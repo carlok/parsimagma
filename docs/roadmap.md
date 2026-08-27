@@ -4,9 +4,10 @@ Five sprints, not four: greedy constructions do not fit in one. Each has an
 exit criterion and a kill criterion, because two of these are research and can
 fail for good reasons.
 
-The running size-4 sweep is **not** a gate. It contributes zero to the pinned
-denominator by construction, needs no attention, and finishes on its own into
-`out/bruteforce4.log`. Nothing below waits on it.
+The size-4 sweep has completed: 13,753,982 refutations from 178,981,952
+canonical magmas, matching the ETP repo's corrected figure and OEIS A001329(4).
+It was never a gate on any sprint below and contributed zero to the pinned
+denominator, as expected.
 
 ---
 

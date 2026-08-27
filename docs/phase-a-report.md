@@ -3,7 +3,8 @@
 Date: 2026-08-27/28. Toolchain pinned in `rust-toolchain.toml` (Rust 1.96.0).
 Every number below is reproduced by `cargo test --release`,
 `./target/release/pm stats`, `pm coverage`, and `pm bruteforce N`.
-Raw outputs are in `out/`.
+Raw outputs are in `out/`. The size-4 sweep referenced below has since
+completed; see section 6.
 
 ---
 
@@ -129,7 +130,7 @@ justified it.
 | symbolic vs table route, affine over `Z/m`, `m = 2..5` | 224 instances | bit-identical |
 | symbolic vs table route, `Z/13` and `Z/11` load-bearing instances | 4 instances | bit-identical |
 | symbolic vs table route, `M_2(F_2)`, noncommuting pairs | 2 instances, 16 elements | bit-identical |
-| magmas up to isomorphism (OEIS A001329) | orders 1, 2, 3 | 1, 10, 3330 |
+| magmas up to isomorphism (OEIS A001329) | orders 1, 2, 3, 4 | 1, 10, 3330, 178,981,952 |
 | `E1` holds always; `E2` holds exactly in singletons | 176 magmas | exact |
 | twisted power vs table sweep, `F_2^k`, `k = 2..4` | 29 instances | bit-identical |
 | one-coordinate twist reproduces its base magma | 3 instances | bit-identical |
@@ -156,7 +157,7 @@ pairs. If that had disagreed the headline number would be worthless.
 | variety of E2441 is `1 = a² + aba² + abab + ab² + b` | paper Ex. 5.3 | exact |
 | refutations by magmas of size ≤ 2 | ETP repo README | **12,560,783** |
 | refutations by magmas of size ≤ 3 | ETP repo README | **13,596,121** |
-| refutations by magmas of size ≤ 4 | ETP repo README | in flight, see §6 |
+| refutations by magmas of size ≤ 4 | ETP repo README | **13,753,982** |
 | Vampire: 13,854,295 refuted / 8,173,585 proven / 1062 unknown | arXiv:2508.15856 Table 2 | exact, per method |
 
 ### A correction to the published paper
@@ -336,28 +337,49 @@ this corpus reaches, and 5992 of 6005 rows are redundant for the hard core.
 
 ---
 
-## 6. In flight
+## 6. The exhaustive size-4 sweep
 
-The exhaustive size-4 sweep is running: 4,294,967,296 tables, 178,981,952
-after isomorphism filtering, about 90 minutes remaining at the time of
-writing, 75 MB resident. It appends to `out/bruteforce4.log`. It contributes
-**nothing** to the hard-core number by construction — every small finite
-counterexample is already what Vampire's model builder found — and exists only
-to complete the third independent confirmation of the ETP repo's corrected
-13,753,982, against a published figure of 13,632,566 that does not reconcile
-with its own parts.
+Completed. 4,294,967,296 tables, **178,981,952** after isomorphism filtering,
+83 minutes wall clock at 856,000 tables/s, 75 MB resident.
+
+```
+size <= 2:    12560783 refutations
+size <= 3:    13596121 refutations
+size <= 4:    13753982 refutations
+```
+
+All three match the ETP repo's corrected figures exactly, from an
+independently written implementation sharing no code with theirs. Against the
+published paper's 13,632,566 — a figure that does not reconcile with its own
+stated parts — this is the third independent confirmation that §5.1 is wrong
+and the repo is right. The canonical count is also exactly OEIS A001329(4),
+which validates the isomorphism filter at the only scale where it matters.
+
+Every refuted pair was checked against the implication graph. No contradictions.
+
+Two notes on reading this.
+
+It contributes **nothing** to the hard-core number by construction: every
+counterexample of carrier size at most 4 is precisely what Vampire's finite
+model builder already found, which is why set (B) exists in the first place.
+
+The run also reports that 178,985,292 of the swept tables "separate at least
+one pair", i.e. all of them. That is not a finding. Every magma of size at
+least 2 satisfies E1 and refutes E2, so the predicate is trivially true above
+the singleton and the number carries no information.
 
 Worker memory was the one thing that needed care: a per-chunk accumulator is
 2.8 MB and there are 262,144 chunks, so collecting them would have wanted
 728 GB. The sweep folds one accumulator per worker instead, which is what the
-75 MB figure reflects.
+75 MB reflects.
 
-Also outstanding from Phase 0: reconciling Janota's "only 310 of the undecided
-implications require an infinite model" against the paper's 820 pairs whose
-truth changes under finiteness, and against the 814 pairs his saturation runs
-refuted without producing a witness. That needs the per-method fields of the
-84 MB Vampire dump, which was deleted after `implications.bits` and
-`hard_core.txt` were extracted from it; redoing it means re-fetching that file.
+Still outstanding from Phase 0, and now sprint S1: reconciling Janota's "only
+310 of the undecided implications require an infinite model" against the
+paper's 820 pairs whose truth flips under finiteness, and against the 814 pairs
+his saturation runs refuted without producing a witness. That needs the
+per-method fields of the 84 MB Vampire dump, which was deleted once
+`implications.bits` and `hard_core.txt` were extracted; redoing it means
+re-fetching that file.
 
 ## 7. Reproducibility
 
