@@ -1,0 +1,2741 @@
+row	family	params	carrier	laws_satisfied
+0	linear/Z_m	m=2 a=0 b=0	finite:2	1556
+1	linear/Z_m	m=2 a=0 b=1	finite:2	1214
+2	linear/Z_m	m=2 a=1 b=0	finite:2	1214
+3	linear/Z_m	m=2 a=1 b=1	finite:2	663
+4	linear/Z_m	m=3 a=0 b=2	finite:3	575
+5	linear/Z_m	m=3 a=1 b=1	finite:3	60
+6	linear/Z_m	m=3 a=1 b=2	finite:3	179
+7	linear/Z_m	m=3 a=2 b=0	finite:3	575
+8	linear/Z_m	m=3 a=2 b=1	finite:3	179
+9	linear/Z_m	m=3 a=2 b=2	finite:3	382
+10	linear/Z_m	m=4 a=0 b=2	finite:4	261
+11	linear/Z_m	m=4 a=1 b=1	finite:4	116
+12	linear/Z_m	m=4 a=1 b=2	finite:4	155
+13	linear/Z_m	m=4 a=1 b=3	finite:4	169
+14	linear/Z_m	m=4 a=2 b=0	finite:4	261
+15	linear/Z_m	m=4 a=2 b=1	finite:4	155
+16	linear/Z_m	m=4 a=2 b=2	finite:4	161
+17	linear/Z_m	m=4 a=2 b=3	finite:4	317
+18	linear/Z_m	m=4 a=3 b=1	finite:4	169
+19	linear/Z_m	m=4 a=3 b=2	finite:4	317
+20	linear/Z_m	m=4 a=3 b=3	finite:4	294
+21	linear/Z_m	m=5 a=0 b=2	finite:5	228
+22	linear/Z_m	m=5 a=1 b=1	finite:5	32
+23	linear/Z_m	m=5 a=1 b=2	finite:5	38
+24	linear/Z_m	m=5 a=1 b=3	finite:5	27
+25	linear/Z_m	m=5 a=1 b=4	finite:5	163
+26	linear/Z_m	m=5 a=2 b=0	finite:5	228
+27	linear/Z_m	m=5 a=2 b=1	finite:5	38
+28	linear/Z_m	m=5 a=2 b=2	finite:5	90
+29	linear/Z_m	m=5 a=2 b=3	finite:5	56
+30	linear/Z_m	m=5 a=2 b=4	finite:5	177
+31	linear/Z_m	m=5 a=3 b=1	finite:5	27
+32	linear/Z_m	m=5 a=3 b=2	finite:5	56
+33	linear/Z_m	m=5 a=3 b=3	finite:5	176
+34	linear/Z_m	m=5 a=3 b=4	finite:5	81
+35	linear/Z_m	m=5 a=4 b=1	finite:5	163
+36	linear/Z_m	m=5 a=4 b=2	finite:5	177
+37	linear/Z_m	m=5 a=4 b=3	finite:5	81
+38	linear/Z_m	m=6 a=0 b=2	finite:6	228
+39	linear/Z_m	m=6 a=0 b=3	finite:6	399
+40	linear/Z_m	m=6 a=1 b=2	finite:6	81
+41	linear/Z_m	m=6 a=1 b=3	finite:6	233
+42	linear/Z_m	m=6 a=1 b=4	finite:6	23
+43	linear/Z_m	m=6 a=2 b=0	finite:6	228
+44	linear/Z_m	m=6 a=2 b=1	finite:6	81
+45	linear/Z_m	m=6 a=2 b=2	finite:6	124
+46	linear/Z_m	m=6 a=2 b=3	finite:6	165
+47	linear/Z_m	m=6 a=2 b=4	finite:6	69
+48	linear/Z_m	m=6 a=2 b=5	finite:6	154
+49	linear/Z_m	m=6 a=3 b=0	finite:6	399
+50	linear/Z_m	m=6 a=3 b=1	finite:6	233
+51	linear/Z_m	m=6 a=3 b=2	finite:6	165
+52	linear/Z_m	m=6 a=3 b=3	finite:6	221
+53	linear/Z_m	m=6 a=3 b=4	finite:6	353
+54	linear/Z_m	m=6 a=3 b=5	finite:6	110
+55	linear/Z_m	m=6 a=4 b=1	finite:6	23
+56	linear/Z_m	m=6 a=4 b=2	finite:6	69
+57	linear/Z_m	m=6 a=4 b=4	finite:6	35
+58	linear/Z_m	m=6 a=4 b=5	finite:6	73
+59	linear/Z_m	m=6 a=5 b=2	finite:6	154
+60	linear/Z_m	m=6 a=5 b=3	finite:6	110
+61	linear/Z_m	m=6 a=5 b=4	finite:6	73
+62	linear/Z_m	m=6 a=5 b=5	finite:6	297
+63	linear/Z_m	m=7 a=0 b=2	finite:7	347
+64	linear/Z_m	m=7 a=0 b=3	finite:7	176
+65	linear/Z_m	m=7 a=1 b=2	finite:7	12
+66	linear/Z_m	m=7 a=1 b=3	finite:7	15
+67	linear/Z_m	m=7 a=1 b=4	finite:7	23
+68	linear/Z_m	m=7 a=1 b=5	finite:7	12
+69	linear/Z_m	m=7 a=2 b=0	finite:7	347
+70	linear/Z_m	m=7 a=2 b=1	finite:7	12
+71	linear/Z_m	m=7 a=2 b=2	finite:7	26
+72	linear/Z_m	m=7 a=2 b=3	finite:7	26
+73	linear/Z_m	m=7 a=2 b=4	finite:7	15
+74	linear/Z_m	m=7 a=2 b=5	finite:7	21
+75	linear/Z_m	m=7 a=2 b=6	finite:7	126
+76	linear/Z_m	m=7 a=3 b=0	finite:7	176
+77	linear/Z_m	m=7 a=3 b=1	finite:7	15
+78	linear/Z_m	m=7 a=3 b=2	finite:7	26
+79	linear/Z_m	m=7 a=3 b=3	finite:7	18
+80	linear/Z_m	m=7 a=3 b=4	finite:7	25
+81	linear/Z_m	m=7 a=3 b=5	finite:7	169
+82	linear/Z_m	m=7 a=3 b=6	finite:7	49
+83	linear/Z_m	m=7 a=4 b=1	finite:7	23
+84	linear/Z_m	m=7 a=4 b=2	finite:7	15
+85	linear/Z_m	m=7 a=4 b=3	finite:7	25
+86	linear/Z_m	m=7 a=4 b=4	finite:7	128
+87	linear/Z_m	m=7 a=4 b=5	finite:7	33
+88	linear/Z_m	m=7 a=4 b=6	finite:7	52
+89	linear/Z_m	m=7 a=5 b=1	finite:7	12
+90	linear/Z_m	m=7 a=5 b=2	finite:7	21
+91	linear/Z_m	m=7 a=5 b=3	finite:7	169
+92	linear/Z_m	m=7 a=5 b=4	finite:7	33
+93	linear/Z_m	m=7 a=5 b=5	finite:7	16
+94	linear/Z_m	m=7 a=5 b=6	finite:7	46
+95	linear/Z_m	m=7 a=6 b=2	finite:7	126
+96	linear/Z_m	m=7 a=6 b=3	finite:7	49
+97	linear/Z_m	m=7 a=6 b=4	finite:7	52
+98	linear/Z_m	m=7 a=6 b=5	finite:7	46
+99	linear/Z_m	m=8 a=1 b=2	finite:8	24
+100	linear/Z_m	m=8 a=1 b=3	finite:8	29
+101	linear/Z_m	m=8 a=1 b=5	finite:8	28
+102	linear/Z_m	m=8 a=2 b=1	finite:8	24
+103	linear/Z_m	m=8 a=2 b=2	finite:8	21
+104	linear/Z_m	m=8 a=2 b=3	finite:8	62
+105	linear/Z_m	m=8 a=2 b=4	finite:8	48
+106	linear/Z_m	m=8 a=2 b=6	finite:8	21
+107	linear/Z_m	m=8 a=2 b=7	finite:8	122
+108	linear/Z_m	m=8 a=3 b=1	finite:8	29
+109	linear/Z_m	m=8 a=3 b=2	finite:8	62
+110	linear/Z_m	m=8 a=3 b=3	finite:8	62
+111	linear/Z_m	m=8 a=3 b=5	finite:8	50
+112	linear/Z_m	m=8 a=3 b=6	finite:8	122
+113	linear/Z_m	m=8 a=3 b=7	finite:8	67
+114	linear/Z_m	m=8 a=4 b=2	finite:8	48
+115	linear/Z_m	m=8 a=5 b=1	finite:8	28
+116	linear/Z_m	m=8 a=5 b=3	finite:8	50
+117	linear/Z_m	m=8 a=5 b=7	finite:8	63
+118	linear/Z_m	m=8 a=7 b=3	finite:8	67
+119	linear/Z_m	m=8 a=7 b=5	finite:8	63
+120	linear/Z_m	m=9 a=1 b=2	finite:9	11
+121	linear/Z_m	m=9 a=1 b=3	finite:9	61
+122	linear/Z_m	m=9 a=1 b=4	finite:9	6
+123	linear/Z_m	m=9 a=1 b=5	finite:9	10
+124	linear/Z_m	m=9 a=1 b=7	finite:9	7
+125	linear/Z_m	m=9 a=2 b=1	finite:9	11
+126	linear/Z_m	m=9 a=2 b=2	finite:9	68
+127	linear/Z_m	m=9 a=2 b=3	finite:9	31
+128	linear/Z_m	m=9 a=2 b=4	finite:9	23
+129	linear/Z_m	m=9 a=2 b=5	finite:9	123
+130	linear/Z_m	m=9 a=2 b=6	finite:9	31
+131	linear/Z_m	m=9 a=2 b=7	finite:9	18
+132	linear/Z_m	m=9 a=2 b=8	finite:9	109
+133	linear/Z_m	m=9 a=3 b=1	finite:9	61
+134	linear/Z_m	m=9 a=3 b=2	finite:9	31
+135	linear/Z_m	m=9 a=3 b=3	finite:9	108
+136	linear/Z_m	m=9 a=3 b=5	finite:9	31
+137	linear/Z_m	m=9 a=3 b=6	finite:9	108
+138	linear/Z_m	m=9 a=3 b=7	finite:9	216
+139	linear/Z_m	m=9 a=3 b=8	finite:9	87
+140	linear/Z_m	m=9 a=4 b=1	finite:9	6
+141	linear/Z_m	m=9 a=4 b=2	finite:9	23
+142	linear/Z_m	m=9 a=4 b=5	finite:9	20
+143	linear/Z_m	m=9 a=4 b=6	finite:9	216
+144	linear/Z_m	m=9 a=4 b=7	finite:9	7
+145	linear/Z_m	m=9 a=4 b=8	finite:9	44
+146	linear/Z_m	m=9 a=5 b=1	finite:9	10
+147	linear/Z_m	m=9 a=5 b=2	finite:9	123
+148	linear/Z_m	m=9 a=5 b=4	finite:9	20
+149	linear/Z_m	m=9 a=5 b=5	finite:9	80
+150	linear/Z_m	m=9 a=5 b=7	finite:9	23
+151	linear/Z_m	m=9 a=5 b=8	finite:9	84
+152	linear/Z_m	m=9 a=7 b=1	finite:9	7
+153	linear/Z_m	m=9 a=7 b=2	finite:9	18
+154	linear/Z_m	m=9 a=7 b=4	finite:9	7
+155	linear/Z_m	m=9 a=7 b=5	finite:9	23
+156	linear/Z_m	m=9 a=7 b=7	finite:9	14
+157	linear/Z_m	m=9 a=7 b=8	finite:9	41
+158	linear/Z_m	m=9 a=8 b=2	finite:9	109
+159	linear/Z_m	m=9 a=8 b=3	finite:9	87
+160	linear/Z_m	m=9 a=8 b=4	finite:9	44
+161	linear/Z_m	m=9 a=8 b=5	finite:9	84
+162	linear/Z_m	m=9 a=8 b=7	finite:9	41
+163	linear/Z_m	m=10 a=1 b=2	finite:10	16
+164	linear/Z_m	m=10 a=1 b=3	finite:10	18
+165	linear/Z_m	m=10 a=1 b=4	finite:10	79
+166	linear/Z_m	m=10 a=1 b=6	finite:10	13
+167	linear/Z_m	m=10 a=1 b=7	finite:10	22
+168	linear/Z_m	m=10 a=1 b=8	finite:10	14
+169	linear/Z_m	m=10 a=2 b=1	finite:10	16
+170	linear/Z_m	m=10 a=2 b=2	finite:10	17
+171	linear/Z_m	m=10 a=2 b=3	finite:10	25
+172	linear/Z_m	m=10 a=2 b=4	finite:10	55
+173	linear/Z_m	m=10 a=2 b=5	finite:10	63
+174	linear/Z_m	m=10 a=2 b=6	finite:10	7
+175	linear/Z_m	m=10 a=2 b=7	finite:10	37
+176	linear/Z_m	m=10 a=2 b=8	finite:10	17
+177	linear/Z_m	m=10 a=2 b=9	finite:10	104
+178	linear/Z_m	m=10 a=3 b=1	finite:10	18
+179	linear/Z_m	m=10 a=3 b=2	finite:10	25
+180	linear/Z_m	m=10 a=3 b=3	finite:10	115
+181	linear/Z_m	m=10 a=3 b=4	finite:10	33
+182	linear/Z_m	m=10 a=3 b=5	finite:10	42
+183	linear/Z_m	m=10 a=3 b=6	finite:10	12
+184	linear/Z_m	m=10 a=3 b=7	finite:10	46
+185	linear/Z_m	m=10 a=3 b=8	finite:10	82
+186	linear/Z_m	m=10 a=3 b=9	finite:10	71
+187	linear/Z_m	m=10 a=4 b=1	finite:10	79
+188	linear/Z_m	m=10 a=4 b=2	finite:10	55
+189	linear/Z_m	m=10 a=4 b=3	finite:10	33
+190	linear/Z_m	m=10 a=4 b=4	finite:10	96
+191	linear/Z_m	m=10 a=4 b=6	finite:10	64
+192	linear/Z_m	m=10 a=4 b=7	finite:10	82
+193	linear/Z_m	m=10 a=4 b=8	finite:10	25
+194	linear/Z_m	m=10 a=4 b=9	finite:10	112
+195	linear/Z_m	m=10 a=5 b=2	finite:10	63
+196	linear/Z_m	m=10 a=5 b=3	finite:10	42
+197	linear/Z_m	m=10 a=6 b=1	finite:10	13
+198	linear/Z_m	m=10 a=6 b=2	finite:10	7
+199	linear/Z_m	m=10 a=6 b=3	finite:10	12
+200	linear/Z_m	m=10 a=6 b=4	finite:10	64
+201	linear/Z_m	m=10 a=6 b=7	finite:10	18
+202	linear/Z_m	m=10 a=6 b=8	finite:10	7
+203	linear/Z_m	m=10 a=6 b=9	finite:10	67
+204	linear/Z_m	m=10 a=7 b=1	finite:10	22
+205	linear/Z_m	m=10 a=7 b=2	finite:10	37
+206	linear/Z_m	m=10 a=7 b=4	finite:10	82
+207	linear/Z_m	m=10 a=7 b=6	finite:10	18
+208	linear/Z_m	m=10 a=7 b=7	finite:10	78
+209	linear/Z_m	m=10 a=7 b=8	finite:10	23
+210	linear/Z_m	m=10 a=7 b=9	finite:10	108
+211	linear/Z_m	m=10 a=8 b=1	finite:10	14
+212	linear/Z_m	m=10 a=8 b=2	finite:10	17
+213	linear/Z_m	m=10 a=8 b=3	finite:10	82
+214	linear/Z_m	m=10 a=8 b=4	finite:10	25
+215	linear/Z_m	m=10 a=8 b=6	finite:10	7
+216	linear/Z_m	m=10 a=8 b=7	finite:10	23
+217	linear/Z_m	m=10 a=8 b=8	finite:10	50
+218	linear/Z_m	m=10 a=8 b=9	finite:10	47
+219	linear/Z_m	m=10 a=9 b=2	finite:10	104
+220	linear/Z_m	m=10 a=9 b=3	finite:10	71
+221	linear/Z_m	m=10 a=9 b=4	finite:10	112
+222	linear/Z_m	m=10 a=9 b=6	finite:10	67
+223	linear/Z_m	m=10 a=9 b=7	finite:10	108
+224	linear/Z_m	m=10 a=9 b=8	finite:10	47
+225	linear/Z_m	m=11 a=1 b=2	finite:11	7
+226	linear/Z_m	m=11 a=1 b=3	finite:11	7
+227	linear/Z_m	m=11 a=1 b=4	finite:11	8
+228	linear/Z_m	m=11 a=1 b=6	finite:11	10
+229	linear/Z_m	m=11 a=1 b=7	finite:11	9
+230	linear/Z_m	m=11 a=1 b=8	finite:11	10
+231	linear/Z_m	m=11 a=2 b=1	finite:11	7
+232	linear/Z_m	m=11 a=2 b=3	finite:11	7
+233	linear/Z_m	m=11 a=2 b=4	finite:11	7
+234	linear/Z_m	m=11 a=2 b=5	finite:11	16
+235	linear/Z_m	m=11 a=2 b=6	finite:11	5
+236	linear/Z_m	m=11 a=2 b=7	finite:11	7
+237	linear/Z_m	m=11 a=2 b=8	finite:11	4
+238	linear/Z_m	m=11 a=2 b=9	finite:11	17
+239	linear/Z_m	m=11 a=2 b=10	finite:11	102
+240	linear/Z_m	m=11 a=3 b=1	finite:11	7
+241	linear/Z_m	m=11 a=3 b=2	finite:11	7
+242	linear/Z_m	m=11 a=3 b=4	finite:11	4
+243	linear/Z_m	m=11 a=3 b=5	finite:11	8
+244	linear/Z_m	m=11 a=3 b=6	finite:11	5
+245	linear/Z_m	m=11 a=3 b=7	finite:11	12
+246	linear/Z_m	m=11 a=3 b=8	finite:11	19
+247	linear/Z_m	m=11 a=3 b=9	finite:11	82
+248	linear/Z_m	m=11 a=3 b=10	finite:11	46
+249	linear/Z_m	m=11 a=4 b=1	finite:11	8
+250	linear/Z_m	m=11 a=4 b=2	finite:11	7
+251	linear/Z_m	m=11 a=4 b=3	finite:11	4
+252	linear/Z_m	m=11 a=4 b=5	finite:11	3
+253	linear/Z_m	m=11 a=4 b=6	finite:11	7
+254	linear/Z_m	m=11 a=4 b=7	finite:11	19
+255	linear/Z_m	m=11 a=4 b=8	finite:11	74
+256	linear/Z_m	m=11 a=4 b=9	finite:11	9
+257	linear/Z_m	m=11 a=4 b=10	finite:11	46
+258	linear/Z_m	m=11 a=5 b=2	finite:11	16
+259	linear/Z_m	m=11 a=5 b=3	finite:11	8
+260	linear/Z_m	m=11 a=5 b=4	finite:11	3
+261	linear/Z_m	m=11 a=5 b=6	finite:11	20
+262	linear/Z_m	m=11 a=5 b=7	finite:11	68
+263	linear/Z_m	m=11 a=5 b=8	finite:11	8
+264	linear/Z_m	m=11 a=5 b=9	finite:11	4
+265	linear/Z_m	m=11 a=6 b=1	finite:11	10
+266	linear/Z_m	m=11 a=6 b=2	finite:11	5
+267	linear/Z_m	m=11 a=6 b=3	finite:11	5
+268	linear/Z_m	m=11 a=6 b=4	finite:11	7
+269	linear/Z_m	m=11 a=6 b=5	finite:11	20
+270	linear/Z_m	m=11 a=6 b=6	finite:11	80
+271	linear/Z_m	m=11 a=6 b=7	finite:11	5
+272	linear/Z_m	m=11 a=6 b=8	finite:11	10
+273	linear/Z_m	m=11 a=6 b=9	finite:11	15
+274	linear/Z_m	m=11 a=6 b=10	finite:11	44
+275	linear/Z_m	m=11 a=7 b=1	finite:11	9
+276	linear/Z_m	m=11 a=7 b=2	finite:11	7
+277	linear/Z_m	m=11 a=7 b=4	finite:11	19
+278	linear/Z_m	m=11 a=7 b=5	finite:11	68
+279	linear/Z_m	m=11 a=7 b=6	finite:11	5
+280	linear/Z_m	m=11 a=7 b=8	finite:11	1
+281	linear/Z_m	m=11 a=7 b=9	finite:11	15
+282	linear/Z_m	m=11 a=8 b=1	finite:11	10
+283	linear/Z_m	m=11 a=8 b=2	finite:11	4
+284	linear/Z_m	m=11 a=8 b=3	finite:11	19
+285	linear/Z_m	m=11 a=8 b=4	finite:11	74
+286	linear/Z_m	m=11 a=8 b=5	finite:11	8
+287	linear/Z_m	m=11 a=8 b=6	finite:11	10
+288	linear/Z_m	m=11 a=8 b=9	finite:11	9
+289	linear/Z_m	m=11 a=9 b=2	finite:11	17
+290	linear/Z_m	m=11 a=9 b=3	finite:11	82
+291	linear/Z_m	m=11 a=9 b=4	finite:11	9
+292	linear/Z_m	m=11 a=9 b=5	finite:11	4
+293	linear/Z_m	m=11 a=9 b=6	finite:11	15
+294	linear/Z_m	m=11 a=9 b=7	finite:11	15
+295	linear/Z_m	m=11 a=9 b=8	finite:11	9
+296	linear/Z_m	m=11 a=10 b=2	finite:11	102
+297	linear/Z_m	m=11 a=10 b=3	finite:11	46
+298	linear/Z_m	m=11 a=10 b=4	finite:11	46
+299	linear/Z_m	m=11 a=10 b=6	finite:11	44
+300	linear/Z_m	m=12 a=1 b=2	finite:12	14
+301	linear/Z_m	m=12 a=1 b=3	finite:12	81
+302	linear/Z_m	m=12 a=1 b=7	finite:12	5
+303	linear/Z_m	m=12 a=1 b=9	finite:12	41
+304	linear/Z_m	m=12 a=2 b=1	finite:12	14
+305	linear/Z_m	m=12 a=2 b=2	finite:12	19
+306	linear/Z_m	m=12 a=2 b=3	finite:12	52
+307	linear/Z_m	m=12 a=2 b=4	finite:12	19
+308	linear/Z_m	m=12 a=2 b=5	finite:12	53
+309	linear/Z_m	m=12 a=2 b=6	finite:12	34
+310	linear/Z_m	m=12 a=2 b=7	finite:12	31
+311	linear/Z_m	m=12 a=2 b=8	finite:12	29
+312	linear/Z_m	m=12 a=2 b=9	finite:12	23
+313	linear/Z_m	m=12 a=2 b=10	finite:12	14
+314	linear/Z_m	m=12 a=2 b=11	finite:12	101
+315	linear/Z_m	m=12 a=3 b=1	finite:12	81
+316	linear/Z_m	m=12 a=3 b=2	finite:12	52
+317	linear/Z_m	m=12 a=3 b=5	finite:12	39
+318	linear/Z_m	m=12 a=3 b=6	finite:12	94
+319	linear/Z_m	m=12 a=3 b=8	finite:12	78
+320	linear/Z_m	m=12 a=3 b=10	finite:12	114
+321	linear/Z_m	m=12 a=3 b=11	finite:12	79
+322	linear/Z_m	m=12 a=4 b=2	finite:12	19
+323	linear/Z_m	m=12 a=4 b=6	finite:12	69
+324	linear/Z_m	m=12 a=4 b=7	finite:12	9
+325	linear/Z_m	m=12 a=4 b=10	finite:12	11
+326	linear/Z_m	m=12 a=4 b=11	finite:12	55
+327	linear/Z_m	m=12 a=5 b=2	finite:12	53
+328	linear/Z_m	m=12 a=5 b=3	finite:12	39
+329	linear/Z_m	m=12 a=5 b=5	finite:12	64
+330	linear/Z_m	m=12 a=5 b=9	finite:12	17
+331	linear/Z_m	m=12 a=5 b=11	finite:12	69
+332	linear/Z_m	m=12 a=6 b=2	finite:12	34
+333	linear/Z_m	m=12 a=6 b=3	finite:12	94
+334	linear/Z_m	m=12 a=6 b=4	finite:12	69
+335	linear/Z_m	m=12 a=6 b=8	finite:12	49
+336	linear/Z_m	m=12 a=6 b=9	finite:12	57
+337	linear/Z_m	m=12 a=6 b=10	finite:12	64
+338	linear/Z_m	m=12 a=7 b=1	finite:12	5
+339	linear/Z_m	m=12 a=7 b=2	finite:12	31
+340	linear/Z_m	m=12 a=7 b=4	finite:12	9
+341	linear/Z_m	m=12 a=7 b=8	finite:12	37
+342	linear/Z_m	m=12 a=7 b=9	finite:12	71
+343	linear/Z_m	m=12 a=7 b=10	finite:12	13
+344	linear/Z_m	m=12 a=8 b=2	finite:12	29
+345	linear/Z_m	m=12 a=8 b=6	finite:12	49
+346	linear/Z_m	m=12 a=8 b=7	finite:12	37
+347	linear/Z_m	m=12 a=8 b=10	finite:12	19
+348	linear/Z_m	m=12 a=8 b=11	finite:12	85
+349	linear/Z_m	m=12 a=9 b=1	finite:12	41
+350	linear/Z_m	m=12 a=9 b=2	finite:12	23
+351	linear/Z_m	m=12 a=9 b=5	finite:12	17
+352	linear/Z_m	m=12 a=9 b=6	finite:12	57
+353	linear/Z_m	m=12 a=9 b=7	finite:12	71
+354	linear/Z_m	m=12 a=9 b=10	finite:12	52
+355	linear/Z_m	m=12 a=10 b=3	finite:12	114
+356	linear/Z_m	m=12 a=10 b=4	finite:12	11
+357	linear/Z_m	m=12 a=10 b=6	finite:12	64
+358	linear/Z_m	m=12 a=10 b=7	finite:12	13
+359	linear/Z_m	m=12 a=10 b=8	finite:12	19
+360	linear/Z_m	m=12 a=10 b=9	finite:12	52
+361	linear/Z_m	m=12 a=10 b=11	finite:12	48
+362	linear/Z_m	m=12 a=11 b=2	finite:12	101
+363	linear/Z_m	m=12 a=11 b=3	finite:12	79
+364	linear/Z_m	m=12 a=11 b=4	finite:12	55
+365	linear/Z_m	m=12 a=11 b=5	finite:12	69
+366	linear/Z_m	m=12 a=11 b=8	finite:12	85
+367	linear/Z_m	m=12 a=11 b=10	finite:12	48
+368	linear/Z_m	m=13 a=1 b=2	finite:13	3
+369	linear/Z_m	m=13 a=1 b=3	finite:13	7
+370	linear/Z_m	m=13 a=1 b=4	finite:13	6
+371	linear/Z_m	m=13 a=1 b=5	finite:13	13
+372	linear/Z_m	m=13 a=1 b=7	finite:13	4
+373	linear/Z_m	m=13 a=1 b=10	finite:13	10
+374	linear/Z_m	m=13 a=2 b=1	finite:13	3
+375	linear/Z_m	m=13 a=2 b=3	finite:13	7
+376	linear/Z_m	m=13 a=2 b=4	finite:13	6
+377	linear/Z_m	m=13 a=2 b=5	finite:13	9
+378	linear/Z_m	m=13 a=2 b=6	finite:13	14
+379	linear/Z_m	m=13 a=2 b=7	finite:13	2
+380	linear/Z_m	m=13 a=2 b=8	finite:13	9
+381	linear/Z_m	m=13 a=2 b=9	finite:13	7
+382	linear/Z_m	m=13 a=2 b=10	finite:13	5
+383	linear/Z_m	m=13 a=2 b=11	finite:13	17
+384	linear/Z_m	m=13 a=2 b=12	finite:13	100
+385	linear/Z_m	m=13 a=3 b=1	finite:13	7
+386	linear/Z_m	m=13 a=3 b=2	finite:13	7
+387	linear/Z_m	m=13 a=3 b=4	finite:13	24
+388	linear/Z_m	m=13 a=3 b=5	finite:13	10
+389	linear/Z_m	m=13 a=3 b=6	finite:13	8
+390	linear/Z_m	m=13 a=3 b=7	finite:13	7
+391	linear/Z_m	m=13 a=3 b=8	finite:13	10
+392	linear/Z_m	m=13 a=3 b=9	finite:13	14
+393	linear/Z_m	m=13 a=3 b=10	finite:13	17
+394	linear/Z_m	m=13 a=3 b=11	finite:13	69
+395	linear/Z_m	m=13 a=3 b=12	finite:13	49
+396	linear/Z_m	m=13 a=4 b=1	finite:13	6
+397	linear/Z_m	m=13 a=4 b=2	finite:13	6
+398	linear/Z_m	m=13 a=4 b=3	finite:13	24
+399	linear/Z_m	m=13 a=4 b=5	finite:13	12
+400	linear/Z_m	m=13 a=4 b=6	finite:13	3
+401	linear/Z_m	m=13 a=4 b=8	finite:13	11
+402	linear/Z_m	m=13 a=4 b=9	finite:13	17
+403	linear/Z_m	m=13 a=4 b=10	finite:13	164
+404	linear/Z_m	m=13 a=4 b=11	finite:13	11
+405	linear/Z_m	m=13 a=5 b=1	finite:13	13
+406	linear/Z_m	m=13 a=5 b=2	finite:13	9
+407	linear/Z_m	m=13 a=5 b=3	finite:13	10
+408	linear/Z_m	m=13 a=5 b=4	finite:13	12
+409	linear/Z_m	m=13 a=5 b=6	finite:13	6
+410	linear/Z_m	m=13 a=5 b=7	finite:13	9
+411	linear/Z_m	m=13 a=5 b=9	finite:13	74
+412	linear/Z_m	m=13 a=5 b=10	finite:13	10
+413	linear/Z_m	m=13 a=5 b=11	finite:13	8
+414	linear/Z_m	m=13 a=6 b=2	finite:13	14
+415	linear/Z_m	m=13 a=6 b=3	finite:13	8
+416	linear/Z_m	m=13 a=6 b=4	finite:13	3
+417	linear/Z_m	m=13 a=6 b=5	finite:13	6
+418	linear/Z_m	m=13 a=6 b=7	finite:13	20
+419	linear/Z_m	m=13 a=6 b=8	finite:13	67
+420	linear/Z_m	m=13 a=6 b=9	finite:13	6
+421	linear/Z_m	m=13 a=6 b=10	finite:13	7
+422	linear/Z_m	m=13 a=6 b=11	finite:13	3
+423	linear/Z_m	m=13 a=7 b=1	finite:13	4
+424	linear/Z_m	m=13 a=7 b=2	finite:13	2
+425	linear/Z_m	m=13 a=7 b=3	finite:13	7
+426	linear/Z_m	m=13 a=7 b=5	finite:13	9
+427	linear/Z_m	m=13 a=7 b=6	finite:13	20
+428	linear/Z_m	m=13 a=7 b=7	finite:13	80
+429	linear/Z_m	m=13 a=7 b=8	finite:13	10
+430	linear/Z_m	m=13 a=7 b=9	finite:13	3
+431	linear/Z_m	m=13 a=7 b=10	finite:13	4
+432	linear/Z_m	m=13 a=7 b=11	finite:13	13
+433	linear/Z_m	m=13 a=8 b=2	finite:13	9
+434	linear/Z_m	m=13 a=8 b=3	finite:13	10
+435	linear/Z_m	m=13 a=8 b=4	finite:13	11
+436	linear/Z_m	m=13 a=8 b=6	finite:13	67
+437	linear/Z_m	m=13 a=8 b=7	finite:13	10
+438	linear/Z_m	m=13 a=8 b=9	finite:13	8
+439	linear/Z_m	m=13 a=8 b=11	finite:13	12
+440	linear/Z_m	m=13 a=9 b=2	finite:13	7
+441	linear/Z_m	m=13 a=9 b=5	finite:13	74
+442	linear/Z_m	m=13 a=9 b=6	finite:13	6
+443	linear/Z_m	m=13 a=9 b=7	finite:13	3
+444	linear/Z_m	m=13 a=9 b=8	finite:13	8
+445	linear/Z_m	m=13 a=9 b=11	finite:13	11
+446	linear/Z_m	m=13 a=10 b=1	finite:13	10
+447	linear/Z_m	m=13 a=10 b=5	finite:13	10
+448	linear/Z_m	m=13 a=10 b=6	finite:13	7
+449	linear/Z_m	m=13 a=10 b=7	finite:13	4
+450	linear/Z_m	m=13 a=10 b=11	finite:13	13
+451	linear/Z_m	m=13 a=11 b=2	finite:13	17
+452	linear/Z_m	m=13 a=11 b=3	finite:13	69
+453	linear/Z_m	m=13 a=11 b=4	finite:13	11
+454	linear/Z_m	m=13 a=11 b=5	finite:13	8
+455	linear/Z_m	m=13 a=11 b=6	finite:13	3
+456	linear/Z_m	m=13 a=11 b=7	finite:13	13
+457	linear/Z_m	m=13 a=11 b=8	finite:13	12
+458	linear/Z_m	m=13 a=11 b=9	finite:13	11
+459	linear/Z_m	m=13 a=11 b=10	finite:13	13
+460	linear/Z_m	m=13 a=12 b=2	finite:13	100
+461	linear/Z_m	m=13 a=12 b=3	finite:13	49
+462	linear/Z_m	m=14 a=1 b=2	finite:14	7
+463	linear/Z_m	m=14 a=1 b=3	finite:14	9
+464	linear/Z_m	m=14 a=1 b=4	finite:14	11
+465	linear/Z_m	m=14 a=1 b=5	finite:14	7
+466	linear/Z_m	m=14 a=1 b=9	finite:14	5
+467	linear/Z_m	m=14 a=1 b=10	finite:14	9
+468	linear/Z_m	m=14 a=1 b=11	finite:14	9
+469	linear/Z_m	m=14 a=1 b=12	finite:14	9
+470	linear/Z_m	m=14 a=2 b=1	finite:14	7
+471	linear/Z_m	m=14 a=2 b=3	finite:14	9
+472	linear/Z_m	m=14 a=2 b=4	finite:14	6
+473	linear/Z_m	m=14 a=2 b=5	finite:14	10
+474	linear/Z_m	m=14 a=2 b=6	finite:14	40
+475	linear/Z_m	m=14 a=2 b=7	finite:14	98
+476	linear/Z_m	m=14 a=2 b=8	finite:14	4
+477	linear/Z_m	m=14 a=2 b=9	finite:14	11
+478	linear/Z_m	m=14 a=2 b=10	finite:14	6
+479	linear/Z_m	m=14 a=2 b=11	finite:14	5
+480	linear/Z_m	m=14 a=2 b=13	finite:14	100
+481	linear/Z_m	m=14 a=3 b=1	finite:14	9
+482	linear/Z_m	m=14 a=3 b=2	finite:14	9
+483	linear/Z_m	m=14 a=3 b=4	finite:14	11
+484	linear/Z_m	m=14 a=3 b=5	finite:14	121
+485	linear/Z_m	m=14 a=3 b=6	finite:14	20
+486	linear/Z_m	m=14 a=3 b=7	finite:14	31
+487	linear/Z_m	m=14 a=3 b=8	finite:14	6
+488	linear/Z_m	m=14 a=3 b=9	finite:14	21
+489	linear/Z_m	m=14 a=3 b=10	finite:14	7
+490	linear/Z_m	m=14 a=3 b=11	finite:14	17
+491	linear/Z_m	m=14 a=3 b=12	finite:14	72
+492	linear/Z_m	m=14 a=4 b=1	finite:14	11
+493	linear/Z_m	m=14 a=4 b=2	finite:14	6
+494	linear/Z_m	m=14 a=4 b=3	finite:14	11
+495	linear/Z_m	m=14 a=4 b=4	finite:14	50
+496	linear/Z_m	m=14 a=4 b=5	finite:14	13
+497	linear/Z_m	m=14 a=4 b=6	finite:14	20
+498	linear/Z_m	m=14 a=4 b=8	finite:14	5
+499	linear/Z_m	m=14 a=4 b=11	finite:14	60
+500	linear/Z_m	m=14 a=4 b=12	finite:14	6
+501	linear/Z_m	m=14 a=4 b=13	finite:14	42
+502	linear/Z_m	m=14 a=5 b=1	finite:14	7
+503	linear/Z_m	m=14 a=5 b=2	finite:14	10
+504	linear/Z_m	m=14 a=5 b=4	finite:14	13
+505	linear/Z_m	m=14 a=5 b=8	finite:14	5
+506	linear/Z_m	m=14 a=5 b=9	finite:14	17
+507	linear/Z_m	m=14 a=5 b=10	finite:14	72
+508	linear/Z_m	m=14 a=5 b=11	finite:14	22
+509	linear/Z_m	m=14 a=5 b=12	finite:14	8
+510	linear/Z_m	m=14 a=6 b=2	finite:14	40
+511	linear/Z_m	m=14 a=6 b=3	finite:14	20
+512	linear/Z_m	m=14 a=6 b=4	finite:14	20
+513	linear/Z_m	m=14 a=6 b=9	finite:14	66
+514	linear/Z_m	m=14 a=6 b=10	finite:14	20
+515	linear/Z_m	m=14 a=6 b=11	finite:14	21
+516	linear/Z_m	m=14 a=6 b=12	finite:14	18
+517	linear/Z_m	m=14 a=7 b=2	finite:14	98
+518	linear/Z_m	m=14 a=7 b=3	finite:14	31
+519	linear/Z_m	m=14 a=7 b=9	finite:14	64
+520	linear/Z_m	m=14 a=7 b=10	finite:14	48
+521	linear/Z_m	m=14 a=8 b=2	finite:14	4
+522	linear/Z_m	m=14 a=8 b=3	finite:14	6
+523	linear/Z_m	m=14 a=8 b=4	finite:14	5
+524	linear/Z_m	m=14 a=8 b=5	finite:14	5
+525	linear/Z_m	m=14 a=8 b=9	finite:14	6
+526	linear/Z_m	m=14 a=8 b=10	finite:14	5
+527	linear/Z_m	m=14 a=8 b=11	finite:14	10
+528	linear/Z_m	m=14 a=8 b=12	finite:14	4
+529	linear/Z_m	m=14 a=9 b=1	finite:14	5
+530	linear/Z_m	m=14 a=9 b=2	finite:14	11
+531	linear/Z_m	m=14 a=9 b=3	finite:14	21
+532	linear/Z_m	m=14 a=9 b=4	finite:14	5
+533	linear/Z_m	m=14 a=9 b=5	finite:14	17
+534	linear/Z_m	m=14 a=9 b=6	finite:14	66
+535	linear/Z_m	m=14 a=9 b=7	finite:14	64
+536	linear/Z_m	m=14 a=9 b=8	finite:14	6
+537	linear/Z_m	m=14 a=9 b=10	finite:14	10
+538	linear/Z_m	m=14 a=9 b=11	finite:14	5
+539	linear/Z_m	m=14 a=9 b=12	finite:14	11
+540	linear/Z_m	m=14 a=9 b=13	finite:14	78
+541	linear/Z_m	m=14 a=10 b=1	finite:14	9
+542	linear/Z_m	m=14 a=10 b=2	finite:14	6
+543	linear/Z_m	m=14 a=10 b=3	finite:14	7
+544	linear/Z_m	m=14 a=10 b=5	finite:14	72
+545	linear/Z_m	m=14 a=10 b=6	finite:14	20
+546	linear/Z_m	m=14 a=10 b=7	finite:14	48
+547	linear/Z_m	m=14 a=10 b=8	finite:14	5
+548	linear/Z_m	m=14 a=10 b=9	finite:14	10
+549	linear/Z_m	m=14 a=10 b=11	finite:14	12
+550	linear/Z_m	m=14 a=10 b=12	finite:14	52
+551	linear/Z_m	m=14 a=11 b=1	finite:14	9
+552	linear/Z_m	m=14 a=11 b=3	finite:14	17
+553	linear/Z_m	m=14 a=11 b=4	finite:14	60
+554	linear/Z_m	m=14 a=11 b=5	finite:14	22
+555	linear/Z_m	m=14 a=11 b=6	finite:14	21
+556	linear/Z_m	m=14 a=11 b=8	finite:14	10
+557	linear/Z_m	m=14 a=11 b=10	finite:14	12
+558	linear/Z_m	m=14 a=11 b=11	finite:14	67
+559	linear/Z_m	m=14 a=11 b=12	finite:14	14
+560	linear/Z_m	m=14 a=12 b=1	finite:14	9
+561	linear/Z_m	m=14 a=12 b=3	finite:14	72
+562	linear/Z_m	m=14 a=12 b=4	finite:14	6
+563	linear/Z_m	m=14 a=12 b=5	finite:14	8
+564	linear/Z_m	m=14 a=12 b=6	finite:14	18
+565	linear/Z_m	m=14 a=12 b=8	finite:14	4
+566	linear/Z_m	m=14 a=12 b=9	finite:14	11
+567	linear/Z_m	m=14 a=12 b=10	finite:14	52
+568	linear/Z_m	m=14 a=12 b=11	finite:14	14
+569	linear/Z_m	m=14 a=13 b=2	finite:14	100
+570	linear/Z_m	m=14 a=13 b=4	finite:14	42
+571	linear/Z_m	m=14 a=13 b=9	finite:14	78
+572	linear/Z_m	m=15 a=1 b=2	finite:15	6
+573	linear/Z_m	m=15 a=1 b=8	finite:15	7
+574	linear/Z_m	m=15 a=2 b=1	finite:15	6
+575	linear/Z_m	m=15 a=2 b=2	finite:15	39
+576	linear/Z_m	m=15 a=2 b=3	finite:15	11
+577	linear/Z_m	m=15 a=2 b=4	finite:15	30
+578	linear/Z_m	m=15 a=2 b=5	finite:15	31
+579	linear/Z_m	m=15 a=2 b=6	finite:15	12
+580	linear/Z_m	m=15 a=2 b=7	finite:15	14
+581	linear/Z_m	m=15 a=2 b=8	finite:15	16
+582	linear/Z_m	m=15 a=2 b=9	finite:15	39
+583	linear/Z_m	m=15 a=2 b=10	finite:15	21
+584	linear/Z_m	m=15 a=2 b=11	finite:15	17
+585	linear/Z_m	m=15 a=2 b=12	finite:15	15
+586	linear/Z_m	m=15 a=2 b=13	finite:15	17
+587	linear/Z_m	m=15 a=2 b=14	finite:15	100
+588	linear/Z_m	m=15 a=3 b=2	finite:15	11
+589	linear/Z_m	m=15 a=3 b=5	finite:15	28
+590	linear/Z_m	m=15 a=3 b=8	finite:15	37
+591	linear/Z_m	m=15 a=4 b=2	finite:15	30
+592	linear/Z_m	m=15 a=4 b=7	finite:15	15
+593	linear/Z_m	m=15 a=4 b=8	finite:15	18
+594	linear/Z_m	m=15 a=4 b=11	finite:15	46
+595	linear/Z_m	m=15 a=4 b=13	finite:15	4
+596	linear/Z_m	m=15 a=5 b=2	finite:15	31
+597	linear/Z_m	m=15 a=5 b=3	finite:15	28
+598	linear/Z_m	m=15 a=5 b=7	finite:15	13
+599	linear/Z_m	m=15 a=6 b=2	finite:15	12
+600	linear/Z_m	m=15 a=6 b=8	finite:15	10
+601	linear/Z_m	m=15 a=6 b=11	finite:15	5
+602	linear/Z_m	m=15 a=7 b=2	finite:15	14
+603	linear/Z_m	m=15 a=7 b=4	finite:15	15
+604	linear/Z_m	m=15 a=7 b=5	finite:15	13
+605	linear/Z_m	m=15 a=7 b=8	finite:15	20
+606	linear/Z_m	m=15 a=7 b=10	finite:15	5
+607	linear/Z_m	m=15 a=7 b=11	finite:15	4
+608	linear/Z_m	m=15 a=7 b=13	finite:15	2
+609	linear/Z_m	m=15 a=7 b=14	finite:15	49
+610	linear/Z_m	m=15 a=8 b=1	finite:15	7
+611	linear/Z_m	m=15 a=8 b=2	finite:15	16
+612	linear/Z_m	m=15 a=8 b=3	finite:15	37
+613	linear/Z_m	m=15 a=8 b=4	finite:15	18
+614	linear/Z_m	m=15 a=8 b=6	finite:15	10
+615	linear/Z_m	m=15 a=8 b=7	finite:15	20
+616	linear/Z_m	m=15 a=8 b=8	finite:15	80
+617	linear/Z_m	m=15 a=8 b=9	finite:15	17
+618	linear/Z_m	m=15 a=8 b=11	finite:15	14
+619	linear/Z_m	m=15 a=8 b=12	finite:15	14
+620	linear/Z_m	m=15 a=8 b=13	finite:15	32
+621	linear/Z_m	m=15 a=8 b=14	finite:15	49
+622	linear/Z_m	m=15 a=9 b=2	finite:15	39
+623	linear/Z_m	m=15 a=9 b=8	finite:15	17
+624	linear/Z_m	m=15 a=10 b=2	finite:15	21
+625	linear/Z_m	m=15 a=11 b=2	finite:15	17
+626	linear/Z_m	m=15 a=11 b=7	finite:15	4
+627	linear/Z_m	m=15 a=11 b=8	finite:15	14
+628	linear/Z_m	m=15 a=11 b=13	finite:15	4
+629	linear/Z_m	m=15 a=11 b=14	finite:15	65
+630	linear/Z_m	m=15 a=12 b=2	finite:15	15
+631	linear/Z_m	m=15 a=12 b=8	finite:15	14
+632	linear/Z_m	m=15 a=13 b=2	finite:15	17
+633	linear/Z_m	m=15 a=13 b=4	finite:15	4
+634	linear/Z_m	m=15 a=13 b=7	finite:15	2
+635	linear/Z_m	m=15 a=13 b=8	finite:15	32
+636	linear/Z_m	m=15 a=13 b=11	finite:15	4
+637	linear/Z_m	m=15 a=13 b=13	finite:15	19
+638	linear/Z_m	m=15 a=14 b=2	finite:15	100
+639	linear/Z_m	m=15 a=14 b=7	finite:15	49
+640	linear/Z_m	m=15 a=14 b=8	finite:15	49
+641	linear/Z_m	m=15 a=14 b=11	finite:15	65
+642	linear/Z_m	m=16 a=1 b=2	finite:16	7
+643	linear/Z_m	m=16 a=1 b=3	finite:16	7
+644	linear/Z_m	m=16 a=1 b=4	finite:16	46
+645	linear/Z_m	m=16 a=1 b=5	finite:16	9
+646	linear/Z_m	m=16 a=1 b=13	finite:16	11
+647	linear/Z_m	m=16 a=2 b=1	finite:16	7
+648	linear/Z_m	m=16 a=2 b=3	finite:16	18
+649	linear/Z_m	m=16 a=2 b=4	finite:16	11
+650	linear/Z_m	m=16 a=2 b=5	finite:16	3
+651	linear/Z_m	m=16 a=2 b=6	finite:16	5
+652	linear/Z_m	m=16 a=2 b=10	finite:16	5
+653	linear/Z_m	m=16 a=2 b=12	finite:16	11
+654	linear/Z_m	m=16 a=2 b=15	finite:16	99
+655	linear/Z_m	m=16 a=3 b=1	finite:16	7
+656	linear/Z_m	m=16 a=3 b=2	finite:16	18
+657	linear/Z_m	m=16 a=3 b=3	finite:16	18
+658	linear/Z_m	m=16 a=3 b=4	finite:16	46
+659	linear/Z_m	m=16 a=3 b=5	finite:16	11
+660	linear/Z_m	m=16 a=3 b=6	finite:16	28
+661	linear/Z_m	m=16 a=3 b=7	finite:16	14
+662	linear/Z_m	m=16 a=3 b=8	finite:16	57
+663	linear/Z_m	m=16 a=3 b=9	finite:16	4
+664	linear/Z_m	m=16 a=3 b=11	finite:16	15
+665	linear/Z_m	m=16 a=3 b=13	finite:16	20
+666	linear/Z_m	m=16 a=3 b=14	finite:16	59
+667	linear/Z_m	m=16 a=4 b=1	finite:16	46
+668	linear/Z_m	m=16 a=4 b=2	finite:16	11
+669	linear/Z_m	m=16 a=4 b=3	finite:16	46
+670	linear/Z_m	m=16 a=4 b=5	finite:16	80
+671	linear/Z_m	m=16 a=4 b=8	finite:16	55
+672	linear/Z_m	m=16 a=4 b=13	finite:16	202
+673	linear/Z_m	m=16 a=5 b=1	finite:16	9
+674	linear/Z_m	m=16 a=5 b=2	finite:16	3
+675	linear/Z_m	m=16 a=5 b=4	finite:16	80
+676	linear/Z_m	m=16 a=5 b=6	finite:16	5
+677	linear/Z_m	m=16 a=5 b=9	finite:16	6
+678	linear/Z_m	m=16 a=5 b=12	finite:16	202
+679	linear/Z_m	m=16 a=5 b=13	finite:16	2
+680	linear/Z_m	m=16 a=6 b=3	finite:16	28
+681	linear/Z_m	m=16 a=6 b=5	finite:16	5
+682	linear/Z_m	m=16 a=6 b=11	finite:16	59
+683	linear/Z_m	m=16 a=7 b=3	finite:16	14
+684	linear/Z_m	m=16 a=7 b=10	finite:16	99
+685	linear/Z_m	m=16 a=8 b=3	finite:16	57
+686	linear/Z_m	m=16 a=9 b=3	finite:16	4
+687	linear/Z_m	m=16 a=9 b=5	finite:16	6
+688	linear/Z_m	m=16 a=9 b=13	finite:16	12
+689	linear/Z_m	m=16 a=12 b=2	finite:16	11
+690	linear/Z_m	m=16 a=13 b=1	finite:16	11
+691	linear/Z_m	m=16 a=13 b=5	finite:16	2
+692	linear/Z_m	m=16 a=13 b=9	finite:16	12
+693	linear/Z_m	m=17 a=2 b=4	finite:17	9
+694	linear/Z_m	m=17 a=2 b=5	finite:17	3
+695	linear/Z_m	m=17 a=2 b=7	finite:17	6
+696	linear/Z_m	m=17 a=2 b=10	finite:17	7
+697	linear/Z_m	m=17 a=2 b=11	finite:17	5
+698	linear/Z_m	m=17 a=2 b=12	finite:17	5
+699	linear/Z_m	m=17 a=2 b=13	finite:17	9
+700	linear/Z_m	m=17 a=2 b=14	finite:17	3
+701	linear/Z_m	m=17 a=2 b=16	finite:17	98
+702	linear/Z_m	m=17 a=3 b=4	finite:17	11
+703	linear/Z_m	m=17 a=3 b=5	finite:17	2
+704	linear/Z_m	m=17 a=3 b=6	finite:17	2
+705	linear/Z_m	m=17 a=3 b=7	finite:17	5
+706	linear/Z_m	m=17 a=3 b=8	finite:17	7
+707	linear/Z_m	m=17 a=3 b=9	finite:17	4
+708	linear/Z_m	m=17 a=3 b=11	finite:17	14
+709	linear/Z_m	m=17 a=3 b=13	finite:17	10
+710	linear/Z_m	m=17 a=3 b=14	finite:17	16
+711	linear/Z_m	m=17 a=3 b=15	finite:17	52
+712	linear/Z_m	m=17 a=4 b=2	finite:17	9
+713	linear/Z_m	m=17 a=4 b=3	finite:17	11
+714	linear/Z_m	m=17 a=4 b=5	finite:17	8
+715	linear/Z_m	m=17 a=4 b=6	finite:17	10
+716	linear/Z_m	m=17 a=4 b=7	finite:17	11
+717	linear/Z_m	m=17 a=4 b=8	finite:17	8
+718	linear/Z_m	m=17 a=4 b=10	finite:17	10
+719	linear/Z_m	m=17 a=4 b=11	finite:17	8
+720	linear/Z_m	m=17 a=4 b=14	finite:17	66
+721	linear/Z_m	m=17 a=4 b=15	finite:17	9
+722	linear/Z_m	m=17 a=5 b=2	finite:17	3
+723	linear/Z_m	m=17 a=5 b=3	finite:17	2
+724	linear/Z_m	m=17 a=5 b=4	finite:17	8
+725	linear/Z_m	m=17 a=5 b=6	finite:17	4
+726	linear/Z_m	m=17 a=5 b=7	finite:17	2
+727	linear/Z_m	m=17 a=5 b=9	finite:17	8
+728	linear/Z_m	m=17 a=5 b=10	finite:17	13
+729	linear/Z_m	m=17 a=5 b=11	finite:17	4
+730	linear/Z_m	m=17 a=5 b=13	finite:17	64
+731	linear/Z_m	m=17 a=5 b=15	finite:17	2
+732	linear/Z_m	m=17 a=6 b=4	finite:17	10
+733	linear/Z_m	m=17 a=6 b=5	finite:17	4
+734	linear/Z_m	m=17 a=6 b=7	finite:17	5
+735	linear/Z_m	m=17 a=6 b=11	finite:17	17
+736	linear/Z_m	m=17 a=6 b=12	finite:17	56
+737	linear/Z_m	m=17 a=6 b=14	finite:17	13
+738	linear/Z_m	m=17 a=6 b=15	finite:17	6
+739	linear/Z_m	m=17 a=7 b=2	finite:17	6
+740	linear/Z_m	m=17 a=7 b=3	finite:17	5
+741	linear/Z_m	m=17 a=7 b=4	finite:17	11
+742	linear/Z_m	m=17 a=7 b=5	finite:17	2
+743	linear/Z_m	m=17 a=7 b=6	finite:17	5
+744	linear/Z_m	m=17 a=7 b=9	finite:17	2
+745	linear/Z_m	m=17 a=7 b=11	finite:17	59
+746	linear/Z_m	m=17 a=7 b=12	finite:17	13
+747	linear/Z_m	m=17 a=7 b=13	finite:17	9
+748	linear/Z_m	m=17 a=7 b=14	finite:17	3
+749	linear/Z_m	m=17 a=7 b=15	finite:17	4
+750	linear/Z_m	m=17 a=8 b=3	finite:17	7
+751	linear/Z_m	m=17 a=8 b=4	finite:17	8
+752	linear/Z_m	m=17 a=8 b=10	finite:17	67
+753	linear/Z_m	m=17 a=8 b=12	finite:17	5
+754	linear/Z_m	m=17 a=8 b=13	finite:17	8
+755	linear/Z_m	m=17 a=8 b=14	finite:17	7
+756	linear/Z_m	m=17 a=9 b=3	finite:17	4
+757	linear/Z_m	m=17 a=9 b=5	finite:17	8
+758	linear/Z_m	m=17 a=9 b=9	finite:17	64
+759	linear/Z_m	m=17 a=9 b=10	finite:17	3
+760	linear/Z_m	m=17 a=9 b=11	finite:17	3
+761	linear/Z_m	m=17 a=9 b=12	finite:17	3
+762	linear/Z_m	m=17 a=9 b=14	finite:17	7
+763	linear/Z_m	m=17 a=10 b=2	finite:17	7
+764	linear/Z_m	m=17 a=10 b=4	finite:17	10
+765	linear/Z_m	m=17 a=10 b=5	finite:17	13
+766	linear/Z_m	m=17 a=10 b=8	finite:17	67
+767	linear/Z_m	m=17 a=10 b=9	finite:17	3
+768	linear/Z_m	m=17 a=10 b=11	finite:17	8
+769	linear/Z_m	m=17 a=10 b=12	finite:17	2
+770	linear/Z_m	m=17 a=10 b=13	finite:17	10
+771	linear/Z_m	m=17 a=10 b=15	finite:17	6
+772	linear/Z_m	m=17 a=11 b=2	finite:17	5
+773	linear/Z_m	m=17 a=11 b=3	finite:17	14
+774	linear/Z_m	m=17 a=11 b=4	finite:17	8
+775	linear/Z_m	m=17 a=11 b=5	finite:17	4
+776	linear/Z_m	m=17 a=11 b=6	finite:17	17
+777	linear/Z_m	m=17 a=11 b=7	finite:17	59
+778	linear/Z_m	m=17 a=11 b=9	finite:17	3
+779	linear/Z_m	m=17 a=11 b=10	finite:17	8
+780	linear/Z_m	m=17 a=11 b=12	finite:17	4
+781	linear/Z_m	m=17 a=11 b=15	finite:17	5
+782	linear/Z_m	m=17 a=12 b=2	finite:17	5
+783	linear/Z_m	m=17 a=12 b=6	finite:17	56
+784	linear/Z_m	m=17 a=12 b=7	finite:17	13
+785	linear/Z_m	m=17 a=12 b=8	finite:17	5
+786	linear/Z_m	m=17 a=12 b=9	finite:17	3
+787	linear/Z_m	m=17 a=12 b=10	finite:17	2
+788	linear/Z_m	m=17 a=12 b=11	finite:17	4
+789	linear/Z_m	m=17 a=12 b=14	finite:17	4
+790	linear/Z_m	m=17 a=12 b=15	finite:17	4
+791	linear/Z_m	m=17 a=13 b=2	finite:17	9
+792	linear/Z_m	m=17 a=13 b=3	finite:17	10
+793	linear/Z_m	m=17 a=13 b=5	finite:17	64
+794	linear/Z_m	m=17 a=13 b=7	finite:17	9
+795	linear/Z_m	m=17 a=13 b=8	finite:17	8
+796	linear/Z_m	m=17 a=13 b=10	finite:17	10
+797	linear/Z_m	m=17 a=13 b=14	finite:17	7
+798	linear/Z_m	m=17 a=13 b=15	finite:17	9
+799	linear/Z_m	m=17 a=14 b=2	finite:17	3
+800	linear/Z_m	m=17 a=14 b=3	finite:17	16
+801	linear/Z_m	m=17 a=14 b=4	finite:17	66
+802	linear/Z_m	m=17 a=14 b=6	finite:17	13
+803	linear/Z_m	m=17 a=14 b=7	finite:17	3
+804	linear/Z_m	m=17 a=14 b=8	finite:17	7
+805	linear/Z_m	m=17 a=14 b=9	finite:17	7
+806	linear/Z_m	m=17 a=14 b=12	finite:17	4
+807	linear/Z_m	m=17 a=14 b=13	finite:17	7
+808	linear/Z_m	m=17 a=14 b=15	finite:17	4
+809	linear/Z_m	m=17 a=15 b=3	finite:17	52
+810	linear/Z_m	m=17 a=15 b=4	finite:17	9
+811	linear/Z_m	m=17 a=15 b=6	finite:17	6
+812	linear/Z_m	m=17 a=15 b=7	finite:17	4
+813	linear/Z_m	m=17 a=15 b=10	finite:17	6
+814	linear/Z_m	m=17 a=15 b=11	finite:17	5
+815	linear/Z_m	m=17 a=15 b=12	finite:17	4
+816	linear/Z_m	m=17 a=15 b=13	finite:17	9
+817	linear/Z_m	m=17 a=15 b=14	finite:17	4
+818	linear/Z_m	m=17 a=16 b=2	finite:17	98
+819	linear/Z_m	m=18 a=1 b=3	finite:18	19
+820	linear/Z_m	m=18 a=1 b=4	finite:18	5
+821	linear/Z_m	m=18 a=1 b=5	finite:18	9
+822	linear/Z_m	m=18 a=2 b=2	finite:18	30
+823	linear/Z_m	m=18 a=2 b=3	finite:18	13
+824	linear/Z_m	m=18 a=2 b=4	finite:18	6
+825	linear/Z_m	m=18 a=2 b=5	finite:18	51
+826	linear/Z_m	m=18 a=2 b=6	finite:18	24
+827	linear/Z_m	m=18 a=2 b=7	finite:18	8
+828	linear/Z_m	m=18 a=2 b=8	finite:18	36
+829	linear/Z_m	m=18 a=2 b=11	finite:18	41
+830	linear/Z_m	m=18 a=2 b=13	finite:18	7
+831	linear/Z_m	m=18 a=2 b=14	finite:18	38
+832	linear/Z_m	m=18 a=2 b=15	finite:18	9
+833	linear/Z_m	m=18 a=3 b=1	finite:18	19
+834	linear/Z_m	m=18 a=3 b=2	finite:18	13
+835	linear/Z_m	m=18 a=3 b=4	finite:18	20
+836	linear/Z_m	m=18 a=3 b=5	finite:18	10
+837	linear/Z_m	m=18 a=3 b=6	finite:18	49
+838	linear/Z_m	m=18 a=3 b=7	finite:18	65
+839	linear/Z_m	m=18 a=3 b=8	finite:18	30
+840	linear/Z_m	m=18 a=3 b=9	finite:18	43
+841	linear/Z_m	m=18 a=3 b=11	finite:18	10
+842	linear/Z_m	m=18 a=3 b=12	finite:18	49
+843	linear/Z_m	m=18 a=3 b=14	finite:18	9
+844	linear/Z_m	m=18 a=3 b=16	finite:18	88
+845	linear/Z_m	m=18 a=4 b=1	finite:18	5
+846	linear/Z_m	m=18 a=4 b=2	finite:18	6
+847	linear/Z_m	m=18 a=4 b=3	finite:18	20
+848	linear/Z_m	m=18 a=4 b=5	finite:18	10
+849	linear/Z_m	m=18 a=4 b=6	finite:18	76
+850	linear/Z_m	m=18 a=4 b=8	finite:18	18
+851	linear/Z_m	m=18 a=4 b=10	finite:18	4
+852	linear/Z_m	m=18 a=4 b=11	finite:18	7
+853	linear/Z_m	m=18 a=4 b=12	finite:18	44
+854	linear/Z_m	m=18 a=4 b=15	finite:18	88
+855	linear/Z_m	m=18 a=4 b=16	finite:18	6
+856	linear/Z_m	m=18 a=5 b=1	finite:18	9
+857	linear/Z_m	m=18 a=5 b=2	finite:18	51
+858	linear/Z_m	m=18 a=5 b=3	finite:18	10
+859	linear/Z_m	m=18 a=5 b=4	finite:18	10
+860	linear/Z_m	m=18 a=5 b=5	finite:18	59
+861	linear/Z_m	m=18 a=5 b=8	finite:18	42
+862	linear/Z_m	m=18 a=5 b=10	finite:18	4
+863	linear/Z_m	m=18 a=5 b=11	finite:18	118
+864	linear/Z_m	m=18 a=5 b=13	finite:18	17
+865	linear/Z_m	m=18 a=5 b=14	finite:18	52
+866	linear/Z_m	m=18 a=5 b=15	finite:18	10
+867	linear/Z_m	m=18 a=5 b=16	finite:18	8
+868	linear/Z_m	m=18 a=5 b=17	finite:18	76
+869	linear/Z_m	m=18 a=6 b=2	finite:18	24
+870	linear/Z_m	m=18 a=6 b=3	finite:18	49
+871	linear/Z_m	m=18 a=6 b=4	finite:18	76
+872	linear/Z_m	m=18 a=6 b=8	finite:18	32
+873	linear/Z_m	m=18 a=6 b=10	finite:18	44
+874	linear/Z_m	m=18 a=6 b=15	finite:18	49
+875	linear/Z_m	m=18 a=7 b=2	finite:18	8
+876	linear/Z_m	m=18 a=7 b=3	finite:18	65
+877	linear/Z_m	m=18 a=7 b=8	finite:18	18
+878	linear/Z_m	m=18 a=7 b=11	finite:18	17
+879	linear/Z_m	m=18 a=7 b=14	finite:18	7
+880	linear/Z_m	m=18 a=7 b=16	finite:18	6
+881	linear/Z_m	m=18 a=8 b=2	finite:18	36
+882	linear/Z_m	m=18 a=8 b=3	finite:18	30
+883	linear/Z_m	m=18 a=8 b=4	finite:18	18
+884	linear/Z_m	m=18 a=8 b=5	finite:18	42
+885	linear/Z_m	m=18 a=8 b=6	finite:18	32
+886	linear/Z_m	m=18 a=8 b=7	finite:18	18
+887	linear/Z_m	m=18 a=8 b=11	finite:18	59
+888	linear/Z_m	m=18 a=8 b=14	finite:18	28
+889	linear/Z_m	m=18 a=8 b=16	finite:18	16
+890	linear/Z_m	m=18 a=9 b=3	finite:18	43
+891	linear/Z_m	m=18 a=10 b=4	finite:18	4
+892	linear/Z_m	m=18 a=10 b=5	finite:18	4
+893	linear/Z_m	m=18 a=10 b=11	finite:18	5
+894	linear/Z_m	m=18 a=11 b=2	finite:18	41
+895	linear/Z_m	m=18 a=11 b=4	finite:18	7
+896	linear/Z_m	m=18 a=11 b=8	finite:18	59
+897	linear/Z_m	m=18 a=11 b=10	finite:18	5
+898	linear/Z_m	m=18 a=11 b=11	finite:18	56
+899	linear/Z_m	m=18 a=11 b=14	finite:18	50
+900	linear/Z_m	m=18 a=11 b=16	finite:18	9
+901	linear/Z_m	m=18 a=11 b=17	finite:18	79
+902	linear/Z_m	m=18 a=14 b=2	finite:18	38
+903	linear/Z_m	m=18 a=14 b=5	finite:18	52
+904	linear/Z_m	m=18 a=14 b=8	finite:18	28
+905	linear/Z_m	m=18 a=14 b=11	finite:18	50
+906	linear/Z_m	m=18 a=14 b=14	finite:18	42
+907	linear/Z_m	m=18 a=14 b=16	finite:18	6
+908	linear/Z_m	m=18 a=14 b=17	finite:18	69
+909	linear/Z_m	m=18 a=16 b=4	finite:18	6
+910	linear/Z_m	m=18 a=16 b=5	finite:18	8
+911	linear/Z_m	m=18 a=16 b=7	finite:18	6
+912	linear/Z_m	m=18 a=16 b=8	finite:18	16
+913	linear/Z_m	m=18 a=16 b=11	finite:18	9
+914	linear/Z_m	m=18 a=16 b=14	finite:18	6
+915	linear/Z_m	m=18 a=17 b=5	finite:18	76
+916	linear/Z_m	m=18 a=17 b=11	finite:18	79
+917	linear/Z_m	m=18 a=17 b=14	finite:18	69
+918	linear/Z_m	m=19 a=1 b=4	finite:19	4
+919	linear/Z_m	m=19 a=1 b=5	finite:19	4
+920	linear/Z_m	m=19 a=2 b=3	finite:19	7
+921	linear/Z_m	m=19 a=2 b=4	finite:19	4
+922	linear/Z_m	m=19 a=2 b=8	finite:19	3
+923	linear/Z_m	m=19 a=2 b=13	finite:19	4
+924	linear/Z_m	m=19 a=2 b=15	finite:19	4
+925	linear/Z_m	m=19 a=3 b=2	finite:19	7
+926	linear/Z_m	m=19 a=3 b=5	finite:19	3
+927	linear/Z_m	m=19 a=3 b=6	finite:19	14
+928	linear/Z_m	m=19 a=3 b=7	finite:19	6
+929	linear/Z_m	m=19 a=3 b=8	finite:19	3
+930	linear/Z_m	m=19 a=3 b=9	finite:19	4
+931	linear/Z_m	m=19 a=3 b=12	finite:19	6
+932	linear/Z_m	m=19 a=3 b=14	finite:19	3
+933	linear/Z_m	m=19 a=3 b=16	finite:19	16
+934	linear/Z_m	m=19 a=3 b=17	finite:19	68
+935	linear/Z_m	m=19 a=4 b=1	finite:19	4
+936	linear/Z_m	m=19 a=4 b=2	finite:19	4
+937	linear/Z_m	m=19 a=4 b=9	finite:19	9
+938	linear/Z_m	m=19 a=4 b=15	finite:19	16
+939	linear/Z_m	m=19 a=4 b=16	finite:19	54
+940	linear/Z_m	m=19 a=4 b=17	finite:19	6
+941	linear/Z_m	m=19 a=5 b=1	finite:19	4
+942	linear/Z_m	m=19 a=5 b=3	finite:19	3
+943	linear/Z_m	m=19 a=5 b=7	finite:19	7
+944	linear/Z_m	m=19 a=5 b=8	finite:19	3
+945	linear/Z_m	m=19 a=5 b=9	finite:19	7
+946	linear/Z_m	m=19 a=5 b=11	finite:19	7
+947	linear/Z_m	m=19 a=5 b=14	finite:19	16
+948	linear/Z_m	m=19 a=5 b=15	finite:19	67
+949	linear/Z_m	m=19 a=5 b=17	finite:19	4
+950	linear/Z_m	m=19 a=6 b=3	finite:19	14
+951	linear/Z_m	m=19 a=6 b=11	finite:19	4
+952	linear/Z_m	m=19 a=6 b=12	finite:19	5
+953	linear/Z_m	m=19 a=6 b=14	finite:19	55
+954	linear/Z_m	m=19 a=6 b=15	finite:19	7
+955	linear/Z_m	m=19 a=6 b=17	finite:19	5
+956	linear/Z_m	m=19 a=7 b=3	finite:19	6
+957	linear/Z_m	m=19 a=7 b=5	finite:19	7
+958	linear/Z_m	m=19 a=7 b=13	finite:19	62
+959	linear/Z_m	m=19 a=7 b=14	finite:19	4
+960	linear/Z_m	m=19 a=7 b=15	finite:19	4
+961	linear/Z_m	m=19 a=8 b=2	finite:19	3
+962	linear/Z_m	m=19 a=8 b=3	finite:19	3
+963	linear/Z_m	m=19 a=8 b=5	finite:19	3
+964	linear/Z_m	m=19 a=8 b=13	finite:19	4
+965	linear/Z_m	m=19 a=8 b=14	finite:19	7
+966	linear/Z_m	m=19 a=8 b=15	finite:19	3
+967	linear/Z_m	m=19 a=9 b=3	finite:19	4
+968	linear/Z_m	m=19 a=9 b=4	finite:19	9
+969	linear/Z_m	m=19 a=9 b=5	finite:19	7
+970	linear/Z_m	m=19 a=9 b=11	finite:19	57
+971	linear/Z_m	m=19 a=9 b=14	finite:19	6
+972	linear/Z_m	m=19 a=9 b=16	finite:19	5
+973	linear/Z_m	m=19 a=10 b=12	finite:19	3
+974	linear/Z_m	m=19 a=10 b=13	finite:19	3
+975	linear/Z_m	m=19 a=11 b=5	finite:19	7
+976	linear/Z_m	m=19 a=11 b=6	finite:19	4
+977	linear/Z_m	m=19 a=11 b=9	finite:19	57
+978	linear/Z_m	m=19 a=11 b=13	finite:19	7
+979	linear/Z_m	m=19 a=11 b=14	finite:19	5
+980	linear/Z_m	m=19 a=11 b=17	finite:19	4
+981	linear/Z_m	m=19 a=12 b=3	finite:19	6
+982	linear/Z_m	m=19 a=12 b=6	finite:19	5
+983	linear/Z_m	m=19 a=12 b=10	finite:19	3
+984	linear/Z_m	m=19 a=12 b=14	finite:19	4
+985	linear/Z_m	m=19 a=12 b=15	finite:19	4
+986	linear/Z_m	m=19 a=12 b=16	finite:19	4
+987	linear/Z_m	m=19 a=13 b=2	finite:19	4
+988	linear/Z_m	m=19 a=13 b=7	finite:19	62
+989	linear/Z_m	m=19 a=13 b=8	finite:19	4
+990	linear/Z_m	m=19 a=13 b=10	finite:19	3
+991	linear/Z_m	m=19 a=13 b=11	finite:19	7
+992	linear/Z_m	m=19 a=14 b=3	finite:19	3
+993	linear/Z_m	m=19 a=14 b=6	finite:19	55
+994	linear/Z_m	m=19 a=14 b=7	finite:19	4
+995	linear/Z_m	m=19 a=14 b=8	finite:19	7
+996	linear/Z_m	m=19 a=14 b=9	finite:19	6
+997	linear/Z_m	m=19 a=14 b=11	finite:19	5
+998	linear/Z_m	m=19 a=14 b=12	finite:19	4
+999	linear/Z_m	m=19 a=14 b=16	finite:19	3
+1000	linear/Z_m	m=19 a=14 b=17	finite:19	4
+1001	linear/Z_m	m=19 a=15 b=2	finite:19	4
+1002	linear/Z_m	m=19 a=15 b=6	finite:19	7
+1003	linear/Z_m	m=19 a=15 b=7	finite:19	4
+1004	linear/Z_m	m=19 a=15 b=8	finite:19	3
+1005	linear/Z_m	m=19 a=15 b=12	finite:19	4
+1006	linear/Z_m	m=19 a=15 b=16	finite:19	7
+1007	linear/Z_m	m=19 a=15 b=17	finite:19	7
+1008	linear/Z_m	m=19 a=16 b=3	finite:19	16
+1009	linear/Z_m	m=19 a=16 b=4	finite:19	54
+1010	linear/Z_m	m=19 a=16 b=9	finite:19	5
+1011	linear/Z_m	m=19 a=16 b=12	finite:19	4
+1012	linear/Z_m	m=19 a=16 b=14	finite:19	3
+1013	linear/Z_m	m=19 a=16 b=15	finite:19	7
+1014	linear/Z_m	m=19 a=16 b=17	finite:19	3
+1015	linear/Z_m	m=19 a=17 b=3	finite:19	68
+1016	linear/Z_m	m=19 a=17 b=4	finite:19	6
+1017	linear/Z_m	m=19 a=17 b=5	finite:19	4
+1018	linear/Z_m	m=19 a=17 b=6	finite:19	5
+1019	linear/Z_m	m=19 a=17 b=11	finite:19	4
+1020	linear/Z_m	m=19 a=17 b=14	finite:19	4
+1021	linear/Z_m	m=19 a=17 b=15	finite:19	7
+1022	linear/Z_m	m=19 a=17 b=16	finite:19	3
+1023	linear/Z_m	m=20 a=1 b=13	finite:20	8
+1024	linear/Z_m	m=20 a=1 b=17	finite:20	12
+1025	linear/Z_m	m=20 a=2 b=3	finite:20	15
+1026	linear/Z_m	m=20 a=2 b=4	finite:20	13
+1027	linear/Z_m	m=20 a=2 b=5	finite:20	6
+1028	linear/Z_m	m=20 a=2 b=7	finite:20	23
+1029	linear/Z_m	m=20 a=2 b=8	finite:20	6
+1030	linear/Z_m	m=20 a=2 b=11	finite:20	9
+1031	linear/Z_m	m=20 a=2 b=12	finite:20	6
+1032	linear/Z_m	m=20 a=2 b=13	finite:20	11
+1033	linear/Z_m	m=20 a=2 b=14	finite:20	7
+1034	linear/Z_m	m=20 a=2 b=15	finite:20	18
+1035	linear/Z_m	m=20 a=2 b=17	finite:20	10
+1036	linear/Z_m	m=20 a=3 b=2	finite:20	15
+1037	linear/Z_m	m=20 a=3 b=3	finite:20	56
+1038	linear/Z_m	m=20 a=3 b=6	finite:20	10
+1039	linear/Z_m	m=20 a=3 b=7	finite:20	13
+1040	linear/Z_m	m=20 a=3 b=9	finite:20	20
+1041	linear/Z_m	m=20 a=3 b=11	finite:20	9
+1042	linear/Z_m	m=20 a=3 b=13	finite:20	30
+1043	linear/Z_m	m=20 a=3 b=14	finite:20	23
+1044	linear/Z_m	m=20 a=3 b=15	finite:20	29
+1045	linear/Z_m	m=20 a=3 b=17	finite:20	20
+1046	linear/Z_m	m=20 a=3 b=18	finite:20	64
+1047	linear/Z_m	m=20 a=3 b=19	finite:20	44
+1048	linear/Z_m	m=20 a=4 b=2	finite:20	13
+1049	linear/Z_m	m=20 a=4 b=6	finite:20	18
+1050	linear/Z_m	m=20 a=4 b=14	finite:20	26
+1051	linear/Z_m	m=20 a=4 b=18	finite:20	9
+1052	linear/Z_m	m=20 a=5 b=2	finite:20	6
+1053	linear/Z_m	m=20 a=5 b=13	finite:20	7
+1054	linear/Z_m	m=20 a=6 b=3	finite:20	10
+1055	linear/Z_m	m=20 a=6 b=4	finite:20	18
+1056	linear/Z_m	m=20 a=6 b=7	finite:20	14
+1057	linear/Z_m	m=20 a=6 b=11	finite:20	6
+1058	linear/Z_m	m=20 a=6 b=16	finite:20	10
+1059	linear/Z_m	m=20 a=6 b=19	finite:20	46
+1060	linear/Z_m	m=20 a=7 b=2	finite:20	23
+1061	linear/Z_m	m=20 a=7 b=6	finite:20	14
+1062	linear/Z_m	m=20 a=7 b=7	finite:20	38
+1063	linear/Z_m	m=20 a=7 b=9	finite:20	29
+1064	linear/Z_m	m=20 a=7 b=11	finite:20	10
+1065	linear/Z_m	m=20 a=7 b=14	finite:20	63
+1066	linear/Z_m	m=20 a=7 b=17	finite:20	17
+1067	linear/Z_m	m=20 a=7 b=18	finite:20	14
+1068	linear/Z_m	m=20 a=7 b=19	finite:20	69
+1069	linear/Z_m	m=20 a=8 b=2	finite:20	6
+1070	linear/Z_m	m=20 a=8 b=14	finite:20	9
+1071	linear/Z_m	m=20 a=8 b=18	finite:20	12
+1072	linear/Z_m	m=20 a=9 b=3	finite:20	20
+1073	linear/Z_m	m=20 a=9 b=7	finite:20	29
+1074	linear/Z_m	m=20 a=9 b=14	finite:20	47
+1075	linear/Z_m	m=20 a=9 b=17	finite:20	35
+1076	linear/Z_m	m=20 a=11 b=2	finite:20	9
+1077	linear/Z_m	m=20 a=11 b=3	finite:20	9
+1078	linear/Z_m	m=20 a=11 b=6	finite:20	6
+1079	linear/Z_m	m=20 a=11 b=7	finite:20	10
+1080	linear/Z_m	m=20 a=11 b=13	finite:20	6
+1081	linear/Z_m	m=20 a=11 b=14	finite:20	30
+1082	linear/Z_m	m=20 a=11 b=17	finite:20	7
+1083	linear/Z_m	m=20 a=11 b=18	finite:20	10
+1084	linear/Z_m	m=20 a=12 b=2	finite:20	6
+1085	linear/Z_m	m=20 a=12 b=14	finite:20	13
+1086	linear/Z_m	m=20 a=12 b=18	finite:20	6
+1087	linear/Z_m	m=20 a=13 b=1	finite:20	8
+1088	linear/Z_m	m=20 a=13 b=2	finite:20	11
+1089	linear/Z_m	m=20 a=13 b=3	finite:20	30
+1090	linear/Z_m	m=20 a=13 b=5	finite:20	7
+1091	linear/Z_m	m=20 a=13 b=11	finite:20	6
+1092	linear/Z_m	m=20 a=13 b=13	finite:20	44
+1093	linear/Z_m	m=20 a=13 b=14	finite:20	10
+1094	linear/Z_m	m=20 a=13 b=15	finite:20	15
+1095	linear/Z_m	m=20 a=13 b=18	finite:20	30
+1096	linear/Z_m	m=20 a=14 b=2	finite:20	7
+1097	linear/Z_m	m=20 a=14 b=3	finite:20	23
+1098	linear/Z_m	m=20 a=14 b=4	finite:20	26
+1099	linear/Z_m	m=20 a=14 b=7	finite:20	63
+1100	linear/Z_m	m=20 a=14 b=8	finite:20	9
+1101	linear/Z_m	m=20 a=14 b=9	finite:20	47
+1102	linear/Z_m	m=20 a=14 b=11	finite:20	30
+1103	linear/Z_m	m=20 a=14 b=12	finite:20	13
+1104	linear/Z_m	m=20 a=14 b=13	finite:20	10
+1105	linear/Z_m	m=20 a=14 b=16	finite:20	18
+1106	linear/Z_m	m=20 a=14 b=17	finite:20	29
+1107	linear/Z_m	m=20 a=14 b=19	finite:20	70
+1108	linear/Z_m	m=20 a=15 b=2	finite:20	18
+1109	linear/Z_m	m=20 a=15 b=3	finite:20	29
+1110	linear/Z_m	m=20 a=15 b=13	finite:20	15
+1111	linear/Z_m	m=20 a=16 b=6	finite:20	10
+1112	linear/Z_m	m=20 a=16 b=14	finite:20	18
+1113	linear/Z_m	m=20 a=17 b=1	finite:20	12
+1114	linear/Z_m	m=20 a=17 b=2	finite:20	10
+1115	linear/Z_m	m=20 a=17 b=9	finite:20	35
+1116	linear/Z_m	m=20 a=17 b=11	finite:20	7
+1117	linear/Z_m	m=20 a=17 b=14	finite:20	29
+1118	linear/Z_m	m=20 a=17 b=18	finite:20	9
+1119	linear/Z_m	m=20 a=17 b=19	finite:20	47
+1120	linear/Z_m	m=20 a=18 b=3	finite:20	64
+1121	linear/Z_m	m=20 a=18 b=4	finite:20	9
+1122	linear/Z_m	m=20 a=18 b=7	finite:20	14
+1123	linear/Z_m	m=20 a=18 b=8	finite:20	12
+1124	linear/Z_m	m=20 a=18 b=11	finite:20	10
+1125	linear/Z_m	m=20 a=18 b=12	finite:20	6
+1126	linear/Z_m	m=20 a=18 b=13	finite:20	30
+1127	linear/Z_m	m=20 a=18 b=17	finite:20	9
+1128	linear/Z_m	m=20 a=18 b=18	finite:20	15
+1129	linear/Z_m	m=20 a=18 b=19	finite:20	44
+1130	linear/Z_m	m=20 a=19 b=3	finite:20	44
+1131	linear/Z_m	m=20 a=19 b=6	finite:20	46
+1132	linear/Z_m	m=20 a=19 b=7	finite:20	69
+1133	linear/Z_m	m=20 a=19 b=14	finite:20	70
+1134	linear/Z_m	m=20 a=19 b=17	finite:20	47
+1135	linear/Z_m	m=20 a=19 b=18	finite:20	44
+1136	linear/Z_m	m=21 a=2 b=2	finite:21	18
+1137	linear/Z_m	m=21 a=2 b=3	finite:21	5
+1138	linear/Z_m	m=21 a=2 b=4	finite:21	6
+1139	linear/Z_m	m=21 a=2 b=5	finite:21	5
+1140	linear/Z_m	m=21 a=2 b=6	finite:21	31
+1141	linear/Z_m	m=21 a=2 b=7	finite:21	18
+1142	linear/Z_m	m=21 a=2 b=8	finite:21	3
+1143	linear/Z_m	m=21 a=2 b=9	finite:21	4
+1144	linear/Z_m	m=21 a=2 b=11	finite:21	8
+1145	linear/Z_m	m=21 a=2 b=12	finite:21	6
+1146	linear/Z_m	m=21 a=2 b=13	finite:21	23
+1147	linear/Z_m	m=21 a=2 b=14	finite:21	41
+1148	linear/Z_m	m=21 a=2 b=15	finite:21	4
+1149	linear/Z_m	m=21 a=2 b=17	finite:21	16
+1150	linear/Z_m	m=21 a=3 b=2	finite:21	5
+1151	linear/Z_m	m=21 a=3 b=5	finite:21	33
+1152	linear/Z_m	m=21 a=3 b=11	finite:21	3
+1153	linear/Z_m	m=21 a=3 b=17	finite:21	4
+1154	linear/Z_m	m=21 a=4 b=2	finite:21	6
+1155	linear/Z_m	m=21 a=4 b=4	finite:21	27
+1156	linear/Z_m	m=21 a=4 b=7	finite:21	7
+1157	linear/Z_m	m=21 a=4 b=11	finite:21	23
+1158	linear/Z_m	m=21 a=4 b=14	finite:21	15
+1159	linear/Z_m	m=21 a=4 b=19	finite:21	6
+1160	linear/Z_m	m=21 a=5 b=2	finite:21	5
+1161	linear/Z_m	m=21 a=5 b=3	finite:21	33
+1162	linear/Z_m	m=21 a=5 b=6	finite:21	10
+1163	linear/Z_m	m=21 a=5 b=7	finite:21	13
+1164	linear/Z_m	m=21 a=5 b=8	finite:21	7
+1165	linear/Z_m	m=21 a=5 b=9	finite:21	3
+1166	linear/Z_m	m=21 a=5 b=10	finite:21	29
+1167	linear/Z_m	m=21 a=5 b=11	finite:21	17
+1168	linear/Z_m	m=21 a=5 b=12	finite:21	3
+1169	linear/Z_m	m=21 a=5 b=13	finite:21	7
+1170	linear/Z_m	m=21 a=5 b=14	finite:21	23
+1171	linear/Z_m	m=21 a=5 b=18	finite:21	5
+1172	linear/Z_m	m=21 a=6 b=2	finite:21	31
+1173	linear/Z_m	m=21 a=6 b=5	finite:21	10
+1174	linear/Z_m	m=21 a=7 b=2	finite:21	18
+1175	linear/Z_m	m=21 a=7 b=4	finite:21	7
+1176	linear/Z_m	m=21 a=7 b=5	finite:21	13
+1177	linear/Z_m	m=21 a=8 b=2	finite:21	3
+1178	linear/Z_m	m=21 a=8 b=5	finite:21	7
+1179	linear/Z_m	m=21 a=8 b=11	finite:21	8
+1180	linear/Z_m	m=21 a=8 b=17	finite:21	8
+1181	linear/Z_m	m=21 a=9 b=2	finite:21	4
+1182	linear/Z_m	m=21 a=9 b=14	finite:21	43
+1183	linear/Z_m	m=21 a=9 b=17	finite:21	4
+1184	linear/Z_m	m=21 a=10 b=5	finite:21	29
+1185	linear/Z_m	m=21 a=10 b=16	finite:21	5
+1186	linear/Z_m	m=21 a=10 b=19	finite:21	12
+1187	linear/Z_m	m=21 a=11 b=4	finite:21	23
+1188	linear/Z_m	m=21 a=11 b=5	finite:21	17
+1189	linear/Z_m	m=21 a=11 b=8	finite:21	8
+1190	linear/Z_m	m=21 a=11 b=12	finite:21	8
+1191	linear/Z_m	m=21 a=11 b=17	finite:21	6
+1192	linear/Z_m	m=21 a=11 b=18	finite:21	23
+1193	linear/Z_m	m=21 a=11 b=20	finite:21	45
+1194	linear/Z_m	m=21 a=12 b=2	finite:21	6
+1195	linear/Z_m	m=21 a=12 b=5	finite:21	3
+1196	linear/Z_m	m=21 a=12 b=11	finite:21	8
+1197	linear/Z_m	m=21 a=12 b=17	finite:21	33
+1198	linear/Z_m	m=21 a=13 b=2	finite:21	23
+1199	linear/Z_m	m=21 a=13 b=5	finite:21	7
+1200	linear/Z_m	m=21 a=13 b=16	finite:21	11
+1201	linear/Z_m	m=21 a=14 b=2	finite:21	41
+1202	linear/Z_m	m=21 a=14 b=4	finite:21	15
+1203	linear/Z_m	m=21 a=14 b=5	finite:21	23
+1204	linear/Z_m	m=21 a=14 b=9	finite:21	43
+1205	linear/Z_m	m=21 a=15 b=2	finite:21	4
+1206	linear/Z_m	m=21 a=16 b=10	finite:21	5
+1207	linear/Z_m	m=21 a=16 b=13	finite:21	11
+1208	linear/Z_m	m=21 a=16 b=20	finite:21	52
+1209	linear/Z_m	m=21 a=17 b=2	finite:21	16
+1210	linear/Z_m	m=21 a=17 b=3	finite:21	4
+1211	linear/Z_m	m=21 a=17 b=8	finite:21	8
+1212	linear/Z_m	m=21 a=17 b=9	finite:21	4
+1213	linear/Z_m	m=21 a=17 b=11	finite:21	6
+1214	linear/Z_m	m=21 a=17 b=12	finite:21	33
+1215	linear/Z_m	m=21 a=17 b=17	finite:21	15
+1216	linear/Z_m	m=21 a=17 b=19	finite:21	30
+1217	linear/Z_m	m=21 a=18 b=5	finite:21	5
+1218	linear/Z_m	m=21 a=18 b=11	finite:21	23
+1219	linear/Z_m	m=21 a=19 b=4	finite:21	6
+1220	linear/Z_m	m=21 a=19 b=17	finite:21	30
+1221	linear/Z_m	m=21 a=20 b=11	finite:21	45
+1222	linear/Z_m	m=21 a=20 b=16	finite:21	52
+1223	linear/Z_m	m=22 a=1 b=2	finite:22	5
+1224	linear/Z_m	m=22 a=2 b=1	finite:22	5
+1225	linear/Z_m	m=22 a=2 b=3	finite:22	3
+1226	linear/Z_m	m=22 a=2 b=4	finite:22	5
+1227	linear/Z_m	m=22 a=2 b=5	finite:22	8
+1228	linear/Z_m	m=22 a=2 b=6	finite:22	3
+1229	linear/Z_m	m=22 a=2 b=9	finite:22	8
+1230	linear/Z_m	m=22 a=2 b=10	finite:22	35
+1231	linear/Z_m	m=22 a=2 b=15	finite:22	3
+1232	linear/Z_m	m=22 a=2 b=18	finite:22	5
+1233	linear/Z_m	m=22 a=3 b=2	finite:22	3
+1234	linear/Z_m	m=22 a=3 b=5	finite:22	4
+1235	linear/Z_m	m=22 a=3 b=8	finite:22	10
+1236	linear/Z_m	m=22 a=3 b=9	finite:22	46
+1237	linear/Z_m	m=22 a=3 b=10	finite:22	21
+1238	linear/Z_m	m=22 a=3 b=12	finite:22	2
+1239	linear/Z_m	m=22 a=3 b=13	finite:22	6
+1240	linear/Z_m	m=22 a=3 b=16	finite:22	3
+1241	linear/Z_m	m=22 a=3 b=18	finite:22	6
+1242	linear/Z_m	m=22 a=3 b=20	finite:22	48
+1243	linear/Z_m	m=22 a=4 b=2	finite:22	5
+1244	linear/Z_m	m=22 a=4 b=7	finite:22	10
+1245	linear/Z_m	m=22 a=4 b=8	finite:22	23
+1246	linear/Z_m	m=22 a=4 b=9	finite:22	3
+1247	linear/Z_m	m=22 a=4 b=10	finite:22	18
+1248	linear/Z_m	m=22 a=4 b=13	finite:22	3
+1249	linear/Z_m	m=22 a=4 b=17	finite:22	3
+1250	linear/Z_m	m=22 a=4 b=19	finite:22	51
+1251	linear/Z_m	m=22 a=4 b=20	finite:22	5
+1252	linear/Z_m	m=22 a=5 b=2	finite:22	8
+1253	linear/Z_m	m=22 a=5 b=3	finite:22	4
+1254	linear/Z_m	m=22 a=5 b=6	finite:22	8
+1255	linear/Z_m	m=22 a=5 b=7	finite:22	41
+1256	linear/Z_m	m=22 a=5 b=8	finite:22	3
+1257	linear/Z_m	m=22 a=5 b=13	finite:22	12
+1258	linear/Z_m	m=22 a=5 b=14	finite:22	3
+1259	linear/Z_m	m=22 a=5 b=18	finite:22	45
+1260	linear/Z_m	m=22 a=5 b=19	finite:22	5
+1261	linear/Z_m	m=22 a=6 b=2	finite:22	3
+1262	linear/Z_m	m=22 a=6 b=5	finite:22	8
+1263	linear/Z_m	m=22 a=6 b=7	finite:22	3
+1264	linear/Z_m	m=22 a=6 b=8	finite:22	4
+1265	linear/Z_m	m=22 a=6 b=9	finite:22	6
+1266	linear/Z_m	m=22 a=6 b=10	finite:22	18
+1267	linear/Z_m	m=22 a=6 b=14	finite:22	4
+1268	linear/Z_m	m=22 a=6 b=15	finite:22	4
+1269	linear/Z_m	m=22 a=6 b=17	finite:22	50
+1270	linear/Z_m	m=22 a=6 b=19	finite:22	4
+1271	linear/Z_m	m=22 a=6 b=20	finite:22	3
+1272	linear/Z_m	m=22 a=7 b=4	finite:22	10
+1273	linear/Z_m	m=22 a=7 b=5	finite:22	41
+1274	linear/Z_m	m=22 a=7 b=6	finite:22	3
+1275	linear/Z_m	m=22 a=7 b=9	finite:22	10
+1276	linear/Z_m	m=22 a=7 b=12	finite:22	3
+1277	linear/Z_m	m=22 a=7 b=16	finite:22	46
+1278	linear/Z_m	m=22 a=7 b=20	finite:22	5
+1279	linear/Z_m	m=22 a=8 b=3	finite:22	10
+1280	linear/Z_m	m=22 a=8 b=4	finite:22	23
+1281	linear/Z_m	m=22 a=8 b=5	finite:22	3
+1282	linear/Z_m	m=22 a=8 b=6	finite:22	4
+1283	linear/Z_m	m=22 a=8 b=9	finite:22	5
+1284	linear/Z_m	m=22 a=8 b=15	finite:22	52
+1285	linear/Z_m	m=22 a=8 b=16	finite:22	4
+1286	linear/Z_m	m=22 a=8 b=17	finite:22	4
+1287	linear/Z_m	m=22 a=9 b=2	finite:22	8
+1288	linear/Z_m	m=22 a=9 b=3	finite:22	46
+1289	linear/Z_m	m=22 a=9 b=4	finite:22	3
+1290	linear/Z_m	m=22 a=9 b=6	finite:22	6
+1291	linear/Z_m	m=22 a=9 b=7	finite:22	10
+1292	linear/Z_m	m=22 a=9 b=8	finite:22	5
+1293	linear/Z_m	m=22 a=9 b=14	finite:22	46
+1294	linear/Z_m	m=22 a=9 b=15	finite:22	4
+1295	linear/Z_m	m=22 a=9 b=18	finite:22	7
+1296	linear/Z_m	m=22 a=10 b=2	finite:22	35
+1297	linear/Z_m	m=22 a=10 b=3	finite:22	21
+1298	linear/Z_m	m=22 a=10 b=4	finite:22	18
+1299	linear/Z_m	m=22 a=10 b=6	finite:22	18
+1300	linear/Z_m	m=22 a=10 b=13	finite:22	57
+1301	linear/Z_m	m=22 a=10 b=14	finite:22	18
+1302	linear/Z_m	m=22 a=10 b=15	finite:22	21
+1303	linear/Z_m	m=22 a=10 b=17	finite:22	19
+1304	linear/Z_m	m=22 a=12 b=3	finite:22	2
+1305	linear/Z_m	m=22 a=12 b=7	finite:22	3
+1306	linear/Z_m	m=22 a=12 b=13	finite:22	3
+1307	linear/Z_m	m=22 a=12 b=15	finite:22	3
+1308	linear/Z_m	m=22 a=12 b=17	finite:22	4
+1309	linear/Z_m	m=22 a=12 b=19	finite:22	4
+1310	linear/Z_m	m=22 a=13 b=3	finite:22	6
+1311	linear/Z_m	m=22 a=13 b=5	finite:22	12
+1312	linear/Z_m	m=22 a=13 b=10	finite:22	57
+1313	linear/Z_m	m=22 a=13 b=12	finite:22	3
+1314	linear/Z_m	m=22 a=13 b=15	finite:22	4
+1315	linear/Z_m	m=22 a=13 b=16	finite:22	6
+1316	linear/Z_m	m=22 a=13 b=18	finite:22	3
+1317	linear/Z_m	m=22 a=13 b=20	finite:22	8
+1318	linear/Z_m	m=22 a=13 b=21	finite:22	70
+1319	linear/Z_m	m=22 a=14 b=5	finite:22	3
+1320	linear/Z_m	m=22 a=14 b=6	finite:22	4
+1321	linear/Z_m	m=22 a=14 b=7	finite:22	6
+1322	linear/Z_m	m=22 a=14 b=9	finite:22	46
+1323	linear/Z_m	m=22 a=14 b=10	finite:22	18
+1324	linear/Z_m	m=22 a=14 b=19	finite:22	11
+1325	linear/Z_m	m=22 a=14 b=20	finite:22	31
+1326	linear/Z_m	m=22 a=15 b=6	finite:22	4
+1327	linear/Z_m	m=22 a=15 b=8	finite:22	52
+1328	linear/Z_m	m=22 a=15 b=9	finite:22	4
+1329	linear/Z_m	m=22 a=15 b=10	finite:22	21
+1330	linear/Z_m	m=22 a=15 b=12	finite:22	3
+1331	linear/Z_m	m=22 a=15 b=13	finite:22	4
+1332	linear/Z_m	m=22 a=15 b=17	finite:22	6
+1333	linear/Z_m	m=22 a=15 b=18	finite:22	11
+1334	linear/Z_m	m=22 a=15 b=19	finite:22	48
+1335	linear/Z_m	m=22 a=15 b=20	finite:22	3
+1336	linear/Z_m	m=22 a=16 b=3	finite:22	3
+1337	linear/Z_m	m=22 a=16 b=7	finite:22	46
+1338	linear/Z_m	m=22 a=16 b=8	finite:22	4
+1339	linear/Z_m	m=22 a=16 b=13	finite:22	6
+1340	linear/Z_m	m=22 a=16 b=17	finite:22	10
+1341	linear/Z_m	m=22 a=16 b=18	finite:22	28
+1342	linear/Z_m	m=22 a=16 b=19	finite:22	4
+1343	linear/Z_m	m=22 a=16 b=20	finite:22	3
+1344	linear/Z_m	m=22 a=17 b=4	finite:22	3
+1345	linear/Z_m	m=22 a=17 b=6	finite:22	50
+1346	linear/Z_m	m=22 a=17 b=10	finite:22	19
+1347	linear/Z_m	m=22 a=17 b=12	finite:22	4
+1348	linear/Z_m	m=22 a=17 b=15	finite:22	6
+1349	linear/Z_m	m=22 a=17 b=16	finite:22	10
+1350	linear/Z_m	m=22 a=17 b=17	finite:22	43
+1351	linear/Z_m	m=22 a=17 b=20	finite:22	6
+1352	linear/Z_m	m=22 a=18 b=2	finite:22	5
+1353	linear/Z_m	m=22 a=18 b=5	finite:22	45
+1354	linear/Z_m	m=22 a=18 b=9	finite:22	7
+1355	linear/Z_m	m=22 a=18 b=13	finite:22	3
+1356	linear/Z_m	m=22 a=18 b=15	finite:22	11
+1357	linear/Z_m	m=22 a=18 b=16	finite:22	28
+1358	linear/Z_m	m=22 a=18 b=20	finite:22	5
+1359	linear/Z_m	m=22 a=19 b=4	finite:22	51
+1360	linear/Z_m	m=22 a=19 b=5	finite:22	5
+1361	linear/Z_m	m=22 a=19 b=12	finite:22	4
+1362	linear/Z_m	m=22 a=19 b=14	finite:22	11
+1363	linear/Z_m	m=22 a=19 b=15	finite:22	48
+1364	linear/Z_m	m=22 a=19 b=16	finite:22	4
+1365	linear/Z_m	m=22 a=19 b=20	finite:22	5
+1366	linear/Z_m	m=22 a=20 b=3	finite:22	48
+1367	linear/Z_m	m=22 a=20 b=4	finite:22	5
+1368	linear/Z_m	m=22 a=20 b=6	finite:22	3
+1369	linear/Z_m	m=22 a=20 b=7	finite:22	5
+1370	linear/Z_m	m=22 a=20 b=13	finite:22	8
+1371	linear/Z_m	m=22 a=20 b=14	finite:22	31
+1372	linear/Z_m	m=22 a=20 b=15	finite:22	3
+1373	linear/Z_m	m=22 a=20 b=16	finite:22	3
+1374	linear/Z_m	m=22 a=20 b=17	finite:22	6
+1375	linear/Z_m	m=22 a=20 b=18	finite:22	5
+1376	linear/Z_m	m=22 a=20 b=19	finite:22	5
+1377	linear/Z_m	m=22 a=21 b=13	finite:22	70
+1378	linear/Z_m	m=23 a=2 b=4	finite:23	6
+1379	linear/Z_m	m=23 a=2 b=6	finite:23	4
+1380	linear/Z_m	m=23 a=2 b=7	finite:23	4
+1381	linear/Z_m	m=23 a=2 b=8	finite:23	3
+1382	linear/Z_m	m=23 a=2 b=9	finite:23	3
+1383	linear/Z_m	m=23 a=2 b=15	finite:23	4
+1384	linear/Z_m	m=23 a=3 b=7	finite:23	5
+1385	linear/Z_m	m=23 a=3 b=16	finite:23	5
+1386	linear/Z_m	m=23 a=3 b=21	finite:23	46
+1387	linear/Z_m	m=23 a=4 b=2	finite:23	6
+1388	linear/Z_m	m=23 a=4 b=7	finite:23	5
+1389	linear/Z_m	m=23 a=4 b=10	finite:23	3
+1390	linear/Z_m	m=23 a=4 b=12	finite:23	8
+1391	linear/Z_m	m=23 a=4 b=20	finite:23	56
+1392	linear/Z_m	m=23 a=5 b=19	finite:23	45
+1393	linear/Z_m	m=23 a=6 b=2	finite:23	4
+1394	linear/Z_m	m=23 a=6 b=8	finite:23	4
+1395	linear/Z_m	m=23 a=6 b=10	finite:23	6
+1396	linear/Z_m	m=23 a=6 b=12	finite:23	5
+1397	linear/Z_m	m=23 a=6 b=18	finite:23	49
+1398	linear/Z_m	m=23 a=7 b=2	finite:23	4
+1399	linear/Z_m	m=23 a=7 b=3	finite:23	5
+1400	linear/Z_m	m=23 a=7 b=4	finite:23	5
+1401	linear/Z_m	m=23 a=7 b=17	finite:23	45
+1402	linear/Z_m	m=23 a=7 b=19	finite:23	5
+1403	linear/Z_m	m=23 a=8 b=2	finite:23	3
+1404	linear/Z_m	m=23 a=8 b=6	finite:23	4
+1405	linear/Z_m	m=23 a=8 b=10	finite:23	5
+1406	linear/Z_m	m=23 a=8 b=16	finite:23	66
+1407	linear/Z_m	m=23 a=8 b=17	finite:23	4
+1408	linear/Z_m	m=23 a=9 b=2	finite:23	3
+1409	linear/Z_m	m=23 a=9 b=15	finite:23	66
+1410	linear/Z_m	m=23 a=9 b=17	finite:23	3
+1411	linear/Z_m	m=23 a=10 b=4	finite:23	3
+1412	linear/Z_m	m=23 a=10 b=6	finite:23	6
+1413	linear/Z_m	m=23 a=10 b=8	finite:23	5
+1414	linear/Z_m	m=23 a=10 b=14	finite:23	50
+1415	linear/Z_m	m=23 a=10 b=19	finite:23	3
+1416	linear/Z_m	m=23 a=11 b=13	finite:23	52
+1417	linear/Z_m	m=23 a=12 b=4	finite:23	8
+1418	linear/Z_m	m=23 a=12 b=6	finite:23	5
+1419	linear/Z_m	m=23 a=12 b=16	finite:23	4
+1420	linear/Z_m	m=23 a=12 b=18	finite:23	5
+1421	linear/Z_m	m=23 a=13 b=11	finite:23	52
+1422	linear/Z_m	m=23 a=13 b=16	finite:23	3
+1423	linear/Z_m	m=23 a=14 b=10	finite:23	50
+1424	linear/Z_m	m=23 a=14 b=15	finite:23	4
+1425	linear/Z_m	m=23 a=15 b=2	finite:23	4
+1426	linear/Z_m	m=23 a=15 b=9	finite:23	66
+1427	linear/Z_m	m=23 a=15 b=14	finite:23	4
+1428	linear/Z_m	m=23 a=15 b=17	finite:23	3
+1429	linear/Z_m	m=23 a=15 b=19	finite:23	4
+1430	linear/Z_m	m=23 a=15 b=21	finite:23	4
+1431	linear/Z_m	m=23 a=16 b=3	finite:23	5
+1432	linear/Z_m	m=23 a=16 b=8	finite:23	66
+1433	linear/Z_m	m=23 a=16 b=13	finite:23	3
+1434	linear/Z_m	m=23 a=17 b=7	finite:23	45
+1435	linear/Z_m	m=23 a=17 b=8	finite:23	4
+1436	linear/Z_m	m=23 a=17 b=9	finite:23	3
+1437	linear/Z_m	m=23 a=17 b=15	finite:23	3
+1438	linear/Z_m	m=23 a=18 b=6	finite:23	49
+1439	linear/Z_m	m=23 a=18 b=12	finite:23	5
+1440	linear/Z_m	m=23 a=19 b=5	finite:23	45
+1441	linear/Z_m	m=23 a=19 b=7	finite:23	5
+1442	linear/Z_m	m=23 a=19 b=10	finite:23	3
+1443	linear/Z_m	m=23 a=20 b=4	finite:23	56
+1444	linear/Z_m	m=23 a=21 b=3	finite:23	46
+1445	linear/Z_m	m=23 a=21 b=15	finite:23	4
+1446	linear/Z_m	m=24 a=1 b=3	finite:24	15
+1447	linear/Z_m	m=24 a=1 b=21	finite:24	17
+1448	linear/Z_m	m=24 a=2 b=3	finite:24	13
+1449	linear/Z_m	m=24 a=2 b=4	finite:24	6
+1450	linear/Z_m	m=24 a=2 b=5	finite:24	16
+1451	linear/Z_m	m=24 a=2 b=6	finite:24	5
+1452	linear/Z_m	m=24 a=2 b=7	finite:24	19
+1453	linear/Z_m	m=24 a=2 b=14	finite:24	6
+1454	linear/Z_m	m=24 a=2 b=15	finite:24	28
+1455	linear/Z_m	m=24 a=2 b=19	finite:24	9
+1456	linear/Z_m	m=24 a=2 b=20	finite:24	6
+1457	linear/Z_m	m=24 a=3 b=1	finite:24	15
+1458	linear/Z_m	m=24 a=3 b=2	finite:24	13
+1459	linear/Z_m	m=24 a=3 b=5	finite:24	18
+1460	linear/Z_m	m=24 a=3 b=6	finite:24	38
+1461	linear/Z_m	m=24 a=3 b=7	finite:24	45
+1462	linear/Z_m	m=24 a=3 b=10	finite:24	28
+1463	linear/Z_m	m=24 a=3 b=11	finite:24	15
+1464	linear/Z_m	m=24 a=3 b=13	finite:24	27
+1465	linear/Z_m	m=24 a=3 b=14	finite:24	28
+1466	linear/Z_m	m=24 a=3 b=15	finite:24	21
+1467	linear/Z_m	m=24 a=3 b=17	finite:24	9
+1468	linear/Z_m	m=24 a=3 b=18	finite:24	23
+1469	linear/Z_m	m=24 a=3 b=19	finite:24	24
+1470	linear/Z_m	m=24 a=3 b=22	finite:24	61
+1471	linear/Z_m	m=24 a=4 b=2	finite:24	6
+1472	linear/Z_m	m=24 a=4 b=6	finite:24	13
+1473	linear/Z_m	m=24 a=4 b=10	finite:24	6
+1474	linear/Z_m	m=24 a=5 b=2	finite:24	16
+1475	linear/Z_m	m=24 a=5 b=3	finite:24	18
+1476	linear/Z_m	m=24 a=5 b=7	finite:24	13
+1477	linear/Z_m	m=24 a=5 b=9	finite:24	5
+1478	linear/Z_m	m=24 a=5 b=10	finite:24	8
+1479	linear/Z_m	m=24 a=5 b=11	finite:24	16
+1480	linear/Z_m	m=24 a=5 b=15	finite:24	21
+1481	linear/Z_m	m=24 a=5 b=17	finite:24	16
+1482	linear/Z_m	m=24 a=6 b=2	finite:24	5
+1483	linear/Z_m	m=24 a=6 b=3	finite:24	38
+1484	linear/Z_m	m=24 a=6 b=9	finite:24	8
+1485	linear/Z_m	m=24 a=6 b=10	finite:24	9
+1486	linear/Z_m	m=24 a=6 b=15	finite:24	23
+1487	linear/Z_m	m=24 a=6 b=22	finite:24	9
+1488	linear/Z_m	m=24 a=7 b=2	finite:24	19
+1489	linear/Z_m	m=24 a=7 b=3	finite:24	45
+1490	linear/Z_m	m=24 a=7 b=10	finite:24	10
+1491	linear/Z_m	m=24 a=7 b=11	finite:24	15
+1492	linear/Z_m	m=24 a=7 b=14	finite:24	9
+1493	linear/Z_m	m=24 a=7 b=21	finite:24	43
+1494	linear/Z_m	m=24 a=7 b=22	finite:24	5
+1495	linear/Z_m	m=24 a=9 b=5	finite:24	5
+1496	linear/Z_m	m=24 a=9 b=6	finite:24	8
+1497	linear/Z_m	m=24 a=9 b=10	finite:24	10
+1498	linear/Z_m	m=24 a=9 b=11	finite:24	9
+1499	linear/Z_m	m=24 a=9 b=13	finite:24	10
+1500	linear/Z_m	m=24 a=9 b=19	finite:24	11
+1501	linear/Z_m	m=24 a=10 b=3	finite:24	28
+1502	linear/Z_m	m=24 a=10 b=4	finite:24	6
+1503	linear/Z_m	m=24 a=10 b=5	finite:24	8
+1504	linear/Z_m	m=24 a=10 b=6	finite:24	9
+1505	linear/Z_m	m=24 a=10 b=7	finite:24	10
+1506	linear/Z_m	m=24 a=10 b=9	finite:24	10
+1507	linear/Z_m	m=24 a=10 b=15	finite:24	61
+1508	linear/Z_m	m=24 a=10 b=18	finite:24	9
+1509	linear/Z_m	m=24 a=10 b=19	finite:24	5
+1510	linear/Z_m	m=24 a=10 b=20	finite:24	6
+1511	linear/Z_m	m=24 a=10 b=23	finite:24	45
+1512	linear/Z_m	m=24 a=11 b=3	finite:24	15
+1513	linear/Z_m	m=24 a=11 b=5	finite:24	16
+1514	linear/Z_m	m=24 a=11 b=7	finite:24	15
+1515	linear/Z_m	m=24 a=11 b=9	finite:24	9
+1516	linear/Z_m	m=24 a=11 b=15	finite:24	23
+1517	linear/Z_m	m=24 a=11 b=17	finite:24	16
+1518	linear/Z_m	m=24 a=11 b=21	finite:24	20
+1519	linear/Z_m	m=24 a=11 b=22	finite:24	45
+1520	linear/Z_m	m=24 a=13 b=3	finite:24	27
+1521	linear/Z_m	m=24 a=13 b=9	finite:24	10
+1522	linear/Z_m	m=24 a=13 b=15	finite:24	31
+1523	linear/Z_m	m=24 a=15 b=3	finite:24	21
+1524	linear/Z_m	m=24 a=15 b=5	finite:24	21
+1525	linear/Z_m	m=24 a=15 b=11	finite:24	23
+1526	linear/Z_m	m=24 a=15 b=13	finite:24	31
+1527	linear/Z_m	m=24 a=15 b=19	finite:24	33
+1528	linear/Z_m	m=24 a=17 b=3	finite:24	9
+1529	linear/Z_m	m=24 a=17 b=5	finite:24	16
+1530	linear/Z_m	m=24 a=17 b=11	finite:24	16
+1531	linear/Z_m	m=24 a=19 b=3	finite:24	24
+1532	linear/Z_m	m=24 a=19 b=9	finite:24	11
+1533	linear/Z_m	m=24 a=19 b=15	finite:24	33
+1534	linear/Z_m	m=24 a=19 b=21	finite:24	26
+1535	linear/Z_m	m=24 a=20 b=2	finite:24	6
+1536	linear/Z_m	m=24 a=20 b=10	finite:24	6
+1537	linear/Z_m	m=24 a=21 b=1	finite:24	17
+1538	linear/Z_m	m=24 a=21 b=7	finite:24	43
+1539	linear/Z_m	m=24 a=21 b=11	finite:24	20
+1540	linear/Z_m	m=24 a=21 b=19	finite:24	26
+1541	linear/Z_m	m=25 a=2 b=4	finite:25	16
+1542	linear/Z_m	m=25 a=2 b=5	finite:25	7
+1543	linear/Z_m	m=25 a=2 b=7	finite:25	10
+1544	linear/Z_m	m=25 a=2 b=9	finite:25	16
+1545	linear/Z_m	m=25 a=2 b=14	finite:25	16
+1546	linear/Z_m	m=25 a=2 b=17	finite:25	5
+1547	linear/Z_m	m=25 a=2 b=18	finite:25	8
+1548	linear/Z_m	m=25 a=2 b=19	finite:25	21
+1549	linear/Z_m	m=25 a=3 b=3	finite:25	22
+1550	linear/Z_m	m=25 a=3 b=8	finite:25	28
+1551	linear/Z_m	m=25 a=3 b=13	finite:25	20
+1552	linear/Z_m	m=25 a=3 b=18	finite:25	21
+1553	linear/Z_m	m=25 a=3 b=23	finite:25	57
+1554	linear/Z_m	m=25 a=4 b=2	finite:25	16
+1555	linear/Z_m	m=25 a=4 b=7	finite:25	23
+1556	linear/Z_m	m=25 a=4 b=9	finite:25	7
+1557	linear/Z_m	m=25 a=4 b=11	finite:25	5
+1558	linear/Z_m	m=25 a=4 b=12	finite:25	20
+1559	linear/Z_m	m=25 a=4 b=14	finite:25	7
+1560	linear/Z_m	m=25 a=4 b=17	finite:25	15
+1561	linear/Z_m	m=25 a=4 b=21	finite:25	16
+1562	linear/Z_m	m=25 a=4 b=22	finite:25	53
+1563	linear/Z_m	m=25 a=5 b=2	finite:25	7
+1564	linear/Z_m	m=25 a=5 b=7	finite:25	12
+1565	linear/Z_m	m=25 a=5 b=21	finite:25	201
+1566	linear/Z_m	m=25 a=6 b=12	finite:25	6
+1567	linear/Z_m	m=25 a=6 b=14	finite:25	5
+1568	linear/Z_m	m=25 a=6 b=19	finite:25	16
+1569	linear/Z_m	m=25 a=6 b=20	finite:25	201
+1570	linear/Z_m	m=25 a=6 b=22	finite:25	3
+1571	linear/Z_m	m=25 a=7 b=2	finite:25	10
+1572	linear/Z_m	m=25 a=7 b=4	finite:25	23
+1573	linear/Z_m	m=25 a=7 b=5	finite:25	12
+1574	linear/Z_m	m=25 a=7 b=9	finite:25	24
+1575	linear/Z_m	m=25 a=7 b=12	finite:25	8
+1576	linear/Z_m	m=25 a=7 b=14	finite:25	20
+1577	linear/Z_m	m=25 a=7 b=19	finite:25	62
+1578	linear/Z_m	m=25 a=7 b=22	finite:25	10
+1579	linear/Z_m	m=25 a=7 b=23	finite:25	7
+1580	linear/Z_m	m=25 a=8 b=3	finite:25	28
+1581	linear/Z_m	m=25 a=8 b=8	finite:25	30
+1582	linear/Z_m	m=25 a=8 b=13	finite:25	20
+1583	linear/Z_m	m=25 a=8 b=18	finite:25	62
+1584	linear/Z_m	m=25 a=8 b=19	finite:25	3
+1585	linear/Z_m	m=25 a=8 b=23	finite:25	21
+1586	linear/Z_m	m=25 a=9 b=2	finite:25	16
+1587	linear/Z_m	m=25 a=9 b=7	finite:25	24
+1588	linear/Z_m	m=25 a=9 b=12	finite:25	18
+1589	linear/Z_m	m=25 a=9 b=13	finite:25	3
+1590	linear/Z_m	m=25 a=9 b=17	finite:25	65
+1591	linear/Z_m	m=25 a=9 b=18	finite:25	7
+1592	linear/Z_m	m=25 a=9 b=22	finite:25	17
+1593	linear/Z_m	m=25 a=12 b=4	finite:25	20
+1594	linear/Z_m	m=25 a=12 b=6	finite:25	6
+1595	linear/Z_m	m=25 a=12 b=7	finite:25	8
+1596	linear/Z_m	m=25 a=12 b=9	finite:25	18
+1597	linear/Z_m	m=25 a=12 b=14	finite:25	46
+1598	linear/Z_m	m=25 a=12 b=17	finite:25	3
+1599	linear/Z_m	m=25 a=12 b=18	finite:25	7
+1600	linear/Z_m	m=25 a=12 b=19	finite:25	20
+1601	linear/Z_m	m=25 a=12 b=22	finite:25	3
+1602	linear/Z_m	m=25 a=12 b=24	finite:25	46
+1603	linear/Z_m	m=25 a=13 b=3	finite:25	20
+1604	linear/Z_m	m=25 a=13 b=8	finite:25	20
+1605	linear/Z_m	m=25 a=13 b=18	finite:25	20
+1606	linear/Z_m	m=25 a=13 b=23	finite:25	26
+1607	linear/Z_m	m=25 a=14 b=2	finite:25	16
+1608	linear/Z_m	m=25 a=14 b=7	finite:25	20
+1609	linear/Z_m	m=25 a=14 b=12	finite:25	46
+1610	linear/Z_m	m=25 a=14 b=17	finite:25	16
+1611	linear/Z_m	m=25 a=14 b=22	finite:25	20
+1612	linear/Z_m	m=25 a=16 b=18	finite:25	7
+1613	linear/Z_m	m=25 a=17 b=2	finite:25	5
+1614	linear/Z_m	m=25 a=17 b=4	finite:25	15
+1615	linear/Z_m	m=25 a=17 b=9	finite:25	65
+1616	linear/Z_m	m=25 a=17 b=14	finite:25	16
+1617	linear/Z_m	m=25 a=17 b=19	finite:25	18
+1618	linear/Z_m	m=25 a=17 b=24	finite:25	43
+1619	linear/Z_m	m=25 a=18 b=2	finite:25	8
+1620	linear/Z_m	m=25 a=18 b=3	finite:25	21
+1621	linear/Z_m	m=25 a=18 b=9	finite:25	7
+1622	linear/Z_m	m=25 a=18 b=12	finite:25	7
+1623	linear/Z_m	m=25 a=18 b=13	finite:25	20
+1624	linear/Z_m	m=25 a=18 b=16	finite:25	7
+1625	linear/Z_m	m=25 a=18 b=22	finite:25	9
+1626	linear/Z_m	m=25 a=18 b=23	finite:25	22
+1627	linear/Z_m	m=25 a=19 b=2	finite:25	21
+1628	linear/Z_m	m=25 a=19 b=12	finite:25	20
+1629	linear/Z_m	m=25 a=19 b=17	finite:25	18
+1630	linear/Z_m	m=25 a=19 b=22	finite:25	15
+1631	linear/Z_m	m=25 a=21 b=23	finite:25	6
+1632	linear/Z_m	m=25 a=22 b=4	finite:25	53
+1633	linear/Z_m	m=25 a=22 b=6	finite:25	3
+1634	linear/Z_m	m=25 a=22 b=7	finite:25	10
+1635	linear/Z_m	m=25 a=22 b=9	finite:25	17
+1636	linear/Z_m	m=25 a=22 b=14	finite:25	20
+1637	linear/Z_m	m=25 a=22 b=18	finite:25	9
+1638	linear/Z_m	m=25 a=22 b=19	finite:25	15
+1639	linear/Z_m	m=25 a=22 b=24	finite:25	44
+1640	linear/Z_m	m=25 a=23 b=3	finite:25	57
+1641	linear/Z_m	m=25 a=23 b=7	finite:25	7
+1642	linear/Z_m	m=25 a=23 b=8	finite:25	21
+1643	linear/Z_m	m=25 a=23 b=13	finite:25	26
+1644	linear/Z_m	m=25 a=23 b=18	finite:25	22
+1645	linear/Z_m	m=25 a=23 b=21	finite:25	6
+1646	linear/Z_m	m=25 a=24 b=12	finite:25	46
+1647	linear/Z_m	m=25 a=24 b=17	finite:25	43
+1648	linear/Z_m	m=25 a=24 b=22	finite:25	44
+1649	linear/Z_m	m=26 a=1 b=8	finite:26	8
+1650	linear/Z_m	m=26 a=1 b=16	finite:26	5
+1651	linear/Z_m	m=26 a=2 b=3	finite:26	5
+1652	linear/Z_m	m=26 a=2 b=4	finite:26	5
+1653	linear/Z_m	m=26 a=2 b=5	finite:26	7
+1654	linear/Z_m	m=26 a=2 b=10	finite:26	3
+1655	linear/Z_m	m=26 a=2 b=11	finite:26	9
+1656	linear/Z_m	m=26 a=2 b=16	finite:26	3
+1657	linear/Z_m	m=26 a=2 b=21	finite:26	7
+1658	linear/Z_m	m=26 a=2 b=22	finite:26	5
+1659	linear/Z_m	m=26 a=3 b=2	finite:26	5
+1660	linear/Z_m	m=26 a=3 b=4	finite:26	9
+1661	linear/Z_m	m=26 a=3 b=6	finite:26	5
+1662	linear/Z_m	m=26 a=3 b=8	finite:26	6
+1663	linear/Z_m	m=26 a=3 b=10	finite:26	8
+1664	linear/Z_m	m=26 a=3 b=11	finite:26	40
+1665	linear/Z_m	m=26 a=3 b=12	finite:26	20
+1666	linear/Z_m	m=26 a=3 b=18	finite:26	6
+1667	linear/Z_m	m=26 a=3 b=20	finite:26	5
+1668	linear/Z_m	m=26 a=3 b=24	finite:26	52
+1669	linear/Z_m	m=26 a=4 b=2	finite:26	5
+1670	linear/Z_m	m=26 a=4 b=3	finite:26	9
+1671	linear/Z_m	m=26 a=4 b=9	finite:26	8
+1672	linear/Z_m	m=26 a=4 b=10	finite:26	50
+1673	linear/Z_m	m=26 a=4 b=11	finite:26	5
+1674	linear/Z_m	m=26 a=4 b=16	finite:26	5
+1675	linear/Z_m	m=26 a=4 b=23	finite:26	70
+1676	linear/Z_m	m=26 a=4 b=24	finite:26	5
+1677	linear/Z_m	m=26 a=5 b=2	finite:26	7
+1678	linear/Z_m	m=26 a=5 b=8	finite:26	19
+1679	linear/Z_m	m=26 a=5 b=9	finite:26	44
+1680	linear/Z_m	m=26 a=5 b=10	finite:26	7
+1681	linear/Z_m	m=26 a=5 b=12	finite:26	28
+1682	linear/Z_m	m=26 a=5 b=16	finite:26	7
+1683	linear/Z_m	m=26 a=5 b=18	finite:26	30
+1684	linear/Z_m	m=26 a=5 b=22	finite:26	63
+1685	linear/Z_m	m=26 a=5 b=23	finite:26	8
+1686	linear/Z_m	m=26 a=6 b=3	finite:26	5
+1687	linear/Z_m	m=26 a=6 b=7	finite:26	10
+1688	linear/Z_m	m=26 a=6 b=8	finite:26	23
+1689	linear/Z_m	m=26 a=6 b=9	finite:26	4
+1690	linear/Z_m	m=26 a=6 b=15	finite:26	6
+1691	linear/Z_m	m=26 a=6 b=23	finite:26	4
+1692	linear/Z_m	m=26 a=7 b=6	finite:26	10
+1693	linear/Z_m	m=26 a=7 b=8	finite:26	5
+1694	linear/Z_m	m=26 a=7 b=16	finite:26	3
+1695	linear/Z_m	m=26 a=7 b=18	finite:26	5
+1696	linear/Z_m	m=26 a=7 b=20	finite:26	48
+1697	linear/Z_m	m=26 a=7 b=22	finite:26	2
+1698	linear/Z_m	m=26 a=7 b=24	finite:26	5
+1699	linear/Z_m	m=26 a=8 b=1	finite:26	8
+1700	linear/Z_m	m=26 a=8 b=3	finite:26	6
+1701	linear/Z_m	m=26 a=8 b=5	finite:26	19
+1702	linear/Z_m	m=26 a=8 b=6	finite:26	23
+1703	linear/Z_m	m=26 a=8 b=7	finite:26	5
+1704	linear/Z_m	m=26 a=8 b=9	finite:26	5
+1705	linear/Z_m	m=26 a=8 b=11	finite:26	5
+1706	linear/Z_m	m=26 a=8 b=12	finite:26	21
+1707	linear/Z_m	m=26 a=8 b=14	finite:26	5
+1708	linear/Z_m	m=26 a=8 b=15	finite:26	4
+1709	linear/Z_m	m=26 a=8 b=17	finite:26	6
+1710	linear/Z_m	m=26 a=8 b=19	finite:26	44
+1711	linear/Z_m	m=26 a=8 b=21	finite:26	30
+1712	linear/Z_m	m=26 a=8 b=23	finite:26	4
+1713	linear/Z_m	m=26 a=8 b=25	finite:26	45
+1714	linear/Z_m	m=26 a=9 b=5	finite:26	44
+1715	linear/Z_m	m=26 a=9 b=6	finite:26	4
+1716	linear/Z_m	m=26 a=9 b=8	finite:26	5
+1717	linear/Z_m	m=26 a=9 b=18	finite:26	51
+1718	linear/Z_m	m=26 a=9 b=24	finite:26	6
+1719	linear/Z_m	m=26 a=10 b=11	finite:26	8
+1720	linear/Z_m	m=26 a=10 b=19	finite:26	3
+1721	linear/Z_m	m=26 a=11 b=2	finite:26	9
+1722	linear/Z_m	m=26 a=11 b=3	finite:26	40
+1723	linear/Z_m	m=26 a=11 b=4	finite:26	5
+1724	linear/Z_m	m=26 a=11 b=8	finite:26	5
+1725	linear/Z_m	m=26 a=11 b=10	finite:26	8
+1726	linear/Z_m	m=26 a=11 b=16	finite:26	49
+1727	linear/Z_m	m=26 a=11 b=18	finite:26	4
+1728	linear/Z_m	m=26 a=11 b=20	finite:26	6
+1729	linear/Z_m	m=26 a=11 b=21	finite:26	8
+1730	linear/Z_m	m=26 a=11 b=22	finite:26	4
+1731	linear/Z_m	m=26 a=11 b=23	finite:26	8
+1732	linear/Z_m	m=26 a=12 b=3	finite:26	20
+1733	linear/Z_m	m=26 a=12 b=5	finite:26	28
+1734	linear/Z_m	m=26 a=12 b=8	finite:26	21
+1735	linear/Z_m	m=26 a=12 b=15	finite:26	56
+1736	linear/Z_m	m=26 a=12 b=16	finite:26	18
+1737	linear/Z_m	m=26 a=14 b=8	finite:26	5
+1738	linear/Z_m	m=26 a=14 b=17	finite:26	2
+1739	linear/Z_m	m=26 a=15 b=6	finite:26	6
+1740	linear/Z_m	m=26 a=15 b=8	finite:26	4
+1741	linear/Z_m	m=26 a=15 b=12	finite:26	56
+1742	linear/Z_m	m=26 a=15 b=18	finite:26	4
+1743	linear/Z_m	m=26 a=16 b=1	finite:26	5
+1744	linear/Z_m	m=26 a=16 b=2	finite:26	3
+1745	linear/Z_m	m=26 a=16 b=4	finite:26	5
+1746	linear/Z_m	m=26 a=16 b=5	finite:26	7
+1747	linear/Z_m	m=26 a=16 b=7	finite:26	3
+1748	linear/Z_m	m=26 a=16 b=11	finite:26	49
+1749	linear/Z_m	m=26 a=16 b=12	finite:26	18
+1750	linear/Z_m	m=26 a=16 b=19	finite:26	4
+1751	linear/Z_m	m=26 a=16 b=23	finite:26	8
+1752	linear/Z_m	m=26 a=16 b=24	finite:26	25
+1753	linear/Z_m	m=26 a=17 b=8	finite:26	6
+1754	linear/Z_m	m=26 a=17 b=10	finite:26	70
+1755	linear/Z_m	m=26 a=17 b=14	finite:26	2
+1756	linear/Z_m	m=26 a=17 b=18	finite:26	6
+1757	linear/Z_m	m=26 a=17 b=22	finite:26	8
+1758	linear/Z_m	m=26 a=17 b=24	finite:26	4
+1759	linear/Z_m	m=26 a=18 b=3	finite:26	6
+1760	linear/Z_m	m=26 a=18 b=7	finite:26	5
+1761	linear/Z_m	m=26 a=18 b=9	finite:26	51
+1762	linear/Z_m	m=26 a=18 b=11	finite:26	4
+1763	linear/Z_m	m=26 a=18 b=17	finite:26	6
+1764	linear/Z_m	m=26 a=18 b=19	finite:26	3
+1765	linear/Z_m	m=26 a=18 b=22	finite:26	23
+1766	linear/Z_m	m=26 a=18 b=23	finite:26	5
+1767	linear/Z_m	m=26 a=19 b=8	finite:26	44
+1768	linear/Z_m	m=26 a=19 b=10	finite:26	3
+1769	linear/Z_m	m=26 a=19 b=16	finite:26	4
+1770	linear/Z_m	m=26 a=19 b=18	finite:26	3
+1771	linear/Z_m	m=26 a=19 b=21	finite:26	41
+1772	linear/Z_m	m=26 a=19 b=22	finite:26	3
+1773	linear/Z_m	m=26 a=20 b=3	finite:26	5
+1774	linear/Z_m	m=26 a=20 b=7	finite:26	48
+1775	linear/Z_m	m=26 a=20 b=11	finite:26	6
+1776	linear/Z_m	m=26 a=21 b=11	finite:26	8
+1777	linear/Z_m	m=26 a=21 b=19	finite:26	41
+1778	linear/Z_m	m=26 a=21 b=24	finite:26	9
+1779	linear/Z_m	m=26 a=22 b=2	finite:26	5
+1780	linear/Z_m	m=26 a=22 b=5	finite:26	63
+1781	linear/Z_m	m=26 a=22 b=7	finite:26	2
+1782	linear/Z_m	m=26 a=22 b=11	finite:26	4
+1783	linear/Z_m	m=26 a=22 b=18	finite:26	23
+1784	linear/Z_m	m=26 a=22 b=19	finite:26	3
+1785	linear/Z_m	m=26 a=22 b=24	finite:26	5
+1786	linear/Z_m	m=26 a=23 b=5	finite:26	8
+1787	linear/Z_m	m=26 a=23 b=6	finite:26	4
+1788	linear/Z_m	m=26 a=23 b=11	finite:26	8
+1789	linear/Z_m	m=26 a=23 b=18	finite:26	5
+1790	linear/Z_m	m=26 a=23 b=24	finite:26	6
+1791	linear/Z_m	m=26 a=24 b=3	finite:26	52
+1792	linear/Z_m	m=26 a=24 b=4	finite:26	5
+1793	linear/Z_m	m=26 a=24 b=7	finite:26	5
+1794	linear/Z_m	m=26 a=24 b=9	finite:26	6
+1795	linear/Z_m	m=26 a=24 b=16	finite:26	25
+1796	linear/Z_m	m=26 a=24 b=17	finite:26	4
+1797	linear/Z_m	m=26 a=24 b=21	finite:26	9
+1798	linear/Z_m	m=26 a=24 b=22	finite:26	5
+1799	linear/Z_m	m=26 a=24 b=23	finite:26	6
+1800	linear/Z_m	m=26 a=25 b=8	finite:26	45
+1801	linear/Z_m	m=27 a=2 b=3	finite:27	3
+1802	linear/Z_m	m=27 a=2 b=4	finite:27	5
+1803	linear/Z_m	m=27 a=2 b=5	finite:27	15
+1804	linear/Z_m	m=27 a=2 b=8	finite:27	32
+1805	linear/Z_m	m=27 a=2 b=11	finite:27	7
+1806	linear/Z_m	m=27 a=2 b=15	finite:27	3
+1807	linear/Z_m	m=27 a=2 b=17	finite:27	36
+1808	linear/Z_m	m=27 a=2 b=23	finite:27	16
+1809	linear/Z_m	m=27 a=3 b=2	finite:27	3
+1810	linear/Z_m	m=27 a=3 b=7	finite:27	17
+1811	linear/Z_m	m=27 a=3 b=8	finite:27	8
+1812	linear/Z_m	m=27 a=3 b=9	finite:27	41
+1813	linear/Z_m	m=27 a=3 b=14	finite:27	3
+1814	linear/Z_m	m=27 a=3 b=18	finite:27	41
+1815	linear/Z_m	m=27 a=3 b=25	finite:27	62
+1816	linear/Z_m	m=27 a=4 b=2	finite:27	5
+1817	linear/Z_m	m=27 a=4 b=6	finite:27	14
+1818	linear/Z_m	m=27 a=4 b=8	finite:27	3
+1819	linear/Z_m	m=27 a=4 b=11	finite:27	6
+1820	linear/Z_m	m=27 a=4 b=24	finite:27	59
+1821	linear/Z_m	m=27 a=5 b=2	finite:27	15
+1822	linear/Z_m	m=27 a=5 b=5	finite:27	40
+1823	linear/Z_m	m=27 a=5 b=8	finite:27	14
+1824	linear/Z_m	m=27 a=5 b=11	finite:27	16
+1825	linear/Z_m	m=27 a=5 b=14	finite:27	31
+1826	linear/Z_m	m=27 a=5 b=17	finite:27	12
+1827	linear/Z_m	m=27 a=5 b=23	finite:27	46
+1828	linear/Z_m	m=27 a=6 b=4	finite:27	14
+1829	linear/Z_m	m=27 a=6 b=7	finite:27	7
+1830	linear/Z_m	m=27 a=6 b=22	finite:27	59
+1831	linear/Z_m	m=27 a=7 b=3	finite:27	17
+1832	linear/Z_m	m=27 a=7 b=6	finite:27	7
+1833	linear/Z_m	m=27 a=7 b=21	finite:27	62
+1834	linear/Z_m	m=27 a=8 b=2	finite:27	32
+1835	linear/Z_m	m=27 a=8 b=3	finite:27	8
+1836	linear/Z_m	m=27 a=8 b=4	finite:27	3
+1837	linear/Z_m	m=27 a=8 b=5	finite:27	14
+1838	linear/Z_m	m=27 a=8 b=11	finite:27	30
+1839	linear/Z_m	m=27 a=8 b=13	finite:27	4
+1840	linear/Z_m	m=27 a=8 b=14	finite:27	13
+1841	linear/Z_m	m=27 a=8 b=20	finite:27	46
+1842	linear/Z_m	m=27 a=8 b=23	finite:27	12
+1843	linear/Z_m	m=27 a=9 b=3	finite:27	41
+1844	linear/Z_m	m=27 a=10 b=14	finite:27	4
+1845	linear/Z_m	m=27 a=11 b=4	finite:27	6
+1846	linear/Z_m	m=27 a=11 b=5	finite:27	16
+1847	linear/Z_m	m=27 a=11 b=8	finite:27	30
+1848	linear/Z_m	m=27 a=11 b=14	finite:27	16
+1849	linear/Z_m	m=27 a=11 b=17	finite:27	50
+1850	linear/Z_m	m=27 a=11 b=23	finite:27	17
+1851	linear/Z_m	m=27 a=11 b=26	finite:27	67
+1852	linear/Z_m	m=27 a=13 b=8	finite:27	4
+1853	linear/Z_m	m=27 a=13 b=20	finite:27	6
+1854	linear/Z_m	m=27 a=14 b=5	finite:27	31
+1855	linear/Z_m	m=27 a=14 b=8	finite:27	13
+1856	linear/Z_m	m=27 a=14 b=10	finite:27	4
+1857	linear/Z_m	m=27 a=14 b=11	finite:27	16
+1858	linear/Z_m	m=27 a=14 b=23	finite:27	31
+1859	linear/Z_m	m=27 a=16 b=23	finite:27	5
+1860	linear/Z_m	m=27 a=17 b=2	finite:27	36
+1861	linear/Z_m	m=27 a=17 b=11	finite:27	50
+1862	linear/Z_m	m=27 a=17 b=20	finite:27	34
+1863	linear/Z_m	m=27 a=18 b=3	finite:27	41
+1864	linear/Z_m	m=27 a=20 b=8	finite:27	46
+1865	linear/Z_m	m=27 a=20 b=13	finite:27	6
+1866	linear/Z_m	m=27 a=20 b=17	finite:27	34
+1867	linear/Z_m	m=27 a=20 b=22	finite:27	5
+1868	linear/Z_m	m=27 a=20 b=23	finite:27	16
+1869	linear/Z_m	m=27 a=22 b=20	finite:27	5
+1870	linear/Z_m	m=27 a=23 b=2	finite:27	16
+1871	linear/Z_m	m=27 a=23 b=5	finite:27	46
+1872	linear/Z_m	m=27 a=23 b=11	finite:27	17
+1873	linear/Z_m	m=27 a=23 b=14	finite:27	31
+1874	linear/Z_m	m=27 a=23 b=16	finite:27	5
+1875	linear/Z_m	m=27 a=23 b=20	finite:27	16
+1876	linear/Z_m	m=27 a=23 b=25	finite:27	6
+1877	linear/Z_m	m=27 a=25 b=23	finite:27	6
+1878	linear/Z_m	m=27 a=26 b=11	finite:27	67
+1879	linear/Z_m	m=28 a=2 b=3	finite:28	6
+1880	linear/Z_m	m=28 a=2 b=6	finite:28	5
+1881	linear/Z_m	m=28 a=2 b=7	finite:28	30
+1882	linear/Z_m	m=28 a=2 b=11	finite:28	4
+1883	linear/Z_m	m=28 a=2 b=15	finite:28	5
+1884	linear/Z_m	m=28 a=2 b=19	finite:28	5
+1885	linear/Z_m	m=28 a=2 b=20	finite:28	11
+1886	linear/Z_m	m=28 a=2 b=21	finite:28	11
+1887	linear/Z_m	m=28 a=2 b=23	finite:28	7
+1888	linear/Z_m	m=28 a=3 b=2	finite:28	6
+1889	linear/Z_m	m=28 a=3 b=5	finite:28	29
+1890	linear/Z_m	m=28 a=3 b=6	finite:28	13
+1891	linear/Z_m	m=28 a=3 b=7	finite:28	21
+1892	linear/Z_m	m=28 a=3 b=10	finite:28	4
+1893	linear/Z_m	m=28 a=3 b=14	finite:28	46
+1894	linear/Z_m	m=28 a=3 b=15	finite:28	6
+1895	linear/Z_m	m=28 a=3 b=18	finite:28	6
+1896	linear/Z_m	m=28 a=3 b=22	finite:28	5
+1897	linear/Z_m	m=28 a=3 b=23	finite:28	13
+1898	linear/Z_m	m=28 a=3 b=26	finite:28	48
+1899	linear/Z_m	m=28 a=5 b=3	finite:28	29
+1900	linear/Z_m	m=28 a=5 b=6	finite:28	5
+1901	linear/Z_m	m=28 a=5 b=10	finite:28	20
+1902	linear/Z_m	m=28 a=5 b=17	finite:28	33
+1903	linear/Z_m	m=28 a=5 b=25	finite:28	8
+1904	linear/Z_m	m=28 a=6 b=2	finite:28	5
+1905	linear/Z_m	m=28 a=6 b=3	finite:28	13
+1906	linear/Z_m	m=28 a=6 b=5	finite:28	5
+1907	linear/Z_m	m=28 a=6 b=9	finite:28	20
+1908	linear/Z_m	m=28 a=6 b=11	finite:28	12
+1909	linear/Z_m	m=28 a=6 b=16	finite:28	12
+1910	linear/Z_m	m=28 a=6 b=23	finite:28	45
+1911	linear/Z_m	m=28 a=6 b=24	finite:28	9
+1912	linear/Z_m	m=28 a=7 b=2	finite:28	30
+1913	linear/Z_m	m=28 a=7 b=3	finite:28	21
+1914	linear/Z_m	m=28 a=7 b=10	finite:28	13
+1915	linear/Z_m	m=28 a=7 b=11	finite:28	29
+1916	linear/Z_m	m=28 a=9 b=6	finite:28	20
+1917	linear/Z_m	m=28 a=9 b=10	finite:28	3
+1918	linear/Z_m	m=28 a=9 b=13	finite:28	26
+1919	linear/Z_m	m=28 a=9 b=17	finite:28	7
+1920	linear/Z_m	m=28 a=9 b=21	finite:28	11
+1921	linear/Z_m	m=28 a=9 b=26	finite:28	3
+1922	linear/Z_m	m=28 a=9 b=27	finite:28	46
+1923	linear/Z_m	m=28 a=10 b=5	finite:28	20
+1924	linear/Z_m	m=28 a=10 b=7	finite:28	13
+1925	linear/Z_m	m=28 a=10 b=9	finite:28	3
+1926	linear/Z_m	m=28 a=10 b=11	finite:28	5
+1927	linear/Z_m	m=28 a=10 b=12	finite:28	15
+1928	linear/Z_m	m=28 a=10 b=15	finite:28	8
+1929	linear/Z_m	m=28 a=10 b=19	finite:28	46
+1930	linear/Z_m	m=28 a=10 b=20	finite:28	7
+1931	linear/Z_m	m=28 a=10 b=23	finite:28	6
+1932	linear/Z_m	m=28 a=10 b=26	finite:28	6
+1933	linear/Z_m	m=28 a=11 b=6	finite:28	12
+1934	linear/Z_m	m=28 a=11 b=7	finite:28	29
+1935	linear/Z_m	m=28 a=11 b=10	finite:28	5
+1936	linear/Z_m	m=28 a=11 b=14	finite:28	83
+1937	linear/Z_m	m=28 a=11 b=15	finite:28	3
+1938	linear/Z_m	m=28 a=11 b=18	finite:28	42
+1939	linear/Z_m	m=28 a=11 b=19	finite:28	14
+1940	linear/Z_m	m=28 a=11 b=21	finite:28	17
+1941	linear/Z_m	m=28 a=11 b=22	finite:28	6
+1942	linear/Z_m	m=28 a=11 b=25	finite:28	20
+1943	linear/Z_m	m=28 a=11 b=26	finite:28	7
+1944	linear/Z_m	m=28 a=12 b=10	finite:28	15
+1945	linear/Z_m	m=28 a=13 b=9	finite:28	26
+1946	linear/Z_m	m=28 a=13 b=23	finite:28	22
+1947	linear/Z_m	m=28 a=14 b=3	finite:28	46
+1948	linear/Z_m	m=28 a=14 b=11	finite:28	83
+1949	linear/Z_m	m=28 a=15 b=2	finite:28	5
+1950	linear/Z_m	m=28 a=15 b=3	finite:28	6
+1951	linear/Z_m	m=28 a=15 b=10	finite:28	8
+1952	linear/Z_m	m=28 a=15 b=11	finite:28	3
+1953	linear/Z_m	m=28 a=15 b=18	finite:28	7
+1954	linear/Z_m	m=28 a=15 b=26	finite:28	8
+1955	linear/Z_m	m=28 a=16 b=6	finite:28	12
+1956	linear/Z_m	m=28 a=17 b=9	finite:28	7
+1957	linear/Z_m	m=28 a=17 b=26	finite:28	21
+1958	linear/Z_m	m=28 a=18 b=3	finite:28	6
+1959	linear/Z_m	m=28 a=18 b=11	finite:28	42
+1960	linear/Z_m	m=28 a=18 b=15	finite:28	7
+1961	linear/Z_m	m=28 a=18 b=19	finite:28	8
+1962	linear/Z_m	m=28 a=18 b=20	finite:28	7
+1963	linear/Z_m	m=28 a=18 b=25	finite:28	18
+1964	linear/Z_m	m=28 a=19 b=2	finite:28	5
+1965	linear/Z_m	m=28 a=19 b=10	finite:28	46
+1966	linear/Z_m	m=28 a=19 b=11	finite:28	14
+1967	linear/Z_m	m=28 a=19 b=18	finite:28	8
+1968	linear/Z_m	m=28 a=19 b=26	finite:28	5
+1969	linear/Z_m	m=28 a=20 b=2	finite:28	11
+1970	linear/Z_m	m=28 a=20 b=10	finite:28	7
+1971	linear/Z_m	m=28 a=20 b=18	finite:28	7
+1972	linear/Z_m	m=28 a=21 b=2	finite:28	11
+1973	linear/Z_m	m=28 a=21 b=9	finite:28	11
+1974	linear/Z_m	m=28 a=21 b=11	finite:28	17
+1975	linear/Z_m	m=28 a=22 b=3	finite:28	5
+1976	linear/Z_m	m=28 a=22 b=11	finite:28	6
+1977	linear/Z_m	m=28 a=22 b=23	finite:28	4
+1978	linear/Z_m	m=28 a=23 b=3	finite:28	13
+1979	linear/Z_m	m=28 a=23 b=6	finite:28	45
+1980	linear/Z_m	m=28 a=23 b=10	finite:28	6
+1981	linear/Z_m	m=28 a=23 b=13	finite:28	22
+1982	linear/Z_m	m=28 a=23 b=22	finite:28	4
+1983	linear/Z_m	m=28 a=23 b=26	finite:28	5
+1984	linear/Z_m	m=28 a=24 b=6	finite:28	9
+1985	linear/Z_m	m=28 a=24 b=26	finite:28	16
+1986	linear/Z_m	m=28 a=25 b=5	finite:28	8
+1987	linear/Z_m	m=28 a=25 b=11	finite:28	20
+1988	linear/Z_m	m=28 a=25 b=18	finite:28	18
+1989	linear/Z_m	m=28 a=25 b=25	finite:28	52
+1990	linear/Z_m	m=28 a=25 b=26	finite:28	4
+1991	linear/Z_m	m=28 a=26 b=3	finite:28	48
+1992	linear/Z_m	m=28 a=26 b=9	finite:28	3
+1993	linear/Z_m	m=28 a=26 b=11	finite:28	7
+1994	linear/Z_m	m=28 a=26 b=15	finite:28	8
+1995	linear/Z_m	m=28 a=26 b=17	finite:28	21
+1996	linear/Z_m	m=28 a=26 b=23	finite:28	5
+1997	linear/Z_m	m=28 a=26 b=24	finite:28	16
+1998	linear/Z_m	m=28 a=26 b=25	finite:28	4
+1999	linear/Z_m	m=28 a=27 b=9	finite:28	46
+2000	linear/Z_m	m=29 a=2 b=4	finite:29	6
+2001	linear/Z_m	m=29 a=2 b=6	finite:29	4
+2002	linear/Z_m	m=29 a=2 b=22	finite:29	8
+2003	linear/Z_m	m=29 a=3 b=27	finite:29	45
+2004	linear/Z_m	m=29 a=4 b=2	finite:29	6
+2005	linear/Z_m	m=29 a=4 b=11	finite:29	3
+2006	linear/Z_m	m=29 a=4 b=15	finite:29	3
+2007	linear/Z_m	m=29 a=4 b=26	finite:29	44
+2008	linear/Z_m	m=29 a=5 b=14	finite:29	3
+2009	linear/Z_m	m=29 a=5 b=17	finite:29	7
+2010	linear/Z_m	m=29 a=5 b=25	finite:29	50
+2011	linear/Z_m	m=29 a=6 b=2	finite:29	4
+2012	linear/Z_m	m=29 a=6 b=10	finite:29	3
+2013	linear/Z_m	m=29 a=6 b=17	finite:29	8
+2014	linear/Z_m	m=29 a=6 b=27	finite:29	4
+2015	linear/Z_m	m=29 a=7 b=16	finite:29	3
+2016	linear/Z_m	m=29 a=7 b=23	finite:29	53
+2017	linear/Z_m	m=29 a=8 b=22	finite:29	44
+2018	linear/Z_m	m=29 a=9 b=11	finite:29	4
+2019	linear/Z_m	m=29 a=9 b=21	finite:29	53
+2020	linear/Z_m	m=29 a=10 b=24	finite:29	4
+2021	linear/Z_m	m=29 a=11 b=9	finite:29	4
+2022	linear/Z_m	m=29 a=11 b=14	finite:29	4
+2023	linear/Z_m	m=29 a=11 b=19	finite:29	47
+2024	linear/Z_m	m=29 a=12 b=19	finite:29	8
+2025	linear/Z_m	m=29 a=12 b=26	finite:29	7
+2026	linear/Z_m	m=29 a=14 b=5	finite:29	3
+2027	linear/Z_m	m=29 a=14 b=11	finite:29	4
+2028	linear/Z_m	m=29 a=14 b=16	finite:29	44
+2029	linear/Z_m	m=29 a=14 b=18	finite:29	3
+2030	linear/Z_m	m=29 a=14 b=26	finite:29	3
+2031	linear/Z_m	m=29 a=15 b=4	finite:29	3
+2032	linear/Z_m	m=29 a=16 b=7	finite:29	3
+2033	linear/Z_m	m=29 a=16 b=14	finite:29	44
+2034	linear/Z_m	m=29 a=17 b=6	finite:29	8
+2035	linear/Z_m	m=29 a=18 b=14	finite:29	3
+2036	linear/Z_m	m=29 a=19 b=11	finite:29	47
+2037	linear/Z_m	m=29 a=19 b=12	finite:29	8
+2038	linear/Z_m	m=29 a=20 b=25	finite:29	3
+2039	linear/Z_m	m=29 a=20 b=27	finite:29	3
+2040	linear/Z_m	m=29 a=21 b=9	finite:29	53
+2041	linear/Z_m	m=29 a=21 b=27	finite:29	3
+2042	linear/Z_m	m=29 a=22 b=2	finite:29	8
+2043	linear/Z_m	m=29 a=22 b=8	finite:29	44
+2044	linear/Z_m	m=29 a=23 b=7	finite:29	53
+2045	linear/Z_m	m=29 a=24 b=10	finite:29	4
+2046	linear/Z_m	m=29 a=25 b=5	finite:29	50
+2047	linear/Z_m	m=29 a=25 b=20	finite:29	3
+2048	linear/Z_m	m=29 a=26 b=4	finite:29	44
+2049	linear/Z_m	m=29 a=26 b=14	finite:29	3
+2050	linear/Z_m	m=29 a=27 b=3	finite:29	45
+2051	linear/Z_m	m=29 a=27 b=6	finite:29	4
+2052	linear/Z_m	m=29 a=27 b=20	finite:29	3
+2053	linear/Z_m	m=29 a=27 b=21	finite:29	3
+2054	linear/Z_m	m=30 a=1 b=2	finite:30	5
+2055	linear/Z_m	m=30 a=1 b=3	finite:30	10
+2056	linear/Z_m	m=30 a=1 b=27	finite:30	14
+2057	linear/Z_m	m=30 a=2 b=1	finite:30	5
+2058	linear/Z_m	m=30 a=2 b=3	finite:30	5
+2059	linear/Z_m	m=30 a=2 b=4	finite:30	12
+2060	linear/Z_m	m=30 a=2 b=5	finite:30	13
+2061	linear/Z_m	m=30 a=2 b=7	finite:30	7
+2062	linear/Z_m	m=30 a=2 b=8	finite:30	3
+2063	linear/Z_m	m=30 a=2 b=9	finite:30	27
+2064	linear/Z_m	m=30 a=2 b=11	finite:30	7
+2065	linear/Z_m	m=30 a=2 b=13	finite:30	8
+2066	linear/Z_m	m=30 a=2 b=17	finite:30	16
+2067	linear/Z_m	m=30 a=2 b=19	finite:30	18
+2068	linear/Z_m	m=30 a=2 b=23	finite:30	9
+2069	linear/Z_m	m=30 a=2 b=24	finite:30	14
+2070	linear/Z_m	m=30 a=2 b=25	finite:30	9
+2071	linear/Z_m	m=30 a=2 b=27	finite:30	8
+2072	linear/Z_m	m=30 a=3 b=1	finite:30	10
+2073	linear/Z_m	m=30 a=3 b=2	finite:30	5
+2074	linear/Z_m	m=30 a=3 b=3	finite:30	35
+2075	linear/Z_m	m=30 a=3 b=4	finite:30	22
+2076	linear/Z_m	m=30 a=3 b=8	finite:30	20
+2077	linear/Z_m	m=30 a=3 b=12	finite:30	7
+2078	linear/Z_m	m=30 a=3 b=13	finite:30	53
+2079	linear/Z_m	m=30 a=3 b=16	finite:30	6
+2080	linear/Z_m	m=30 a=3 b=17	finite:30	10
+2081	linear/Z_m	m=30 a=3 b=18	finite:30	26
+2082	linear/Z_m	m=30 a=3 b=22	finite:30	11
+2083	linear/Z_m	m=30 a=3 b=23	finite:30	23
+2084	linear/Z_m	m=30 a=3 b=24	finite:30	10
+2085	linear/Z_m	m=30 a=3 b=25	finite:30	15
+2086	linear/Z_m	m=30 a=3 b=28	finite:30	49
+2087	linear/Z_m	m=30 a=4 b=2	finite:30	12
+2088	linear/Z_m	m=30 a=4 b=3	finite:30	22
+2089	linear/Z_m	m=30 a=4 b=5	finite:30	15
+2090	linear/Z_m	m=30 a=4 b=6	finite:30	25
+2091	linear/Z_m	m=30 a=4 b=7	finite:30	8
+2092	linear/Z_m	m=30 a=4 b=9	finite:30	51
+2093	linear/Z_m	m=30 a=4 b=11	finite:30	24
+2094	linear/Z_m	m=30 a=4 b=17	finite:30	15
+2095	linear/Z_m	m=30 a=4 b=21	finite:30	32
+2096	linear/Z_m	m=30 a=4 b=22	finite:30	5
+2097	linear/Z_m	m=30 a=4 b=23	finite:30	7
+2098	linear/Z_m	m=30 a=4 b=24	finite:30	37
+2099	linear/Z_m	m=30 a=4 b=27	finite:30	57
+2100	linear/Z_m	m=30 a=5 b=2	finite:30	13
+2101	linear/Z_m	m=30 a=5 b=4	finite:30	15
+2102	linear/Z_m	m=30 a=5 b=5	finite:30	97
+2103	linear/Z_m	m=30 a=5 b=9	finite:30	19
+2104	linear/Z_m	m=30 a=5 b=10	finite:30	26
+2105	linear/Z_m	m=30 a=5 b=11	finite:30	115
+2106	linear/Z_m	m=30 a=5 b=14	finite:30	36
+2107	linear/Z_m	m=30 a=5 b=15	finite:30	42
+2108	linear/Z_m	m=30 a=5 b=16	finite:30	33
+2109	linear/Z_m	m=30 a=5 b=20	finite:30	49
+2110	linear/Z_m	m=30 a=5 b=21	finite:30	41
+2111	linear/Z_m	m=30 a=5 b=26	finite:30	73
+2112	linear/Z_m	m=30 a=6 b=4	finite:30	25
+2113	linear/Z_m	m=30 a=6 b=10	finite:30	113
+2114	linear/Z_m	m=30 a=6 b=14	finite:30	21
+2115	linear/Z_m	m=30 a=6 b=20	finite:30	63
+2116	linear/Z_m	m=30 a=7 b=2	finite:30	7
+2117	linear/Z_m	m=30 a=7 b=8	finite:30	8
+2118	linear/Z_m	m=30 a=7 b=9	finite:30	52
+2119	linear/Z_m	m=30 a=7 b=14	finite:30	22
+2120	linear/Z_m	m=30 a=7 b=19	finite:30	5
+2121	linear/Z_m	m=30 a=7 b=21	finite:30	11
+2122	linear/Z_m	m=30 a=7 b=29	finite:30	44
+2123	linear/Z_m	m=30 a=8 b=2	finite:30	3
+2124	linear/Z_m	m=30 a=8 b=3	finite:30	20
+2125	linear/Z_m	m=30 a=8 b=9	finite:30	12
+2126	linear/Z_m	m=30 a=8 b=11	finite:30	8
+2127	linear/Z_m	m=30 a=8 b=13	finite:30	18
+2128	linear/Z_m	m=30 a=8 b=17	finite:30	8
+2129	linear/Z_m	m=30 a=8 b=18	finite:30	12
+2130	linear/Z_m	m=30 a=8 b=19	finite:30	9
+2131	linear/Z_m	m=30 a=8 b=23	finite:30	46
+2132	linear/Z_m	m=30 a=8 b=27	finite:30	6
+2133	linear/Z_m	m=30 a=8 b=28	finite:30	9
+2134	linear/Z_m	m=30 a=8 b=29	finite:30	44
+2135	linear/Z_m	m=30 a=9 b=2	finite:30	27
+2136	linear/Z_m	m=30 a=9 b=7	finite:30	52
+2137	linear/Z_m	m=30 a=9 b=8	finite:30	12
+2138	linear/Z_m	m=30 a=9 b=14	finite:30	32
+2139	linear/Z_m	m=30 a=9 b=17	finite:30	28
+2140	linear/Z_m	m=30 a=9 b=23	finite:30	15
+2141	linear/Z_m	m=30 a=9 b=27	finite:30	33
+2142	linear/Z_m	m=30 a=10 b=5	finite:30	26
+2143	linear/Z_m	m=30 a=11 b=2	finite:30	7
+2144	linear/Z_m	m=30 a=11 b=4	finite:30	24
+2145	linear/Z_m	m=30 a=11 b=5	finite:30	115
+2146	linear/Z_m	m=30 a=11 b=8	finite:30	8
+2147	linear/Z_m	m=30 a=11 b=14	finite:30	33
+2148	linear/Z_m	m=30 a=11 b=17	finite:30	11
+2149	linear/Z_m	m=30 a=12 b=3	finite:30	7
+2150	linear/Z_m	m=30 a=12 b=14	finite:30	20
+2151	linear/Z_m	m=30 a=13 b=3	finite:30	53
+2152	linear/Z_m	m=30 a=13 b=8	finite:30	18
+2153	linear/Z_m	m=30 a=13 b=21	finite:30	9
+2154	linear/Z_m	m=30 a=13 b=23	finite:30	27
+2155	linear/Z_m	m=30 a=13 b=28	finite:30	11
+2156	linear/Z_m	m=30 a=14 b=5	finite:30	36
+2157	linear/Z_m	m=30 a=14 b=6	finite:30	21
+2158	linear/Z_m	m=30 a=14 b=7	finite:30	22
+2159	linear/Z_m	m=30 a=14 b=9	finite:30	32
+2160	linear/Z_m	m=30 a=14 b=11	finite:30	33
+2161	linear/Z_m	m=30 a=14 b=12	finite:30	20
+2162	linear/Z_m	m=30 a=14 b=17	finite:30	56
+2163	linear/Z_m	m=30 a=14 b=20	finite:30	31
+2164	linear/Z_m	m=30 a=14 b=21	finite:30	24
+2165	linear/Z_m	m=30 a=14 b=22	finite:30	19
+2166	linear/Z_m	m=30 a=14 b=23	finite:30	23
+2167	linear/Z_m	m=30 a=14 b=24	finite:30	29
+2168	linear/Z_m	m=30 a=14 b=26	finite:30	22
+2169	linear/Z_m	m=30 a=14 b=27	finite:30	26
+2170	linear/Z_m	m=30 a=15 b=5	finite:30	42
+2171	linear/Z_m	m=30 a=15 b=21	finite:30	75
+2172	linear/Z_m	m=30 a=16 b=3	finite:30	6
+2173	linear/Z_m	m=30 a=16 b=5	finite:30	33
+2174	linear/Z_m	m=30 a=16 b=9	finite:30	32
+2175	linear/Z_m	m=30 a=16 b=17	finite:30	3
+2176	linear/Z_m	m=30 a=16 b=20	finite:30	29
+2177	linear/Z_m	m=30 a=16 b=21	finite:30	6
+2178	linear/Z_m	m=30 a=16 b=25	finite:30	11
+2179	linear/Z_m	m=30 a=16 b=27	finite:30	7
+2180	linear/Z_m	m=30 a=17 b=2	finite:30	16
+2181	linear/Z_m	m=30 a=17 b=3	finite:30	10
+2182	linear/Z_m	m=30 a=17 b=4	finite:30	15
+2183	linear/Z_m	m=30 a=17 b=8	finite:30	8
+2184	linear/Z_m	m=30 a=17 b=9	finite:30	28
+2185	linear/Z_m	m=30 a=17 b=11	finite:30	11
+2186	linear/Z_m	m=30 a=17 b=14	finite:30	56
+2187	linear/Z_m	m=30 a=17 b=16	finite:30	3
+2188	linear/Z_m	m=30 a=17 b=19	finite:30	27
+2189	linear/Z_m	m=30 a=17 b=22	finite:30	7
+2190	linear/Z_m	m=30 a=17 b=23	finite:30	14
+2191	linear/Z_m	m=30 a=17 b=26	finite:30	9
+2192	linear/Z_m	m=30 a=17 b=27	finite:30	12
+2193	linear/Z_m	m=30 a=17 b=28	finite:30	8
+2194	linear/Z_m	m=30 a=17 b=29	finite:30	72
+2195	linear/Z_m	m=30 a=18 b=3	finite:30	26
+2196	linear/Z_m	m=30 a=18 b=8	finite:30	12
+2197	linear/Z_m	m=30 a=18 b=22	finite:30	6
+2198	linear/Z_m	m=30 a=19 b=2	finite:30	18
+2199	linear/Z_m	m=30 a=19 b=8	finite:30	9
+2200	linear/Z_m	m=30 a=19 b=17	finite:30	27
+2201	linear/Z_m	m=30 a=19 b=27	finite:30	73
+2202	linear/Z_m	m=30 a=20 b=5	finite:30	49
+2203	linear/Z_m	m=30 a=20 b=6	finite:30	63
+2204	linear/Z_m	m=30 a=20 b=14	finite:30	31
+2205	linear/Z_m	m=30 a=20 b=16	finite:30	29
+2206	linear/Z_m	m=30 a=20 b=24	finite:30	43
+2207	linear/Z_m	m=30 a=21 b=5	finite:30	41
+2208	linear/Z_m	m=30 a=21 b=7	finite:30	11
+2209	linear/Z_m	m=30 a=21 b=13	finite:30	9
+2210	linear/Z_m	m=30 a=21 b=14	finite:30	24
+2211	linear/Z_m	m=30 a=21 b=15	finite:30	75
+2212	linear/Z_m	m=30 a=21 b=25	finite:30	89
+2213	linear/Z_m	m=30 a=22 b=3	finite:30	11
+2214	linear/Z_m	m=30 a=22 b=9	finite:30	57
+2215	linear/Z_m	m=30 a=22 b=14	finite:30	19
+2216	linear/Z_m	m=30 a=22 b=17	finite:30	7
+2217	linear/Z_m	m=30 a=22 b=18	finite:30	6
+2218	linear/Z_m	m=30 a=22 b=21	finite:30	7
+2219	linear/Z_m	m=30 a=22 b=23	finite:30	9
+2220	linear/Z_m	m=30 a=22 b=24	finite:30	25
+2221	linear/Z_m	m=30 a=22 b=27	finite:30	22
+2222	linear/Z_m	m=30 a=22 b=29	finite:30	46
+2223	linear/Z_m	m=30 a=23 b=2	finite:30	9
+2224	linear/Z_m	m=30 a=23 b=3	finite:30	23
+2225	linear/Z_m	m=30 a=23 b=4	finite:30	7
+2226	linear/Z_m	m=30 a=23 b=8	finite:30	46
+2227	linear/Z_m	m=30 a=23 b=9	finite:30	15
+2228	linear/Z_m	m=30 a=23 b=13	finite:30	27
+2229	linear/Z_m	m=30 a=23 b=14	finite:30	23
+2230	linear/Z_m	m=30 a=23 b=22	finite:30	9
+2231	linear/Z_m	m=30 a=23 b=23	finite:30	59
+2232	linear/Z_m	m=30 a=23 b=26	finite:30	8
+2233	linear/Z_m	m=30 a=23 b=28	finite:30	19
+2234	linear/Z_m	m=30 a=23 b=29	finite:30	45
+2235	linear/Z_m	m=30 a=24 b=2	finite:30	14
+2236	linear/Z_m	m=30 a=24 b=3	finite:30	10
+2237	linear/Z_m	m=30 a=24 b=4	finite:30	37
+2238	linear/Z_m	m=30 a=24 b=14	finite:30	29
+2239	linear/Z_m	m=30 a=24 b=22	finite:30	25
+2240	linear/Z_m	m=30 a=25 b=2	finite:30	9
+2241	linear/Z_m	m=30 a=25 b=3	finite:30	15
+2242	linear/Z_m	m=30 a=26 b=14	finite:30	22
+2243	linear/Z_m	m=30 a=26 b=17	finite:30	9
+2244	linear/Z_m	m=30 a=26 b=23	finite:30	8
+2245	linear/Z_m	m=30 a=26 b=29	finite:30	45
+2246	linear/Z_m	m=30 a=27 b=1	finite:30	14
+2247	linear/Z_m	m=30 a=27 b=2	finite:30	8
+2248	linear/Z_m	m=30 a=27 b=8	finite:30	6
+2249	linear/Z_m	m=30 a=27 b=9	finite:30	33
+2250	linear/Z_m	m=30 a=27 b=14	finite:30	26
+2251	linear/Z_m	m=30 a=27 b=17	finite:30	12
+2252	linear/Z_m	m=30 a=27 b=19	finite:30	73
+2253	linear/Z_m	m=30 a=28 b=8	finite:30	9
+2254	linear/Z_m	m=30 a=28 b=13	finite:30	11
+2255	linear/Z_m	m=30 a=28 b=17	finite:30	8
+2256	linear/Z_m	m=30 a=28 b=23	finite:30	19
+2257	linear/Z_m	m=30 a=29 b=7	finite:30	44
+2258	linear/Z_m	m=30 a=29 b=8	finite:30	44
+2259	linear/Z_m	m=30 a=29 b=17	finite:30	72
+2260	linear/Z_m	m=30 a=29 b=22	finite:30	46
+2261	linear/Z_m	m=30 a=29 b=23	finite:30	45
+2262	linear/Z_m	m=30 a=29 b=26	finite:30	45
+2263	linear/Z_m	m=31 a=2 b=6	finite:31	3
+2264	linear/Z_m	m=31 a=2 b=9	finite:31	3
+2265	linear/Z_m	m=31 a=2 b=22	finite:31	3
+2266	linear/Z_m	m=31 a=3 b=29	finite:31	47
+2267	linear/Z_m	m=31 a=4 b=28	finite:31	44
+2268	linear/Z_m	m=31 a=5 b=10	finite:31	4
+2269	linear/Z_m	m=31 a=5 b=13	finite:31	5
+2270	linear/Z_m	m=31 a=5 b=14	finite:31	4
+2271	linear/Z_m	m=31 a=5 b=27	finite:31	52
+2272	linear/Z_m	m=31 a=6 b=2	finite:31	3
+2273	linear/Z_m	m=31 a=6 b=14	finite:31	3
+2274	linear/Z_m	m=31 a=7 b=25	finite:31	52
+2275	linear/Z_m	m=31 a=8 b=20	finite:31	3
+2276	linear/Z_m	m=31 a=8 b=24	finite:31	46
+2277	linear/Z_m	m=31 a=9 b=2	finite:31	3
+2278	linear/Z_m	m=31 a=9 b=14	finite:31	5
+2279	linear/Z_m	m=31 a=9 b=23	finite:31	43
+2280	linear/Z_m	m=31 a=10 b=5	finite:31	4
+2281	linear/Z_m	m=31 a=10 b=26	finite:31	4
+2282	linear/Z_m	m=31 a=11 b=21	finite:31	46
+2283	linear/Z_m	m=31 a=11 b=27	finite:31	4
+2284	linear/Z_m	m=31 a=12 b=20	finite:31	50
+2285	linear/Z_m	m=31 a=13 b=5	finite:31	5
+2286	linear/Z_m	m=31 a=13 b=14	finite:31	5
+2287	linear/Z_m	m=31 a=14 b=5	finite:31	4
+2288	linear/Z_m	m=31 a=14 b=6	finite:31	3
+2289	linear/Z_m	m=31 a=14 b=8	finite:31	3
+2290	linear/Z_m	m=31 a=14 b=9	finite:31	5
+2291	linear/Z_m	m=31 a=14 b=13	finite:31	5
+2292	linear/Z_m	m=31 a=14 b=18	finite:31	51
+2293	linear/Z_m	m=31 a=14 b=26	finite:31	3
+2294	linear/Z_m	m=31 a=15 b=17	finite:31	44
+2295	linear/Z_m	m=31 a=17 b=15	finite:31	44
+2296	linear/Z_m	m=31 a=18 b=14	finite:31	51
+2297	linear/Z_m	m=31 a=19 b=24	finite:31	8
+2298	linear/Z_m	m=31 a=20 b=8	finite:31	3
+2299	linear/Z_m	m=31 a=20 b=12	finite:31	50
+2300	linear/Z_m	m=31 a=21 b=11	finite:31	46
+2301	linear/Z_m	m=31 a=23 b=9	finite:31	43
+2302	linear/Z_m	m=31 a=23 b=25	finite:31	5
+2303	linear/Z_m	m=31 a=24 b=8	finite:31	46
+2304	linear/Z_m	m=31 a=24 b=19	finite:31	8
+2305	linear/Z_m	m=31 a=25 b=7	finite:31	52
+2306	linear/Z_m	m=31 a=25 b=23	finite:31	5
+2307	linear/Z_m	m=31 a=26 b=10	finite:31	4
+2308	linear/Z_m	m=31 a=26 b=14	finite:31	3
+2309	linear/Z_m	m=31 a=27 b=5	finite:31	52
+2310	linear/Z_m	m=31 a=27 b=11	finite:31	4
+2311	linear/Z_m	m=31 a=28 b=4	finite:31	44
+2312	linear/Z_m	m=31 a=29 b=3	finite:31	47
+2313	linear/Z_m	m=32 a=2 b=3	finite:32	4
+2314	linear/Z_m	m=32 a=3 b=2	finite:32	4
+2315	linear/Z_m	m=32 a=3 b=4	finite:32	9
+2316	linear/Z_m	m=32 a=3 b=5	finite:32	5
+2317	linear/Z_m	m=32 a=3 b=6	finite:32	10
+2318	linear/Z_m	m=32 a=3 b=7	finite:32	3
+2319	linear/Z_m	m=32 a=3 b=12	finite:32	9
+2320	linear/Z_m	m=32 a=3 b=13	finite:32	2
+2321	linear/Z_m	m=32 a=3 b=14	finite:32	19
+2322	linear/Z_m	m=32 a=3 b=19	finite:32	3
+2323	linear/Z_m	m=32 a=3 b=27	finite:32	9
+2324	linear/Z_m	m=32 a=3 b=30	finite:32	43
+2325	linear/Z_m	m=32 a=4 b=3	finite:32	9
+2326	linear/Z_m	m=32 a=4 b=5	finite:32	14
+2327	linear/Z_m	m=32 a=4 b=7	finite:32	16
+2328	linear/Z_m	m=32 a=4 b=11	finite:32	9
+2329	linear/Z_m	m=32 a=4 b=12	finite:32	9
+2330	linear/Z_m	m=32 a=4 b=13	finite:32	30
+2331	linear/Z_m	m=32 a=4 b=29	finite:32	75
+2332	linear/Z_m	m=32 a=5 b=4	finite:32	14
+2333	linear/Z_m	m=32 a=5 b=11	finite:32	2
+2334	linear/Z_m	m=32 a=5 b=12	finite:32	30
+2335	linear/Z_m	m=32 a=5 b=28	finite:32	75
+2336	linear/Z_m	m=32 a=6 b=3	finite:32	10
+2337	linear/Z_m	m=32 a=6 b=11	finite:32	19
+2338	linear/Z_m	m=32 a=6 b=27	finite:32	43
+2339	linear/Z_m	m=32 a=7 b=4	finite:32	16
+2340	linear/Z_m	m=32 a=7 b=10	finite:32	26
+2341	linear/Z_m	m=32 a=7 b=26	finite:32	56
+2342	linear/Z_m	m=32 a=9 b=13	finite:32	5
+2343	linear/Z_m	m=32 a=10 b=7	finite:32	26
+2344	linear/Z_m	m=32 a=10 b=23	finite:32	56
+2345	linear/Z_m	m=32 a=11 b=6	finite:32	19
+2346	linear/Z_m	m=32 a=11 b=22	finite:32	43
+2347	linear/Z_m	m=32 a=13 b=9	finite:32	5
+2348	linear/Z_m	m=32 a=14 b=3	finite:32	19
+2349	linear/Z_m	m=32 a=14 b=19	finite:32	43
+2350	linear/Z_m	m=32 a=17 b=29	finite:32	3
+2351	linear/Z_m	m=32 a=29 b=17	finite:32	3
+2352	affine/Z_m	m=3 a=2 b=2 c=1	finite:3	313
+2353	affine/Z_m	m=4 a=1 b=2 c=1	finite:4	77
+2354	affine/Z_m	m=4 a=2 b=1 c=1	finite:4	77
+2355	affine/Z_m	m=4 a=2 b=3 c=1	finite:4	95
+2356	affine/Z_m	m=4 a=3 b=2 c=1	finite:4	95
+2357	affine/Z_m	m=5 a=2 b=4 c=1	finite:5	81
+2358	affine/Z_m	m=5 a=3 b=3 c=1	finite:5	89
+2359	affine/Z_m	m=5 a=4 b=2 c=1	finite:5	81
+2360	affine/Z_m	m=6 a=2 b=2 c=1	finite:6	103
+2361	affine/Z_m	m=6 a=2 b=5 c=2	finite:6	120
+2362	affine/Z_m	m=6 a=5 b=2 c=2	finite:6	120
+2363	affine/Z_m	m=7 a=3 b=5 c=1	finite:7	14
+2364	affine/Z_m	m=7 a=4 b=4 c=1	finite:7	29
+2365	affine/Z_m	m=7 a=5 b=3 c=1	finite:7	14
+2366	affine/Z_m	m=8 a=1 b=2 c=1	finite:8	13
+2367	affine/Z_m	m=8 a=1 b=4 c=1	finite:8	26
+2368	affine/Z_m	m=8 a=2 b=1 c=1	finite:8	13
+2369	affine/Z_m	m=8 a=4 b=1 c=1	finite:8	26
+2370	affine/Z_m	m=9 a=1 b=3 c=1	finite:9	9
+2371	affine/Z_m	m=9 a=1 b=6 c=1	finite:9	24
+2372	affine/Z_m	m=9 a=2 b=5 c=1	finite:9	43
+2373	affine/Z_m	m=9 a=2 b=8 c=3	finite:9	81
+2374	affine/Z_m	m=9 a=3 b=1 c=1	finite:9	9
+2375	affine/Z_m	m=9 a=5 b=2 c=1	finite:9	43
+2376	affine/Z_m	m=9 a=5 b=5 c=1	finite:9	21
+2377	affine/Z_m	m=9 a=5 b=5 c=3	finite:9	59
+2378	affine/Z_m	m=9 a=6 b=1 c=1	finite:9	24
+2379	affine/Z_m	m=9 a=8 b=2 c=3	finite:9	81
+2380	affine/Z_m	m=10 a=2 b=4 c=1	finite:10	25
+2381	affine/Z_m	m=10 a=2 b=9 c=2	finite:10	47
+2382	affine/Z_m	m=10 a=3 b=8 c=1	finite:10	14
+2383	affine/Z_m	m=10 a=3 b=8 c=2	finite:10	34
+2384	affine/Z_m	m=10 a=4 b=2 c=1	finite:10	25
+2385	affine/Z_m	m=10 a=4 b=7 c=1	finite:10	17
+2386	affine/Z_m	m=10 a=4 b=7 c=2	finite:10	31
+2387	affine/Z_m	m=10 a=7 b=4 c=1	finite:10	17
+2388	affine/Z_m	m=10 a=7 b=4 c=2	finite:10	31
+2389	affine/Z_m	m=10 a=8 b=3 c=1	finite:10	14
+2390	affine/Z_m	m=10 a=8 b=3 c=2	finite:10	34
+2391	affine/Z_m	m=10 a=8 b=8 c=1	finite:10	17
+2392	affine/Z_m	m=10 a=9 b=2 c=2	finite:10	47
+2393	affine/Z_m	m=11 a=4 b=8 c=1	finite:11	13
+2394	affine/Z_m	m=11 a=5 b=7 c=1	finite:11	7
+2395	affine/Z_m	m=11 a=7 b=5 c=1	finite:11	7
+2396	affine/Z_m	m=11 a=8 b=4 c=1	finite:11	13
+2397	affine/Z_m	m=12 a=2 b=3 c=1	finite:12	16
+2398	affine/Z_m	m=12 a=2 b=5 c=1	finite:12	20
+2399	affine/Z_m	m=12 a=2 b=5 c=3	finite:12	24
+2400	affine/Z_m	m=12 a=2 b=8 c=1	finite:12	27
+2401	affine/Z_m	m=12 a=2 b=9 c=1	finite:12	3
+2402	affine/Z_m	m=12 a=2 b=11 c=4	finite:12	75
+2403	affine/Z_m	m=12 a=3 b=2 c=1	finite:12	16
+2404	affine/Z_m	m=12 a=3 b=6 c=1	finite:12	37
+2405	affine/Z_m	m=12 a=3 b=10 c=3	finite:12	31
+2406	affine/Z_m	m=12 a=5 b=2 c=1	finite:12	20
+2407	affine/Z_m	m=12 a=5 b=2 c=3	finite:12	24
+2408	affine/Z_m	m=12 a=6 b=3 c=1	finite:12	37
+2409	affine/Z_m	m=12 a=8 b=2 c=1	finite:12	27
+2410	affine/Z_m	m=12 a=9 b=10 c=1	finite:12	6
+2411	affine/Z_m	m=12 a=9 b=10 c=3	finite:12	24
+2412	affine/Z_m	m=12 a=10 b=3 c=3	finite:12	31
+2413	affine/Z_m	m=12 a=10 b=9 c=1	finite:12	6
+2414	affine/Z_m	m=12 a=10 b=9 c=3	finite:12	24
+2415	affine/Z_m	m=12 a=11 b=2 c=4	finite:12	75
+2416	affine/Z_m	m=13 a=3 b=11 c=1	finite:13	5
+2417	affine/Z_m	m=13 a=4 b=10 c=1	finite:13	5
+2418	affine/Z_m	m=13 a=11 b=3 c=1	finite:13	5
+2419	affine/Z_m	m=14 a=3 b=5 c=1	finite:14	6
+2420	affine/Z_m	m=14 a=3 b=12 c=2	finite:14	4
+2421	affine/Z_m	m=14 a=4 b=11 c=2	finite:14	12
+2422	affine/Z_m	m=14 a=5 b=3 c=1	finite:14	6
+2423	affine/Z_m	m=14 a=5 b=10 c=2	finite:14	5
+2424	affine/Z_m	m=14 a=10 b=5 c=2	finite:14	5
+2425	affine/Z_m	m=14 a=10 b=12 c=1	finite:14	6
+2426	affine/Z_m	m=14 a=11 b=4 c=2	finite:14	12
+2427	affine/Z_m	m=14 a=12 b=3 c=2	finite:14	4
+2428	affine/Z_m	m=14 a=12 b=10 c=1	finite:14	6
+2429	affine/Z_m	m=15 a=2 b=4 c=1	finite:15	19
+2430	affine/Z_m	m=15 a=2 b=11 c=1	finite:15	11
+2431	affine/Z_m	m=15 a=2 b=14 c=3	finite:15	46
+2432	affine/Z_m	m=15 a=2 b=14 c=5	finite:15	74
+2433	affine/Z_m	m=15 a=3 b=7 c=1	finite:15	6
+2434	affine/Z_m	m=15 a=3 b=13 c=1	finite:15	7
+2435	affine/Z_m	m=15 a=3 b=13 c=5	finite:15	23
+2436	affine/Z_m	m=15 a=4 b=2 c=1	finite:15	19
+2437	affine/Z_m	m=15 a=4 b=12 c=5	finite:15	27
+2438	affine/Z_m	m=15 a=7 b=3 c=1	finite:15	6
+2439	affine/Z_m	m=15 a=7 b=9 c=1	finite:15	9
+2440	affine/Z_m	m=15 a=7 b=9 c=5	finite:15	21
+2441	affine/Z_m	m=15 a=7 b=12 c=1	finite:15	6
+2442	affine/Z_m	m=15 a=8 b=8 c=1	finite:15	41
+2443	affine/Z_m	m=15 a=8 b=8 c=5	finite:15	59
+2444	affine/Z_m	m=15 a=8 b=14 c=1	finite:15	47
+2445	affine/Z_m	m=15 a=9 b=7 c=1	finite:15	9
+2446	affine/Z_m	m=15 a=9 b=7 c=5	finite:15	21
+2447	affine/Z_m	m=15 a=9 b=13 c=1	finite:15	10
+2448	affine/Z_m	m=15 a=11 b=2 c=1	finite:15	11
+2449	affine/Z_m	m=15 a=12 b=4 c=5	finite:15	27
+2450	affine/Z_m	m=15 a=12 b=7 c=1	finite:15	6
+2451	affine/Z_m	m=15 a=12 b=13 c=1	finite:15	7
+2452	affine/Z_m	m=15 a=13 b=3 c=1	finite:15	7
+2453	affine/Z_m	m=15 a=13 b=3 c=5	finite:15	23
+2454	affine/Z_m	m=15 a=13 b=9 c=1	finite:15	10
+2455	affine/Z_m	m=15 a=13 b=12 c=1	finite:15	7
+2456	affine/Z_m	m=15 a=14 b=2 c=3	finite:15	46
+2457	affine/Z_m	m=15 a=14 b=2 c=5	finite:15	74
+2458	affine/Z_m	m=15 a=14 b=8 c=1	finite:15	47
+2459	affine/Z_m	m=16 a=1 b=4 c=2	finite:16	24
+2460	affine/Z_m	m=16 a=4 b=1 c=2	finite:16	24
+2461	affine/Z_m	m=16 a=4 b=7 c=1	finite:16	32
+2462	affine/Z_m	m=16 a=7 b=4 c=1	finite:16	32
+2463	affine/Z_m	m=17 a=7 b=11 c=1	finite:17	6
+2464	affine/Z_m	m=17 a=8 b=10 c=1	finite:17	8
+2465	affine/Z_m	m=17 a=10 b=8 c=1	finite:17	8
+2466	affine/Z_m	m=17 a=11 b=7 c=1	finite:17	6
+2467	affine/Z_m	m=18 a=2 b=5 c=1	finite:18	7
+2468	affine/Z_m	m=18 a=2 b=5 c=2	finite:18	15
+2469	affine/Z_m	m=18 a=2 b=5 c=3	finite:18	28
+2470	affine/Z_m	m=18 a=2 b=8 c=3	finite:18	27
+2471	affine/Z_m	m=18 a=2 b=11 c=1	finite:18	6
+2472	affine/Z_m	m=18 a=2 b=11 c=2	finite:18	10
+2473	affine/Z_m	m=18 a=2 b=11 c=3	finite:18	21
+2474	affine/Z_m	m=18 a=2 b=13 c=1	finite:18	4
+2475	affine/Z_m	m=18 a=2 b=14 c=1	finite:18	6
+2476	affine/Z_m	m=18 a=2 b=17 c=6	finite:18	72
+2477	affine/Z_m	m=18 a=3 b=4 c=3	finite:18	8
+2478	affine/Z_m	m=18 a=3 b=16 c=9	finite:18	40
+2479	affine/Z_m	m=18 a=4 b=3 c=3	finite:18	8
+2480	affine/Z_m	m=18 a=4 b=5 c=1	finite:18	6
+2481	affine/Z_m	m=18 a=4 b=15 c=2	finite:18	7
+2482	affine/Z_m	m=18 a=4 b=15 c=9	finite:18	40
+2483	affine/Z_m	m=18 a=5 b=2 c=1	finite:18	7
+2484	affine/Z_m	m=18 a=5 b=2 c=2	finite:18	15
+2485	affine/Z_m	m=18 a=5 b=2 c=3	finite:18	28
+2486	affine/Z_m	m=18 a=5 b=4 c=1	finite:18	6
+2487	affine/Z_m	m=18 a=5 b=8 c=3	finite:18	24
+2488	affine/Z_m	m=18 a=5 b=11 c=1	finite:18	41
+2489	affine/Z_m	m=18 a=5 b=14 c=1	finite:18	6
+2490	affine/Z_m	m=18 a=5 b=14 c=2	finite:18	11
+2491	affine/Z_m	m=18 a=5 b=14 c=3	finite:18	21
+2492	affine/Z_m	m=18 a=5 b=14 c=6	finite:18	36
+2493	affine/Z_m	m=18 a=5 b=14 c=9	finite:18	25
+2494	affine/Z_m	m=18 a=6 b=13 c=9	finite:18	84
+2495	affine/Z_m	m=18 a=7 b=12 c=9	finite:18	84
+2496	affine/Z_m	m=18 a=7 b=14 c=1	finite:18	4
+2497	affine/Z_m	m=18 a=8 b=2 c=3	finite:18	27
+2498	affine/Z_m	m=18 a=8 b=5 c=3	finite:18	24
+2499	affine/Z_m	m=18 a=8 b=11 c=6	finite:18	41
+2500	affine/Z_m	m=18 a=8 b=11 c=9	finite:18	28
+2501	affine/Z_m	m=18 a=11 b=2 c=2	finite:18	10
+2502	affine/Z_m	m=18 a=11 b=8 c=6	finite:18	41
+2503	affine/Z_m	m=18 a=11 b=8 c=9	finite:18	28
+2504	affine/Z_m	m=18 a=11 b=14 c=2	finite:18	15
+2505	affine/Z_m	m=18 a=14 b=2 c=1	finite:18	6
+2506	affine/Z_m	m=18 a=14 b=5 c=2	finite:18	11
+2507	affine/Z_m	m=18 a=14 b=5 c=6	finite:18	36
+2508	affine/Z_m	m=18 a=14 b=5 c=9	finite:18	25
+2509	affine/Z_m	m=18 a=14 b=11 c=2	finite:18	15
+2510	affine/Z_m	m=18 a=14 b=14 c=3	finite:18	29
+2511	affine/Z_m	m=18 a=15 b=4 c=2	finite:18	7
+2512	affine/Z_m	m=18 a=17 b=2 c=6	finite:18	72
+2513	affine/Z_m	m=20 a=2 b=4 c=1	finite:20	9
+2514	affine/Z_m	m=20 a=2 b=7 c=1	finite:20	7
+2515	affine/Z_m	m=20 a=2 b=19 c=4	finite:20	44
+2516	affine/Z_m	m=20 a=3 b=10 c=1	finite:20	37
+2517	affine/Z_m	m=20 a=3 b=14 c=1	finite:20	8
+2518	affine/Z_m	m=20 a=3 b=18 c=1	finite:20	8
+2519	affine/Z_m	m=20 a=3 b=18 c=2	finite:20	10
+2520	affine/Z_m	m=20 a=3 b=18 c=4	finite:20	23
+2521	affine/Z_m	m=20 a=3 b=18 c=5	finite:20	18
+2522	affine/Z_m	m=20 a=4 b=2 c=1	finite:20	9
+2523	affine/Z_m	m=20 a=4 b=13 c=1	finite:20	11
+2524	affine/Z_m	m=20 a=4 b=17 c=5	finite:20	15
+2525	affine/Z_m	m=20 a=7 b=2 c=1	finite:20	7
+2526	affine/Z_m	m=20 a=7 b=14 c=1	finite:20	10
+2527	affine/Z_m	m=20 a=7 b=14 c=2	finite:20	12
+2528	affine/Z_m	m=20 a=7 b=14 c=4	finite:20	23
+2529	affine/Z_m	m=20 a=8 b=13 c=1	finite:20	8
+2530	affine/Z_m	m=20 a=8 b=13 c=5	finite:20	14
+2531	affine/Z_m	m=20 a=8 b=17 c=1	finite:20	8
+2532	affine/Z_m	m=20 a=8 b=18 c=1	finite:20	6
+2533	affine/Z_m	m=20 a=9 b=12 c=5	finite:20	20
+2534	affine/Z_m	m=20 a=10 b=3 c=1	finite:20	37
+2535	affine/Z_m	m=20 a=12 b=9 c=5	finite:20	20
+2536	affine/Z_m	m=20 a=13 b=4 c=1	finite:20	11
+2537	affine/Z_m	m=20 a=13 b=8 c=1	finite:20	8
+2538	affine/Z_m	m=20 a=13 b=8 c=5	finite:20	14
+2539	affine/Z_m	m=20 a=13 b=12 c=1	finite:20	8
+2540	affine/Z_m	m=20 a=13 b=18 c=5	finite:20	16
+2541	affine/Z_m	m=20 a=14 b=3 c=1	finite:20	8
+2542	affine/Z_m	m=20 a=14 b=7 c=1	finite:20	10
+2543	affine/Z_m	m=20 a=14 b=7 c=2	finite:20	12
+2544	affine/Z_m	m=20 a=14 b=7 c=4	finite:20	23
+2545	affine/Z_m	m=20 a=14 b=7 c=5	finite:20	18
+2546	affine/Z_m	m=20 a=14 b=17 c=5	finite:20	15
+2547	affine/Z_m	m=20 a=17 b=4 c=5	finite:20	15
+2548	affine/Z_m	m=20 a=17 b=14 c=5	finite:20	15
+2549	affine/Z_m	m=20 a=18 b=3 c=1	finite:20	8
+2550	affine/Z_m	m=20 a=18 b=3 c=2	finite:20	10
+2551	affine/Z_m	m=20 a=18 b=3 c=4	finite:20	23
+2552	affine/Z_m	m=20 a=18 b=8 c=1	finite:20	6
+2553	affine/Z_m	m=20 a=18 b=13 c=5	finite:20	16
+2554	affine/Z_m	m=20 a=19 b=2 c=4	finite:20	44
+2555	linear/Z	a=-5 b=6	infinite	41
+2556	linear/Z	a=-2 b=3	infinite	42
+2557	linear/Z	a=3 b=-2	infinite	42
+2558	linear/M2(F2)	a=[1, 0, 0, 0] b=[0, 1, 0, 0]	finite:16	88
+2559	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 1, 0, 0]	finite:16	31
+2560	linear/M2(F2)	a=[1, 0, 0, 0] b=[0, 0, 1, 0]	finite:16	113
+2561	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 0, 1, 0]	finite:16	53
+2562	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 1, 1, 0]	finite:16	11
+2563	linear/M2(F2)	a=[1, 0, 0, 0] b=[0, 1, 0, 1]	finite:16	81
+2564	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 1, 0, 1]	finite:16	127
+2565	linear/M2(F2)	a=[1, 0, 0, 0] b=[0, 0, 1, 1]	finite:16	81
+2566	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 0, 1, 1]	finite:16	53
+2567	linear/M2(F2)	a=[1, 0, 0, 0] b=[0, 1, 1, 1]	finite:16	8
+2568	linear/M2(F2)	a=[1, 0, 0, 0] b=[1, 1, 1, 1]	finite:16	12
+2569	linear/M2(F2)	a=[0, 1, 0, 0] b=[1, 0, 0, 0]	finite:16	88
+2570	linear/M2(F2)	a=[0, 1, 0, 0] b=[0, 0, 1, 0]	finite:16	78
+2571	linear/M2(F2)	a=[0, 1, 0, 0] b=[1, 0, 1, 0]	finite:16	12
+2572	linear/M2(F2)	a=[0, 1, 0, 0] b=[1, 1, 1, 0]	finite:16	22
+2573	linear/M2(F2)	a=[0, 1, 0, 0] b=[0, 0, 0, 1]	finite:16	113
+2574	linear/M2(F2)	a=[0, 1, 1, 0] b=[1, 1, 0, 0]	finite:16	53
+2575	linear/M2(F2)	a=[0, 1, 1, 0] b=[1, 0, 1, 0]	finite:16	127
+2576	linear/M2(F2)	a=[0, 1, 1, 0] b=[0, 1, 1, 0]	finite:16	165
+2577	linear/M2(F2)	a=[0, 1, 1, 0] b=[1, 1, 1, 0]	finite:16	23
+2578	linear/M2(F2)	a=[0, 1, 1, 0] b=[1, 0, 0, 1]	finite:16	110
+2579	linear/M2(F2)	a=[0, 1, 1, 0] b=[1, 1, 0, 1]	finite:16	19
+2580	linear/M2(F2)	a=[1, 1, 1, 0] b=[1, 0, 0, 0]	finite:16	11
+2581	linear/M2(F2)	a=[1, 1, 1, 0] b=[0, 1, 0, 0]	finite:16	22
+2582	linear/M2(F2)	a=[1, 1, 1, 0] b=[1, 1, 0, 0]	finite:16	8
+2583	linear/M2(F2)	a=[1, 1, 1, 0] b=[0, 1, 1, 0]	finite:16	23
+2584	linear/M2(F2)	a=[1, 1, 1, 0] b=[1, 1, 1, 0]	finite:16	49
+2585	linear/M2(F2)	a=[1, 1, 1, 0] b=[1, 0, 0, 1]	finite:16	73
+2586	linear/M2(F2)	a=[1, 1, 1, 0] b=[0, 1, 1, 1]	finite:16	238
+2587	linear/M2(F2)	a=[1, 0, 0, 1] b=[0, 1, 1, 0]	finite:16	110
+2588	linear/M2(F2)	a=[1, 0, 0, 1] b=[1, 1, 1, 0]	finite:16	73
+2589	linear/M2(F3)	a=[1, 0, 0, 0] b=[0, 1, 0, 0]	finite:81	60
+2590	linear/M2(F3)	a=[1, 0, 0, 0] b=[1, 1, 0, 0]	finite:81	5
+2591	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 1, 0, 0]	finite:81	13
+2592	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 0, 1, 0]	finite:81	21
+2593	linear/M2(F3)	a=[1, 0, 0, 0] b=[1, 2, 1, 0]	finite:81	3
+2594	linear/M2(F3)	a=[1, 0, 0, 0] b=[0, 1, 0, 1]	finite:81	49
+2595	linear/M2(F3)	a=[1, 0, 0, 0] b=[1, 1, 0, 1]	finite:81	12
+2596	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 1, 0, 1]	finite:81	60
+2597	linear/M2(F3)	a=[1, 0, 0, 0] b=[0, 0, 1, 1]	finite:81	49
+2598	linear/M2(F3)	a=[1, 0, 0, 0] b=[1, 0, 1, 1]	finite:81	6
+2599	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 0, 1, 1]	finite:81	19
+2600	linear/M2(F3)	a=[1, 0, 0, 0] b=[0, 1, 0, 2]	finite:81	29
+2601	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 1, 0, 2]	finite:81	6
+2602	linear/M2(F3)	a=[1, 0, 0, 0] b=[0, 0, 1, 2]	finite:81	80
+2603	linear/M2(F3)	a=[1, 0, 0, 0] b=[2, 0, 1, 2]	finite:81	11
+2604	linear/M2(F3)	a=[1, 0, 0, 0] b=[1, 1, 1, 2]	finite:81	18
+2605	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 1, 0, 0]	finite:81	38
+2606	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 1, 0, 0]	finite:81	13
+2607	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 1, 0, 0]	finite:81	23
+2608	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 0, 1, 0]	finite:81	43
+2609	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 0, 1, 0]	finite:81	21
+2610	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 0, 1, 0]	finite:81	45
+2611	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 1, 1, 0]	finite:81	8
+2612	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 2, 1, 0]	finite:81	16
+2613	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 1, 0, 1]	finite:81	80
+2614	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 1, 0, 1]	finite:81	31
+2615	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 1, 0, 1]	finite:81	90
+2616	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 0, 1, 1]	finite:81	29
+2617	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 0, 1, 1]	finite:81	19
+2618	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 0, 1, 1]	finite:81	29
+2619	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 1, 1, 1]	finite:81	11
+2620	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 1, 0, 2]	finite:81	32
+2621	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 1, 0, 2]	finite:81	24
+2622	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 1, 0, 2]	finite:81	12
+2623	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 0, 1, 2]	finite:81	32
+2624	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 0, 1, 2]	finite:81	16
+2625	linear/M2(F3)	a=[2, 0, 0, 0] b=[2, 0, 1, 2]	finite:81	41
+2626	linear/M2(F3)	a=[2, 0, 0, 0] b=[0, 1, 1, 2]	finite:81	7
+2627	linear/M2(F3)	a=[2, 0, 0, 0] b=[1, 2, 1, 2]	finite:81	17
+2628	linear/M2(F3)	a=[0, 1, 0, 0] b=[1, 0, 0, 0]	finite:81	60
+2629	linear/M2(F3)	a=[0, 1, 0, 0] b=[2, 0, 0, 0]	finite:81	38
+2630	linear/M2(F3)	a=[0, 1, 0, 0] b=[2, 1, 1, 0]	finite:81	14
+2631	linear/M2(F3)	a=[0, 1, 0, 0] b=[1, 2, 1, 0]	finite:81	9
+2632	linear/M2(F3)	a=[0, 1, 0, 0] b=[2, 2, 1, 0]	finite:81	9
+2633	linear/M2(F3)	a=[0, 1, 0, 0] b=[0, 0, 2, 0]	finite:81	13
+2634	linear/M2(F3)	a=[0, 1, 0, 0] b=[2, 0, 2, 0]	finite:81	17
+2635	linear/M2(F3)	a=[0, 1, 0, 0] b=[0, 1, 2, 0]	finite:81	24
+2636	linear/M2(F3)	a=[0, 1, 0, 0] b=[1, 2, 2, 0]	finite:81	18
+2637	linear/M2(F3)	a=[0, 1, 0, 0] b=[2, 0, 0, 1]	finite:81	147
+2638	linear/M2(F3)	a=[0, 1, 0, 0] b=[0, 0, 0, 2]	finite:81	43
+2639	linear/M2(F3)	a=[0, 1, 0, 0] b=[1, 0, 0, 2]	finite:81	64
+2640	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 1, 0, 0]	finite:81	29
+2641	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 2, 0, 0]	finite:81	19
+2642	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 2, 0, 0]	finite:81	16
+2643	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 0, 1, 0]	finite:81	90
+2644	linear/M2(F3)	a=[0, 1, 1, 0] b=[0, 1, 1, 0]	finite:81	27
+2645	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 2, 1, 0]	finite:81	8
+2646	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 0, 2, 0]	finite:81	60
+2647	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 0, 2, 0]	finite:81	24
+2648	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 1, 2, 0]	finite:81	24
+2649	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 2, 2, 0]	finite:81	5
+2650	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 0, 0, 1]	finite:81	7
+2651	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 1, 0, 1]	finite:81	6
+2652	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 2, 0, 1]	finite:81	5
+2653	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 2, 0, 1]	finite:81	12
+2654	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 0, 1, 1]	finite:81	6
+2655	linear/M2(F3)	a=[0, 1, 1, 0] b=[1, 2, 1, 1]	finite:81	7
+2656	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 2, 1, 1]	finite:81	147
+2657	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 0, 2, 1]	finite:81	8
+2658	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 1, 2, 1]	finite:81	64
+2659	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 2, 2, 1]	finite:81	11
+2660	linear/M2(F3)	a=[0, 1, 1, 0] b=[2, 0, 0, 2]	finite:81	69
+2661	linear/M2(F3)	a=[1, 1, 1, 0] b=[2, 0, 0, 0]	finite:81	8
+2662	linear/M2(F3)	a=[1, 1, 1, 0] b=[0, 2, 0, 0]	finite:81	18
+2663	linear/M2(F3)	a=[1, 1, 1, 0] b=[1, 1, 1, 0]	finite:81	24
+2664	linear/M2(F3)	a=[1, 1, 1, 0] b=[0, 2, 1, 0]	finite:81	12
+2665	linear/M2(F3)	a=[1, 1, 1, 0] b=[0, 2, 2, 0]	finite:81	5
+2666	linear/M2(F3)	a=[1, 1, 1, 0] b=[1, 0, 0, 1]	finite:81	10
+2667	linear/M2(F3)	a=[1, 1, 1, 0] b=[1, 2, 0, 1]	finite:81	8
+2668	linear/M2(F3)	a=[1, 1, 1, 0] b=[2, 1, 1, 1]	finite:81	14
+2669	linear/M2(F3)	a=[1, 1, 1, 0] b=[0, 2, 2, 1]	finite:81	86
+2670	linear/M2(F3)	a=[1, 1, 1, 0] b=[0, 1, 1, 2]	finite:81	6
+2671	linear/M2(F3)	a=[1, 1, 1, 0] b=[1, 2, 2, 2]	finite:81	14
+2672	linear/M2(F3)	a=[2, 1, 1, 0] b=[0, 1, 0, 0]	finite:81	14
+2673	linear/M2(F3)	a=[2, 1, 1, 0] b=[2, 2, 0, 0]	finite:81	7
+2674	linear/M2(F3)	a=[2, 1, 1, 0] b=[2, 2, 1, 0]	finite:81	4
+2675	linear/M2(F3)	a=[2, 1, 1, 0] b=[2, 2, 2, 0]	finite:81	2
+2676	linear/M2(F3)	a=[2, 1, 1, 0] b=[1, 0, 0, 1]	finite:81	14
+2677	linear/M2(F3)	a=[2, 1, 1, 0] b=[2, 2, 0, 1]	finite:81	7
+2678	linear/M2(F3)	a=[2, 1, 1, 0] b=[0, 1, 1, 1]	finite:81	6
+2679	linear/M2(F3)	a=[2, 1, 1, 0] b=[2, 2, 2, 1]	finite:81	82
+2680	linear/M2(F3)	a=[2, 1, 1, 0] b=[1, 1, 1, 2]	finite:81	14
+2681	linear/M2(F3)	a=[2, 1, 1, 0] b=[0, 2, 2, 2]	finite:81	17
+2682	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 0, 0, 0]	finite:81	16
+2683	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 1, 0, 0]	finite:81	18
+2684	linear/M2(F3)	a=[0, 2, 1, 0] b=[0, 2, 0, 0]	finite:81	24
+2685	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 1, 1, 0]	finite:81	12
+2686	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 2, 1, 0]	finite:81	9
+2687	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 1, 2, 0]	finite:81	9
+2688	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 0, 0, 1]	finite:81	15
+2689	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 1, 0, 1]	finite:81	11
+2690	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 1, 1, 1]	finite:81	13
+2691	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 2, 1, 1]	finite:81	14
+2692	linear/M2(F3)	a=[0, 2, 1, 0] b=[1, 1, 2, 1]	finite:81	82
+2693	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 2, 1, 2]	finite:81	14
+2694	linear/M2(F3)	a=[0, 2, 1, 0] b=[2, 1, 2, 2]	finite:81	14
+2695	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 0, 0, 0]	finite:81	3
+2696	linear/M2(F3)	a=[1, 2, 1, 0] b=[0, 1, 0, 0]	finite:81	9
+2697	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 1, 0, 0]	finite:81	11
+2698	linear/M2(F3)	a=[1, 2, 1, 0] b=[2, 2, 0, 0]	finite:81	41
+2699	linear/M2(F3)	a=[1, 2, 1, 0] b=[2, 0, 1, 0]	finite:81	12
+2700	linear/M2(F3)	a=[1, 2, 1, 0] b=[0, 1, 1, 0]	finite:81	8
+2701	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 2, 1, 0]	finite:81	60
+2702	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 0, 2, 0]	finite:81	6
+2703	linear/M2(F3)	a=[1, 2, 1, 0] b=[0, 1, 2, 0]	finite:81	9
+2704	linear/M2(F3)	a=[1, 2, 1, 0] b=[2, 1, 2, 0]	finite:81	20
+2705	linear/M2(F3)	a=[1, 2, 1, 0] b=[0, 2, 2, 0]	finite:81	24
+2706	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 0, 0, 1]	finite:81	12
+2707	linear/M2(F3)	a=[1, 2, 1, 0] b=[1, 1, 0, 1]	finite:81	5
+2708	linear/M2(F3)	a=[1, 2, 1, 0] b=[2, 0, 0, 2]	finite:81	82
+2709	linear/M2(F3)	a=[2, 2, 1, 0] b=[0, 1, 0, 0]	finite:81	9
+2710	linear/M2(F3)	a=[2, 2, 1, 0] b=[2, 1, 0, 0]	finite:81	19
+2711	linear/M2(F3)	a=[2, 2, 1, 0] b=[1, 2, 0, 0]	finite:81	6
+2712	linear/M2(F3)	a=[2, 2, 1, 0] b=[1, 0, 1, 0]	finite:81	12
+2713	linear/M2(F3)	a=[2, 2, 1, 0] b=[2, 1, 1, 0]	finite:81	4
+2714	linear/M2(F3)	a=[2, 2, 1, 0] b=[0, 2, 1, 0]	finite:81	9
+2715	linear/M2(F3)	a=[2, 2, 1, 0] b=[2, 0, 2, 0]	finite:81	31
+2716	linear/M2(F3)	a=[2, 2, 1, 0] b=[1, 1, 2, 0]	finite:81	20
+2717	linear/M2(F3)	a=[2, 2, 1, 0] b=[2, 1, 2, 0]	finite:81	6
+2718	linear/M2(F3)	a=[2, 2, 1, 0] b=[1, 0, 0, 1]	finite:81	9
+2719	linear/M2(F3)	a=[2, 2, 1, 0] b=[2, 1, 0, 1]	finite:81	5
+2720	linear/M2(F3)	a=[2, 2, 1, 0] b=[1, 2, 0, 1]	finite:81	5
+2721	linear/M2(F3)	a=[2, 2, 1, 0] b=[0, 1, 1, 1]	finite:81	8
+2722	linear/M2(F3)	a=[2, 2, 1, 0] b=[0, 1, 2, 1]	finite:81	5
+2723	linear/M2(F3)	a=[1, 0, 0, 1] b=[0, 1, 1, 0]	finite:81	7
+2724	linear/M2(F3)	a=[1, 0, 0, 1] b=[1, 1, 1, 0]	finite:81	10
+2725	linear/M2(F3)	a=[1, 0, 0, 1] b=[2, 1, 1, 0]	finite:81	14
+2726	linear/M2(F3)	a=[1, 0, 0, 1] b=[0, 2, 1, 0]	finite:81	15
+2727	linear/M2(F3)	a=[1, 0, 0, 1] b=[1, 2, 1, 0]	finite:81	12
+2728	linear/M2(F3)	a=[1, 0, 0, 1] b=[2, 2, 1, 0]	finite:81	9
+2729	linear/M2(F3)	a=[2, 0, 0, 2] b=[0, 1, 1, 0]	finite:81	69
+2730	linear/M2(F3)	a=[2, 0, 0, 2] b=[1, 2, 1, 0]	finite:81	82
+2731	affine/M2(F2)	a=[1, 0, 0, 0] b=[0, 1, 0, 0] c=[1, 0, 0, 0]	finite:16	43
+2732	affine/M2(F2)	a=[1, 0, 0, 0] b=[1, 1, 0, 1] c=[0, 0, 1, 0]	finite:16	43
+2733	affine/M2(F2)	a=[1, 0, 0, 0] b=[1, 0, 1, 1] c=[1, 0, 0, 0]	finite:16	37
+2734	affine/M2(F2)	a=[0, 1, 0, 0] b=[1, 0, 0, 0] c=[1, 0, 0, 0]	finite:16	43
+2735	affine/M2(F2)	a=[0, 1, 1, 0] b=[1, 1, 0, 0] c=[1, 0, 0, 0]	finite:16	37
+2736	affine/M2(F2)	a=[0, 1, 1, 0] b=[1, 0, 1, 0] c=[1, 0, 0, 0]	finite:16	43
+2737	affine/M2(F2)	a=[0, 1, 1, 0] b=[1, 1, 0, 1] c=[1, 0, 0, 0]	finite:16	11
+2738	affine/M2(F2)	a=[1, 1, 1, 0] b=[0, 1, 1, 1] c=[1, 0, 0, 0]	finite:16	43
+2739	linear/one-sided	a,b generators	infinite	6

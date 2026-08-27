@@ -1,0 +1,8 @@
+metric	value
+laws	4694
+corpus_rows	2740
+hard_core_pairs	1062
+hard_core_covered	378
+graph_false_implications	13855357
+graph_covered	13418872
+greedy_cover_size	12

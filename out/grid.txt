@@ -1,0 +1,11 @@
+# Parameter grid. Coverage totals are meaningless without it.
+linear/Z_m	11439	2352	x ◇ y = ax + by over Z/m, m = 2..32, all (a,b) in (Z/m)^2
+affine/Z_m	41230	203	x ◇ y = ax + by + c over Z/m, m = 2..20, all (a,b,c) in (Z/m)^3
+linear/Z	169	3	x ◇ y = ax + by over Z, a,b in [-6,6]
+affine/Z	2028	0	x ◇ y = ax + by + c over Z, a,b,c in [-6,6], c != 0
+linear/Z[t]	625	0	x ◇ y = ax + by over Z[t], a,b = c0 + c1 t with c0,c1 in [-2,2]
+linear/M2(F2)	256	31	x ◇ y = ax + by over M_2(F_2), all (a,b); carrier has 16 elements
+linear/M2(F3)	6561	142	x ◇ y = ax + by over M_2(F_3), all (a,b); carrier has 81 elements
+affine/M2(F2)	3840	8	x ◇ y = ax + by + c over M_2(F_2), all (a,b,c) with c nonzero
+linear/generic	2	0	the generic linear magmas: Z[a,b] and Z<a,b> with a,b the generators
+linear/one-sided	1	1	x ◇ y = ax + by over Z<a,b>/(ba+1), the shift-operator ring of paper Example 5.3; b is a one-sided inverse of a and nothing more

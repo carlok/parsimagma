@@ -1,0 +1,6 @@
+e5a88a1479011ece4aad8e3c2e7e5c0ebc0a5b2a
+source: https://github.com/teorth/equational_theories (Apache-2.0)
+fetched: 2026-08-27
+files: equations.txt, smallest_magma.txt, smallest_magma_examples.txt, duals.json
+       from data/; refutations{2x2,3x3,4x4}.txt from
+       equational_theories/Generated/All4x4Tables/data/
