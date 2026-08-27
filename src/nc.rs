@@ -36,7 +36,7 @@ pub const fn word_of(index: usize) -> (u32, u32) {
 /// Degrees `(deg_a, deg_b)` of a word, for use in commutative rings.
 pub const fn word_degrees(index: usize) -> (u32, u32) {
     let (len, bits) = word_of(index);
-    let db = (bits as u32).count_ones();
+    let db = bits.count_ones();
     (len - db, db)
 }
 

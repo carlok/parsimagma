@@ -34,7 +34,7 @@ impl RingOps for Zmod {
         *acc = (*acc + km * *x) % self.m;
     }
     fn is_zero(&self, x: &u64) -> bool {
-        *x % self.m == 0
+        x.is_multiple_of(self.m)
     }
     fn carrier_size(&self) -> Option<usize> {
         Some(self.m as usize)
@@ -214,7 +214,7 @@ impl RingOps for MatFp {
         }
     }
     fn is_zero(&self, x: &Vec<u64>) -> bool {
-        x.iter().all(|&c| c % self.p == 0)
+        x.iter().all(|&c| c.is_multiple_of(self.p))
     }
     fn carrier_size(&self) -> Option<usize> {
         Some((self.p as usize).pow((self.k * self.k) as u32))
@@ -446,12 +446,12 @@ impl RingOps for OneSidedInverse {
     fn mul(&self, x: &OsiElem, y: &OsiElem) -> OsiElem {
         let degs = normal_form_degrees();
         let mut out = [0i128; 15];
-        for n in 0..15 {
-            if x[n] == 0 {
+        for (n, &xn) in x.iter().enumerate() {
+            if xn == 0 {
                 continue;
             }
-            for q in 0..15 {
-                if y[q] == 0 {
+            for (q, &yq) in y.iter().enumerate() {
+                if yq == 0 {
                     continue;
                 }
                 let (i, j) = degs[n];
@@ -461,7 +461,7 @@ impl RingOps for OneSidedInverse {
                     (ni + nj) as usize <= MAX_DEG,
                     "normal form a^{ni} b^{nj} exceeds the degree bound"
                 );
-                out[monomial_index(ni, nj)] += sign * x[n] * y[q];
+                out[monomial_index(ni, nj)] += sign * xn * yq;
             }
         }
         out

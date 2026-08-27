@@ -5,7 +5,11 @@
 //! "the coverage of the linear family" has no value. Every grid below is
 //! finite, stated in the output, and every total is reported against it.
 
+use crate::finite::FiniteMagma;
+use crate::law::Law;
 use crate::linear::{AffineModel, LinearLaws, LinearModel, RingOps};
+use crate::twist::TwistedPower;
+use rayon::prelude::*;
 use crate::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, Zmod};
 use crate::sig::Signature;
 use rustc_hash::FxHashSet;
@@ -310,4 +314,109 @@ fn enumerate_matrices(p: u64, k: usize) -> Vec<Vec<u64>> {
                 .collect()
         })
         .collect()
+}
+
+/// Coordinate count swept for twisted Cartesian powers. `Twist_{E1485}` is
+/// cyclic of order 5, so anything short of `k = 5` cannot reproduce the
+/// paper's own worked example; the grid runs to 8 to leave room for twisting
+/// semigroups of larger order.
+pub const TWIST_MAX_K: usize = 8;
+
+/// Add twisted Cartesian powers (paper section 5.4) to a corpus.
+///
+/// Base magmas are every magma on two elements and every magma on three
+/// elements up to isomorphism; twists are the cyclic shifts `i -> i + s` and
+/// `i -> i + t`, which are the endomorphisms of `M^k` the construction always
+/// supplies. Order-3 bases are capped at `k = 4` because the per-law cost is
+/// `k · n^(leaves)` and `3^6` is eleven times `2^6`.
+pub fn add_twist_family(c: &mut Corpus, laws: &[Law], order3_bases: &[FiniteMagma]) {
+    let two: Vec<FiniteMagma> = (0..16u32)
+        .map(|bits| {
+            FiniteMagma::new(2, (0..4).map(|i| ((bits >> i) & 1) as u8).collect()).unwrap()
+        })
+        .collect();
+
+    let mut jobs: Vec<(usize, usize, usize, usize)> = Vec::new();
+    for (bi, _) in two.iter().enumerate() {
+        for k in 2..=TWIST_MAX_K {
+            for s in 0..k {
+                for t in 0..k {
+                    jobs.push((bi, k, s, t));
+                }
+            }
+        }
+    }
+    let rows: Vec<(String, Carrier, Signature)> = jobs
+        .par_iter()
+        .map(|&(bi, k, s, t)| {
+            let tw = TwistedPower::cyclic(two[bi].clone(), k, s, t);
+            (
+                format!("base2#{bi} k={k} shifts=({s},{t})"),
+                Carrier::Finite(tw.carrier_size()),
+                tw.signature(laws),
+            )
+        })
+        .collect();
+    c.add_family(
+        "twist/M2^k",
+        format!(
+            "x ◇' y = x[i+s] ◇ y[i+t] on M^k for every 2-element base M,              k = 2..{TWIST_MAX_K}, all cyclic shift pairs (paper §5.4)"
+        ),
+        rows,
+    );
+
+    if order3_bases.is_empty() {
+        return;
+    }
+    let mut jobs3: Vec<(usize, usize, usize, usize)> = Vec::new();
+    for bi in 0..order3_bases.len() {
+        for k in 2..=4usize {
+            for s in 0..k {
+                for t in 0..k {
+                    jobs3.push((bi, k, s, t));
+                }
+            }
+        }
+    }
+    let rows3: Vec<(String, Carrier, Signature)> = jobs3
+        .par_iter()
+        .map(|&(bi, k, s, t)| {
+            let tw = TwistedPower::cyclic(order3_bases[bi].clone(), k, s, t);
+            (
+                format!("base3#{bi} k={k} shifts=({s},{t})"),
+                Carrier::Finite(tw.carrier_size()),
+                tw.signature(laws),
+            )
+        })
+        .collect();
+    c.add_family(
+        "twist/M3^k",
+        format!(
+            "the same over 3-element bases up to isomorphism, k = 2..4 \
+             ({} bases)",
+            order3_bases.len()
+        ),
+        rows3,
+    );
+}
+
+/// Every magma on three elements that is the least member of its isomorphism
+/// class, for use as a twist base. There are 3330 of them (OEIS A001329).
+pub fn order3_canonical() -> Vec<FiniteMagma> {
+    use crate::finite::{is_canonical, permutations};
+    let perms = permutations(3);
+    let mut table = vec![0u8; 9];
+    let mut buf = vec![0u8; 9];
+    let mut out = Vec::new();
+    for code in 0..3u64.pow(9) {
+        let mut v = code;
+        for cell in table.iter_mut() {
+            *cell = (v % 3) as u8;
+            v /= 3;
+        }
+        if is_canonical(&table, 3, &perms, &mut buf) {
+            out.push(FiniteMagma::new(3, table.clone()).unwrap());
+        }
+    }
+    out
 }

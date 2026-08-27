@@ -9,3 +9,5 @@ linear/M2(F3)	6561	142	x ◇ y = ax + by over M_2(F_3), all (a,b); carrier has 8
 affine/M2(F2)	3840	8	x ◇ y = ax + by + c over M_2(F_2), all (a,b,c) with c nonzero
 linear/generic	2	0	the generic linear magmas: Z[a,b] and Z<a,b> with a,b the generators
 linear/one-sided	1	1	x ◇ y = ax + by over Z<a,b>/(ba+1), the shift-operator ring of paper Example 5.3; b is a one-sided inverse of a and nothing more
+twist/M2^k	3248	46	x ◇' y = x[i+s] ◇ y[i+t] on M^k for every 2-element base M,              k = 2..8, all cyclic shift pairs (paper §5.4)
+twist/M3^k	96570	3219	the same over 3-element bases up to isomorphism, k = 2..4 (3330 bases)

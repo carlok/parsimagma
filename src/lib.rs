@@ -17,6 +17,7 @@ pub mod linear;
 pub mod nc;
 pub mod rings;
 pub mod sig;
+pub mod twist;
 
 pub use dag::{Dag, EvalPlan};
 pub use finite::{Engine, FiniteMagma};

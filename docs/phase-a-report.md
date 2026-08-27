@@ -1,6 +1,6 @@
 # Phase A report — magma signature and coverage engine
 
-Date: 2026-08-27. Toolchain pinned in `rust-toolchain.toml` (Rust 1.96.0).
+Date: 2026-08-27/28. Toolchain pinned in `rust-toolchain.toml` (Rust 1.96.0).
 Every number below is reproduced by `cargo test --release`,
 `./target/release/pm stats`, `pm coverage`, and `pm bruteforce N`.
 Raw outputs are in `out/`.
@@ -9,9 +9,9 @@ Raw outputs are in `out/`.
 
 ## 1. The number that decides whether to continue
 
-**378 of the 1062 hard-core separations (35.6%) are discharged by the
-implemented corpus, and the redundancy in reaching them is extreme: 12
-instances suffice for all 378, out of 2740 distinct rows.**
+**416 of the 1062 hard-core separations (39.2%) are discharged by the
+implemented corpus, and the redundancy in reaching them is extreme: 13
+instances suffice for all 416, out of 6005 distinct rows.**
 
 The hard core is set (B) from the Phase 0 report, as pinned: the 1062
 implications Vampire left undecided in Janota's exhaustive run
@@ -22,10 +22,11 @@ By the brief's own decision rule this is the "coverage is poor, the family
 library is incomplete, the fix is mathematics not compute" branch. Three
 findings sharpen that.
 
-**The 378 come almost entirely from one instance.** The linear magma
-`x ◇ y = 7x + 7y` over `Z/13` discharges 268 pairs on its own; two more
-`Z/13` instances add 89 between them. Everything else in a 66,151-instance
-grid contributes 21 pairs.
+**The 416 come from four instances.** The linear magma `x ◇ y = 7x + 7y` over
+`Z/13` discharges 268 pairs on its own; two more `Z/13` instances add 89; the
+paper's own twisted power — `F_2` under NAND raised to the fifth power and
+twisted by the left and right shifts — adds 38. Everything else in a
+165,969-instance grid contributes 21 pairs between them.
 
 **Those pairs are not mathematically hard.** A 13-element multiplication
 table is a finite counterexample. Vampire's finite model builder searches
@@ -35,24 +36,28 @@ MACE-style model finding at domain size 9 and above, not evidence of
 mathematical depth. Anyone quoting 1062 as a measure of difficulty is
 overstating it, and the coverage matrix is what makes that visible.
 
-**The coverage saturates.** Widening the modulus grid from `m ≤ 32` to
-`m ≤ 96` — 354,247 instances instead of 66,151, 6445 distinct signatures
-instead of 2740 — discharges exactly the same 378 pairs. The commutative
-linear family is exhausted. More compute on this family buys nothing; the
-remaining 684 pairs need different constructions.
+**Coverage saturates hard, twice over.** Widening the modulus grid from
+`m ≤ 32` to `m ≤ 96` — 354,247 linear instances instead of 11,439 — discharges
+exactly the same pairs. Adding 96,570 twisted powers over three-element bases
+produces 3219 new distinct signatures and raises whole-graph coverage by three
+percentage points, and discharges **zero** additional hard-core pairs. Compute
+is not the binding constraint on this number; the set of construction *kinds*
+is.
 
 Against the whole graph rather than the hard core, the corpus discharges
-**13,418,872 of the 13,855,357 false implications (96.85%)**.
+**13,834,667 of the 13,855,357 false implications (99.85%)**. The contrast is
+the finding: a corpus that is within 0.15% of complete against the graph is at
+39% against the part of the graph that resisted a good prover.
 
-### What the remaining 684 want
+### What the remaining 646 want
 
 | hypothesis law | uncovered | covered | ETP's method (blueprint ch. 27) |
 |---|---|---|---|
 | E1133, E1167, E1659, E1661, E1979, E2000, E2473, E2481 | 37 each, 296 total | 0 | not in the curated list; greedy or ad hoc |
 | E1076 / E2531 (duals) | 40 each | 134 each | greedy |
-| E1485 / E2162 (duals) | 19 each | 0 | twisting semigroup, paper §5.4 |
 | E1924, E1648 | 15 each | 0 | greedy |
 | E1895, E1692 | 11 each | 0 | greedy |
+| E1485 / E2162 (duals) | **0** | 19 each | twisting semigroup, §5.4 — implemented, cluster closed |
 
 Greedy constructions (paper §5.5) dominate what is missing, which is what the
 Phase 0 report predicted: they carry most of the blueprint's hard list and
@@ -60,6 +65,14 @@ they are the one family with **no finite counterpart at all**, which is
 exactly why `E677 ⊧_fin E255` remains the last open finite implication. A
 family library without them cannot reach the hard core, and no amount of
 grid-widening substitutes.
+
+The E1485 row is the method working. That cluster was uncovered at the linear
+stage; the paper names the twisting semigroup as its method and says the
+separation "does not seem to be easily refuted by any of the other methods
+discussed"; implementing §5.4 closed all 38 pairs with one instance. The same
+loop — read which method the ETP used for an uncovered cluster, implement it,
+watch the cluster fall — is what the remaining 646 pairs are waiting for. That
+is mathematics, not machine time.
 
 ---
 
@@ -118,6 +131,8 @@ justified it.
 | symbolic vs table route, `M_2(F_2)`, noncommuting pairs | 2 instances, 16 elements | bit-identical |
 | magmas up to isomorphism (OEIS A001329) | orders 1, 2, 3 | 1, 10, 3330 |
 | `E1` holds always; `E2` holds exactly in singletons | 176 magmas | exact |
+| twisted power vs table sweep, `F_2^k`, `k = 2..4` | 29 instances | bit-identical |
+| one-coordinate twist reproduces its base magma | 3 instances | bit-identical |
 
 The `All4x4Tables` corpus is the strongest oracle available and is used in
 preference to the smallest-magma-per-equation set the brief names: each entry
@@ -127,7 +142,7 @@ checked on all 4694 bits rather than on one.
 The symbolic-vs-table cross-check is what makes Tier S trustworthy. A linear
 model over `Z/m` is simultaneously a symbolic object and a finite magma, so the
 two independent routes must produce identical signatures. They do, including
-for `Z/13` with `a = b = 7`, the instance carrying 268 of the 378 covered
+for `Z/13` with `a = b = 7`, the instance carrying 268 of the 416 covered
 pairs. If that had disagreed the headline number would be worthless.
 
 ### Reproducing published counts
@@ -197,6 +212,25 @@ word is `S_w · c` where `S_w` sums the path word of every *internal* node, so
 affine adds exactly one condition, `(S_lhs - S_rhs)·c = 0`, on top of the
 linear ones.
 
+**Twisted Cartesian powers** (paper §5.4). Given a magma `M` satisfying `E`
+and two endomorphisms `T, U`, the twisted operation `x ◇' y := Tx ◇ Uy`
+satisfies `E` again provided `T, U` obey the relations defining the *twisting
+semigroup* `Twist_E`; a Cartesian power `M^k` always supplies such
+endomorphisms as coordinate shifts. The twisted magma has `n^k` elements — 32
+for the paper's worked case — and 22 laws use six variables, so a sweep would
+need `32^6 ≈ 1.1e9` assignments. The check decomposes by coordinate instead:
+writing `σ`, `τ` for the shifts,
+
+```text
+    eval(Var v, i)    = x_v[i]
+    eval(Op(l, r), i) = eval(l, σ(i)) ◇_M eval(r, τ(i))
+```
+
+so at a fixed root coordinate the law reads at most six entries of the input
+tuples, one per leaf, and the law holds exactly when the base identity holds at
+every coordinate for every assignment to those entries. That is `k · n^leaves`
+base operations per law rather than `n^(k·vars)`.
+
 Rings implemented: `Z/m`; `Z`; `Z[t]`; `M_k(F_p)`; the free commutative
 `Z[a,b]` and free noncommutative `Z<a,b>`, whose instances are the *generic*
 linear magmas satisfying precisely the laws every linear magma satisfies; and
@@ -214,6 +248,8 @@ linear magmas satisfying precisely the laws every linear magma satisfies; and
 | `Z`, `(-1,-1)` | semi-symmetric `E14`, totally symmetric `E492` | reproduced |
 | `Z`, `(1,0)` / `(0,1)` / `(0,0)` | projections `E4`, `E5`; constant `E46` | reproduced |
 | linear family as a whole | Remark 5.6: `E1485 ⊭ E151` is immune to it | no witness in a 900-instance grid |
+| `F_2` NAND, `k = 5`, shifts `(+1, -1)` | paper Ex. 5.11: witnesses `E1485 ⊭ E151` | reproduced |
+| the same | `Twist_{E1485}` cyclic of order 5, `Twist_{E151}` of order 2 | `k < 5` does not separate them |
 
 `E1117 ⊭ E2441` matters most: it is in the 1062-pair hard core, it has no
 finite counterexample at all, and the instance that discharges it has an
@@ -236,8 +272,6 @@ Listed because the brief asks which families were left out, and because the
 coverage number is a statement about this list as much as about the one above.
 
 - **Translation-invariant models**, `x ◇ y = x + f(y-x)` (paper §5.3)
-- **Twisting semigroup** `S_E` (paper §5.4) — the named method for the
-  `E1485` / `E2162` cluster, 38 uncovered pairs
 - **Greedy constructions** (paper §5.5) — the largest gap by far, and
   inherently infinitary, so it has no finite proxy
 - **Submagma, projection, and magma cohomology extensions** (paper §5.6)
@@ -245,7 +279,7 @@ coverage number is a statement about this list as much as about the one above.
   (paper §6) — note this is a *syntactic* method verified by Knuth-Bendix
   completion, not a polynomial-identity method, so it does not belong in the
   same tier as the linear models even though the brief groups them
-- **Twisted Cartesian powers** and **abelian extensions**
+- **Abelian extensions**
 - **Quadratic models** over `Z/N` (paper Remark 5.5)
 
 ---
@@ -269,7 +303,13 @@ and every total in this report is against it.
 | `affine/M2(F2)`, all `(a,b,c)`, `c ≠ 0` | 3840 | 8 |
 | `linear/generic`, `Z[a,b]` and `Z<a,b>` | 2 | 0 |
 | `linear/one-sided`, `Z<a,b>/(ba+1)` | 1 | 1 |
-| **total** | **66,151** | **2740** |
+| `twist/M2^k`, all 2-element bases, `k = 2..8`, all cyclic shift pairs | 3248 | 46 |
+| `twist/M3^k`, all 3330 3-element bases up to isomorphism, `k = 2..4` | 96,570 | 3219 |
+| **total** | **165,969** | **6005** |
+
+Four instances have infinite carriers. 2024 have carriers past what a
+six-variable table sweep can reach, and are decidable only symbolically or
+coordinate-wise.
 
 Rows are deduplicated on the signature. That subsumes deduplication up to
 isomorphism — isomorphic magmas satisfy the same laws — and is the right
@@ -280,40 +320,44 @@ because for coefficients with no algebraic relation the only laws satisfied are
 those holding identically, which is the generic model. The same happens to all
 625 `Z[t]` instances.
 
-Four instances have infinite carriers. 1897 have carriers past what a
-six-variable table sweep can reach (`n > 16`), and are decidable only
-symbolically.
-
 ### Redundancy
 
 | | |
 |---|---|
-| distinct rows in the corpus | 2740 |
-| rows discharging at least one hard-core pair | 137 |
-| greedy cover of the 378 reached pairs | **12 instances** |
+| distinct rows in the corpus | 6005 |
+| rows discharging at least one hard-core pair | 138 |
+| greedy cover of the 416 reached pairs | **13 instances** |
 
 The word "minimal" is not used. Set cover is NP-hard, greedy gives an upper
 bound within `ln(n)`, and the LP relaxation that would give a lower bound —
 and therefore the gap, which is the interesting quantity — is Phase B. What
-can be said now: 12 is an upper bound on the size of a smallest cover of what
-this corpus reaches, and 2728 of 2740 rows are redundant for the hard core.
+can be said now: 13 is an upper bound on the size of a smallest cover of what
+this corpus reaches, and 5992 of 6005 rows are redundant for the hard core.
 
 ---
 
 ## 6. In flight
 
 The exhaustive size-4 sweep is running: 4,294,967,296 tables, 178,981,952
-after isomorphism filtering, ETA about two hours from launch, 92 MB resident.
-It appends to `out/bruteforce4.log`. It contributes **nothing** to the
-hard-core number by construction — every small finite counterexample is
-already what Vampire's model builder found — and exists only to complete the
-third independent confirmation of the ETP repo's corrected 13,753,982.
+after isomorphism filtering, about 90 minutes remaining at the time of
+writing, 75 MB resident. It appends to `out/bruteforce4.log`. It contributes
+**nothing** to the hard-core number by construction — every small finite
+counterexample is already what Vampire's model builder found — and exists only
+to complete the third independent confirmation of the ETP repo's corrected
+13,753,982, against a published figure of 13,632,566 that does not reconcile
+with its own parts.
 
 Worker memory was the one thing that needed care: a per-chunk accumulator is
 2.8 MB and there are 262,144 chunks, so collecting them would have wanted
-728 GB. The sweep folds one accumulator per worker instead.
+728 GB. The sweep folds one accumulator per worker instead, which is what the
+75 MB figure reflects.
 
----
+Also outstanding from Phase 0: reconciling Janota's "only 310 of the undecided
+implications require an infinite model" against the paper's 820 pairs whose
+truth changes under finiteness, and against the 814 pairs his saturation runs
+refuted without producing a witness. That needs the per-method fields of the
+84 MB Vampire dump, which was deleted after `implications.bits` and
+`hard_core.txt` were extracted from it; redoing it means re-fetching that file.
 
 ## 7. Reproducibility
 
@@ -327,9 +371,9 @@ Worker memory was the one thing that needed care: a per-chunk accumulator is
   84 MB Vampire dump by the recipe recorded in the Phase 0 report; the derived
   files are committed, the dump is not.
 - Raw outputs in `out/`: `grid.txt`, `coverage_hardcore.tsv`,
-  `corpus_signatures.bin` (2740 x 587 bytes), `corpus_index.tsv`,
+  `corpus_signatures.bin` (6005 x 587 bytes), `corpus_index.tsv`,
   `summary.tsv`, `bruteforce4.log`.
-- 21 tests, `cargo test --release`, about 50 seconds.
+- 24 tests, `cargo test --release`, about 50 seconds.
 
 ## 8. Not done, deliberately
 

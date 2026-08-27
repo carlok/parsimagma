@@ -275,7 +275,7 @@ fn noncommutative_linear_model_reproduces_e1117_not_implies_e2441() {
         s.get(1117 - 1),
         "Z<a,b>/(ba+1) must satisfy E1117: ba = -1 puts it in the variety"
     );
-    assert!(s.get(2441 - 1) == false, "and must refute E2441");
+    assert!(!s.get(2441 - 1), "and must refute E2441");
 
     // The paper's other claim about this instance: no finite magma can
     // witness it, so no commutative linear model can either (Remark 5.4
@@ -306,9 +306,12 @@ fn e1485_not_implies_e151_is_immune_to_linear_models() {
         checked += 1;
         if s.get(1485 - 1) {
             witnesses += 1;
+            // If a linear model satisfies E1485 it must also satisfy E151,
+            // or we would have found the witness the paper says does not
+            // exist for this family.
             assert!(
-                !s.get(151 - 1) == false,
-                "found a linear witness for E1485 ⊭ E151"
+                s.get(151 - 1),
+                "found a linear witness for E1485 not implies E151"
             );
         }
     };

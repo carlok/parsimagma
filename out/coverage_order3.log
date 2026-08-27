@@ -1,0 +1,93 @@
+# Coverage report
+
+law set                4694 laws of order <= 4 (ETP equations.txt)
+target                 1062 pair hard core: implications Vampire left
+                       undecided (Janota, arXiv:2508.15856, run 2025-08-11)
+
+## Parameter grid
+
+linear/Z_m           11439 enumerated    2352 distinct signatures
+    x ◇ y = ax + by over Z/m, m = 2..32, all (a,b) in (Z/m)^2
+affine/Z_m           41230 enumerated     203 distinct signatures
+    x ◇ y = ax + by + c over Z/m, m = 2..20, all (a,b,c) in (Z/m)^3
+linear/Z               169 enumerated       3 distinct signatures
+    x ◇ y = ax + by over Z, a,b in [-6,6]
+affine/Z              2028 enumerated       0 distinct signatures
+    x ◇ y = ax + by + c over Z, a,b,c in [-6,6], c != 0
+linear/Z[t]            625 enumerated       0 distinct signatures
+    x ◇ y = ax + by over Z[t], a,b = c0 + c1 t with c0,c1 in [-2,2]
+linear/M2(F2)          256 enumerated      31 distinct signatures
+    x ◇ y = ax + by over M_2(F_2), all (a,b); carrier has 16 elements
+linear/M2(F3)         6561 enumerated     142 distinct signatures
+    x ◇ y = ax + by over M_2(F_3), all (a,b); carrier has 81 elements
+affine/M2(F2)         3840 enumerated       8 distinct signatures
+    x ◇ y = ax + by + c over M_2(F_2), all (a,b,c) with c nonzero
+linear/generic           2 enumerated       0 distinct signatures
+    the generic linear magmas: Z[a,b] and Z<a,b> with a,b the generators
+linear/one-sided         1 enumerated       1 distinct signatures
+    x ◇ y = ax + by over Z<a,b>/(ba+1), the shift-operator ring of paper Example 5.3; b is a one-sided inverse of a and nothing more
+twist/M2^k            3248 enumerated      46 distinct signatures
+    x ◇' y = x[i+s] ◇ y[i+t] on M^k for every 2-element base M,              k = 2..8, all cyclic shift pairs (paper §5.4)
+twist/M3^k           96570 enumerated    3219 distinct signatures
+    the same over 3-element bases up to isomorphism, k = 2..4 (3330 bases)
+
+total 165969 instances enumerated, 6005 distinct rows, built in 50.92s
+  4 have an infinite carrier; 2024 are past any table sweep
+
+## Coverage of the hard core
+
+   416 / 1062 hard-core pairs discharged  (39.17%)
+
+contributing instances by family:
+  linear/M2(F3)      2
+  linear/Z_m         134
+  linear/one-sided   1
+  twist/M2^k         1
+
+greedy cover: 13 instances suffice for the 416 pairs reached
+  (an upper bound within ln(n) of a smallest cover, not a minimum)
+    +268   linear/Z_m [m=13 a=7 b=7]
+    +45    linear/Z_m [m=13 a=4 b=11]
+    +44    linear/Z_m [m=13 a=11 b=4]
+    +38    twist/M2^k [base2#1 k=5 shifts=(1,4)]
+    +5     linear/one-sided [a,b generators]
+    +4     linear/Z_m [m=29 a=11 b=19]
+    +4     linear/Z_m [m=25 a=9 b=2]
+    +3     linear/Z_m [m=25 a=2 b=9]
+    +1     linear/Z_m [m=31 a=6 b=2]
+    +1     linear/Z_m [m=31 a=2 b=6]
+    +1     linear/Z_m [m=29 a=27 b=20]
+    +1     linear/Z_m [m=29 a=23 b=7]
+
+uncovered hard-core pairs by hypothesis law (top 20 of 75 laws):
+    E2531     40 uncovered,  134 covered
+    E1076     40 uncovered,  134 covered
+    E2481     37 uncovered,    0 covered
+    E2473     37 uncovered,    0 covered
+    E2000     37 uncovered,    0 covered
+    E1979     37 uncovered,    0 covered
+    E1661     37 uncovered,    0 covered
+    E1659     37 uncovered,    0 covered
+    E1167     37 uncovered,    0 covered
+    E1133     37 uncovered,    0 covered
+    E1924     15 uncovered,    0 covered
+    E1648     15 uncovered,    0 covered
+    E3116     12 uncovered,    1 covered
+    E511      12 uncovered,    1 covered
+    E1895     11 uncovered,    0 covered
+    E1692     11 uncovered,    0 covered
+    E1839     10 uncovered,    0 covered
+    E2712      7 uncovered,    0 covered
+    E2460      7 uncovered,    0 covered
+    E1112      7 uncovered,    0 covered
+
+pairs reached, first 40:
+ 464!=>2457 464!=>3066 474!=>3278 511!=>3079 670!=>817 907!=>255 907!=>836 907!=>843 1076!=>26 1076!=>65 1076!=>73 1076!=>102 1076!=>117 1076!=>125 1076!=>160 1076!=>167 1076!=>212 1076!=>229 1076!=>258 1076!=>263 1076!=>335 1076!=>362 1076!=>429 1076!=>437 1076!=>464 1076!=>473 1076!=>504 1076!=>513 1076!=>546 1076!=>562 1076!=>617 1076!=>632 1076!=>640 1076!=>679 1076!=>704 1076!=>826 1076!=>833 1076!=>872 1076!=>879 1076!=>910
+
+## Coverage of the whole graph
+
+  13834667 of 13855357 false implications discharged  (99.85%)
+every discharged pair checked against the published graph: no contradictions
+
+raw outputs written to out/: grid.txt, coverage_hardcore.tsv,
+  corpus_signatures.bin (6005 x 587 bytes), corpus_index.tsv, summary.tsv

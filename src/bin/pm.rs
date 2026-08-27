@@ -1,6 +1,6 @@
 //! `pm` — command line front end.
 
-use parsimagma::corpus::{linear_corpus, Carrier};
+use parsimagma::corpus::{add_twist_family, linear_corpus, order3_canonical, Carrier};
 use parsimagma::coverage::{CoverageMatrix, GraphCoverage};
 use parsimagma::etpdata::parse_refutations;
 use parsimagma::graph::{parse_pairs, ImplicationGraph};
@@ -90,7 +90,11 @@ fn coverage() {
     let ll: &'static LinearLaws = Box::leak(Box::new(LinearLaws::build(&laws)));
 
     let t = Instant::now();
-    let corpus = linear_corpus(ll);
+    let mut corpus = linear_corpus(ll);
+    let want3 = std::env::args().any(|a| a == "--order3-twists");
+    let bases3 = if want3 { order3_canonical() } else { Vec::new() };
+    add_twist_family(&mut corpus, &laws, &bases3);
+    let corpus = corpus;
     let build_time = t.elapsed();
 
     let hard = parse_pairs(&data("hard_core.txt")).unwrap();

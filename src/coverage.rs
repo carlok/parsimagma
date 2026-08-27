@@ -114,8 +114,8 @@ impl GraphCoverage {
         let last_bits = self.n % 64;
         for i in sig.iter_set() {
             let base = i * self.row_words;
-            for k in 0..self.row_words {
-                let mut c = !w[k];
+            for (k, &word) in w.iter().enumerate().take(self.row_words) {
+                let mut c = !word;
                 if k == self.row_words - 1 && last_bits != 0 {
                     c &= (1u64 << last_bits) - 1;
                 }
