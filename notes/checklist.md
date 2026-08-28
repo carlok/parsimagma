@@ -46,7 +46,7 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 7.3  Close the `fmb` tuning caveat: contour and symmetry_ratio change nothing
 - [x] 7.4  Write `docs/atp-control.md` as a standalone, reproducible note
 - [x] 7.5  Venue: PR to teorth/equational_theories, filed as #1473 (paper numbers)
-- [ ] 7.6  Cliff finding as a separate issue, only if #1473 lands
+- [x] 7.6  Cliff finding filed as issue #1474 on 2026-08-28, without waiting for #1473
 - [x] 7.7  Janota email sent 2026-08-28, two points, no PR cited (#1473 still open)
 
 ## Blocked / not started
