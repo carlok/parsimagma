@@ -13,8 +13,12 @@ used for the 296-pair cluster, and because the domain-size cliff says carrier
 |---|---|---|---|---|
 | all `f`, `n = 2..7` | 873,611 | 0 | 0 | 0 |
 | permutations `f`, `n = 8..11` | 43,948,800 | 19 | 16 | **0** |
+| permutations `f`, `n = 12` | 479,001,600 | 0 | 0 | **0** |
 
-All 16 pairs reached were already covered by the linear family.
+523 million candidates. All 16 pairs reached were already covered by the linear
+family, and `n = 12` reached nothing at all — 35 minutes for an empty result,
+which is itself informative: the family thins out rather than improving as the
+carrier grows into the range the cliff leaves unsearched.
 
 ## Why permutations, and why that was not enough
 
@@ -58,7 +62,7 @@ cargo run --release --bin pm -- transinv 7
 ```
 
 ```bash
-cargo run --release --bin pm -- transinv 11 8 perm
+cargo run --release --bin pm -- transinv 12 8 perm
 ```
 
 Arguments are `max_n`, then optional `min_n`, then optional `perm`.

@@ -1,0 +1,9 @@
+# Translation-invariant magmas vs the hard core
+
+grid       x ◇ y = x + f(y - x) over Z/n, every *permutation* f, n = 12..12
+evaluating 476 laws (those appearing in the 1062 hard-core pairs)
+
+n=12     479001600 candidates         0 discharge something     0 distinct pairs  2103.55s
+
+0 of 1062 hard-core pairs reached by this family
+0 of them were not reached by any earlier family
