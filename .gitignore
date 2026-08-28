@@ -15,3 +15,6 @@
 /data/etp/implications.bits
 /data/etp/eq_size5.txt
 /out/corpus_signatures.bin
+
+# Drafts of messages to other projects. They go public when sent, not before.
+/outreach/
