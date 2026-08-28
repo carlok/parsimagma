@@ -19,8 +19,9 @@ fn main() {
         "stats" => stats(),
         "coverage" => coverage(),
         "bruteforce" => bruteforce(),
+        "partition" => partition(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition");
             std::process::exit(2);
         }
     }
@@ -500,4 +501,105 @@ fn bruteforce() {
         Ok(()) => println!("every refuted pair agrees with the published implication graph"),
         Err((i, j)) => panic!("BLOCKING: claimed E{i} does not imply E{j}, graph says it does"),
     }
+}
+
+/// Partition the hard core by the smallest carrier that witnesses each pair.
+///
+/// Sprint S1. Three published numbers describe overlapping but distinct sets
+/// and have never been reconciled: Janota's "only 310 of the undecided
+/// implications require an infinite model", the ETP paper's 820 pairs whose
+/// truth flips under finiteness, and the 814 pairs Janota's saturation runs
+/// refuted without producing a witnessing model. This labels every pair in
+/// the 1062-pair hard core and in the 814 with the smallest carrier the
+/// corpus can witness it on, which bounds how much of each set can possibly
+/// be infinite-only.
+fn partition() {
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let ll: &'static LinearLaws = Box::leak(Box::new(LinearLaws::build(&laws)));
+    let mut corpus = linear_corpus(ll);
+    let bases3 = if std::env::args().any(|a| a == "--order3-twists") {
+        order3_canonical()
+    } else {
+        Vec::new()
+    };
+    add_twist_family(&mut corpus, &laws, &bases3);
+
+    let hard = parse_pairs(&data("hard_core.txt")).unwrap();
+    let sat = parse_pairs(&data("saturation_refuted.txt")).unwrap();
+
+    // Smallest witnessing carrier per pair: None = uncovered, Some(None) =
+    // only an infinite carrier witnesses it, Some(Some(n)) = a carrier of n.
+    let label = |targets: &[parsimagma::graph::Pair]| -> Vec<Option<Option<usize>>> {
+        targets
+            .iter()
+            .map(|&p| {
+                let mut best: Option<Option<usize>> = None;
+                for inst in &corpus.instances {
+                    if !parsimagma::graph::separates(&inst.sig, p) {
+                        continue;
+                    }
+                    let here = match inst.carrier {
+                        Carrier::Finite(n) => Some(n),
+                        Carrier::Infinite => None,
+                    };
+                    best = Some(match (best, here) {
+                        (None, h) => h,
+                        (Some(None), h) => h,
+                        (Some(Some(a)), Some(b)) => Some(a.min(b)),
+                        (Some(Some(a)), None) => Some(a),
+                    });
+                }
+                best
+            })
+            .collect()
+    };
+
+    let hl = label(&hard);
+    let sl = label(&sat);
+
+    let report = |name: &str, targets: &[parsimagma::graph::Pair], lab: &[Option<Option<usize>>]| {
+        let mut hist: std::collections::BTreeMap<String, usize> = Default::default();
+        for l in lab {
+            let k = match l {
+                None => "uncovered".to_string(),
+                Some(None) => "infinite only".to_string(),
+                Some(Some(n)) => format!("finite {n}"),
+            };
+            *hist.entry(k).or_default() += 1;
+        }
+        let covered = lab.iter().filter(|l| l.is_some()).count();
+        let finite = lab.iter().filter(|l| matches!(l, Some(Some(_)))).count();
+        println!();
+        println!("## {name}: {} pairs", targets.len());
+        println!("  {covered} covered, of which {finite} by a finite carrier");
+        for (k, v) in &hist {
+            println!("    {k:<16} {v}");
+        }
+    };
+
+    println!("# Hard-core partition (sprint S1)");
+    report("hard core, Vampire-unresolved", &hard, &hl);
+    report("saturation-refuted, no witnessing model", &sat, &sl);
+
+    let dir = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp");
+    use std::io::Write;
+    let mut f = std::io::BufWriter::new(
+        std::fs::File::create(format!("{dir}/hard_core_partition.tsv")).unwrap(),
+    );
+    writeln!(f, "set\tfrom\tto\tsmallest_witness").unwrap();
+    for (set, targets, lab) in [
+        ("unresolved", &hard, &hl),
+        ("saturation_refuted", &sat, &sl),
+    ] {
+        for (p, l) in targets.iter().zip(lab) {
+            let w = match l {
+                None => "none".to_string(),
+                Some(None) => "infinite".to_string(),
+                Some(Some(n)) => n.to_string(),
+            };
+            writeln!(f, "{set}\t{}\t{}\t{w}", p.from, p.to).unwrap();
+        }
+    }
+    println!();
+    println!("wrote data/etp/hard_core_partition.tsv");
 }
