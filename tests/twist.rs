@@ -8,8 +8,7 @@ use std::sync::OnceLock;
 fn laws() -> &'static Vec<Law> {
     static L: OnceLock<Vec<Law>> = OnceLock::new();
     L.get_or_init(|| {
-        let p = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp/equations.txt");
-        parse_laws(&std::fs::read_to_string(p).unwrap()).unwrap()
+        parse_laws(&parsimagma::etpdata::read_text("equations.txt")).unwrap()
     })
 }
 

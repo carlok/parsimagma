@@ -5,6 +5,33 @@
 //! until it reproduces them exactly.
 
 use crate::finite::FiniteMagma;
+use std::io::Read;
+
+/// Where the vendored and derived ETP files live.
+pub const DATA_DIR: &str = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp/");
+
+/// Read a data file, transparently decompressing `<name>.gz` when the plain
+/// file is absent. The three large files are stored compressed because they
+/// shrink by 18x to 47x: a 4694 x 4694 bit matrix is enormously structured,
+/// and keeping the repository small matters more than avoiding an inflate.
+pub fn read_bytes(name: &str) -> Vec<u8> {
+    let plain = format!("{DATA_DIR}{name}");
+    if let Ok(b) = std::fs::read(&plain) {
+        return b;
+    }
+    let gz = format!("{plain}.gz");
+    let f = std::fs::File::open(&gz)
+        .unwrap_or_else(|e| panic!("neither {plain} nor {gz}: {e}"));
+    let mut out = Vec::new();
+    flate2::read::GzDecoder::new(f)
+        .read_to_end(&mut out)
+        .unwrap_or_else(|e| panic!("{gz}: {e}"));
+    out
+}
+
+pub fn read_text(name: &str) -> String {
+    String::from_utf8(read_bytes(name)).expect("data file is not UTF-8")
+}
 
 /// One entry of `All4x4Tables/data/refutations{2x2,3x3,4x4}.txt`: a magma
 /// together with the *complete* list of laws it satisfies, as computed by

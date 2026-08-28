@@ -7,6 +7,7 @@ description = "Magma signature and coverage engine for the Equational Theories P
 license = "Apache-2.0"
 
 [dependencies]
+flate2 = "1"
 rustc-hash = "2"
 rayon = "1"
 

@@ -8,8 +8,7 @@ use parsimagma::{parse_laws, Dag, Engine, FiniteMagma, Law};
 use std::sync::OnceLock;
 
 fn data(name: &str) -> String {
-    let p = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp/");
-    std::fs::read_to_string(format!("{p}{name}")).unwrap()
+    parsimagma::etpdata::read_text(name)
 }
 
 fn eq5() -> &'static Vec<Law> {

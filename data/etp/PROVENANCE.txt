@@ -5,7 +5,7 @@ fetched 2026-08-27/28
 Verbatim upstream files
 -----------------------
 equations.txt                  data/equations.txt              4694 laws, order <= 4
-eq_size5.txt                   data/eq_size5.txt               62,576 laws, order <= 5
+eq_size5.txt.gz                data/eq_size5.txt               62,576 laws, order <= 5
 smallest_magma.txt             data/smallest_magma.txt
 smallest_magma_examples.txt    data/smallest_magma_examples.txt
 duals.json                     data/duals.json
@@ -15,7 +15,7 @@ refutations4x4.txt                          "
 
 Derived here, from files not vendored
 -------------------------------------
-implications.bits         packed 4694 x 4694 bit matrix of the general-magma
+implications.bits.gz      packed 4694 x 4694 bit matrix of the general-magma
                           implication graph. Bit j of row i is set iff E_(i+1)
                           entails E_(j+1). Built from data/2025-08-11-vampire.json.gz
                           (sha256 16e8efcdb4c60cf5b438364efdd38552d073255d8ee653e2eccd79fc6d0a61b2,
@@ -46,3 +46,9 @@ To rebuild the three files that need the Vampire dump, re-fetch it from
   https://raw.githubusercontent.com/teorth/equational_theories/e5a88a1479011ece4aad8e3c2e7e5c0ebc0a5b2a/data/2025-08-11-vampire.json.gz
 and stream it rather than json.load: 22,028,942 entries is roughly 10 GB as a
 Python dict, against 184 MB scanned in chunks.
+
+A note on storage
+-----------------
+implications.bits and eq_size5.txt are stored gzipped: the bit matrix shrinks
+47x and the law list 18x, and the loader in src/etpdata.rs decompresses either
+form transparently, so `<name>` and `<name>.gz` are interchangeable to callers.

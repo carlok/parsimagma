@@ -11,8 +11,7 @@ use std::collections::BTreeSet;
 use std::sync::OnceLock;
 
 fn data(name: &str) -> String {
-    let p = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp/");
-    std::fs::read_to_string(format!("{p}{name}")).unwrap_or_else(|e| panic!("{name}: {e}"))
+    parsimagma::etpdata::read_text(name)
 }
 
 fn engine() -> &'static Engine {
@@ -214,11 +213,7 @@ fn signature_bytes_round_trip() {
 fn no_signature_contradicts_the_published_implication_graph() {
     use parsimagma::graph::ImplicationGraph;
     let e = engine();
-    let bits = std::fs::read(concat!(
-        env!("CARGO_MANIFEST_DIR"),
-        "/data/etp/implications.bits"
-    ))
-    .unwrap();
+    let bits = parsimagma::etpdata::read_bytes("implications.bits");
     let g = ImplicationGraph::from_bytes(N_LAWS_ORDER4, bits);
 
     // Janota's run: 8,173,585 non-reflexive implications hold, plus the 4694

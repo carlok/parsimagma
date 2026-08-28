@@ -68,6 +68,10 @@ vendored. `data/etp/PROVENANCE.txt` lists every file, its upstream path, the
 pinned commit, and for the derived ones the exact recipe and the sha256 of the
 input.
 
+The two largest data files are stored gzipped (the implication bit matrix
+compresses 47x) and the loader accepts either form, so nothing in the build or
+test path notices.
+
 Everything else in the repository is either source or a committed result.
 Nothing needs a network fetch to rebuild except the three files that depend on
 that dump, and `PROVENANCE.txt` gives the pinned URL for it.

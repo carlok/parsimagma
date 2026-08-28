@@ -8,3 +8,8 @@
 # themselves are not, since they are a pure function of the two.
 /out/tptp_*/
 /out/ladr_*/
+
+# Decompressed copies of files stored gzipped.
+/data/etp/implications.bits
+/data/etp/eq_size5.txt
+/out/corpus_signatures.bin

@@ -9,9 +9,10 @@ use parsimagma::linear::LinearLaws;
 use parsimagma::{parse_laws, Dag, Engine, FiniteMagma, N_LAWS_ORDER4};
 use std::time::Instant;
 
+use parsimagma::etpdata::read_text as data_text;
+
 fn data(name: &str) -> String {
-    let p = concat!(env!("CARGO_MANIFEST_DIR"), "/data/etp/");
-    std::fs::read_to_string(format!("{p}{name}")).unwrap_or_else(|e| panic!("{name}: {e}"))
+    data_text(name)
 }
 
 fn main() {
@@ -305,8 +306,13 @@ fn write_raw_outputs(
     drop(f);
 
     // Raw signatures: 587 bytes each, in corpus order, with a parallel index.
-    let mut sig = std::io::BufWriter::new(
-        std::fs::File::create(format!("{dir}/corpus_signatures.bin")).unwrap(),
+    // Compressed: the corpus signatures shrink 27x, and the file is a pure
+    // output of this command.
+    let mut sig = flate2::write::GzEncoder::new(
+        std::io::BufWriter::new(
+            std::fs::File::create(format!("{dir}/corpus_signatures.bin.gz")).unwrap(),
+        ),
+        flate2::Compression::best(),
     );
     let mut idx =
         std::io::BufWriter::new(std::fs::File::create(format!("{dir}/corpus_index.tsv")).unwrap());
@@ -326,7 +332,7 @@ fn write_raw_outputs(
         )
         .unwrap();
     }
-    drop(sig);
+    sig.finish().unwrap();
     drop(idx);
 
     let covered = cm.covered().len();
