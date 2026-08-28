@@ -28,9 +28,10 @@ fn main() {
         "mincover" => mincover(),
         "transinv" => transinv(),
         "quad" => quad(),
+        "matring" => matring(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad, matring");
             std::process::exit(2);
         }
     }
@@ -1584,4 +1585,128 @@ fn quad() {
             fresh.join(" ")
         );
     }
+}
+
+/// Sweep linear magmas over larger matrix rings against the hard core.
+///
+/// `M_2(F_5)` has 625 elements and `M_3(F_2)` has 512, both far past what any
+/// table sweep or model finder reaches, so these instances are decidable only
+/// symbolically. Noncommutative linear models are also where the one
+/// separation with no finite counterexample at all came from
+/// (`E1117 ⊭ E2441`, paper Example 5.3), which is the reason to look here
+/// rather than at yet another commutative family.
+fn matring() {
+    use parsimagma::linear::{LinearLaws, LinearModel, RingOps};
+    use parsimagma::rings::MatFp;
+    use rayon::prelude::*;
+
+    let all_laws = parse_laws(&data("equations.txt")).unwrap();
+    let hard = parse_pairs(&data("hard_core.txt")).unwrap();
+    let mut ids: Vec<u32> = hard.iter().flat_map(|p| [p.from, p.to]).collect();
+    ids.sort_unstable();
+    ids.dedup();
+    let index: std::collections::HashMap<u32, usize> =
+        ids.iter().enumerate().map(|(i, id)| (*id, i)).collect();
+    let laws: Vec<parsimagma::Law> = ids
+        .iter()
+        .map(|id| all_laws[*id as usize - 1].clone())
+        .collect();
+    let ll = LinearLaws::build(&laws);
+    let pairs: Vec<(usize, usize)> = hard
+        .iter()
+        .map(|p| (index[&p.from], index[&p.to]))
+        .collect();
+
+    let part = data("hard_core_partition.tsv");
+    let uncovered: std::collections::HashSet<(u32, u32)> = part
+        .lines()
+        .skip(1)
+        .filter_map(|l| {
+            let c: Vec<&str> = l.split('\t').collect();
+            (c.len() == 4 && c[0] == "unresolved" && c[3] == "none")
+                .then(|| (c[1].parse().unwrap(), c[2].parse().unwrap()))
+        })
+        .collect();
+
+    println!("# Linear magmas over larger matrix rings vs the hard core");
+    println!();
+    println!(
+        "evaluating {} laws (those in the {} hard-core pairs)",
+        laws.len(),
+        hard.len()
+    );
+    println!();
+
+    let mut all_reached: std::collections::BTreeSet<usize> = Default::default();
+    for (p, k) in [(5u64, 2usize), (2, 3)] {
+        let r = MatFp { p, k };
+        let size = r.carrier_size().unwrap();
+        let cells = k * k;
+        let n_elems = (p as usize).pow(cells as u32);
+        let mats: Vec<Vec<u64>> = (0..n_elems)
+            .map(|mut code| {
+                (0..cells)
+                    .map(|_| {
+                        let d = (code % p as usize) as u64;
+                        code /= p as usize;
+                        d
+                    })
+                    .collect()
+            })
+            .collect();
+        let t = Instant::now();
+        let found: Vec<(usize, usize, Vec<usize>)> = (0..n_elems)
+            .into_par_iter()
+            .flat_map(|i| {
+                let r = r.clone();
+                let a = mats[i].clone();
+                (0..n_elems)
+                    .filter_map(|j| {
+                        let sig =
+                            LinearModel::new(r.clone(), a.clone(), mats[j].clone()).signature(&ll);
+                        let got: Vec<usize> = pairs
+                            .iter()
+                            .enumerate()
+                            .filter(|(_, (x, y))| sig.get(*x) && !sig.get(*y))
+                            .map(|(n, _)| n)
+                            .collect();
+                        (!got.is_empty()).then_some((i, j, got))
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .collect();
+        let mut reached: std::collections::BTreeSet<usize> = Default::default();
+        for (_, _, g) in &found {
+            reached.extend(g.iter().copied());
+        }
+        let new: Vec<usize> = reached
+            .iter()
+            .copied()
+            .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+            .collect();
+        println!(
+            "M_{k}(F_{p})  carrier {size:<4} {:>10} pairs  {:>7} hit  {:>4} reached  {:>3} NEW  {:.2?}",
+            n_elems * n_elems,
+            found.len(),
+            reached.len(),
+            new.len(),
+            t.elapsed()
+        );
+        for k2 in new.iter().take(20) {
+            println!("      NEW  E{} !=> E{}", hard[*k2].from, hard[*k2].to);
+        }
+        all_reached.extend(reached);
+    }
+    let new: Vec<usize> = all_reached
+        .iter()
+        .copied()
+        .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+        .collect();
+    println!();
+    println!(
+        "{} of {} hard-core pairs reached, {} of them new",
+        all_reached.len(),
+        hard.len(),
+        new.len()
+    );
 }
