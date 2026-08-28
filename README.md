@@ -45,6 +45,15 @@ construction *kinds*, not compute. See
 structured rather than blind, and it names the only ring class that could still
 work: [docs/open-questions-scan.md](docs/open-questions-scan.md).
 
+**Two further families were built and both added nothing.** Translation-invariant
+magmas over `Z/n`, 523 million candidates across `n = 2..12`, reached 16
+hard-core pairs and no new ones. Quadratic magmas over `Z/N`, 11.5 million
+instances for `N = 2..13`, reached 93 and no new ones. Neither is redundant as a
+*family* — four of the six hitting permutations at `n = 9` are genuinely
+nonlinear — but their coverage coincides with what linear models already reach.
+The binding constraint on the coverage number is which *kinds* of construction
+exist, not how wide any grid is swept.
+
 ## Checking it
 
 ```bash
@@ -125,6 +134,9 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor |
 | [docs/phase-a-report.md](docs/phase-a-report.md) | engine, differential agreement, families implemented and not, coverage totals |
 | [docs/open-questions-scan.md](docs/open-questions-scan.md) | 143 open questions, a structured negative |
+| [docs/cluster-296.md](docs/cluster-296.md) | what the largest uncovered cluster wants, recovered from the ETP issue history |
+| [docs/translation-invariant.md](docs/translation-invariant.md) | `x ◇ y = x + f(y - x)`, 523M candidates, no new coverage |
+| [docs/quadratic.md](docs/quadratic.md) | `ax² + bxy + cy² + dx + ey + f`, 11.5M instances, no new coverage |
 | [docs/phase0-findings.md](docs/phase0-findings.md) | prior art, and the four distinct "hard core" counts |
 | [notes/](notes/) | working state: sprint queue and checklist |
 

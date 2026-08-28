@@ -17,6 +17,12 @@ completed; see section 6.
 implemented corpus, and the redundancy in reaching them is extreme: 13
 instances suffice for all 416, out of 6005 distinct rows.**
 
+> Since this report was written, two further families were built and measured:
+> translation-invariant magmas ([docs/translation-invariant.md](translation-invariant.md))
+> and quadratic magmas ([docs/quadratic.md](quadratic.md)). Both add zero
+> hard-core coverage, so the 416 stands. The family count below should be read
+> as five implemented, three contributing.
+
 The hard core is set (B) from the Phase 0 report, as pinned: the 1062
 implications Vampire left undecided in Janota's exhaustive run
 (arXiv:2508.15856). Vampire proved every implication that holds, so all 1062
