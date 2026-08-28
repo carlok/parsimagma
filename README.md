@@ -141,7 +141,6 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/quadratic.md](docs/quadratic.md) | `ax² + bxy + cy² + dx + ey + f`, 11.5M instances, no new coverage |
 | [docs/phase0-findings.md](docs/phase0-findings.md) | prior art, and the four distinct "hard core" counts |
 | [docs/where-a-wrong-sum-survives.md](docs/where-a-wrong-sum-survives.md) | a short note on which artifacts get checked, with the specifics |
-| [writing/where-errors-survive.md](writing/where-errors-survive.md) | the same argument as a standalone essay, naming nobody |
 | [notes/](notes/) | working state: sprint queue and checklist |
 
 Apache-2.0, matching upstream. See `NOTICE`.

@@ -18,3 +18,6 @@
 
 # Drafts of messages to other projects. They go public when sent, not before.
 /outreach/
+
+# Blog drafts. Local until published somewhere deliberate.
+/writing/
