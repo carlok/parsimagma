@@ -15,6 +15,7 @@ pub mod graph;
 pub mod law;
 pub mod linear;
 pub mod nc;
+pub mod quadratic;
 pub mod rings;
 pub mod sig;
 pub mod transinv;

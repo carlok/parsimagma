@@ -50,6 +50,7 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 
 - [x] S2   296-pair cluster is four dual pairs; one ad hoc infinite model on N (docs/cluster-296.md)
 - [x] S3'  Translation-invariant models built: 523M candidates, 0 new coverage (docs/translation-invariant.md)
+- [x] S3'' Quadratic magmas over Z/N built: 11.5M instances, 93 pairs, 0 new (docs/quadratic.md)
 - [ ] S3   Greedy spike, single target, 3-day kill criterion
 - [ ] S4   Greedy generalised — conditional on S3
 - [ ] S5   Phase B set-cover bounds — needs an explicit go

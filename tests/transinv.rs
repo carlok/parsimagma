@@ -90,7 +90,11 @@ fn permutation_decoding_is_a_bijection() {
             assert_eq!(buf.len(), n);
             let mut sorted = buf.clone();
             sorted.sort_unstable();
-            assert_eq!(sorted, (0..n as u8).collect::<Vec<_>>(), "not a permutation");
+            assert_eq!(
+                sorted,
+                (0..n as u8).collect::<Vec<_>>(),
+                "not a permutation"
+            );
             assert!(seen.insert(buf.clone()), "duplicate at index {i}");
         }
         assert_eq!(seen.len() as u64, total);

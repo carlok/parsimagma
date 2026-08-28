@@ -27,9 +27,10 @@ fn main() {
         "smt2" => smt2(),
         "mincover" => mincover(),
         "transinv" => transinv(),
+        "quad" => quad(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad");
             std::process::exit(2);
         }
     }
@@ -1272,12 +1273,17 @@ fn transinv() {
     println!("# Translation-invariant magmas vs the hard core");
     println!();
     if perms_only {
-        println!("grid       x ◇ y = x + f(y - x) over Z/n, every *permutation* f, n = {min_n}..{max_n}");
+        println!(
+            "grid       x ◇ y = x + f(y - x) over Z/n, every *permutation* f, n = {min_n}..{max_n}"
+        );
     } else {
         println!("grid       x ◇ y = x + f(y - x) over Z/n, every f, n = {min_n}..{max_n}");
     }
-    println!("evaluating {} laws (those appearing in the {} hard-core pairs)",
-             laws.len(), hard.len());
+    println!(
+        "evaluating {} laws (those appearing in the {} hard-core pairs)",
+        laws.len(),
+        hard.len()
+    );
     println!();
 
     let mut hits: Vec<(usize, Vec<u8>, Vec<usize>)> = Vec::new();
@@ -1293,7 +1299,14 @@ fn transinv() {
         let found: Vec<(usize, Vec<u8>, Vec<usize>)> = (0..nchunks)
             .into_par_iter()
             .fold(
-                || (Vec::new(), Scratch::new(&e.dag), Vec::with_capacity(n), vec![0u8; n * n]),
+                || {
+                    (
+                        Vec::new(),
+                        Scratch::new(&e.dag),
+                        Vec::with_capacity(n),
+                        vec![0u8; n * n],
+                    )
+                },
                 |(mut acc, mut scratch, mut f, mut table), c| {
                     let lo = c * chunk;
                     let hi = (lo + chunk).min(total);
@@ -1348,7 +1361,11 @@ fn transinv() {
         reached.extend(g.iter().copied());
     }
     println!();
-    println!("{} of {} hard-core pairs reached by this family", reached.len(), hard.len());
+    println!(
+        "{} of {} hard-core pairs reached by this family",
+        reached.len(),
+        hard.len()
+    );
 
     // What is new relative to the labelled partition?
     let part = data("hard_core_partition.tsv");
@@ -1366,7 +1383,10 @@ fn transinv() {
         .copied()
         .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
         .collect();
-    println!("{} of them were not reached by any earlier family", fresh.len());
+    println!(
+        "{} of them were not reached by any earlier family",
+        fresh.len()
+    );
     if !hits.is_empty() {
         println!();
         println!("witnessing functions (is f linear, f(d) = b*d?):");
@@ -1377,7 +1397,11 @@ fn transinv() {
             let linear = (0..*n).all(|d| f[d] as usize == (b * d) % *n);
             println!(
                 "    n={n:<3} f={f:?}  {}  discharges {} pair(s)",
-                if linear { format!("LINEAR b={b}") } else { "nonlinear".to_string() },
+                if linear {
+                    format!("LINEAR b={b}")
+                } else {
+                    "nonlinear".to_string()
+                },
                 g.len()
             );
             shown += 1;
@@ -1394,5 +1418,170 @@ fn transinv() {
             .map(|(n, f, _)| format!("n={n} f={f:?}"))
             .unwrap_or_default();
         println!("    E{} !=> E{}   {best}", p.from, p.to);
+    }
+}
+
+/// Sweep quadratic magmas `x ◇ y = ax² + bxy + cy² + dx + ey + f` over `Z/N`
+/// against the hard core (ETP paper Remark 5.5).
+///
+/// The paper found these "somewhat useful" for additional finite refutations
+/// at small `N` and expects them to thin out as `N` grows. The reason to run
+/// them anyway is the domain-size cliff: carrier 11 upward is where no
+/// search-based model finder reaches, so if this family has anything there,
+/// nobody has looked.
+///
+/// Usage: `pm quad [max_n] [min_n]`
+fn quad() {
+    use parsimagma::finite::Scratch;
+    use parsimagma::quadratic::Quadratic;
+    use rayon::prelude::*;
+
+    let max_n: u32 = std::env::args()
+        .nth(2)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(16);
+    let min_n: u32 = std::env::args()
+        .nth(3)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(2);
+
+    let all_laws = parse_laws(&data("equations.txt")).unwrap();
+    let hard = parse_pairs(&data("hard_core.txt")).unwrap();
+    let mut ids: Vec<u32> = hard.iter().flat_map(|p| [p.from, p.to]).collect();
+    ids.sort_unstable();
+    ids.dedup();
+    let index: std::collections::HashMap<u32, usize> =
+        ids.iter().enumerate().map(|(i, id)| (*id, i)).collect();
+    let laws: Vec<parsimagma::Law> = ids
+        .iter()
+        .map(|id| all_laws[*id as usize - 1].clone())
+        .collect();
+    let e = Engine::new(Dag::build(&laws));
+    let pairs: Vec<(usize, usize)> = hard
+        .iter()
+        .map(|p| (index[&p.from], index[&p.to]))
+        .collect();
+
+    let part = data("hard_core_partition.tsv");
+    let uncovered: std::collections::HashSet<(u32, u32)> = part
+        .lines()
+        .skip(1)
+        .filter_map(|l| {
+            let c: Vec<&str> = l.split('\t').collect();
+            (c.len() == 4 && c[0] == "unresolved" && c[3] == "none")
+                .then(|| (c[1].parse().unwrap(), c[2].parse().unwrap()))
+        })
+        .collect();
+
+    println!("# Quadratic magmas vs the hard core");
+    println!();
+    println!("grid       x ◇ y = ax² + bxy + cy² + dx + ey + f over Z/N, all coefficients, N = {min_n}..{max_n}");
+    println!(
+        "evaluating {} laws (those in the {} hard-core pairs)",
+        laws.len(),
+        hard.len()
+    );
+    println!();
+
+    let mut all_reached: std::collections::BTreeSet<usize> = Default::default();
+    let mut fresh_hits: Vec<(u32, Quadratic, Vec<usize>)> = Vec::new();
+    for n in min_n..=max_n {
+        let total = Quadratic::grid_size(n);
+        let t = Instant::now();
+        let chunk = 1u64 << 14;
+        let found: Vec<(Quadratic, Vec<usize>)> = (0..total.div_ceil(chunk))
+            .into_par_iter()
+            .fold(
+                || {
+                    (
+                        Vec::new(),
+                        Scratch::new(&e.dag),
+                        vec![0u8; (n * n) as usize],
+                    )
+                },
+                |(mut acc, mut scratch, mut table), c| {
+                    let lo = c * chunk;
+                    let hi = (lo + chunk).min(total);
+                    for code in lo..hi {
+                        let q = Quadratic::from_code(n, code);
+                        // Linear instances are already swept exhaustively.
+                        if q.is_linear() {
+                            continue;
+                        }
+                        q.fill(&mut table);
+                        let m = FiniteMagma::new(n as usize, table.clone()).unwrap();
+                        let sig = e.signature_with(&m, &mut scratch);
+                        let got: Vec<usize> = pairs
+                            .iter()
+                            .enumerate()
+                            .filter(|(_, (a, b))| sig.get(*a) && !sig.get(*b))
+                            .map(|(k, _)| k)
+                            .collect();
+                        if !got.is_empty() {
+                            acc.push((q, got));
+                        }
+                    }
+                    (acc, scratch, table)
+                },
+            )
+            .map(|(acc, _, _)| acc)
+            .reduce(Vec::new, |mut a, b| {
+                a.extend(b);
+                a
+            });
+        let mut reached: std::collections::BTreeSet<usize> = Default::default();
+        for (_, g) in &found {
+            reached.extend(g.iter().copied());
+        }
+        let new: Vec<usize> = reached
+            .iter()
+            .copied()
+            .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+            .collect();
+        println!(
+            "N={n:<3} {total:>12} instances  {:>7} hit  {:>4} pairs  {:>3} NEW  {:.2?}",
+            found.len(),
+            reached.len(),
+            new.len(),
+            t.elapsed()
+        );
+        for (q, g) in &found {
+            if g.iter()
+                .any(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+            {
+                fresh_hits.push((n, *q, g.clone()));
+            }
+        }
+        all_reached.extend(reached);
+    }
+
+    let new: Vec<usize> = all_reached
+        .iter()
+        .copied()
+        .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+        .collect();
+    println!();
+    println!(
+        "{} of {} hard-core pairs reached",
+        all_reached.len(),
+        hard.len()
+    );
+    println!("{} of them reached by no earlier family", new.len());
+    for (n, q, g) in fresh_hits.iter().take(20) {
+        let fresh: Vec<String> = g
+            .iter()
+            .filter(|k| uncovered.contains(&(hard[**k].from, hard[**k].to)))
+            .map(|k| format!("E{}!=>E{}", hard[*k].from, hard[*k].to))
+            .collect();
+        println!(
+            "    N={n} (a,b,c,d,e,f)=({},{},{},{},{},{})  {}",
+            q.a,
+            q.b,
+            q.c,
+            q.d,
+            q.e,
+            q.f,
+            fresh.join(" ")
+        );
     }
 }
