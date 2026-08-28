@@ -13,16 +13,16 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 1.6  Reconcile — 814 is NOT 820; floor of 385 contradicts the published 310
 - [x] 1.7  Write `docs/hard-core-anatomy.md`, emit `data/etp/hard_core_partition.tsv`
 - [x] 1.8  Delete the dump, report freed bytes
-- [>] 1.9  Commit
+- [x] 1.9  Commit
 
 ## Control — is the residual an fmb escalation artifact?
 
-- [ ] 2.1  `brew install vampire` (5.1.0, bottled)
-- [ ] 2.2  TPTP emitter from the parsed law set (`pm tptp`), matching Janota's CNF shape
-- [ ] 2.3  Sanity check: reproduce a known verdict on a handful of settled pairs
-- [ ] 2.4  Experiment A — fmb at *fixed* domain size 13 on pairs `Z/13 (7,7)` covers
-- [ ] 2.5  Experiment B — fmb with escalation at a large budget, same sample
-- [ ] 2.6  Write `docs/atp-control.md` with both verdicts
+- [x] 2.1  `brew install vampire` (5.1.0, bottled) — 16.4 MB
+- [x] 2.2  TPTP emitter `pm tptp`, Janota CNF shape
+- [x] 2.3  Sanity check — E2 => E3 returns Unsatisfiable
+- [x] 2.4  Experiment A — fixed domain 13: 0/20, and it is NOT the escalation
+- [x] 2.5  Experiment B — cliff located between witness size 9 and 11
+- [>] 2.6  Write `docs/atp-control.md` with both verdicts
 - [ ] 2.7  Commit
 
 ## Blocked / not started

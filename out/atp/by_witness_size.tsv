@@ -1,0 +1,25 @@
+problem	config	result	seconds
+1279_2737	witness7	SZS status Satisfiable	0.5
+1279_2936	witness7	SZS status Satisfiable	0.9
+1279_3748	witness7	SZS status Satisfiable	0.4
+2328_1873	witness7	SZS status Satisfiable	0.9
+2328_3761	witness7	SZS status Satisfiable	0.4
+2328_473	witness7	SZS status Satisfiable	0.4
+2328_73	witness7	SZS status Satisfiable	0.4
+2903_513	witness7	SZS status Satisfiable	2.1
+2291_3050	witness9	SZS status Satisfiable	1.4
+2676_3460	witness9	SZS status Satisfiable	0.3
+2676_3518	witness9	SZS status Satisfiable	0.1
+2947_1426	witness9	SZS status Satisfiable	0.3
+2947_2035	witness9	SZS status Satisfiable	0.3
+680_1492	witness9	SZS status Satisfiable	0.4
+680_2035	witness9	SZS status Satisfiable	0.1
+907_843	witness9	Termination reason: Time limit	60.0
+1286_2238	witness11	Termination reason: Time limit	60.1
+1286_255	witness11	Termination reason: Time limit	60.1
+2301_203	witness11	Termination reason: Time limit	60.1
+2301_2441	witness11	Termination reason: Time limit	60.0
+2301_2644	witness11	Termination reason: Time limit	60.0
+2301_3456	witness11	Termination reason: Time limit	60.0
+2301_4118	witness11	Termination reason: Time limit	60.0
+907_614	witness11	Termination reason: Time limit	60.0

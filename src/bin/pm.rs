@@ -20,8 +20,9 @@ fn main() {
         "coverage" => coverage(),
         "bruteforce" => bruteforce(),
         "partition" => partition(),
+        "tptp" => tptp(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp");
             std::process::exit(2);
         }
     }
@@ -602,4 +603,62 @@ fn partition() {
     }
     println!();
     println!("wrote data/etp/hard_core_partition.tsv");
+}
+
+/// Emit TPTP problems, one per ordered pair, in the CNF shape Janota used:
+/// the hypothesis as an axiom over TPTP variables, the conclusion negated and
+/// Skolemised to fresh constants.
+///
+/// Usage: `pm tptp <pairs-file> <out-dir>`
+fn tptp() {
+    use parsimagma::law::Term;
+    use std::io::Write;
+
+    let args: Vec<String> = std::env::args().collect();
+    let pairs_file = args.get(2).expect("usage: pm tptp <pairs-file> <out-dir>");
+    let out_dir = args.get(3).expect("usage: pm tptp <pairs-file> <out-dir>");
+    std::fs::create_dir_all(out_dir).unwrap();
+
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let text = std::fs::read_to_string(pairs_file).unwrap();
+    let pairs = parse_pairs(&text).unwrap();
+
+    // `m` is the magma operation, matching Janota's generated problems.
+    fn render(t: &Term, skolem: bool) -> String {
+        match t {
+            Term::Var(v) => {
+                if skolem {
+                    format!("sk{v}")
+                } else {
+                    format!("X{v}")
+                }
+            }
+            Term::Op(l, r) => format!("m({},{})", render(l, skolem), render(r, skolem)),
+        }
+    }
+
+    let mut n = 0usize;
+    for p in &pairs {
+        let hyp = &laws[p.from as usize - 1];
+        let concl = &laws[p.to as usize - 1];
+        let path = format!("{out_dir}/{}_{}.p", p.from, p.to);
+        let mut f = std::fs::File::create(&path).unwrap();
+        writeln!(f, "% E{} => E{}", p.from, p.to).unwrap();
+        writeln!(
+            f,
+            "cnf(lhs, axiom, {} = {}).",
+            render(&hyp.lhs, false),
+            render(&hyp.rhs, false)
+        )
+        .unwrap();
+        writeln!(
+            f,
+            "cnf(rhs, negated_conjecture, {} != {}).",
+            render(&concl.lhs, true),
+            render(&concl.rhs, true)
+        )
+        .unwrap();
+        n += 1;
+    }
+    eprintln!("wrote {n} TPTP problems to {out_dir}");
 }
