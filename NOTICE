@@ -1,0 +1,10 @@
+parsimagma
+Copyright 2026 Carlo Perassi
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+This product vendors data from the Equational Theories Project
+(https://github.com/teorth/equational_theories), which is also licensed under
+the Apache License, Version 2.0. The vendored files, the upstream commit they
+were taken from, and the files derived from them are listed in
+data/etp/PROVENANCE.txt.

@@ -1,6 +1,48 @@
-e5a88a1479011ece4aad8e3c2e7e5c0ebc0a5b2a
-source: https://github.com/teorth/equational_theories (Apache-2.0)
-fetched: 2026-08-27
-files: equations.txt, smallest_magma.txt, smallest_magma_examples.txt, duals.json
-       from data/; refutations{2x2,3x3,4x4}.txt from
-       equational_theories/Generated/All4x4Tables/data/
+Vendored from https://github.com/teorth/equational_theories (Apache-2.0)
+upstream commit e5a88a1479011ece4aad8e3c2e7e5c0ebc0a5b2a
+fetched 2026-08-27/28
+
+Verbatim upstream files
+-----------------------
+equations.txt                  data/equations.txt              4694 laws, order <= 4
+eq_size5.txt                   data/eq_size5.txt               62,576 laws, order <= 5
+smallest_magma.txt             data/smallest_magma.txt
+smallest_magma_examples.txt    data/smallest_magma_examples.txt
+duals.json                     data/duals.json
+refutations2x2.txt             equational_theories/Generated/All4x4Tables/data/
+refutations3x3.txt                          "
+refutations4x4.txt                          "
+
+Derived here, from files not vendored
+-------------------------------------
+implications.bits         packed 4694 x 4694 bit matrix of the general-magma
+                          implication graph. Bit j of row i is set iff E_(i+1)
+                          entails E_(j+1). Built from data/2025-08-11-vampire.json.gz
+                          (sha256 16e8efcdb4c60cf5b438364efdd38552d073255d8ee653e2eccd79fc6d0a61b2,
+                          88,335,708 bytes) by taking value == 1, then setting
+                          the diagonal. That dump is 84 MB and is NOT vendored.
+
+hard_core.txt             the 1062 pairs with value == 2 in the same dump:
+                          implications Vampire left undecided. All are false.
+
+saturation_refuted.txt    the 814 pairs with value == 0 under method vsi500 or
+                          vss600, i.e. refuted by saturation with no witnessing
+                          model produced.
+
+hard_core_partition.tsv   every pair in the two sets above, labelled with the
+                          smallest carrier this corpus can witness it on.
+                          Regenerate with `pm partition --order3-twists`.
+
+order5_open.txt           the three open sets of blueprint chapter 20, tables
+                          20.1 (10 proved Austin), 20.2 (96 with no nontrivial
+                          finite model, infinite model open) and 20.3 (24 with
+                          finite model existence open). Ids index eq_size5.txt
+                          by line.
+
+hn_open.txt               the 13 unknown-candidate laws of data/Higman-Neumann.json,
+                          with their law text inline since they are order 8.
+
+To rebuild the three files that need the Vampire dump, re-fetch it from
+  https://raw.githubusercontent.com/teorth/equational_theories/e5a88a1479011ece4aad8e3c2e7e5c0ebc0a5b2a/data/2025-08-11-vampire.json.gz
+and stream it rather than json.load: 22,028,942 entries is roughly 10 GB as a
+Python dict, against 184 MB scanned in chunks.

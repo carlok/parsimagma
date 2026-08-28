@@ -60,7 +60,29 @@ filtering) and takes hours.
 - `out/` — raw outputs: the parameter grid, the coverage matrix, and the
   corpus signatures
 
-## Data
+## Data and reconstruction
 
-`data/etp/` vendors the ETP files used as the differential-test oracle, with
-the upstream commit recorded in `PROVENANCE.txt`. Upstream is Apache-2.0.
+`data/etp/` vendors the ETP files used as the differential-test oracle, plus a
+few files derived from an 84 MB upstream dump that is deliberately not
+vendored. `data/etp/PROVENANCE.txt` lists every file, its upstream path, the
+pinned commit, and for the derived ones the exact recipe and the sha256 of the
+input.
+
+Everything else in the repository is either source or a committed result.
+Nothing needs a network fetch to rebuild except the three files that depend on
+that dump, and `PROVENANCE.txt` gives the pinned URL for it.
+
+Generated ATP problem files are not tracked, since they are a pure function of
+a sample list and the law set. To rebuild them:
+
+```bash
+python3 scripts/sample_control_pairs.py
+```
+
+```bash
+./target/release/pm tptp out/atp/samples/witness11.txt out/tptp_w11
+```
+
+External tools used by the control experiment, neither of which is required to
+build or test the crate: Vampire 5.1.0 and Prover9/Mace4, both available from
+Homebrew.

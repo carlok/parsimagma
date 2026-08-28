@@ -1,1 +1,10 @@
 /target
+
+# Generated ATP problem files. Reconstruct with:
+#   python3 scripts/sample_control_pairs.py
+#   ./target/release/pm tptp out/atp/samples/<sample>.txt out/tptp_<name>
+#   ./target/release/pm ladr out/atp/samples/<sample>.txt out/ladr_<name>
+# The sample pair lists and the run results are tracked; the problem files
+# themselves are not, since they are a pure function of the two.
+/out/tptp_*/
+/out/ladr_*/
