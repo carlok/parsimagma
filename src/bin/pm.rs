@@ -1,6 +1,7 @@
 //! `pm` — command line front end.
 
 use parsimagma::corpus::{add_twist_family, linear_corpus, order3_canonical, Carrier};
+use rayon::prelude::*;
 use parsimagma::coverage::{CoverageMatrix, GraphCoverage};
 use parsimagma::etpdata::parse_refutations;
 use parsimagma::graph::{parse_pairs, ImplicationGraph};
@@ -21,8 +22,10 @@ fn main() {
         "bruteforce" => bruteforce(),
         "partition" => partition(),
         "tptp" => tptp(),
+        "ladr" => ladr(),
+        "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, openq");
             std::process::exit(2);
         }
     }
@@ -661,4 +664,298 @@ fn tptp() {
         n += 1;
     }
     eprintln!("wrote {n} TPTP problems to {out_dir}");
+}
+
+/// Emit LADR problems for Mace4, the original MACE-style model finder, so the
+/// domain-size cliff can be checked against an implementation independent of
+/// Vampire's `fmb`.
+///
+/// LADR treats `x y z u v w` (with optional digits) as variables and every
+/// other symbol as a constant, so Skolem constants are named `c0`, `c1`, ...
+/// and law variables are `x0`, `x1`, ...
+///
+/// Usage: `pm ladr <pairs-file> <out-dir>`
+fn ladr() {
+    use parsimagma::law::Term;
+    use std::io::Write;
+
+    let args: Vec<String> = std::env::args().collect();
+    let pairs_file = args.get(2).expect("usage: pm ladr <pairs-file> <out-dir>");
+    let out_dir = args.get(3).expect("usage: pm ladr <pairs-file> <out-dir>");
+    std::fs::create_dir_all(out_dir).unwrap();
+
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let pairs = parse_pairs(&std::fs::read_to_string(pairs_file).unwrap()).unwrap();
+
+    fn render(t: &Term, skolem: bool) -> String {
+        match t {
+            Term::Var(v) => {
+                if skolem {
+                    format!("c{v}")
+                } else {
+                    format!("x{v}")
+                }
+            }
+            Term::Op(l, r) => format!("f({},{})", render(l, skolem), render(r, skolem)),
+        }
+    }
+
+    let mut n = 0usize;
+    for p in &pairs {
+        let hyp = &laws[p.from as usize - 1];
+        let concl = &laws[p.to as usize - 1];
+        let mut f = std::fs::File::create(format!("{out_dir}/{}_{}.in", p.from, p.to)).unwrap();
+        writeln!(f, "% E{} => E{}: a model here refutes the implication", p.from, p.to).unwrap();
+        writeln!(f, "formulas(assumptions).").unwrap();
+        writeln!(
+            f,
+            "  {} = {}.",
+            render(&hyp.lhs, false),
+            render(&hyp.rhs, false)
+        )
+        .unwrap();
+        writeln!(
+            f,
+            "  {} != {}.",
+            render(&concl.lhs, true),
+            render(&concl.rhs, true)
+        )
+        .unwrap();
+        writeln!(f, "end_of_list.").unwrap();
+        n += 1;
+    }
+    eprintln!("wrote {n} LADR problems to {out_dir}");
+}
+
+/// Scan the construction grid against the open order-5 questions.
+///
+/// Blueprint chapter 20 leaves three sets. Ten laws are proved Austin, which
+/// serve as a control. Ninety-six have no nontrivial finite model and it is
+/// open whether they admit an infinite one — the blueprint says plainly that
+/// "no effort was made to build infinite models for these equations". Another
+/// twenty-four are open even for finite models.
+///
+/// The linear tier answers both cheaply, and the two sets need opposite
+/// instances. A linear magma over `Z` satisfying a law satisfies it over every
+/// `Z/m` too, since the law is an identity in the coefficients and reduction
+/// is a ring map — so any ordinary ring gives a nontrivial *finite* model.
+/// That rules every ordinary ring out for the 96 and leaves only rings with no
+/// suitable finite quotient, such as `Z<a,b>/(ba+1)` where `b` is a one-sided
+/// inverse of `a`: in finite dimension a one-sided inverse is two-sided, so
+/// that relation cannot survive. For the 24 the same fact runs the other way,
+/// and any `Z/m` model settles the question outright.
+///
+/// The 10 Austin laws and the 96 must therefore have **no** `Z/m` hit. A hit
+/// there would contradict an established ETP result and should be read as a
+/// bug in this engine before anything else.
+fn openq() {
+    use parsimagma::linear::{AffineModel, LinearModel};
+    use parsimagma::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, Zmod};
+
+    let all_laws = parse_laws(&data("eq_size5.txt")).unwrap();
+    let mut targets: Vec<(String, u32)> = Vec::new();
+    let mut laws: Vec<parsimagma::Law> = Vec::new();
+    // Order-5 open questions are referenced by line number into eq_size5.txt.
+    for line in data("order5_open.txt").lines() {
+        if line.starts_with('#') || line.trim().is_empty() {
+            continue;
+        }
+        let mut it = line.split('\t');
+        let set = it.next().unwrap().to_string();
+        let id: u32 = it.next().unwrap().parse().unwrap();
+        targets.push((set, id));
+        laws.push(all_laws[id as usize - 1].clone());
+    }
+    // The Higman-Neumann candidates are order-8 and carry their law text
+    // inline, since eq_size5.txt only reaches order 5.
+    for line in data("hn_open.txt").lines() {
+        if line.starts_with('#') || line.trim().is_empty() {
+            continue;
+        }
+        let mut it = line.split('\t');
+        let set = it.next().unwrap().to_string();
+        let id: u32 = it.next().unwrap().parse().unwrap();
+        let text = it.next().unwrap();
+        let parsed = parse_laws(text).unwrap();
+        targets.push((set, id));
+        laws.push(parsed.into_iter().next().unwrap());
+    }
+    let ll = LinearLaws::build(&laws);
+
+    println!("# Open order-5 questions vs the construction grid");
+    println!();
+    for set in ["austin", "infinite", "finite", "hn"] {
+        println!(
+            "  {set:<10} {} laws",
+            targets.iter().filter(|(s, _)| s == set).count()
+        );
+    }
+
+    let mut hits: Vec<(usize, String)> = Vec::new();
+    let mut record = |sig: &parsimagma::Signature, label: String, hits: &mut Vec<(usize, String)>| {
+        for i in sig.iter_set() {
+            hits.push((i, label.clone()));
+        }
+    };
+
+    // Finite rings: these can only ever settle the 24.
+    for m in 2u64..=96 {
+        for a in 0..m {
+            for b in 0..m {
+                let s = LinearModel::new(Zmod { m }, a, b).signature(&ll);
+                if s.count() > 0 {
+                    record(&s, format!("Z/{m} linear a={a} b={b}"), &mut hits);
+                }
+            }
+        }
+    }
+    for m in 2u64..=32 {
+        for a in 0..m {
+            for b in 0..m {
+                for c in 1..m {
+                    let s = AffineModel::new(Zmod { m }, a, b, c).signature(&ll);
+                    if s.count() > 0 {
+                        record(&s, format!("Z/{m} affine a={a} b={b} c={c}"), &mut hits);
+                    }
+                }
+            }
+        }
+    }
+    for p in [2u64, 3] {
+        let r = MatFp { p, k: 2 };
+        let n = (p as usize).pow(4);
+        let mats: Vec<Vec<u64>> = (0..n)
+            .map(|mut code| {
+                (0..4)
+                    .map(|_| {
+                        let d = (code % p as usize) as u64;
+                        code /= p as usize;
+                        d
+                    })
+                    .collect()
+            })
+            .collect();
+        for a in &mats {
+            for b in &mats {
+                let s = LinearModel::new(r.clone(), a.clone(), b.clone()).signature(&ll);
+                if s.count() > 0 {
+                    record(&s, format!("M_2(F_{p}) a={a:?} b={b:?}"), &mut hits);
+                }
+            }
+        }
+    }
+
+    // Infinite rings: the only ones that can settle the 96.
+    for a in -6i128..=6 {
+        for b in -6i128..=6 {
+            let s = LinearModel::new(Integers, a, b).signature(&ll);
+            if s.count() > 0 {
+                record(&s, format!("Z linear a={a} b={b}"), &mut hits);
+            }
+        }
+    }
+    for a0 in -2i128..=2 {
+        for a1 in -2i128..=2 {
+            for b0 in -2i128..=2 {
+                for b1 in -2i128..=2 {
+                    let s = LinearModel::new(PolyZ, PolyZ::lin(a0, a1), PolyZ::lin(b0, b1))
+                        .signature(&ll);
+                    if s.count() > 0 {
+                        record(&s, format!("Z[t] a={a0}+{a1}t b={b0}+{b1}t"), &mut hits);
+                    }
+                }
+            }
+        }
+    }
+    let s = LinearModel::new(FreeComm, FreeComm.gen_a(), FreeComm.gen_b()).signature(&ll);
+    record(&s, "Z[a,b] generic".to_string(), &mut hits);
+    let s = LinearModel::new(FreeNc, FreeNc.gen_a(), FreeNc.gen_b()).signature(&ll);
+    record(&s, "Z<a,b> generic".to_string(), &mut hits);
+    let s = LinearModel::new(
+        OneSidedInverse,
+        OneSidedInverse.gen_a(),
+        OneSidedInverse.gen_b(),
+    )
+    .signature(&ll);
+    record(&s, "Z<a,b>/(ba+1) one-sided inverse".to_string(), &mut hits);
+
+    // Twisted Cartesian powers. Their carriers are n^k — 16, 27, 32, 81 —
+    // which is exactly the range the blueprint reports for order-5 models
+    // ("a few had a minimum satisfying model size of order 17 ... one was
+    // found with a satisfying model of order 26"), and exactly where the
+    // control experiment shows finite model builders stop working.
+    {
+        use parsimagma::twist::TwistedPower;
+        let bases2: Vec<FiniteMagma> = (0..16u32)
+            .map(|bits| {
+                FiniteMagma::new(2, (0..4).map(|i| ((bits >> i) & 1) as u8).collect()).unwrap()
+            })
+            .collect();
+        let mut jobs: Vec<(FiniteMagma, usize, usize, usize)> = Vec::new();
+        for b in &bases2 {
+            for k in 2..=8usize {
+                for sh in 0..k {
+                    for t in 0..k {
+                        jobs.push((b.clone(), k, sh, t));
+                    }
+                }
+            }
+        }
+        for b in order3_canonical() {
+            for k in 2..=3usize {
+                for sh in 0..k {
+                    for t in 0..k {
+                        jobs.push((b.clone(), k, sh, t));
+                    }
+                }
+            }
+        }
+        let found: Vec<(usize, String)> = jobs
+            .par_iter()
+            .flat_map(|(b, k, sh, t)| {
+                let tw = TwistedPower::cyclic(b.clone(), *k, *sh, *t);
+                let sig = tw.signature(&laws);
+                sig.iter_set()
+                    .map(|i| {
+                        (
+                            i,
+                            format!(
+                                "twist base{}#{:?} k={k} shifts=({sh},{t}) carrier={}",
+                                b.n,
+                                b.table,
+                                tw.carrier_size()
+                            ),
+                        )
+                    })
+                    .collect::<Vec<_>>()
+            })
+            .collect();
+        eprintln!("twisted powers: {} instances scanned", jobs.len());
+        hits.extend(found);
+    }
+
+    println!();
+    if hits.is_empty() {
+        println!("no instance in the grid satisfies any of the {} target laws", laws.len());
+        return;
+    }
+    let mut by_law: std::collections::BTreeMap<usize, Vec<String>> = Default::default();
+    for (i, lab) in hits {
+        by_law.entry(i).or_default().push(lab);
+    }
+    println!("## Hits");
+    for (i, labels) in &by_law {
+        let (set, id) = &targets[*i];
+        println!();
+        println!("E{id}  [{set}]  {} instances", labels.len());
+        println!("  law: {:?} = {:?}", laws[*i].lhs, laws[*i].rhs);
+        let cap: usize = std::env::var("PM_SHOW").ok().and_then(|v| v.parse().ok()).unwrap_or(6);
+        for l in labels.iter().take(cap) {
+            println!("    {l}");
+        }
+        if *set != "finite" {
+            println!("  !! a hit outside the `finite` set contradicts an established ETP");
+            println!("     result unless the witnessing ring has no nontrivial finite quotient");
+        }
+    }
 }

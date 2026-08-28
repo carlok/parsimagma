@@ -104,10 +104,11 @@ fn parse_law(line: &str, id: u32) -> Result<Law, String> {
     if names.is_empty() {
         return Err("no variables".to_string());
     }
-    if names.len() > 6 {
+    if names.len() > crate::dag::MAX_VARS {
         return Err(format!(
-            "{} distinct variables, expected at most 6",
-            names.len()
+            "{} distinct variables, expected at most {}",
+            names.len(),
+            crate::dag::MAX_VARS
         ));
     }
 

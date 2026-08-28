@@ -1,0 +1,17 @@
+# Higman-Neumann unknown candidates, from data/Higman-Neumann.json upstream.
+# 13 order-8 laws for which it is unknown whether a non-group model exists,
+# finite or infinite. A model here that is not a group under division would
+# settle the case.
+hn	48217520	x = y ◇ ((((x ◇ x) ◇ x) ◇ ((y ◇ z) ◇ y)) ◇ (z ◇ y))
+hn	48217671	x = y ◇ ((((x ◇ x) ◇ x) ◇ ((z ◇ y) ◇ y)) ◇ (y ◇ z))
+hn	58095440	x = y ◇ ((((y ◇ y) ◇ x) ◇ (((x ◇ x) ◇ z) ◇ y)) ◇ z)
+hn	73169078	x = (y ◇ y) ◇ (((x ◇ x) ◇ y) ◇ ((x ◇ z) ◇ (y ◇ z)))
+hn	73169229	x = (y ◇ y) ◇ (((x ◇ x) ◇ z) ◇ ((x ◇ y) ◇ (z ◇ y)))
+hn	102743259	x = ((y ◇ y) ◇ ((x ◇ y) ◇ x)) ◇ ((y ◇ z) ◇ (x ◇ z))
+hn	102745815	x = ((y ◇ y) ◇ ((y ◇ x) ◇ x)) ◇ ((x ◇ z) ◇ (y ◇ z))
+hn	102749116	x = ((y ◇ y) ◇ ((z ◇ x) ◇ x)) ◇ ((x ◇ w) ◇ (z ◇ w))
+hn	113067945	x = (((y ◇ y) ◇ (y ◇ x)) ◇ (z ◇ y)) ◇ ((x ◇ x) ◇ z)
+hn	113071354	x = (((y ◇ y) ◇ (z ◇ x)) ◇ (y ◇ z)) ◇ ((x ◇ x) ◇ y)
+hn	121884950	x = ((y ◇ y) ◇ (z ◇ (x ◇ ((x ◇ x) ◇ y)))) ◇ (y ◇ z)
+hn	122693826	x = ((y ◇ y) ◇ (((y ◇ x) ◇ z) ◇ (x ◇ z))) ◇ (x ◇ y)
+hn	122697948	x = ((y ◇ y) ◇ (((z ◇ x) ◇ w) ◇ (x ◇ w))) ◇ (x ◇ z)

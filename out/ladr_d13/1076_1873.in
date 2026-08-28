@@ -1,0 +1,5 @@
+% E1076 => E1873: a model here refutes the implication
+formulas(assumptions).
+  x0 = f(x1,f(f(x0,f(x0,x1)),x1)).
+  c0 != f(f(c0,f(c1,c2)),f(c1,c2)).
+end_of_list.

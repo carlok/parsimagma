@@ -22,8 +22,19 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 2.3  Sanity check — E2 => E3 returns Unsatisfiable
 - [x] 2.4  Experiment A — fixed domain 13: 0/20, and it is NOT the escalation
 - [x] 2.5  Experiment B — cliff located between witness size 9 and 11
-- [>] 2.6  Write `docs/atp-control.md` with both verdicts
-- [ ] 2.7  Commit
+- [x] 2.6  Write `docs/atp-control.md` with both verdicts
+- [x] 2.7  Commit
+
+## S6 — open questions, ranked by odds of a Palomar-admissible theorem
+
+- [x] 6.1  Extract the three order-5 open sets from blueprint ch. 20 (10 / 96 / 24)
+- [x] 6.2  Extract the 13 Higman-Neumann unknown candidates
+- [x] 6.3  Widen the engine to order-5 and order-8 laws (MAX_DEG 6, MAX_VARS 7)
+- [x] 6.4  Validate on the order-5 set: positive control, negative control, table cross-check
+- [x] 6.5  Scan linear + affine grid: no hits on any of the 143
+- [x] 6.6  Scan 46,538 twisted powers: no hits either
+- [ ] 6.7  Weyl algebra `Z<a,b>/(ba - ab - 1)` — the one ring class the argument leaves open
+- [ ] 6.8  Write up whatever the answer is
 
 ## Blocked / not started
 

@@ -6,10 +6,15 @@
 //! long as the term is deep. There are `2^0 + ... + 2^4 = 31` such words, so
 //! a polynomial is a fixed array and every operation is branch-free.
 
-/// Longest root-to-leaf path in a term of order at most 4.
-pub const MAX_DEG: usize = 4;
+/// Longest root-to-leaf path the engine supports. Order-4 laws need 4; the
+/// order-5 laws of `eq_size5.txt` reach 5, and the order-8 Higman-Neumann
+/// candidates reach 6. Raising it costs only array width: `N_WORDS` is
+/// `2^(MAX_DEG+1) - 1`.
+pub const MAX_DEG: usize = 6;
 /// Number of words in `{a, b}` of length at most `MAX_DEG`.
 pub const N_WORDS: usize = (1 << (MAX_DEG + 1)) - 1;
+/// Number of commutative monomials `a^i b^j` with `i + j <= MAX_DEG`.
+pub const N_MONOMIALS: usize = (MAX_DEG + 1) * (MAX_DEG + 2) / 2;
 
 /// Index of the word of length `len` whose letters, read root-to-leaf, are
 /// the bits of `bits` from most to least significant (`0` = a, `1` = b).
@@ -67,11 +72,11 @@ impl NcPoly {
         out
     }
 
-    /// Image in the commutative quotient: 15 monomials `a^i b^j`, `i+j <= 4`.
-    /// Zero here but not in `self` is exactly the gap between a commutative
-    /// and a noncommutative linear model.
-    pub fn commutative_image(&self) -> [i32; 15] {
-        let mut out = [0i32; 15];
+    /// Image in the commutative quotient. Zero here but not in `self` is
+    /// exactly the gap between a commutative and a noncommutative linear
+    /// model.
+    pub fn commutative_image(&self) -> [i32; N_MONOMIALS] {
+        let mut out = [0i32; N_MONOMIALS];
         for (i, &k) in self.c.iter().enumerate() {
             if k != 0 {
                 let (da, db) = word_degrees(i);
@@ -82,7 +87,7 @@ impl NcPoly {
     }
 }
 
-/// Index of `a^da b^db` among monomials of total degree at most 4.
+/// Index of `a^da b^db` among monomials of total degree at most `MAX_DEG`.
 #[inline]
 pub const fn monomial_index(da: u32, db: u32) -> usize {
     let d = (da + db) as usize;

@@ -12,9 +12,10 @@
 use crate::law::{Law, Term};
 use rustc_hash::FxHashMap;
 
-/// The maximum number of distinct variables in a law of order at most 4:
-/// four operations give at most six leaves.
-pub const MAX_VARS: usize = 6;
+/// The maximum number of distinct variables the engine supports. A law of
+/// order `k` has at most `k + 2` leaves, so order 4 needs 6 and the order-5
+/// laws of `eq_size5.txt` need 7.
+pub const MAX_VARS: usize = 7;
 
 #[derive(Clone, Copy, PartialEq, Eq, Hash, Debug)]
 pub enum Node {

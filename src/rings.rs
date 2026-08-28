@@ -6,7 +6,7 @@
 //! exists and the symbolic route is the only one.
 
 use crate::linear::RingOps;
-use crate::nc::{monomial_index, word_degrees, word_index, word_of, MAX_DEG, N_WORDS};
+use crate::nc::{monomial_index, word_degrees, word_index, word_of, MAX_DEG, N_MONOMIALS, N_WORDS};
 
 /// `Z/mZ`. Carrier size `m`, so instances are finite and cross-checkable.
 #[derive(Clone, Debug)]
@@ -306,24 +306,24 @@ impl RingOps for FreeNc {
 #[derive(Clone, Debug)]
 pub struct FreeComm;
 
-pub type CommElem = [i128; 15];
+pub type CommElem = [i128; N_MONOMIALS];
 
 impl FreeComm {
     pub fn gen_a(&self) -> CommElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(1, 0)] = 1;
         e
     }
     pub fn gen_b(&self) -> CommElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(0, 1)] = 1;
         e
     }
 }
 
 /// `(deg_a, deg_b)` for each of the 15 monomial slots.
-fn monomial_degrees() -> [(u32, u32); 15] {
-    let mut out = [(0u32, 0u32); 15];
+fn monomial_degrees() -> [(u32, u32); N_MONOMIALS] {
+    let mut out = [(0u32, 0u32); N_MONOMIALS];
     for d in 0..=MAX_DEG as u32 {
         for db in 0..=d {
             out[monomial_index(d - db, db)] = (d - db, db);
@@ -336,26 +336,26 @@ impl RingOps for FreeComm {
     type Elem = CommElem;
 
     fn zero(&self) -> CommElem {
-        [0; 15]
+        [0; N_MONOMIALS]
     }
     fn one(&self) -> CommElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(0, 0)] = 1;
         e
     }
     fn add_assign(&self, x: &mut CommElem, y: &CommElem) {
-        for i in 0..15 {
+        for i in 0..N_MONOMIALS {
             x[i] += y[i];
         }
     }
     fn mul(&self, x: &CommElem, y: &CommElem) -> CommElem {
         let degs = monomial_degrees();
-        let mut out = [0i128; 15];
-        for i in 0..15 {
+        let mut out = [0i128; N_MONOMIALS];
+        for i in 0..N_MONOMIALS {
             if x[i] == 0 {
                 continue;
             }
-            for j in 0..15 {
+            for j in 0..N_MONOMIALS {
                 if y[j] == 0 {
                     continue;
                 }
@@ -371,7 +371,7 @@ impl RingOps for FreeComm {
         out
     }
     fn scale_add_assign(&self, acc: &mut CommElem, k: i32, x: &CommElem) {
-        for i in 0..15 {
+        for i in 0..N_MONOMIALS {
             acc[i] += k as i128 * x[i];
         }
     }
@@ -403,16 +403,16 @@ pub struct OneSidedInverse;
 
 /// Coefficients of the normal forms `a^i b^j` with `i + j <= MAX_DEG`,
 /// indexed by [`monomial_index`] just as the commutative monomials are.
-pub type OsiElem = [i128; 15];
+pub type OsiElem = [i128; N_MONOMIALS];
 
 impl OneSidedInverse {
     pub fn gen_a(&self) -> OsiElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(1, 0)] = 1;
         e
     }
     pub fn gen_b(&self) -> OsiElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(0, 1)] = 1;
         e
     }
@@ -431,21 +431,21 @@ impl RingOps for OneSidedInverse {
     type Elem = OsiElem;
 
     fn zero(&self) -> OsiElem {
-        [0; 15]
+        [0; N_MONOMIALS]
     }
     fn one(&self) -> OsiElem {
-        let mut e = [0i128; 15];
+        let mut e = [0i128; N_MONOMIALS];
         e[monomial_index(0, 0)] = 1;
         e
     }
     fn add_assign(&self, x: &mut OsiElem, y: &OsiElem) {
-        for n in 0..15 {
+        for n in 0..N_MONOMIALS {
             x[n] += y[n];
         }
     }
     fn mul(&self, x: &OsiElem, y: &OsiElem) -> OsiElem {
         let degs = normal_form_degrees();
-        let mut out = [0i128; 15];
+        let mut out = [0i128; N_MONOMIALS];
         for (n, &xn) in x.iter().enumerate() {
             if xn == 0 {
                 continue;
@@ -467,7 +467,7 @@ impl RingOps for OneSidedInverse {
         out
     }
     fn scale_add_assign(&self, acc: &mut OsiElem, k: i32, x: &OsiElem) {
-        for n in 0..15 {
+        for n in 0..N_MONOMIALS {
             acc[n] += k as i128 * x[n];
         }
     }
@@ -480,8 +480,8 @@ impl RingOps for OneSidedInverse {
 }
 
 /// `(i, j)` exponents for each normal-form slot `a^i b^j`.
-fn normal_form_degrees() -> [(u32, u32); 15] {
-    let mut out = [(0u32, 0u32); 15];
+fn normal_form_degrees() -> [(u32, u32); N_MONOMIALS] {
+    let mut out = [(0u32, 0u32); N_MONOMIALS];
     for d in 0..=MAX_DEG as u32 {
         for j in 0..=d {
             out[monomial_index(d - j, j)] = (d - j, j);
