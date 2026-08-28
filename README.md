@@ -140,6 +140,7 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/translation-invariant.md](docs/translation-invariant.md) | `x ◇ y = x + f(y - x)`, 523M candidates, no new coverage |
 | [docs/quadratic.md](docs/quadratic.md) | `ax² + bxy + cy² + dx + ey + f`, 11.5M instances, no new coverage |
 | [docs/phase0-findings.md](docs/phase0-findings.md) | prior art, and the four distinct "hard core" counts |
+| [docs/where-a-wrong-sum-survives.md](docs/where-a-wrong-sum-survives.md) | a short note on which artifacts get checked, and which do not |
 | [notes/](notes/) | working state: sprint queue and checklist |
 
 Apache-2.0, matching upstream. See `NOTICE`.
