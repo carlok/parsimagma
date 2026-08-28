@@ -7,9 +7,7 @@ use std::sync::OnceLock;
 
 fn laws() -> &'static Vec<Law> {
     static L: OnceLock<Vec<Law>> = OnceLock::new();
-    L.get_or_init(|| {
-        parse_laws(&parsimagma::etpdata::read_text("equations.txt")).unwrap()
-    })
+    L.get_or_init(|| parse_laws(&parsimagma::etpdata::read_text("equations.txt")).unwrap())
 }
 
 fn engine() -> &'static Engine {

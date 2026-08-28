@@ -20,8 +20,7 @@ pub fn read_bytes(name: &str) -> Vec<u8> {
         return b;
     }
     let gz = format!("{plain}.gz");
-    let f = std::fs::File::open(&gz)
-        .unwrap_or_else(|e| panic!("neither {plain} nor {gz}: {e}"));
+    let f = std::fs::File::open(&gz).unwrap_or_else(|e| panic!("neither {plain} nor {gz}: {e}"));
     let mut out = Vec::new();
     flate2::read::GzDecoder::new(f)
         .read_to_end(&mut out)

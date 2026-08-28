@@ -1,12 +1,12 @@
 //! `pm` — command line front end.
 
 use parsimagma::corpus::{add_twist_family, linear_corpus, order3_canonical, Carrier};
-use rayon::prelude::*;
 use parsimagma::coverage::{CoverageMatrix, GraphCoverage};
 use parsimagma::etpdata::parse_refutations;
 use parsimagma::graph::{parse_pairs, ImplicationGraph};
 use parsimagma::linear::LinearLaws;
 use parsimagma::{parse_laws, Dag, Engine, FiniteMagma, N_LAWS_ORDER4};
+use rayon::prelude::*;
 use std::time::Instant;
 
 use parsimagma::etpdata::read_text as data_text;
@@ -25,9 +25,10 @@ fn main() {
         "tptp" => tptp(),
         "ladr" => ladr(),
         "smt2" => smt2(),
+        "mincover" => mincover(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover");
             std::process::exit(2);
         }
     }
@@ -99,7 +100,11 @@ fn coverage() {
     let t = Instant::now();
     let mut corpus = linear_corpus(ll);
     let want3 = std::env::args().any(|a| a == "--order3-twists");
-    let bases3 = if want3 { order3_canonical() } else { Vec::new() };
+    let bases3 = if want3 {
+        order3_canonical()
+    } else {
+        Vec::new()
+    };
     add_twist_family(&mut corpus, &laws, &bases3);
     let corpus = corpus;
     let build_time = t.elapsed();
@@ -560,25 +565,26 @@ fn partition() {
     let hl = label(&hard);
     let sl = label(&sat);
 
-    let report = |name: &str, targets: &[parsimagma::graph::Pair], lab: &[Option<Option<usize>>]| {
-        let mut hist: std::collections::BTreeMap<String, usize> = Default::default();
-        for l in lab {
-            let k = match l {
-                None => "uncovered".to_string(),
-                Some(None) => "infinite only".to_string(),
-                Some(Some(n)) => format!("finite {n}"),
-            };
-            *hist.entry(k).or_default() += 1;
-        }
-        let covered = lab.iter().filter(|l| l.is_some()).count();
-        let finite = lab.iter().filter(|l| matches!(l, Some(Some(_)))).count();
-        println!();
-        println!("## {name}: {} pairs", targets.len());
-        println!("  {covered} covered, of which {finite} by a finite carrier");
-        for (k, v) in &hist {
-            println!("    {k:<16} {v}");
-        }
-    };
+    let report =
+        |name: &str, targets: &[parsimagma::graph::Pair], lab: &[Option<Option<usize>>]| {
+            let mut hist: std::collections::BTreeMap<String, usize> = Default::default();
+            for l in lab {
+                let k = match l {
+                    None => "uncovered".to_string(),
+                    Some(None) => "infinite only".to_string(),
+                    Some(Some(n)) => format!("finite {n}"),
+                };
+                *hist.entry(k).or_default() += 1;
+            }
+            let covered = lab.iter().filter(|l| l.is_some()).count();
+            let finite = lab.iter().filter(|l| matches!(l, Some(Some(_)))).count();
+            println!();
+            println!("## {name}: {} pairs", targets.len());
+            println!("  {covered} covered, of which {finite} by a finite carrier");
+            for (k, v) in &hist {
+                println!("    {k:<16} {v}");
+            }
+        };
 
     println!("# Hard-core partition (sprint S1)");
     report("hard core, Vampire-unresolved", &hard, &hl);
@@ -704,7 +710,12 @@ fn ladr() {
         let hyp = &laws[p.from as usize - 1];
         let concl = &laws[p.to as usize - 1];
         let mut f = std::fs::File::create(format!("{out_dir}/{}_{}.in", p.from, p.to)).unwrap();
-        writeln!(f, "% E{} => E{}: a model here refutes the implication", p.from, p.to).unwrap();
+        writeln!(
+            f,
+            "% E{} => E{}: a model here refutes the implication",
+            p.from, p.to
+        )
+        .unwrap();
         writeln!(f, "formulas(assumptions).").unwrap();
         writeln!(
             f,
@@ -749,7 +760,9 @@ fn ladr() {
 /// bug in this engine before anything else.
 fn openq() {
     use parsimagma::linear::{AffineModel, LinearModel, RingOps};
-    use parsimagma::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, WeylAlgebra, Zmod};
+    use parsimagma::rings::{
+        FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, WeylAlgebra, Zmod,
+    };
 
     let all_laws = parse_laws(&data("eq_size5.txt")).unwrap();
     let mut targets: Vec<(String, u32)> = Vec::new();
@@ -791,7 +804,7 @@ fn openq() {
     }
 
     let mut hits: Vec<(usize, String)> = Vec::new();
-    let mut record = |sig: &parsimagma::Signature, label: String, hits: &mut Vec<(usize, String)>| {
+    let record = |sig: &parsimagma::Signature, label: String, hits: &mut Vec<(usize, String)>| {
         for i in sig.iter_set() {
             hits.push((i, label.clone()));
         }
@@ -958,7 +971,10 @@ fn openq() {
 
     println!();
     if hits.is_empty() {
-        println!("no instance in the grid satisfies any of the {} target laws", laws.len());
+        println!(
+            "no instance in the grid satisfies any of the {} target laws",
+            laws.len()
+        );
         return;
     }
     let mut by_law: std::collections::BTreeMap<usize, Vec<String>> = Default::default();
@@ -971,7 +987,10 @@ fn openq() {
         println!();
         println!("E{id}  [{set}]  {} instances", labels.len());
         println!("  law: {:?} = {:?}", laws[*i].lhs, laws[*i].rhs);
-        let cap: usize = std::env::var("PM_SHOW").ok().and_then(|v| v.parse().ok()).unwrap_or(6);
+        let cap: usize = std::env::var("PM_SHOW")
+            .ok()
+            .and_then(|v| v.parse().ok())
+            .unwrap_or(6);
         for l in labels.iter().take(cap) {
             println!("    {l}");
         }
@@ -996,8 +1015,12 @@ fn smt2() {
     use std::io::Write;
 
     let args: Vec<String> = std::env::args().collect();
-    let pairs_file = args.get(2).expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
-    let out_dir = args.get(3).expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
+    let pairs_file = args
+        .get(2)
+        .expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
+    let out_dir = args
+        .get(3)
+        .expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
     let n: usize = args
         .get(4)
         .expect("usage: pm smt2 <pairs-file> <out-dir> <n>")
@@ -1026,7 +1049,12 @@ fn smt2() {
         let concl = &laws[p.to as usize - 1];
         let mut f =
             std::fs::File::create(format!("{out_dir}/{}_{}_{n}.smt2", p.from, p.to)).unwrap();
-        writeln!(f, "; E{} => E{} over a carrier of exactly {n}", p.from, p.to).unwrap();
+        writeln!(
+            f,
+            "; E{} => E{} over a carrier of exactly {n}",
+            p.from, p.to
+        )
+        .unwrap();
         writeln!(f, "(set-logic ALL)").unwrap();
         let elems: Vec<String> = (0..n).map(|i| format!("e{i}")).collect();
         writeln!(f, "(declare-datatypes ((M 0)) ((({}))))", elems.join(") (")).unwrap();
@@ -1055,13 +1083,7 @@ fn smt2() {
                     }
                     go(t, &sub)
                 };
-                writeln!(
-                    f,
-                    "(assert (= {} {}))",
-                    subst(&hyp.lhs),
-                    subst(&hyp.rhs)
-                )
-                .unwrap();
+                writeln!(f, "(assert (= {} {}))", subst(&hyp.lhs), subst(&hyp.rhs)).unwrap();
             }
         } else {
             let vars: Vec<String> = (0..hyp.arity).map(|v| format!("(x{v} M)")).collect();
@@ -1087,4 +1109,112 @@ fn smt2() {
         writeln!(f, "(check-sat)").unwrap();
     }
     eprintln!("wrote {} SMT-LIB2 problems at carrier {n}", pairs.len());
+}
+
+/// Reproduce the claim that a small subset of the brute-forced magmas refutes
+/// everything all of them do.
+///
+/// The ETP paper says 524 distinct magmas suffice; Bruno Le Floch recomputed
+/// 523 on Zulip in October 2025 and the repository README carries the working:
+/// all 10 magmas of size 2 are covered by the size-4 models, and 291 of the
+/// 299 magmas of size 3 are too, leaving 515 + 8. That figure has not been
+/// independently checked, so it is checked here before being quoted.
+///
+/// Note this is a *sufficiency* claim, not minimality. Set cover is NP-hard;
+/// nothing here computes a minimum.
+fn mincover() {
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let e = Engine::new(Dag::build(&laws));
+
+    let mut by_size: std::collections::BTreeMap<usize, Vec<parsimagma::Signature>> =
+        Default::default();
+    for f in [
+        "refutations2x2.txt",
+        "refutations3x3.txt",
+        "refutations4x4.txt",
+    ] {
+        for entry in parse_refutations(&data(f)).unwrap() {
+            let n = entry.magma.n;
+            by_size
+                .entry(n)
+                .or_default()
+                .push(e.signature(&entry.magma));
+        }
+    }
+    println!("# Minimal covering subset of the brute-forced magmas");
+    println!();
+    for (n, v) in &by_size {
+        println!("  size {n}: {} magmas", v.len());
+    }
+
+    let fold = |sigs: &[&parsimagma::Signature]| {
+        let mut gc = GraphCoverage::new(N_LAWS_ORDER4);
+        for s in sigs {
+            gc.add(s);
+        }
+        gc
+    };
+
+    let all: Vec<&parsimagma::Signature> = by_size.values().flatten().collect();
+    let full = fold(&all);
+    println!();
+    println!(
+        "all {} magmas refute {} implications",
+        all.len(),
+        full.count()
+    );
+
+    // Everything the size-4 models alone reach.
+    let four: Vec<&parsimagma::Signature> = by_size[&4].iter().collect();
+    let base = fold(&four);
+    println!(
+        "the {} size-4 magmas alone refute {}",
+        four.len(),
+        base.count()
+    );
+
+    // Which smaller magmas add anything on top of them?
+    let mut keep: Vec<(usize, usize)> = Vec::new();
+    for (n, v) in &by_size {
+        if *n == 4 {
+            continue;
+        }
+        let mut redundant = 0usize;
+        for (i, s) in v.iter().enumerate() {
+            if base.adds_anything(s) {
+                keep.push((*n, i));
+            } else {
+                redundant += 1;
+            }
+        }
+        println!(
+            "  {redundant}/{} magmas of size {n} are already covered by the size-4 models",
+            v.len()
+        );
+    }
+
+    let mut subset: Vec<&parsimagma::Signature> = four.clone();
+    for (n, i) in &keep {
+        subset.push(&by_size[n][*i]);
+    }
+    let covered = fold(&subset);
+    println!();
+    println!(
+        "subset of {} magmas ({} of size 4 plus {} smaller) refutes {}",
+        subset.len(),
+        four.len(),
+        keep.len(),
+        covered.count()
+    );
+    if covered.count() == full.count() {
+        println!(
+            "=> {} distinct magmas suffice for every refutation the full set makes",
+            subset.len()
+        );
+    } else {
+        println!(
+            "=> INSUFFICIENT: {} pairs short of the full set",
+            full.count() - covered.count()
+        );
+    }
 }

@@ -4,10 +4,12 @@
 #   python3 scripts/sample_control_pairs.py
 #   ./target/release/pm tptp out/atp/samples/<sample>.txt out/tptp_<name>
 #   ./target/release/pm ladr out/atp/samples/<sample>.txt out/ladr_<name>
+#   PM_GROUND=1 ./target/release/pm smt2 out/atp/samples/<sample>.txt out/smt_<n> <n>
 # The sample pair lists and the run results are tracked; the problem files
 # themselves are not, since they are a pure function of the two.
 /out/tptp_*/
 /out/ladr_*/
+/out/smt_*/
 
 # Decompressed copies of files stored gzipped.
 /data/etp/implications.bits

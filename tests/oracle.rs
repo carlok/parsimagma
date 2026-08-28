@@ -297,3 +297,80 @@ fn every_data_file_loads_through_the_shared_reader() {
     let bits = read_bytes("implications.bits");
     assert_eq!(bits.len(), N_LAWS_ORDER4 * N_LAWS_ORDER4.div_ceil(8));
 }
+
+/// The covering-subset claim, recomputed rather than quoted.
+///
+/// The ETP paper says 524 distinct magmas suffice to make every refutation
+/// brute force over carriers of size at most 4 makes. Bruno Le Floch
+/// recomputed 523 on Zulip in October 2025 and the upstream README carries the
+/// working: all 10 magmas of size 2 and 291 of the 299 of size 3 are already
+/// covered by the 515 of size 4. This asserts all of it, because those figures
+/// are quoted outward and none of them should rest on someone else's post.
+///
+/// Sufficiency, not minimality. Set cover is NP-hard and nothing here computes
+/// a minimum.
+#[test]
+fn five_hundred_and_twenty_three_magmas_suffice() {
+    use parsimagma::coverage::GraphCoverage;
+    let e = engine();
+    let mut by_size: std::collections::BTreeMap<usize, Vec<Signature>> = Default::default();
+    for f in [
+        "refutations2x2.txt",
+        "refutations3x3.txt",
+        "refutations4x4.txt",
+    ] {
+        for entry in parse_refutations(&data(f)).unwrap() {
+            by_size
+                .entry(entry.magma.n)
+                .or_default()
+                .push(e.signature(&entry.magma));
+        }
+    }
+    assert_eq!(by_size[&2].len(), 10);
+    assert_eq!(by_size[&3].len(), 299);
+    assert_eq!(by_size[&4].len(), 515);
+
+    let fold = |sigs: &[&Signature]| {
+        let mut gc = GraphCoverage::new(N_LAWS_ORDER4);
+        for s in sigs {
+            gc.add(s);
+        }
+        gc
+    };
+
+    let all: Vec<&Signature> = by_size.values().flatten().collect();
+    assert_eq!(fold(&all).count(), 13_753_982, "all 824 magmas");
+
+    let four: Vec<&Signature> = by_size[&4].iter().collect();
+    let base = fold(&four);
+    assert_eq!(base.count(), 13_726_214, "the 515 size-4 magmas alone");
+
+    let redundant2 = by_size[&2]
+        .iter()
+        .filter(|s| !base.adds_anything(s))
+        .count();
+    let redundant3 = by_size[&3]
+        .iter()
+        .filter(|s| !base.adds_anything(s))
+        .count();
+    assert_eq!(
+        redundant2, 10,
+        "all size-2 magmas covered by the size-4 models"
+    );
+    assert_eq!(redundant3, 291, "291 of 299 size-3 magmas covered");
+
+    let mut subset = four;
+    for n in [2usize, 3] {
+        for s in &by_size[&n] {
+            if base.adds_anything(s) {
+                subset.push(s);
+            }
+        }
+    }
+    assert_eq!(subset.len(), 523);
+    assert_eq!(
+        fold(&subset).count(),
+        13_753_982,
+        "the 523 must refute everything all 824 do"
+    );
+}

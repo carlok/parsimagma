@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # rust-toolchain.toml pins 1.96.0; every number in docs/ was produced
+      # under it.
+      - uses: dtolnay/rust-toolchain@1.96.0
+        with:
+          components: clippy, rustfmt
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: format
+        run: cargo fmt --check
+
+      - name: lint
+        run: cargo clippy --release --all-targets -- -D warnings
+
+      # The differential harness is the point: exact agreement with the ETP's
+      # own published data on 824 magmas x 4694 bits, the implication graph,
+      # the paper's published varieties, and the brute-force counts.
+      - name: test
+        run: cargo test --release
+
+      # The headline numbers, recomputed from scratch on every push.
+      - name: reproduce the covering-subset count
+        run: cargo run --release --bin pm -- mincover
+
+      - name: reproduce the coverage matrix
+        run: cargo run --release --bin pm -- coverage

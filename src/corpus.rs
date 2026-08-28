@@ -8,10 +8,10 @@
 use crate::finite::FiniteMagma;
 use crate::law::Law;
 use crate::linear::{AffineModel, LinearLaws, LinearModel, RingOps};
-use crate::twist::TwistedPower;
-use rayon::prelude::*;
 use crate::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, Zmod};
 use crate::sig::Signature;
+use crate::twist::TwistedPower;
+use rayon::prelude::*;
 use rustc_hash::FxHashSet;
 
 #[derive(Clone, Copy, PartialEq, Eq, Debug)]
@@ -331,9 +331,7 @@ pub const TWIST_MAX_K: usize = 8;
 /// `k · n^(leaves)` and `3^6` is eleven times `2^6`.
 pub fn add_twist_family(c: &mut Corpus, laws: &[Law], order3_bases: &[FiniteMagma]) {
     let two: Vec<FiniteMagma> = (0..16u32)
-        .map(|bits| {
-            FiniteMagma::new(2, (0..4).map(|i| ((bits >> i) & 1) as u8).collect()).unwrap()
-        })
+        .map(|bits| FiniteMagma::new(2, (0..4).map(|i| ((bits >> i) & 1) as u8).collect()).unwrap())
         .collect();
 
     let mut jobs: Vec<(usize, usize, usize, usize)> = Vec::new();

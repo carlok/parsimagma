@@ -30,7 +30,11 @@ fn order5_law_list_parses_and_extends_the_order4_one() {
         assert_eq!(format!("{:?}", a.lhs), format!("{:?}", b.lhs));
         assert_eq!(format!("{:?}", a.rhs), format!("{:?}", b.rhs));
     }
-    let max_ops = five.iter().map(|l| l.lhs.ops() + l.rhs.ops()).max().unwrap();
+    let max_ops = five
+        .iter()
+        .map(|l| l.lhs.ops() + l.rhs.ops())
+        .max()
+        .unwrap();
     let max_arity = five.iter().map(|l| l.arity).max().unwrap();
     assert_eq!(max_ops, 5);
     assert_eq!(max_arity, 7, "order-5 laws reach seven distinct variables");
@@ -161,11 +165,15 @@ fn weyl_linear_magma_contains_the_generic_signature() {
     let laws = parse_laws(&data("equations.txt")).unwrap();
     let ll = LinearLaws::build(&laws);
     let generic = LinearModel::new(FreeNc, FreeNc.gen_a(), FreeNc.gen_b()).signature(&ll);
-    let weyl = LinearModel::new(WeylAlgebra, WeylAlgebra.gen_a(), WeylAlgebra.gen_b())
-        .signature(&ll);
+    let weyl =
+        LinearModel::new(WeylAlgebra, WeylAlgebra.gen_a(), WeylAlgebra.gen_b()).signature(&ll);
     assert!(generic.count() > 0, "the generic model satisfies something");
     for i in generic.iter_set() {
-        assert!(weyl.get(i), "E{} holds identically but not in the Weyl algebra", i + 1);
+        assert!(
+            weyl.get(i),
+            "E{} holds identically but not in the Weyl algebra",
+            i + 1
+        );
     }
     assert!(
         weyl.count() >= generic.count(),

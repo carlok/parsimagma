@@ -267,13 +267,13 @@ impl RingOps for FreeNc {
     }
     fn mul(&self, x: &NcElem, y: &NcElem) -> NcElem {
         let mut out = [0i128; N_WORDS];
-        for i in 0..N_WORDS {
-            if x[i] == 0 {
+        for (i, &xi) in x.iter().enumerate() {
+            if xi == 0 {
                 continue;
             }
             let (li, bi) = word_of(i);
-            for j in 0..N_WORDS {
-                if y[j] == 0 {
+            for (j, &yj) in y.iter().enumerate() {
+                if yj == 0 {
                     continue;
                 }
                 let (lj, bj) = word_of(j);
@@ -282,7 +282,7 @@ impl RingOps for FreeNc {
                     "word of length {} exceeds the degree bound",
                     li + lj
                 );
-                out[word_index(li + lj, (bi << lj) | bj)] += x[i] * y[j];
+                out[word_index(li + lj, (bi << lj) | bj)] += xi * yj;
             }
         }
         out
@@ -422,7 +422,7 @@ impl OneSidedInverse {
     /// interface.
     fn mul_normal(i: u32, j: u32, k: u32, l: u32) -> (i128, u32, u32) {
         let m = j.min(k);
-        let sign = if m % 2 == 0 { 1i128 } else { -1 };
+        let sign = if m.is_multiple_of(2) { 1i128 } else { -1 };
         (sign, i + (k - m), (j - m) + l)
     }
 }

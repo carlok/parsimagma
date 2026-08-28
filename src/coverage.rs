@@ -140,6 +140,27 @@ impl GraphCoverage {
         }
     }
 
+    /// Would folding `sig` in cover any pair not already covered? A magma
+    /// whose refutations are all accounted for is redundant, which is the
+    /// question `check_redundant.py` asks upstream.
+    pub fn adds_anything(&self, sig: &Signature) -> bool {
+        let w = sig.words();
+        let last_bits = self.n % 64;
+        for i in sig.iter_set() {
+            let base = i * self.row_words;
+            for (k, &word) in w.iter().enumerate().take(self.row_words) {
+                let mut c = !word;
+                if k == self.row_words - 1 && last_bits != 0 {
+                    c &= (1u64 << last_bits) - 1;
+                }
+                if c & !self.bits[base + k] != 0 {
+                    return true;
+                }
+            }
+        }
+        false
+    }
+
     pub fn count(&self) -> u64 {
         self.bits.iter().map(|b| b.count_ones() as u64).sum()
     }
