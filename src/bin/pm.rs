@@ -749,8 +749,8 @@ fn ladr() {
 /// there would contradict an established ETP result and should be read as a
 /// bug in this engine before anything else.
 fn openq() {
-    use parsimagma::linear::{AffineModel, LinearModel};
-    use parsimagma::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, Zmod};
+    use parsimagma::linear::{AffineModel, LinearModel, RingOps};
+    use parsimagma::rings::{FreeComm, FreeNc, Integers, MatFp, OneSidedInverse, PolyZ, WeylAlgebra, Zmod};
 
     let all_laws = parse_laws(&data("eq_size5.txt")).unwrap();
     let mut targets: Vec<(String, u32)> = Vec::new();
@@ -878,6 +878,29 @@ fn openq() {
     )
     .signature(&ll);
     record(&s, "Z<a,b>/(ba+1) one-sided inverse".to_string(), &mut hits);
+    let s = LinearModel::new(WeylAlgebra, WeylAlgebra.gen_a(), WeylAlgebra.gen_b()).signature(&ll);
+    record(&s, "Weyl Z<a,b>/(ba-ab-1)".to_string(), &mut hits);
+    // Also sweep small integer combinations of the generators, since the law
+    // may need coefficients other than the generators themselves.
+    for ca in -2i32..=2 {
+        for cb in -2i32..=2 {
+            for c1 in -2i32..=2 {
+                if ca == 0 && cb == 0 && c1 == 0 {
+                    continue;
+                }
+                let r = WeylAlgebra;
+                let mut a = r.zero();
+                r.scale_add_assign(&mut a, ca, &r.gen_a());
+                r.scale_add_assign(&mut a, c1, &r.one());
+                let mut b = r.zero();
+                r.scale_add_assign(&mut b, cb, &r.gen_b());
+                let s = LinearModel::new(WeylAlgebra, a, b).signature(&ll);
+                if s.count() > 0 {
+                    record(&s, format!("Weyl a={ca}x+{c1} b={cb}d"), &mut hits);
+                }
+            }
+        }
+    }
 
     // Twisted Cartesian powers. Their carriers are n^k — 16, 27, 32, 81 —
     // which is exactly the range the blueprint reports for order-5 models

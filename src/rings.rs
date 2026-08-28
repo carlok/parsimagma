@@ -489,3 +489,125 @@ fn normal_form_degrees() -> [(u32, u32); N_MONOMIALS] {
     }
     out
 }
+
+/// The Weyl algebra `Z<a, b> / (ba - ab - 1)`, with `a` acting as
+/// multiplication by `x` and `b` as `d/dx`.
+///
+/// This ring is the one class the finite-quotient argument leaves open for
+/// the ETP blueprint's table 20.2. A linear magma over a ring with a
+/// nontrivial finite quotient descends to that quotient, exhibiting a finite
+/// model, so it can never witness a law that has none. The Weyl algebra has
+/// **no finite-dimensional representation in characteristic 0** at all: in
+/// any such representation `tr(ab - ba) = 0` while `tr(1) = n`, so `n = 0`.
+/// A linear magma over it is therefore a candidate witness for exactly the
+/// laws that admit infinite models and no nontrivial finite ones — Austin
+/// laws.
+///
+/// Normal form is `a^i b^j`, reached with the standard commutation
+/// `b^j a^k = Σ_r C(j,r) · k!/(k-r)! · a^(k-r) b^(j-r)`, which is Leibniz for
+/// `∂^j x^k`.
+#[derive(Clone, Debug)]
+pub struct WeylAlgebra;
+
+pub type WeylElem = [i128; N_MONOMIALS];
+
+impl WeylAlgebra {
+    pub fn gen_a(&self) -> WeylElem {
+        let mut e = [0i128; N_MONOMIALS];
+        e[monomial_index(1, 0)] = 1;
+        e
+    }
+    pub fn gen_b(&self) -> WeylElem {
+        let mut e = [0i128; N_MONOMIALS];
+        e[monomial_index(0, 1)] = 1;
+        e
+    }
+}
+
+fn binom(n: u32, k: u32) -> i128 {
+    if k > n {
+        return 0;
+    }
+    let mut r: i128 = 1;
+    for i in 0..k {
+        r = r * (n - i) as i128 / (i + 1) as i128;
+    }
+    r
+}
+
+/// Falling factorial `k · (k-1) · ... · (k-r+1)`.
+fn falling(k: u32, r: u32) -> i128 {
+    if r > k {
+        return 0;
+    }
+    (0..r).map(|i| (k - i) as i128).product()
+}
+
+impl RingOps for WeylAlgebra {
+    type Elem = WeylElem;
+
+    fn zero(&self) -> WeylElem {
+        [0; N_MONOMIALS]
+    }
+    fn one(&self) -> WeylElem {
+        let mut e = [0i128; N_MONOMIALS];
+        e[monomial_index(0, 0)] = 1;
+        e
+    }
+    fn add_assign(&self, x: &mut WeylElem, y: &WeylElem) {
+        for n in 0..N_MONOMIALS {
+            x[n] += y[n];
+        }
+    }
+    fn mul(&self, x: &WeylElem, y: &WeylElem) -> WeylElem {
+        let degs = weyl_degrees();
+        let mut out = [0i128; N_MONOMIALS];
+        for (n, &xn) in x.iter().enumerate() {
+            if xn == 0 {
+                continue;
+            }
+            for (q, &yq) in y.iter().enumerate() {
+                if yq == 0 {
+                    continue;
+                }
+                let (i, j) = degs[n];
+                let (k, l) = degs[q];
+                for r in 0..=j.min(k) {
+                    let coeff = binom(j, r) * falling(k, r);
+                    if coeff == 0 {
+                        continue;
+                    }
+                    let (ni, nj) = (i + k - r, j - r + l);
+                    assert!(
+                        (ni + nj) as usize <= MAX_DEG,
+                        "Weyl normal form a^{ni} b^{nj} exceeds the degree bound"
+                    );
+                    out[monomial_index(ni, nj)] += coeff * xn * yq;
+                }
+            }
+        }
+        out
+    }
+    fn scale_add_assign(&self, acc: &mut WeylElem, k: i32, x: &WeylElem) {
+        for n in 0..N_MONOMIALS {
+            acc[n] += k as i128 * x[n];
+        }
+    }
+    fn is_zero(&self, x: &WeylElem) -> bool {
+        x.iter().all(|&c| c == 0)
+    }
+    fn name(&self) -> String {
+        "Z<a,b>/(ba-ab-1) Weyl".to_string()
+    }
+}
+
+/// `(i, j)` exponents for each normal-form slot `a^i b^j`.
+fn weyl_degrees() -> [(u32, u32); N_MONOMIALS] {
+    let mut out = [(0u32, 0u32); N_MONOMIALS];
+    for d in 0..=MAX_DEG as u32 {
+        for j in 0..=d {
+            out[monomial_index(d - j, j)] = (d - j, j);
+        }
+    }
+    out
+}

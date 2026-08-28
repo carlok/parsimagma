@@ -33,8 +33,8 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 6.4  Validate on the order-5 set: positive control, negative control, table cross-check
 - [x] 6.5  Scan linear + affine grid: no hits on any of the 143
 - [x] 6.6  Scan 46,538 twisted powers: no hits either
-- [ ] 6.7  Weyl algebra `Z<a,b>/(ba - ab - 1)` — the one ring class the argument leaves open
-- [ ] 6.8  Write up whatever the answer is
+- [x] 6.7  Weyl algebra `Z<a,b>/(ba - ab - 1)` — implemented, validated, no hits
+- [>] 6.8  Write up whatever the answer is
 
 ## Blocked / not started
 

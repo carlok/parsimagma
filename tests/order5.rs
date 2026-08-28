@@ -120,3 +120,58 @@ fn known_austin_laws_admit_no_finite_linear_model() {
         }
     }
 }
+
+/// The Weyl algebra is the ring the finite-quotient argument singles out, so
+/// its arithmetic has to be right before any negative result over it means
+/// anything.
+#[test]
+fn weyl_algebra_satisfies_its_defining_relation() {
+    use parsimagma::linear::RingOps;
+    use parsimagma::rings::WeylAlgebra;
+    let r = WeylAlgebra;
+    let (a, b) = (r.gen_a(), r.gen_b());
+
+    // ba - ab = 1, the defining relation.
+    let ba = r.mul(&b, &a);
+    let ab = r.mul(&a, &b);
+    let mut d = ba;
+    r.scale_add_assign(&mut d, -1, &ab);
+    assert_eq!(d, r.one(), "ba - ab must be 1");
+
+    // ab is not 1, so a has no inverse: this is not the one-sided-inverse ring.
+    assert_ne!(ab, r.one());
+    // Associativity on the generators, which the normal-form reordering could
+    // easily break.
+    assert_eq!(r.mul(&r.mul(&a, &b), &a), r.mul(&a, &r.mul(&b, &a)));
+    assert_eq!(r.mul(&r.mul(&b, &a), &b), r.mul(&b, &r.mul(&a, &b)));
+    // Leibniz: b a^2 = a^2 b + 2a.
+    let a2 = r.mul(&a, &a);
+    let lhs = r.mul(&b, &a2);
+    let mut rhs = r.mul(&a2, &b);
+    r.scale_add_assign(&mut rhs, 2, &a);
+    assert_eq!(lhs, rhs, "b a^2 = a^2 b + 2a");
+}
+
+/// Every law holding identically in the free noncommutative ring must hold in
+/// any quotient of it, the Weyl algebra included. This checks the Weyl linear
+/// magma is actually being evaluated rather than silently returning nothing.
+#[test]
+fn weyl_linear_magma_contains_the_generic_signature() {
+    use parsimagma::linear::{LinearLaws, LinearModel};
+    use parsimagma::rings::{FreeNc, WeylAlgebra};
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let ll = LinearLaws::build(&laws);
+    let generic = LinearModel::new(FreeNc, FreeNc.gen_a(), FreeNc.gen_b()).signature(&ll);
+    let weyl = LinearModel::new(WeylAlgebra, WeylAlgebra.gen_a(), WeylAlgebra.gen_b())
+        .signature(&ll);
+    assert!(generic.count() > 0, "the generic model satisfies something");
+    for i in generic.iter_set() {
+        assert!(weyl.get(i), "E{} holds identically but not in the Weyl algebra", i + 1);
+    }
+    assert!(
+        weyl.count() >= generic.count(),
+        "weyl {} vs generic {}",
+        weyl.count(),
+        generic.count()
+    );
+}
