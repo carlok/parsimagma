@@ -26,9 +26,10 @@ fn main() {
         "ladr" => ladr(),
         "smt2" => smt2(),
         "mincover" => mincover(),
+        "transinv" => transinv(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv");
             std::process::exit(2);
         }
     }
@@ -1216,5 +1217,182 @@ fn mincover() {
             "=> INSUFFICIENT: {} pairs short of the full set",
             full.count() - covered.count()
         );
+    }
+}
+
+/// Sweep translation-invariant magmas `x ◇ y = x + f(y - x)` over `Z/n`,
+/// exhaustively in `f`, against the hard core.
+///
+/// Aimed at the 296-pair cluster of `docs/cluster-296.md`, and at the carrier
+/// range the domain-size cliff leaves unsearched. The grid is every function
+/// `f: Z/n -> Z/n`, which is `n^n` and therefore stated exactly rather than
+/// sampled.
+///
+/// Only the laws appearing in hard-core pairs are evaluated, not all 4694: a
+/// sweep of hundreds of millions of candidates cannot afford a full signature
+/// each, and every question here is about those laws alone.
+///
+/// Usage: `pm transinv [max_n]`
+fn transinv() {
+    use parsimagma::finite::Scratch;
+    use parsimagma::transinv::TranslationInvariant;
+    use rayon::prelude::*;
+
+    let max_n: usize = std::env::args()
+        .nth(2)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(8);
+    // `perm` restricts f to permutations, which is the only way this family
+    // reaches carrier 11 and above.
+    let perms_only = std::env::args().any(|a| a == "perm");
+    let min_n: usize = std::env::args()
+        .nth(3)
+        .and_then(|s| s.parse().ok())
+        .unwrap_or(2);
+
+    let all_laws = parse_laws(&data("equations.txt")).unwrap();
+    let hard = parse_pairs(&data("hard_core.txt")).unwrap();
+
+    // The sub-problem: only laws that appear in a hard-core pair.
+    let mut ids: Vec<u32> = hard.iter().flat_map(|p| [p.from, p.to]).collect();
+    ids.sort_unstable();
+    ids.dedup();
+    let index: std::collections::HashMap<u32, usize> =
+        ids.iter().enumerate().map(|(i, id)| (*id, i)).collect();
+    let laws: Vec<parsimagma::Law> = ids
+        .iter()
+        .map(|id| all_laws[*id as usize - 1].clone())
+        .collect();
+    let e = Engine::new(Dag::build(&laws));
+    let pairs: Vec<(usize, usize)> = hard
+        .iter()
+        .map(|p| (index[&p.from], index[&p.to]))
+        .collect();
+
+    println!("# Translation-invariant magmas vs the hard core");
+    println!();
+    if perms_only {
+        println!("grid       x ◇ y = x + f(y - x) over Z/n, every *permutation* f, n = {min_n}..{max_n}");
+    } else {
+        println!("grid       x ◇ y = x + f(y - x) over Z/n, every f, n = {min_n}..{max_n}");
+    }
+    println!("evaluating {} laws (those appearing in the {} hard-core pairs)",
+             laws.len(), hard.len());
+    println!();
+
+    let mut hits: Vec<(usize, Vec<u8>, Vec<usize>)> = Vec::new();
+    for n in min_n..=max_n {
+        let total = if perms_only {
+            parsimagma::transinv::factorial(n)
+        } else {
+            TranslationInvariant::grid_size(n)
+        };
+        let t = Instant::now();
+        let chunk = 1u64 << 14;
+        let nchunks = total.div_ceil(chunk);
+        let found: Vec<(usize, Vec<u8>, Vec<usize>)> = (0..nchunks)
+            .into_par_iter()
+            .fold(
+                || (Vec::new(), Scratch::new(&e.dag), Vec::with_capacity(n), vec![0u8; n * n]),
+                |(mut acc, mut scratch, mut f, mut table), c| {
+                    let lo = c * chunk;
+                    let hi = (lo + chunk).min(total);
+                    for code in lo..hi {
+                        if perms_only {
+                            parsimagma::transinv::permutation(n, code, &mut f);
+                        } else {
+                            let mut v = code;
+                            f.clear();
+                            for _ in 0..n {
+                                f.push((v % n as u64) as u8);
+                                v /= n as u64;
+                            }
+                        }
+                        let ti = TranslationInvariant::new(n, f.clone());
+                        ti.fill(&mut table);
+                        let m = FiniteMagma::new(n, table.clone()).unwrap();
+                        let sig = e.signature_with(&m, &mut scratch);
+                        let got: Vec<usize> = pairs
+                            .iter()
+                            .enumerate()
+                            .filter(|(_, (a, b))| sig.get(*a) && !sig.get(*b))
+                            .map(|(k, _)| k)
+                            .collect();
+                        if !got.is_empty() {
+                            acc.push((n, f.clone(), got));
+                        }
+                    }
+                    (acc, scratch, f, table)
+                },
+            )
+            .map(|(acc, _, _, _)| acc)
+            .reduce(Vec::new, |mut a, b| {
+                a.extend(b);
+                a
+            });
+        let mut reached: std::collections::BTreeSet<usize> = Default::default();
+        for (_, _, g) in &found {
+            reached.extend(g.iter().copied());
+        }
+        println!(
+            "n={n:<3} {total:>12} candidates  {:>8} discharge something  {:>4} distinct pairs  {:.2?}",
+            found.len(),
+            reached.len(),
+            t.elapsed()
+        );
+        hits.extend(found);
+    }
+
+    let mut reached: std::collections::BTreeSet<usize> = Default::default();
+    for (_, _, g) in &hits {
+        reached.extend(g.iter().copied());
+    }
+    println!();
+    println!("{} of {} hard-core pairs reached by this family", reached.len(), hard.len());
+
+    // What is new relative to the labelled partition?
+    let part = data("hard_core_partition.tsv");
+    let uncovered: std::collections::HashSet<(u32, u32)> = part
+        .lines()
+        .skip(1)
+        .filter_map(|l| {
+            let c: Vec<&str> = l.split('\t').collect();
+            (c.len() == 4 && c[0] == "unresolved" && c[3] == "none")
+                .then(|| (c[1].parse().unwrap(), c[2].parse().unwrap()))
+        })
+        .collect();
+    let fresh: Vec<usize> = reached
+        .iter()
+        .copied()
+        .filter(|k| uncovered.contains(&(hard[*k].from, hard[*k].to)))
+        .collect();
+    println!("{} of them were not reached by any earlier family", fresh.len());
+    if !hits.is_empty() {
+        println!();
+        println!("witnessing functions (is f linear, f(d) = b*d?):");
+        let mut shown = 0;
+        for (n, f, g) in &hits {
+            // f is linear iff f(d) = f(1)*d for all d.
+            let b = f[1 % *n] as usize;
+            let linear = (0..*n).all(|d| f[d] as usize == (b * d) % *n);
+            println!(
+                "    n={n:<3} f={f:?}  {}  discharges {} pair(s)",
+                if linear { format!("LINEAR b={b}") } else { "nonlinear".to_string() },
+                g.len()
+            );
+            shown += 1;
+            if shown >= 25 {
+                break;
+            }
+        }
+    }
+    for k in fresh.iter().take(30) {
+        let p = hard[*k];
+        let best = hits
+            .iter()
+            .find(|(_, _, g)| g.contains(k))
+            .map(|(n, f, _)| format!("n={n} f={f:?}"))
+            .unwrap_or_default();
+        println!("    E{} !=> E{}   {best}", p.from, p.to);
     }
 }
