@@ -42,11 +42,13 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 7.2  Prove the encoding faithful by pinning the known model (sat in 0.01s)
 - [x] 7.3  Close the `fmb` tuning caveat: contour and symmetry_ratio change nothing
 - [x] 7.4  Write `docs/atp-control.md` as a standalone, reproducible note
-- [ ] 7.5  Decide a venue and draft the message (not sent without a go)
+- [x] 7.5  Venue: PR to teorth/equational_theories, filed as #1473 (paper numbers)
+- [ ] 7.6  Cliff finding as a separate issue, only if #1473 lands
+- [ ] 7.7  Janota email draft, after #1473 lands
 
 ## Blocked / not started
 
-- [ ] S2   Identify the method for the 296-pair cluster
+- [>] S2   Identify the method for the 296-pair cluster
 - [ ] S3   Greedy spike, single target, 3-day kill criterion
 - [ ] S4   Greedy generalised — conditional on S3
 - [ ] S5   Phase B set-cover bounds — needs an explicit go
