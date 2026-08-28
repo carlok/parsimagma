@@ -1,124 +1,212 @@
-# Control experiment — why the residual resisted Vampire
+# A domain-size cliff in finite model finding, and what it means for the ETP benchmark
 
-Sprint 2. The question: is the 1062-pair residual hard mathematics, or an
-artifact of how MACE-style finite model building searches?
+**Claim.** The 1062 implications left unresolved by Vampire in the Equational
+Theories Project are not uniformly hard. At least 411 of them have finite
+counterexamples on 9 to 32 elements. Those counterexamples are out of reach of
+every search-based model finder tested — Vampire's `fmb` with CaDiCaL, Mace4,
+and z3 on a fully ground encoding all fail at carrier 11 and above, while
+solving carrier 7 and 9 in under two seconds — and are found in about three
+seconds for the whole 4694-law set by solving polynomial identities in two
+coefficients instead of searching.
 
-The answer is neither of the two things I expected. It is not a time budget,
-and it is not the incremental escalation of domain sizes. **Finite model
-building on these problems falls off a cliff between carrier size 9 and 11,
-and telling it exactly which size to try does not help.**
+Anyone using the ETP residual to calibrate a prover should partition it first.
 
-## Setup
-
-Vampire 5.1.0 (arm64, CaDiCaL 2.1.3) against Janota's 5.0.0. Problems emitted
-by `pm tptp` in the CNF shape his generator used: the hypothesis as an axiom
-over TPTP variables, the conclusion negated and Skolemised.
-
-```
-% E1076 => E1455
-cnf(lhs, axiom, X0 = m(X1,m(m(X0,m(X0,X1)),X1))).
-cnf(rhs, negated_conjecture, sk0 != m(m(sk0,sk1),m(sk1,m(sk1,sk1)))).
-```
-
-Sanity check first: `E2 => E3` returns Unsatisfiable, i.e. proved, as it must.
-Samples drawn with seed 20260828 from `data/etp/hard_core_partition.tsv`, whose
-"witness size" is the smallest carrier the construction corpus can witness the
-pair on.
-
-## Result 1 — the S1 mechanism, confirmed directly
-
-Eight pairs from the 814 saturation-refuted set whose smallest corpus witness
-has seven elements, run with default `-sa fmb`:
-
-```
-8 / 8 solved, 0.4 to 2.1 seconds
-```
-
-These are pairs Janota's run recorded as refuted *without a witnessing model*,
-which Phase 0 read as evidence they might be infinite-only. They are not. Given
-a normal budget the model builder finds a model in under a second. The reason
-his run did not is method ordering: `vsi500` (saturation) runs before the
-longer fmb budgets, and a pair it refutes is marked solved and never retried.
-S1 inferred this from the data; this confirms it on the prover.
-
-## Result 2 — the cliff
-
-Same configuration, samples stratified by witness size:
-
-| smallest witness | solved in 60s | times |
-|---|---|---|
-| 7 elements | **8 / 8** | 0.4–2.1 s |
-| 9 elements | **7 / 8** | 0.1–1.4 s |
-| 11 elements | **0 / 8** | — |
-| 13 elements (E1076, E2531) | **0 / 20** | — |
-
-Below the cliff it is nearly instant. Above it, nothing. There is no middle
-band of "slow but eventually".
-
-Raising the budget does not move it. Four problems at 300 seconds with default
-escalation: 0 / 4.
-
-## Result 3 — it is not the escalation
-
-This is what I got wrong going in. I predicted the bottleneck was fmb's
-incremental walk up the domain sizes, and that pinning the size would fix it.
-
-Twenty problems with a known 13-element model, run with `-fmbss 13`:
-
-```
-0 / 20 solved in 60s
-```
-
-Vampire's own trace shows it entering the right instance and stalling inside
-the solver, not wandering through smaller sizes:
-
-```
-% TRYING [13]
-% Time limit reached!
-% Termination phase: Finite model building SAT solving
-```
-
-The same holds for `E1286 => E3` at `-fmbss 11`, whose 11-element witness is
-the one the ETP paper itself gives in Example 5.2 as `(p,a,b) = (11,1,7)`.
-
-So the wall is the SAT instance at that domain, not the search over domains.
-
-## What this means for the residual
-
-The 1062 is not a set of uniformly deep problems. It is, in large part, the set
-of separations whose smallest counterexample sits just past where MACE-style
-model building stops working — which on this evidence is around 10 elements for
-magma laws of order 4.
-
-A structured scan over linear magmas finds those models in about three seconds
-for the whole 4694-law set, because it never searches: it solves polynomial
-identities in two coefficients and reads the answer off. Two methods, the same
-models, incomparable cost.
-
-That is a benchmark-calibration datapoint of exactly the kind the ETP paper
-says it wanted and could not produce: *"The objective of using the data from the
+The ETP paper asks for exactly this: *"The objective of using the data from the
 ETP to establish well-calibrated benchmarks to evaluate ATPs remains an
 interesting open problem; the participants of this project did not have the
-required expertise."* The residual is a good benchmark only if one states which
-part of it is deep and which part is a model-finder's domain ceiling.
+required expertise to develop and test such benchmarks."*
 
-## Caveats, stated plainly
+Everything below is reproducible from this repository. Provenance and
+regeneration steps are in `data/etp/PROVENANCE.txt`.
 
-- One prover, one version, one machine. Vampire 5.1.0, not Janota's 5.0.0.
-- fmb defaults except for start size. `--fmb_symmetry_ratio` and
-  `--fmb_enumeration_strategy contour` were not tried, and either might move the
-  cliff. Until they are, "MACE-style model building" should be read as "Vampire
-  5.1.0's fmb with default options".
-- Cells hold 8 to 20 problems, not hundreds.
-- "Witness size" is the smallest carrier *in this corpus*. A smaller model may
-  exist that neither the corpus nor fmb found — which would only sharpen the
-  puzzle for the size-11 rows.
-- The one size-9 failure, `907 => 843`, sits with the other E907 problems that
-  fail at 11, so there is a per-law effect on top of the size effect that this
-  sample is too small to separate.
+---
 
-## Raw output
+## 1. The cliff
 
-`out/atp/by_witness_size.tsv`, `out/atp/d13_default_60s.tsv`,
-`out/atp/d13_fmbss13_60s.tsv`, `out/atp_fixedsize300.tsv`. Problems in
-`out/tptp_*/`. Regenerate with `pm tptp <pairs-file> <out-dir>`.
+Problems are ordered pairs `(E_i, E_j)` from the 1062, asking for a magma
+satisfying `E_i` and refuting `E_j`. They are stratified by the smallest
+carrier on which the construction corpus in this repository exhibits such a
+magma, sampled with a fixed seed (`scripts/sample_control_pairs.py`).
+
+| smallest witness | Vampire `fmb` | Mace4 | z3, ground | z3, quantified |
+|---|---|---|---|---|
+| 7 elements | **8 / 8**, 0.4–2.1 s | 0 / 4 in 60 s | **8 / 8** | — |
+| 9 elements | **7 / 8**, 0.1–1.4 s | — | **6 / 8** | — |
+| 11 elements | 0 / 8 | 0 / 8 | 0 / 8 | — |
+| 13 elements | 0 / 20 | — | 0 / 20 | 0 / 1 at 100 s |
+
+Three independent technologies, one cliff, in the same place.
+
+Nothing moves it:
+
+- **More time.** 300 s instead of 60 s with default escalation: 0 / 4. Janota's
+  own run already shows the saturation: his `fmb` at 60 s added 16,302
+  refutations over the instruction-capped run, and `fmb` at 600 s added
+  **28** more.
+- **Telling it the answer.** `-fmbss 13` on twenty problems with known
+  13-element models: 0 / 20. Vampire's trace shows it entering the right
+  instance and stalling inside the solver, not wandering through smaller sizes:
+  `% TRYING [13]` … `% Termination phase: Finite model building SAT solving`.
+- **Tuning `fmb`.** `--fmb_enumeration_strategy contour` and
+  `--fmb_symmetry_ratio 4`, at fixed domain: 0 / 18.
+- **Removing the model finder entirely.** A fully ground SMT encoding — the
+  hypothesis instantiated at all `n^k` carrier tuples, 169 equations for a
+  two-variable law at `n = 13`, 177 lines of SMT-LIB2 — also fails at 180 s.
+
+So this is not an artifact of MACE-style search, of one prover's encoding, or
+of quantifier instantiation.
+
+### The encoding is not the problem, and here is the proof
+
+`E1076 ⊭ E1455` is witnessed by `Z/13` under `x ◇ y = 7x + 7y`. Pinning that
+table into the same ground SMT file as 169 extra equations:
+
+```
+sat
+real 0.01s
+```
+
+The solver accepts the model instantly and cannot find it in 180 seconds. The
+instance is satisfiable, the encoding is faithful, and the search still fails.
+
+## 2. What finds them instead
+
+In a linear magma `x ◇ y = ax + by` over a ring, every word is
+`Σ_i P_{w,i}(a,b)·x_i`, where `P_{w,i}` sums one word in `{a,b}` per occurrence
+of `x_i` — the root-to-leaf path to it. Since the carrier is the whole unital
+ring, the law holds **iff** `P_{w1,i} = P_{w2,i}` for every `i`. A law of order
+4 has depth at most 4, so there are 31 possible words and a difference
+polynomial is a fixed 31-slot array with a handful of nonzero terms. Deciding
+one instance costs 31 ring multiplications and a sparse scan; no carrier is
+enumerated at all.
+
+Sweeping `Z/m` for `m = 2..32` and all coefficient pairs — 11,439 instances —
+takes about three seconds and discharges 357 of the 1062. The rest of the
+corpus brings it to 416.
+
+The two methods are not competing at the same task. One searches a space of
+`13^169` multiplication tables. The other solves two polynomial equations.
+
+## 3. Which part of the residual is which
+
+Labelling every pair in the 1062 with the smallest carrier the corpus witnesses
+it on:
+
+```
+finite  9        4
+finite 11      101
+finite 13      268
+finite 32       38
+infinite only    5
+uncovered      646
+```
+
+A companion set matters here too. Janota's run records 814 pairs refuted by
+**saturation** rather than by model building, so with no witnessing model
+produced. That looks like evidence of infinite-only behaviour and is not:
+
+```
+saturation-refuted, 814 pairs
+  finite  7      329
+  finite  9       34
+  finite 11       16
+  infinite only    2
+  uncovered      433
+```
+
+379 of them have finite counterexamples, 329 on seven elements, and Vampire's
+`fmb` finds those in under a second when asked. The reason his run did not is
+method ordering: `vsi500` runs before the longer `fmb` budgets, and a pair it
+refutes is marked solved and never retried.
+
+### A published count that cannot be right
+
+Every pair with no finite counterexample is unrefutable by a model builder and
+unprovable by saturation, so its only possible verdicts are *saturation-refuted*
+or *unknown*:
+
+```
+    infinite-only  ⊆  (the 814)  ∪  (the 1062)
+```
+
+The finite witnesses above bound each side:
+
+```
+    |infinite-only ∩ 814|   ≤  814 − 379  =  435
+    |infinite-only ∩ 1062|  ≤ 1062 − 411  =  651
+```
+
+The ETP paper (§8) puts the number of pairs with `E ⊭ E'` but `E ⊧_fin E'` at
+820. Therefore
+
+```
+    |infinite-only ∩ 1062|  ≥  820 − 435  =  385
+```
+
+**At least 385 of the 1062 require an infinite model.** Janota reports 310,
+which is below that floor. The likeliest reading is that 310 counts pairs
+*tagged* in the ETP data as having an infinite-model proof — a property of the
+formalized generating set, not of its closure under transitivity and duality.
+The same generating-versus-closure gap makes 10,657 formalized positive
+implications stand for 8,173,585 real ones.
+
+## 4. Consequences for benchmark use
+
+- Quoting 1062 as a difficulty measure overstates it. Roughly 40% of it is
+  reachable, and a further slice of the 646 uncovered pairs may be too.
+- A benchmark built from this residual should be split into *finite model at
+  carrier ≥ 10*, *infinite model required*, and *unknown*. The first tests a
+  capability current model finders do not have; the second tests something
+  else entirely.
+- The finite-model-search subset is a good hard-SAT benchmark precisely
+  because it is satisfiable, small to state, and resists three solvers.
+- For practitioners: on this problem family, a structured algebraic sweep
+  dominates search by orders of magnitude, and it is twenty lines of
+  arithmetic.
+
+## 5. What is not established
+
+- Four solvers, single versions: Vampire 5.1.0 with CaDiCaL 2.1.3 (Janota used
+  5.0.0), Mace4 2009-11A, z3 as installed. No claim about others.
+- Cells hold 8 to 20 problems. The cliff is sharp enough that the sample size
+  is not the binding uncertainty, but it is not a large study.
+- "Witness size" is the smallest carrier *in this corpus*. Smaller models may
+  exist that neither the corpus nor any solver found, which would sharpen the
+  puzzle rather than soften it.
+- One size-9 problem, `907 ⊭ 843`, fails where its stratum-mates succeed, and
+  the other `E907` problems fail at 11. There is a per-law effect on top of the
+  size effect that this sample cannot separate.
+- The 820 was taken from the paper, not recomputed. Recomputing it needs the
+  full generating set of finite-only implications closed under transitivity and
+  duality, and that set is scattered across the Lean development with no
+  canonical index.
+- This work is machine-generated and machine-checked. It is offered as data and
+  reproduction steps rather than as a proof, and every number above is a
+  command away.
+
+## 6. Reproducing
+
+```bash
+cargo test --release
+```
+
+```bash
+./target/release/pm partition --order3-twists
+```
+
+```bash
+python3 scripts/sample_control_pairs.py
+```
+
+```bash
+./target/release/pm tptp out/atp/samples/witness11.txt out/tptp_w11
+```
+
+```bash
+PM_GROUND=1 ./target/release/pm smt2 out/atp/samples/witness11.txt out/smt_g11 11
+```
+
+Results as run: `out/atp/by_witness_size.tsv`, `out/atp/d13_default_60s.tsv`,
+`out/atp/d13_fmbss13_60s.tsv`, `out/atp/fmb_variants.tsv`,
+`out/atp/z3_ground.tsv`, `out/atp_fixedsize300.tsv`.
+Partition: `data/etp/hard_core_partition.tsv`.

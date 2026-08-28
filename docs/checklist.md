@@ -34,7 +34,15 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 6.5  Scan linear + affine grid: no hits on any of the 143
 - [x] 6.6  Scan 46,538 twisted powers: no hits either
 - [x] 6.7  Weyl algebra `Z<a,b>/(ba - ab - 1)` — implemented, validated, no hits
-- [>] 6.8  Write up whatever the answer is
+- [x] 6.8  Write up whatever the answer is (`docs/open-questions-scan.md`)
+
+## S7 — the ATP calibration note (the thing people asked for)
+
+- [x] 7.1  Third and fourth methods: Mace4, and z3 on a fully ground encoding
+- [x] 7.2  Prove the encoding faithful by pinning the known model (sat in 0.01s)
+- [x] 7.3  Close the `fmb` tuning caveat: contour and symmetry_ratio change nothing
+- [x] 7.4  Write `docs/atp-control.md` as a standalone, reproducible note
+- [ ] 7.5  Decide a venue and draft the message (not sent without a go)
 
 ## Blocked / not started
 

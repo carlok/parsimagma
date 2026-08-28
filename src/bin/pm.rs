@@ -24,9 +24,10 @@ fn main() {
         "partition" => partition(),
         "tptp" => tptp(),
         "ladr" => ladr(),
+        "smt2" => smt2(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, openq");
+            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq");
             std::process::exit(2);
         }
     }
@@ -979,4 +980,111 @@ fn openq() {
             println!("     result unless the witnessing ring has no nontrivial finite quotient");
         }
     }
+}
+
+/// Emit SMT-LIB2 problems that fix the carrier to a finite enumerated sort.
+///
+/// This is the apples-to-apples control the ATP experiment needs. A
+/// MACE-style model finder builds its own propositional encoding with
+/// symmetry breaking and its own search order; handing the *same* question to
+/// an SMT solver over an explicit `n`-element datatype separates "this
+/// problem is hard" from "that encoding and search are hard on this problem".
+///
+/// Usage: `pm smt2 <pairs-file> <out-dir> <carrier-size>`
+fn smt2() {
+    use parsimagma::law::Term;
+    use std::io::Write;
+
+    let args: Vec<String> = std::env::args().collect();
+    let pairs_file = args.get(2).expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
+    let out_dir = args.get(3).expect("usage: pm smt2 <pairs-file> <out-dir> <n>");
+    let n: usize = args
+        .get(4)
+        .expect("usage: pm smt2 <pairs-file> <out-dir> <n>")
+        .parse()
+        .unwrap();
+    std::fs::create_dir_all(out_dir).unwrap();
+
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let pairs = parse_pairs(&std::fs::read_to_string(pairs_file).unwrap()).unwrap();
+
+    fn render(t: &Term, skolem: bool) -> String {
+        match t {
+            Term::Var(v) => {
+                if skolem {
+                    format!("sk{v}")
+                } else {
+                    format!("x{v}")
+                }
+            }
+            Term::Op(l, r) => format!("(op {} {})", render(l, skolem), render(r, skolem)),
+        }
+    }
+
+    for p in &pairs {
+        let hyp = &laws[p.from as usize - 1];
+        let concl = &laws[p.to as usize - 1];
+        let mut f =
+            std::fs::File::create(format!("{out_dir}/{}_{}_{n}.smt2", p.from, p.to)).unwrap();
+        writeln!(f, "; E{} => E{} over a carrier of exactly {n}", p.from, p.to).unwrap();
+        writeln!(f, "(set-logic ALL)").unwrap();
+        let elems: Vec<String> = (0..n).map(|i| format!("e{i}")).collect();
+        writeln!(f, "(declare-datatypes ((M 0)) ((({}))))", elems.join(") (")).unwrap();
+        writeln!(f, "(declare-fun op (M M) M)").unwrap();
+        // Ground expansion rather than a quantifier: instantiate the
+        // hypothesis at every tuple of carrier elements. This hands the
+        // solver the constraint system directly, so a failure here cannot be
+        // blamed on quantifier instantiation.
+        let ground = std::env::var("PM_GROUND").is_ok();
+        if ground {
+            let k = hyp.arity as usize;
+            let total = n.pow(k as u32);
+            for code in 0..total {
+                let mut c = code;
+                let mut sub: Vec<String> = Vec::with_capacity(k);
+                for _ in 0..k {
+                    sub.push(format!("e{}", c % n));
+                    c /= n;
+                }
+                let subst = |t: &Term| -> String {
+                    fn go(t: &Term, sub: &[String]) -> String {
+                        match t {
+                            Term::Var(v) => sub[*v as usize].clone(),
+                            Term::Op(l, r) => format!("(op {} {})", go(l, sub), go(r, sub)),
+                        }
+                    }
+                    go(t, &sub)
+                };
+                writeln!(
+                    f,
+                    "(assert (= {} {}))",
+                    subst(&hyp.lhs),
+                    subst(&hyp.rhs)
+                )
+                .unwrap();
+            }
+        } else {
+            let vars: Vec<String> = (0..hyp.arity).map(|v| format!("(x{v} M)")).collect();
+            writeln!(
+                f,
+                "(assert (forall ({}) (= {} {})))",
+                vars.join(" "),
+                render(&hyp.lhs, false),
+                render(&hyp.rhs, false)
+            )
+            .unwrap();
+        }
+        for v in 0..concl.arity {
+            writeln!(f, "(declare-const sk{v} M)").unwrap();
+        }
+        writeln!(
+            f,
+            "(assert (not (= {} {})))",
+            render(&concl.lhs, true),
+            render(&concl.rhs, true)
+        )
+        .unwrap();
+        writeln!(f, "(check-sat)").unwrap();
+    }
+    eprintln!("wrote {} SMT-LIB2 problems at carrier {n}", pairs.len());
 }
