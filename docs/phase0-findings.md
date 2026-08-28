@@ -1,5 +1,8 @@
 # Phase 0 — ground truth, prior art, and exact counts
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 Date of survey: 2026-08-27. Sources fetched and archived under the session
 scratchpad; every number below is traced to a named source.
 

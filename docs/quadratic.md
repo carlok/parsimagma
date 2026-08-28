@@ -1,5 +1,8 @@
 # Quadratic magmas: 93 pairs reached, none of them new
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 `x ◇ y = ax² + bxy + cy² + dx + ey + f` over `Z/N`, ETP paper Remark 5.5, all
 six coefficients swept for `N = 2..13`. Linear instances are skipped, being
 already covered exhaustively elsewhere.

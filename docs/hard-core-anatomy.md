@@ -1,5 +1,8 @@
 # S1 — anatomy of the hard core
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 What the 1062 actually contains, and why three published numbers describing it
 do not line up. Everything here is recomputed from
 `data/2025-08-11-vampire.json.gz` (upstream `e5a88a1`, sha256

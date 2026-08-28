@@ -1,5 +1,8 @@
 # Working checklist
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 [roadmap.md](roadmap.md).
 

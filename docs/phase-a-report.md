@@ -1,5 +1,8 @@
 # Phase A report — magma signature and coverage engine
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 Date: 2026-08-27/28. Toolchain pinned in `rust-toolchain.toml` (Rust 1.96.0).
 Every number below is reproduced by `cargo test --release`,
 `./target/release/pm stats`, `pm coverage`, and `pm bruteforce N`.

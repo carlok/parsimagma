@@ -1,5 +1,8 @@
 # S2 — what the 296-pair cluster wants
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 The largest block of uncovered hard-core pairs is eight laws with 37 uncovered
 pairs each. They are not in the blueprint's curated hard list, so the method
 had to be recovered from the project's issue history.

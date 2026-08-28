@@ -1,5 +1,8 @@
 # A domain-size cliff in finite model finding, and what it means for the ETP benchmark
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 **Claim.** The 1062 implications left unresolved by Vampire in the Equational
 Theories Project are not uniformly hard. At least 411 of them have finite
 counterexamples on 9 to 32 elements. Those counterexamples are out of reach of
@@ -180,9 +183,6 @@ implications stand for 8,173,585 real ones.
   full generating set of finite-only implications closed under transitivity and
   duality, and that set is scattered across the Lean development with no
   canonical index.
-- This work is machine-generated and machine-checked. It is offered as data and
-  reproduction steps rather than as a proof, and every number above is a
-  command away.
 
 ## 6. Reproducing
 

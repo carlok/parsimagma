@@ -1,5 +1,8 @@
 # Post-Phase-A sprint queue
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 Five sprints, not four: greedy constructions do not fit in one. Each has an
 exit criterion and a kill criterion, because two of these are research and can
 fail for good reasons.

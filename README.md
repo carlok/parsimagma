@@ -7,9 +7,10 @@ A signature and coverage engine over the 4694 equational laws of the
 built to answer one question: **for the constructions the ETP used, which of
 them cover which separations?**
 
-Everything below is a command in this repository. The work is
-machine-generated and machine-checked, and is offered as data and reproduction
-steps rather than as a proof.
+**Produced by an AI agent (Claude) under human direction.** Everything below is
+a command in this repository. The derivations and the code are machine-generated
+and machine-checked, and are offered as data and reproduction steps rather than
+as a proof.
 
 ## What it measured
 

@@ -1,5 +1,8 @@
 # S6 — 143 open ETP questions, scanned
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 A complete negative, from a validated engine. Recording it because the shape
 of the negative says more than the count.
 

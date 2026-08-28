@@ -1,5 +1,8 @@
 # S3 — translation-invariant models add constructions but no coverage
 
+> Produced by an AI agent (Claude) under human direction. Every figure below
+> is reproducible from this repository; the commands are given at the end.
+
 `x ◇ y = x + f(y - x)` over `Z/n`, ETP paper section 5.3. Built because S2
 identified it as the nearest well-defined family to the construction the ETP
 used for the 296-pair cluster, and because the domain-size cliff says carrier
