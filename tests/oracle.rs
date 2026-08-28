@@ -269,3 +269,31 @@ fn no_signature_contradicts_the_published_implication_graph() {
         "expected the corpus to witness billions of separations, got {separations}"
     );
 }
+
+/// Every vendored and derived data file must load through the shared reader,
+/// whether it is stored plain or gzipped. A raw `std::fs::read` on a path that
+/// has since been compressed compiles fine and fails only at runtime, which is
+/// exactly how `pm coverage` and `pm bruteforce` broke once.
+#[test]
+fn every_data_file_loads_through_the_shared_reader() {
+    use parsimagma::etpdata::{read_bytes, read_text};
+    for name in [
+        "equations.txt",
+        "eq_size5.txt",
+        "smallest_magma.txt",
+        "smallest_magma_examples.txt",
+        "refutations2x2.txt",
+        "refutations3x3.txt",
+        "refutations4x4.txt",
+        "hard_core.txt",
+        "saturation_refuted.txt",
+        "hard_core_partition.tsv",
+        "order5_open.txt",
+        "hn_open.txt",
+        "duals.json",
+    ] {
+        assert!(!read_text(name).is_empty(), "{name} is empty");
+    }
+    let bits = read_bytes("implications.bits");
+    assert_eq!(bits.len(), N_LAWS_ORDER4 * N_LAWS_ORDER4.div_ceil(8));
+}

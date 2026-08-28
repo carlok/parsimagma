@@ -1,8 +1,8 @@
 metric	value
 laws	4694
-corpus_rows	6005
+corpus_rows	2786
 hard_core_pairs	1062
 hard_core_covered	416
 graph_false_implications	13855357
-graph_covered	13834667
+graph_covered	13574842
 greedy_cover_size	13

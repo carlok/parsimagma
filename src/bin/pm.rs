@@ -106,11 +106,7 @@ fn coverage() {
     let hard = parse_pairs(&data("hard_core.txt")).unwrap();
     let graph = ImplicationGraph::from_bytes(
         N_LAWS_ORDER4,
-        std::fs::read(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/data/etp/implications.bits"
-        ))
-        .unwrap(),
+        parsimagma::etpdata::read_bytes("implications.bits"),
     );
 
     println!("# Coverage report");
@@ -379,11 +375,7 @@ fn bruteforce() {
     let e = Engine::new(Dag::build(&laws));
     let graph = ImplicationGraph::from_bytes(
         N_LAWS_ORDER4,
-        std::fs::read(concat!(
-            env!("CARGO_MANIFEST_DIR"),
-            "/data/etp/implications.bits"
-        ))
-        .unwrap(),
+        parsimagma::etpdata::read_bytes("implications.bits"),
     );
 
     println!("# Exhaustive small-magma enumeration");
