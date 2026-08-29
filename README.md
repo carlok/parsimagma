@@ -40,11 +40,27 @@ project's own `All4x4Tables/README.md` carries corrected figures, and this
 engine reproduces them independently: **12,560,783 / 13,596,121 / 13,753,982**,
 with **523** magmas sufficing.
 
-**Coverage of the hard core is 416 of 1062**, from three construction families,
-and 13 instances suffice for all 416 out of 6005 distinct rows. Widening the
-grids thirtyfold adds nothing, so the binding constraint is the set of
-construction *kinds*, not compute. See
-[docs/phase-a-report.md](docs/phase-a-report.md).
+**The binding constraint is the set of construction kinds, not compute.**
+Thirteen instances suffice for the 416 hard-core pairs the corpus reaches, out
+of 6005 distinct rows, and widening the grids thirtyfold adds nothing. See
+[docs/phase-a-report.md](docs/phase-a-report.md) — whose 39.2% headline is
+measured against the wrong denominator, corrected above.
+
+**Magma extensions close 16 of the last 39, and provably cannot close the rest.**
+The residual wants §5.6 of the paper — the blueprint's "Magma cohomology"
+chapter — not the greedy constructions the report assumed. Implementing it takes
+the hard core from 411 to **427 of 450**, and two of the sixteen land on exactly
+the ETP's own parameters for `Refutation938`, found from the ingredients rather
+than read off the table. For the remaining 23 the question is decidable rather
+than searchable, and the answer is no across every viable setting: 661,142 fibre
+candidates, zero further pairs. [docs/the-39.md](docs/the-39.md).
+
+**A first coverage measurement on the order-5 laws.** The ETP maps order ≤ 4;
+`pm order5` sweeps the 62,576 laws of order ≤ 5 and discharges **2,299,094,885
+of 3,915,693,200 ordered pairs**, each witnessed by an explicit finite magma.
+It has no oracle for the pair count, which the write-up says at length, but it
+does have one for model existence: 19,522 laws of hard agreement, zero
+disagreements. [docs/order5-first-map.md](docs/order5-first-map.md).
 
 **143 open ETP questions were scanned and none fell.** The negative is
 structured rather than blind, and it names the only ring class that could still
