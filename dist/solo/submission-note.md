@@ -39,6 +39,25 @@ ETP graph. `PRIORITY` in the solver is the first twenty rows of the greedy cover
 over false implications. Everything else in the solver is a plain loop over
 `(m, a, b, c)`, so no part of it needs the repository to run.
 
+## Measured on the stress test
+
+Against the 200-problem `stage2_stress_test` set, which mirrors the graded
+distribution:
+
+| category | false | true |
+|---|---|---|
+| order4_normal | 23/25 | 0/25 |
+| order4_hard | 17/25 | 0/25 |
+| order4_extra_hard | 0/25 | 0/25 |
+| order5_normal | 15/25 | 0/25 |
+| **total** | **55/100** | **0/100** |
+
+**55/200.** Two things that number makes plain. The `extra_hard` category is
+selected against exactly this method and the corpus reaches none of it, so the
+96.2% quoted above — which is over *uniformly sampled* false implications from
+the ETP graph — does not transfer to a curated set. And the solver takes a zero
+on all 100 true implications by design.
+
 ## Scope, stated plainly
 
 This solver **refutes**; it does not prove. The only true-implication case it
