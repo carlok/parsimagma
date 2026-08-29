@@ -1950,21 +1950,51 @@ fn ext() {
     let bsigs: Vec<parsimagma::Signature> =
         bases.par_iter().map(|(_, m)| eng.signature(m)).collect();
 
-    let mut fibres: Vec<Fibre> = Vec::new();
+    let hyps: Vec<u32> = {
+        let mut v: Vec<u32> = targets.iter().map(|&(a, _)| a).collect();
+        v.sort_unstable();
+        v.dedup();
+        v
+    };
+    // Fibre grid. The jump from 6 to 16 came from widening what the fibre *is*
+    // rather than from more grid, so this pushes the same axis: rank 3 over F_2
+    // and rank 2 over F_5 alongside rank 2 over F_2 and F_3.
+    //
+    // That is ~650k candidates, too many to take full signatures of. They are
+    // filtered first on whether the fibre alone satisfies any still-open
+    // hypothesis law, which is a handful of small sweeps and kills nearly all of
+    // them: a fibre failing every hypothesis can never be half of a separating
+    // extension.
+    let hyp_laws: Vec<parsimagma::Law> = sub
+        .iter()
+        .filter(|l| hyps.contains(&l.id))
+        .cloned()
+        .collect();
+    let hyp_eng = Engine::new(parsimagma::Dag::build(&hyp_laws));
+    let unit = FiniteMagma::new(1, vec![0]).unwrap();
+    let fibre_sig = |f: &Fibre, e: &Engine| -> parsimagma::Signature {
+        let x = Extension {
+            base: unit.clone(),
+            fibre: f.clone(),
+            cocycle: vec![0; f.k],
+        };
+        e.signature(&x.magma())
+    };
+
+    let mut cand: Vec<Fibre> = Vec::new();
     for &m in FIBRES.iter() {
         for alpha in 0..m {
             for beta in 0..m {
-                fibres.push(Fibre::scalar(m, alpha, beta));
+                cand.push(Fibre::scalar(m, alpha, beta));
             }
         }
     }
-    let n_scalar = fibres.len();
-    // Matrix endomorphisms on (Z/p)^2, which is what the blueprint's lemma
-    // actually allows. Scalars are the k = 1 case; these are not.
-    for p in [2u32, 3] {
-        let mats: Vec<Vec<u32>> = (0..p.pow(4))
+    let n_scalar = cand.len();
+    for (p, k) in [(2u32, 2usize), (3, 2), (2, 3), (5, 2)] {
+        let d = k * k;
+        let mats: Vec<Vec<u32>> = (0..p.pow(d as u32))
             .map(|c| {
-                let mut v = vec![0u32; 4];
+                let mut v = vec![0u32; d];
                 let mut r = c;
                 for cell in v.iter_mut() {
                     *cell = r % p;
@@ -1975,39 +2005,26 @@ fn ext() {
             .collect();
         for a in &mats {
             for b in &mats {
-                fibres.push(Fibre {
+                cand.push(Fibre {
                     p,
-                    k: 2,
+                    k,
                     alpha: a.clone(),
                     beta: b.clone(),
                 });
             }
         }
     }
-    let fsigs: Vec<parsimagma::Signature> = fibres
-        .par_iter()
-        .map(|f| {
-            let e = Extension {
-                base: FiniteMagma::new(1, vec![0]).unwrap(),
-                fibre: f.clone(),
-                cocycle: vec![0; f.k],
-            };
-            eng.signature(&e.magma())
-        })
+    let n_cand = cand.len();
+    let fibres: Vec<Fibre> = cand
+        .into_par_iter()
+        .filter(|f| f.size() * 2 <= CARRIER_MAX && fibre_sig(f, &hyp_eng).count() > 0)
         .collect();
-    println!(
-        "{} fibres ({n_scalar} scalar over Z/p, {} with 2x2 matrix endomorphisms on (Z/p)^2)",
-        fibres.len(),
-        fibres.len() - n_scalar
-    );
+    let fsigs: Vec<parsimagma::Signature> = fibres.par_iter().map(|f| fibre_sig(f, &eng)).collect();
+    println!("{n_cand} fibre candidates ({n_scalar} scalar over Z/p, rest matrix");
+    println!("         endomorphisms on (Z/p)^k for (p,k) = (2,2) (3,2) (2,3) (5,2));");
+    println!("         {} survive the hypothesis filter", fibres.len());
     println!();
 
-    let hyps: Vec<u32> = {
-        let mut v: Vec<u32> = targets.iter().map(|&(a, _)| a).collect();
-        v.sort_unstable();
-        v.dedup();
-        v
-    };
     let t = Instant::now();
     let mut viable: std::collections::BTreeMap<u32, usize> = Default::default();
     let mut solved: std::collections::BTreeMap<u32, usize> = Default::default();

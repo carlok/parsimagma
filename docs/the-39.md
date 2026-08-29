@@ -128,9 +128,12 @@ blueprint's chapter-677 lemma allows — "M is an abelian group and α, β
 endomorphisms". Scalars on `Z/p` are the `k = 1` case.
 
 Grid: 3,533 bases (linear over `Z/nb` for `nb = 2..8` with every `(a,b)`, plus
-every canonical 3-element magma) and 8,373 fibres (1,556 scalar for `p` up to 23,
-6,817 with `2 x 2` matrix endomorphisms over `F_2` and `F_3`), carrier capped at
-130. Each pair is decided rather than sampled. 25 seconds.
+every canonical 3-element magma) and 661,142 fibre candidates — 1,556 scalar for
+`p` up to 23, the rest matrix endomorphisms on `(Z/p)^k` for `(p,k)` = (2,2),
+(3,2), (2,3), (5,2). Carrier capped at 130. Candidates are filtered on whether
+the fibre alone satisfies any still-open hypothesis law, which leaves 2,147; a
+fibre failing every hypothesis can never be half of a separating extension. Each
+surviving pair is decided rather than sampled. 8.5 minutes.
 
 **16 of the 39 close.**
 
@@ -157,6 +160,13 @@ Six of those came from scalar fibres. **The other ten needed matrix
 endomorphisms and nothing else** — every one is `(Z/3)^2` at carrier 45, and no
 scalar fibre at any modulus up to 23 reaches them. Restricting `α, β` to scalars
 was the binding constraint, not the grid width.
+
+And the axis is now exhausted at this rank. Going from 8,373 fibres to 661,142 —
+adding rank 3 over `F_2` and rank 2 over `F_5` — took the sweep from 25 seconds
+to 8.5 minutes and closed **nothing further**. All sixteen are still `(Z/3)^2`,
+`Z/7` or `Z/13`. What that buys is a much heavier negative rather than a
+sixteenth-plus pair: E879 and E2650 are now blocked across 11,938 viable
+settings each and E1518 and E2054 across 3,695, against 1,184 and 645 before.
 
 The E1076 pair lands on **exactly** ETP's parameters for `Refutation938` — base
 `Z/5` with `4x + 2y`, fibre `Z/13` at `α = 5, β = 9`, carrier 65 — found from the
@@ -195,12 +205,12 @@ Run that way the sweep decides every pair, and each of the 23 remaining comes
 back the same way:
 
 ```
-E854  -> E413    provably unreachable in all  137 viable settings
-E879  -> E4065   provably unreachable in all 1184 viable settings
-E1518 -> E817    provably unreachable in all  645 viable settings
-E2054 -> E255    provably unreachable in all  645 viable settings
-E2650 -> E3253   provably unreachable in all 1184 viable settings
-E2712 -> E4128   provably unreachable in all  137 viable settings
+E854  -> E413    provably unreachable in all    160 viable settings
+E879  -> E4065   provably unreachable in all 11,938 viable settings
+E1518 -> E817    provably unreachable in all  3,695 viable settings
+E2054 -> E255    provably unreachable in all  3,695 viable settings
+E2650 -> E3253   provably unreachable in all 11,938 viable settings
+E2712 -> E4128   provably unreachable in all    160 viable settings
 ...
 ```
 

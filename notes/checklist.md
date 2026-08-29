@@ -82,9 +82,12 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 8.8g Generalise the fibre to (Z/p)^k with matrix endomorphisms, which is
            what the blueprint's lemma allows. Ten more pairs close, all on
            (Z/3)^2 at carrier 45, none reachable by any scalar fibre
-- [ ] 8.8h The last 23, on six hypothesis laws (E854, E879, E1518, E2054, E2650,
-           E2712). Untried: k >= 3, p >= 5 matrices, and alpha/beta varying per
-           base pair
+- [x] 8.8h Rank 3 over F_2 and rank 2 over F_5: 661,142 fibre candidates against
+           8,373, 8.5 minutes against 25s, and zero further pairs. The abelian
+           fibre axis is exhausted at constant alpha, beta
+- [ ] 8.8i The last 23 on six hypothesis laws. Only untried direction is alpha
+           and beta varying per base pair, which breaks the single linear solve.
+           No evidence it works either -- treat as a spike with a kill criterion
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 
