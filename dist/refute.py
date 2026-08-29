@@ -150,14 +150,14 @@ def candidates(limit=None):
     seen = set()
     for m, a, b in PRIORITY:
         seen.add((m, a, b, 0))
-        yield m, linear_table(m, a, b), f"x*y = {a}x+{b}y over Z/{m}"
+        yield m, linear_table(m, a, b), f"x*y = {a}x+{b}y over Z/{m}", (a, b, 0)
     n = 0
     for m in range(2, LINEAR_MAX + 1):
         for a in range(m):
             for b in range(m):
                 if (m, a, b, 0) in seen:
                     continue
-                yield m, linear_table(m, a, b), f"x*y = {a}x+{b}y over Z/{m}"
+                yield m, linear_table(m, a, b), f"x*y = {a}x+{b}y over Z/{m}", (a, b, 0)
                 n += 1
                 if limit and n > limit:
                     return
@@ -165,7 +165,7 @@ def candidates(limit=None):
         for a in range(m):
             for b in range(m):
                 for c in range(1, m):
-                    yield m, linear_table(m, a, b, c), f"x*y = {a}x+{b}y+{c} over Z/{m}"
+                    yield m, linear_table(m, a, b, c), f"x*y = {a}x+{b}y+{c} over Z/{m}", (a, b, c)
                     n += 1
                     if limit and n > limit:
                         return
@@ -187,7 +187,7 @@ def refute(hyp_text, concl_text, limit=None, budget=None):
     hyp = parse_law(hyp_text)
     concl = parse_law(concl_text)
     deadline = None if budget is None else _time.monotonic() + budget
-    for k, (n, table, desc) in enumerate(candidates(limit)):
+    for k, (n, table, desc, coeffs) in enumerate(candidates(limit)):
         if deadline is not None and (k & 255) == 0 and _time.monotonic() > deadline:
             return None
         # The hypothesis is the restrictive one, so testing it first discards
@@ -201,33 +201,66 @@ def refute(hyp_text, concl_text, limit=None, budget=None):
                 "table": table,
                 "rule": desc,
                 "counterexample": w,
+                "coeffs": coeffs,
                 "hypothesis": hyp_text,
                 "conclusion": concl_text,
             }
     return None
 
 
-def to_lean(r, hyp_id=None, concl_id=None):
-    """A self-contained Lean 4 disproof, checked by plain `decide`."""
+def to_lean(r):
+    """The Stage 2 false certificate: a term of the judge-provided `Goal`.
+
+    `Goal` is `∃ (G : Type) (_ : Magma G), EquationLHS G ∧ ¬ EquationRHS G`,
+    bound by the judge's `JudgeProblem`, so the certificate only has to exhibit
+    the carrier, the magma and a `decide`.
+
+    The operation goes in as a function rather than through `finOpTable`. That
+    helper parses its argument one character at a time --
+
+        extractDigits s = s.toList.filterMap fun c => if c.isDigit then ...
+
+    -- so any table entry of 10 or more is silently read as two entries. Every
+    witness here is linear or affine anyway, which states in a dozen characters
+    and stays far inside the 20,000-byte cap on false certificates.
+    """
+    n, rule = r["carrier"], r["rule"]
+    a, b, c = r["coeffs"]
+    terms = []
+    if a:
+        terms.append("x" if a == 1 else f"{a} * x")
+    if b:
+        terms.append("y" if b == 1 else f"{b} * y")
+    if c:
+        terms.append(str(c))
+    expr = " + ".join(terms) if terms else "0"
+    return (
+        "import JudgeProblem\n"
+        "import JudgeDecide.DecideBang\n"
+        "\n"
+        f"-- {rule}\n"
+        "def submission : Goal := by\n"
+        f"  let m : Magma (Fin {n}) := {{ op := fun x y => {expr} }}\n"
+        f"  refine ⟨Fin {n}, m, ?_⟩\n"
+        "  decideFin!\n"
+    )
+
+
+def to_lean_table(r):
+    """Fallback certificate for a witness that is not given by a rule.
+
+    Uses the judge's `magmaFin`, which takes a `List Nat` and so is safe for
+    carriers of ten or more, unlike `finOpTable`.
+    """
     n = r["carrier"]
-    rows = [r["table"][i * n : (i + 1) * n] for i in range(n)]
-    body = ", ".join("![" + ", ".join(str(v) for v in row) + "]" for row in rows)
-    names = "abcdefgh"
-    hyp, concl = parse_law(r["hypothesis"]), parse_law(r["conclusion"])
-
-    def show(t):
-        if t.var is not None:
-            return names[t.var]
-        return f"(op {show(t.lhs)} {show(t.rhs)})"
-
-    hv = " ".join(names[i] for i in range(hyp[2]))
-    cv = " ".join(names[i] for i in range(concl[2]))
-    tag = f" -- E{hyp_id} does not imply E{concl_id}" if hyp_id else ""
-    return f"""import Mathlib
--- {r['rule']}, carrier {n}{tag}
-def T : Fin {n} → Fin {n} → Fin {n} := ![{body}]
-def op (x y : Fin {n}) : Fin {n} := T x y
-
-theorem hypothesis_holds : ∀ {hv} : Fin {n}, {show(hyp[0])} = {show(hyp[1])} := by decide
-theorem conclusion_fails : ¬ (∀ {cv} : Fin {n}, {show(concl[0])} = {show(concl[1])}) := by decide
-"""
+    vals = ", ".join(str(v) for v in r["table"])
+    return (
+        "import JudgeProblem\n"
+        "import JudgeDecide.DecideBang\n"
+        "\n"
+        f"-- {r['rule']}\n"
+        "def submission : Goal := by\n"
+        f"  let m : Magma (Fin {n}) := magmaFin {n} [{vals}]\n"
+        f"  refine ⟨Fin {n}, m, ?_⟩\n"
+        "  decideFin!\n"
+    )

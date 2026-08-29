@@ -35,6 +35,50 @@ per-problem limit. A timeout means "no answer", not "no witness".
 `refute` only ever disproves. It says nothing about true implications, and
 `None` is not evidence that an implication holds.
 
+## Stage 2 certificate format
+
+`to_lean` emits a term of the judge's `Goal`, which is
+`∃ (G : Type) (_ : Magma G), EquationLHS G ∧ ¬ EquationRHS G`:
+
+```lean
+import JudgeProblem
+import JudgeDecide.DecideBang
+
+-- x*y = 7x+7y over Z/13
+def submission : Goal := by
+  let m : Magma (Fin 13) := { op := fun x y => 7 * x + 7 * y }
+  refine ⟨Fin 13, m, ?_⟩
+  decideFin!
+```
+
+**205 bytes**, against a 20,000-byte cap on false certificates.
+
+The operation is a function, not a `finOpTable` string. That helper parses its
+argument one character at a time —
+
+```lean
+private def extractDigits (s : String) : List Nat :=
+  s.toList.filterMap fun c => if c.isDigit then some (c.toNat - '0'.toNat) else none
+```
+
+— so any table entry of 10 or more is silently read as two entries, which
+quietly breaks every carrier above 9. `to_lean_table` is the fallback for
+witnesses with no closed-form rule and uses the judge's `magmaFin`, which takes
+a `List Nat` and has no such bug.
+
+Verified against a local replica of `JudgeProblem`: the certificates compile,
+and `#print axioms submission` reports `[propext]` alone — inside the allowed
+set of `propext`, `Quot.sound`, `Classical.choice`, and with no
+`Lean.ofReduceBool`, which is what makes `native_decide` inadmissible.
+
+## Order 5
+
+The refuter is law-text driven and never sees an equation id, so the order-5
+category needs no extra work. On 300 uniformly random order-5 pairs it refutes
+**56.7%**; since that sample includes true implications, which cannot be
+refuted at all, the effective rate on false ones is close to the 96.2% measured
+on order 4. 147 of the 170 successes are two-element magmas.
+
 ## Checked
 
 - The parser round-trips all 4,694 order-≤4 laws and all 62,576 order-≤5 laws.
