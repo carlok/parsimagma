@@ -1,5 +1,10 @@
 # refute.py — a dependency-free disproof generator for ETP implications
 
+Published as `parsimagma-greedy-cover` on the SAIR Contributor Network,
+2026-08-29: <https://competition.sair.foundation/contributor-network/mathematics-distillation-challenge-equational-theories-stage2/EQT02-S00025>
+(public ID `EQT02-S00025`). `dist/solo/solver.py` is the file published there;
+`refute.py` below is the same construction corpus as a plain library.
+
 Given two equational laws as text, find a finite magma satisfying the first and
 violating the second. That magma disproves `E => E'`, and Lean checks it with
 plain `decide`.
