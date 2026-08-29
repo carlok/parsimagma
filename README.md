@@ -23,10 +23,15 @@ in about three seconds for the whole law set, because it solves polynomial
 identities in two coefficients instead of searching a space of `13^169` tables.
 Details and caveats: [docs/atp-control.md](docs/atp-control.md).
 
-**A published count sits below a provable floor.** At least 385 of those 1062
-require an infinite model; the figure in circulation is 310. The two count
-different things — generating set against its closure — and the bound is
-derived in [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md).
+**The 1062 is now split exactly.** 610 of them require an infinite model, 450
+have a finite counterexample, and 2 are the only implications the ETP left open.
+The corpus witnesses 411 of the 450, so its coverage of the finitely refutable
+hard core is 91%, not the 39% a 1062 denominator suggests. Derived in
+[docs/infinite-only-exact.md](docs/infinite-only-exact.md) from the ETP's own
+finite implication graph, which also validates 790 of this corpus's finite
+witnesses with zero disagreements. The earlier floor of 385 in
+[docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) held; the figure of 310 in
+circulation is most likely a dual-class count, not an error.
 
 **The ETP paper's section 5.1 does not reconcile with itself.** It reports
 13,632,566 refutations from 524 magmas, of which 13,345,053 from size 3 and
@@ -133,7 +138,9 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | | |
 |---|---|
 | [docs/atp-control.md](docs/atp-control.md) | the domain-size cliff, four methods, and what it means for benchmark use |
-| [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor |
+| [docs/infinite-only-exact.md](docs/infinite-only-exact.md) | the 1062 split exactly: 610 infinite-only, 450 finite, 2 open |
+| [docs/the-39.md](docs/the-39.md) | what the 39 remaining finitely-refutable pairs want, and why it is not greedy |
+| [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor (superseded) |
 | [docs/phase-a-report.md](docs/phase-a-report.md) | engine, differential agreement, families implemented and not, coverage totals |
 | [docs/open-questions-scan.md](docs/open-questions-scan.md) | 143 open questions, a structured negative |
 | [docs/cluster-296.md](docs/cluster-296.md) | what the largest uncovered cluster wants, recovered from the ETP issue history |

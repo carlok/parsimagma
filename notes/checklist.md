@@ -49,6 +49,24 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 7.6  Cliff finding filed as issue #1474 on 2026-08-28, without waiting for #1473
 - [x] 7.7  Janota email sent 2026-08-28, two points, no PR cited (#1473 still open)
 
+## S8 — pin the hard core exactly (the finite implication graph)
+
+- [x] 8.1  Find the closed finite graph: `home_page/implications/.gitignore` names
+           `finite_graph.json`, served by the site but not tracked in the repo
+- [x] 8.2  Decode both graphs (RLE `(status, run)`, 4694x4694, codes in `script.js`);
+           reproduce the dashboard exactly, recover the 2 unknowns unprompted
+- [x] 8.3  820 confirmed as the closure count — closes the open question in #1474
+- [x] 8.4  Split both Vampire sets: 1062 = 610 infinite-only / 450 finite / 2 unknown;
+           814 = 210 / 604. 610 + 210 = 820 with nothing left over
+- [x] 8.5  Differential test against the Lean-verified finite graph: 790/790 finite
+           witnesses agree, 7/7 infinite-only labels agree, 0 disagreements
+- [x] 8.6  Emit `data/etp/finite_uncovered.txt` — the 39 (of the 1062) and 225 (of
+           the 814) finitely-refutable pairs the corpus does not reach
+- [x] 8.7  Write `docs/infinite-only-exact.md`; correct the denominator in
+           `phase-a-report.md` and the superseded claims in `hard-core-anatomy.md`
+- [ ] 8.8  Close the 39. Fourteen hypothesis laws; E854 and E1516 have their own
+           blueprint chapters, so the method is recorded rather than guessed
+
 ## Blocked / not started
 
 - [x] S2   296-pair cluster is four dual pairs; one ad hoc infinite model on N (docs/cluster-296.md)

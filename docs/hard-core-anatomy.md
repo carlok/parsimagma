@@ -86,12 +86,16 @@ Taking the paper's 820 as the size of the infinite-only set,
 ```
 
 **At least 385 of the 1062 undecided implications require an infinite model.**
-Janota's figure of 310 is below that floor and cannot be a count of the closed
-set. The likeliest reading is that it counts pairs *tagged* in the ETP data as
-having an infinite-model proof, which is a property of the formalized
-generating set rather than of its closure under transitivity and duality —
-the same generating-versus-closure distinction that makes 10,657 formalized
-positive implications stand for 8,173,585 real ones.
+
+> **Superseded — the exact figure is 610.** The ETP's finite implication graph
+> turned out to be fetchable (see
+> [docs/infinite-only-exact.md](infinite-only-exact.md)), so the bound below is
+> now a computed number. The floor of 385 held. The diagnosis of Janota's 310 in
+> the paragraph that used to sit here did not: counted up to duality the same set
+> is 316, or 294 if both members of a dual pair must lie in the 1062, so 310 sits
+> between two natural dual-class readings rather than being a generating-set
+> artifact. It is most likely a dual-class count against a slightly earlier state
+> of the finite graph, and not an error.
 
 The bound is tight enough to be useful and loose enough to be honest: it does
 not pin the number, it rules out the published one.
@@ -105,7 +109,21 @@ pairs that may well have finite models nobody has searched for at the right
 carrier size. That is a cheaper target than greedy constructions, and it
 reorders the sprint queue in favour of structured finite search before S3.
 
+> **The band was wrong, and in the unhelpful direction.** Of the 646, exactly
+> **39** have a finite counterexample; 605 admit none, and 2 are `E677 ⊭ E255`
+> and its dual. "A few hundred pairs that may well have finite models" was an
+> overestimate by an order of magnitude. The 39 are listed in
+> `data/etp/finite_uncovered.txt` and remain the right target, just a much
+> smaller one than this paragraph expected.
+
 ## Not settled
+
+> **Settled.** `finite_graph.json`, served by the Equation Explorer but not
+> tracked in the repo, is the closed finite implication graph. Counting pair by
+> pair gives exactly 820 general-false / finite-true implications, so §8's 820 is
+> the closure count and no reconstruction from scattered Lean files is needed.
+> [docs/infinite-only-exact.md](infinite-only-exact.md) has the method. The
+> paragraph below records why it looked hard at the time.
 
 The exact 820 was not recomputed. It needs the full generating set of
 finite-only implications closed under transitivity and duality, and that set is

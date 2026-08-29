@@ -23,6 +23,18 @@ instances suffice for all 416, out of 6005 distinct rows.**
 > hard-core coverage, so the 416 stands. The family count below should be read
 > as five implemented, three contributing.
 
+> **The 39.2% is measured against the wrong denominator.** See
+> [docs/infinite-only-exact.md](infinite-only-exact.md): the ETP's finite
+> implication graph, decoded from the Equation Explorer's `finite_graph.json`,
+> shows that **610 of the 1062 require an infinite model** and so cannot be
+> discharged by any corpus of finite magmas. 450 have a finite counterexample and
+> 2 remain unknown to the project. The corpus witnesses 411 of the 450 with a
+> finite magma and reaches 5 of the 610 with its infinite families, which is
+> where the 416 comes from. Against the part that is finitely refutable at all
+> the figure is **411 of 450, 91%**, and the outstanding target is 39 pairs, not
+> 646. The paragraphs below are left as written; read 39.2% as a statement about
+> the whole hard core, not about what a finite corpus could reach.
+
 The hard core is set (B) from the Phase 0 report, as pinned: the 1062
 implications Vampire left undecided in Janota's exhaustive run
 (arXiv:2508.15856). Vampire proved every implication that holds, so all 1062
@@ -55,11 +67,20 @@ is not the binding constraint on this number; the set of construction *kinds*
 is.
 
 Against the whole graph rather than the hard core, the corpus discharges
-**13,834,667 of the 13,855,357 false implications (99.85%)**. The contrast is
-the finding: a corpus that is within 0.15% of complete against the graph is at
-39% against the part of the graph that resisted a good prover.
+**13,834,667 of the 13,855,357 false implications (99.85%)**. The contrast looked
+like the finding when this was written: a corpus within 0.15% of complete against
+the graph, at 39% against the part that resisted a good prover. It does not
+survive the correct denominator. 610 of those 1062 admit no finite counterexample
+at all, so the comparable figure is 411 of 450 — 91% — and the gap between the
+two settings is far smaller than this section claims.
 
 ### What the remaining 646 want
+
+> Of these 646, **605 admit no finite counterexample** and are unreachable by any
+> finite construction; 39 have one and are the real target; 2 are `E677 ⊭ E255`
+> and its dual, still open. The per-law table below counts all 646 together, so
+> its "uncovered" column overstates what is actually missing. The 39 are listed
+> in `data/etp/finite_uncovered.txt`.
 
 | hypothesis law | uncovered | covered | ETP's method (blueprint ch. 27) |
 |---|---|---|---|
