@@ -72,9 +72,12 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 8.8c Implement section 5.6: src/ext.rs, `pm ext`, tests/ext.rs. Rediscovers
            Refutation938's exact parameters from the ingredients
 - [x] 8.8d Closes 6 of the 39 by construction: 411 -> 417 of 450
-- [ ] 8.8e The other 33. Widen the grid (nb > 5, m > 13, non-linear bases),
-           allow alpha/beta to vary per base pair as the blueprint writes them,
-           and handle the 3 laws with more than 3 variables
+- [x] 8.8e Widened to 3,533 bases and 1,556 fibres: same 6. Replaced sampling
+           with a decision procedure -- 162s to 0.95s -- and the other 30 are
+           now provably unreachable with alpha, beta constant, not search misses
+- [ ] 8.8f Let alpha, beta vary per base pair as the blueprint writes them. That
+           is the restriction the proof does not cover. Also the 3 laws using
+           more than 3 variables, which no setting in the grid can test
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 

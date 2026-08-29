@@ -107,6 +107,12 @@ fn residual(ext: &Extension, law: &Law, fibre: u8) -> Option<Vec<u32>> {
     Some(out)
 }
 
+/// The fibre residual of `law` under a given cocycle, at fibre coordinate zero.
+/// Zero everywhere exactly when the extension satisfies the law.
+pub fn law_residual(ext: &Extension, law: &Law) -> Option<Vec<u32>> {
+    residual(ext, law, 0)
+}
+
 /// Whether the residual really is independent of the fibre coordinate, which
 /// is what makes the system linear in `c` alone.
 pub fn residual_is_flat(ext: &Extension, law: &Law) -> bool {
@@ -279,4 +285,49 @@ pub fn cocycle_space(
         basis,
         m,
     })
+}
+
+/// Whether *every* cocycle satisfying `hyp` also satisfies `target`.
+///
+/// The target's residual is affine in the cocycle and the hypothesis's solution
+/// set is an affine subspace, so the restriction is affine and vanishes
+/// identically exactly when it vanishes at the particular solution and at each
+/// `particular + basis_i`. That is `dim + 1` probes and decides the question,
+/// where sampling only ever fails to find something.
+///
+/// Returns `Ok(())` when the family provably cannot separate the pair here, or
+/// `Err(cocycle)` with a witness that does.
+pub fn separates(
+    base: &FiniteMagma,
+    m: u32,
+    alpha: u32,
+    beta: u32,
+    sp: &CocycleSpace,
+    target: &Law,
+) -> Result<(), Vec<u32>> {
+    let mut probes: Vec<Vec<u32>> = vec![sp.particular.clone()];
+    for b in &sp.basis {
+        probes.push(
+            sp.particular
+                .iter()
+                .zip(b)
+                .map(|(p, q)| (p + q) % m)
+                .collect(),
+        );
+    }
+    for c in probes {
+        let e = Extension {
+            base: base.clone(),
+            m,
+            alpha,
+            beta,
+            cocycle: c.clone(),
+        };
+        match law_residual(&e, target) {
+            None => return Err(c),
+            Some(r) if r.iter().any(|&v| v % m != 0) => return Err(c),
+            _ => {}
+        }
+    }
+    Ok(())
 }

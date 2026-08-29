@@ -151,6 +151,46 @@ construction rather than by ingestion: nothing here reads ETP's tables.
 base and fibre each satisfy E1076, E2294 *and* E4435, so the separation cannot
 come from either.
 
+### The other 33 are a proof, not a search failure
+
+Widening the grid to 3,533 bases (203 linear over `Z/nb` for `nb = 2..8`, plus
+every canonical 3-element magma) and 1,556 fibres (`Z/m` for `m` up to 23, every
+`(α, β)`), with a carrier cap of 130, closed **exactly the same six**. Nothing new
+at 17x the grid.
+
+The reason is not that the search missed them. Sampling was the wrong tool, and
+replacing it with a decision procedure says so:
+
+> The target's residual is affine in the cocycle and the hypothesis's solution
+> set is an affine subspace, so the restriction is affine and vanishes
+> identically exactly when it vanishes at the particular solution and at each
+> `particular + basis_i`. That is `dim + 1` probes, and it *decides* the
+> question, where sampling can only fail to find something.
+
+Run that way the whole sweep takes **0.95 seconds** instead of 162, and every one
+of the 30 testable remaining pairs comes back the same way:
+
+```
+E476  -> E359    provably unreachable in 457 of the viable (base,fibre) settings
+E854  -> E413    provably unreachable in 111 of the viable (base,fibre) settings
+E1518 -> E817    provably unreachable in 309 of the viable (base,fibre) settings
+E2054 -> E255    provably unreachable in 309 of the viable (base,fibre) settings
+...
+```
+
+So for every base and fibre in this grid whose ingredients satisfy the
+hypothesis, *every* cocycle that keeps the hypothesis also keeps the target. The
+family cannot separate those pairs with `α, β` held constant. The three left over
+— `E854 -> E1067`, `E2712 -> E2285`, `E2712 -> E2488` — have no viable setting at
+all, because their laws use more than three variables and were excluded.
+
+The dimension statistics show the same thing from another angle, and rule out the
+obvious guess. The pairs that close have small cocycle spaces (max dimension 5
+for E1076, 16 for E1516) and *no* dimension-zero settings. The pairs that never
+close have spaces up to dimension **56** — far larger — across hundreds of solved
+systems. More room in the cocycle does not help when the target's condition is
+implied by the hypothesis's.
+
 ### What the remaining 33 need
 
 The grid is deliberately small: `nb <= 5`, `m <= 13`, linear bases only, twelve
@@ -158,10 +198,15 @@ cocycles per space. Widening any axis is cheap and untried. Three laws (E1067,
 E2285, E2488) use more than three variables and are skipped, since a sweep at
 carrier 65 costs `65^4` and up.
 
-Beyond widening, the obvious gaps are non-linear bases (the base need only be a
-magma), non-constant `α, β` — the blueprint writes them as `α_{x,y}, β_{x,y}`,
-and holding them constant is this implementation's restriction, not the theory's
-— and iterated extensions.
+Non-linear bases are now in the grid (every canonical 3-element magma) and change
+nothing. What is left is the restriction that actually binds: **`α` and `β` held
+constant**. The blueprint writes them as `α_{x,y}, β_{x,y}`, varying with the
+base pair, and that is where the family still has room. It is a harder search —
+the law condition stays linear in `c` only once `α, β` are fixed, so varying them
+turns one linear solve into a search over `m^{2|B|²}` settings of them — but the
+proof above says nothing about it, and the two ETP witnesses that motivated all
+this happen to have constant coefficients. Iterated extensions are the other
+untried direction.
 
 ## What to build
 

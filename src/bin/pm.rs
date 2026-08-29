@@ -1859,7 +1859,15 @@ fn order5() {
 /// it form a subspace, found by elimination rather than enumeration. Sampling
 /// that subspace is what closes pairs.
 fn ext() {
-    use parsimagma::ext::{cocycle_space, Extension};
+    use parsimagma::corpus::order3_canonical;
+    use parsimagma::ext::{cocycle_space, separates, Extension};
+
+    // Grid. Carrier is the binding constraint: a three-variable law costs
+    // carrier^3 per instance, so the cap is what keeps the sweep honest.
+    const NB_MAX: usize = 8;
+    const FIBRES: [u32; 9] = [2, 3, 5, 7, 11, 13, 17, 19, 23];
+    const CARRIER_MAX: usize = 130;
+    const SAMPLES: u32 = 24;
 
     let laws = parse_laws(&data("equations.txt")).unwrap();
     let mut targets: Vec<(u32, u32)> = Vec::new();
@@ -1892,89 +1900,141 @@ fn ext() {
         v.dedup();
         v
     };
-    let sub: Vec<parsimagma::Law> = laws
+    let all: Vec<parsimagma::Law> = laws
         .iter()
         .filter(|l| ids.contains(&l.id))
         .cloned()
         .collect();
-    let skipped: Vec<u32> = sub.iter().filter(|l| l.arity > 3).map(|l| l.id).collect();
-    let sub: Vec<parsimagma::Law> = sub.into_iter().filter(|l| l.arity <= 3).collect();
+    let skipped: Vec<u32> = all.iter().filter(|l| l.arity > 3).map(|l| l.id).collect();
+    let sub: Vec<parsimagma::Law> = all.into_iter().filter(|l| l.arity <= 3).collect();
     if !skipped.is_empty() {
-        println!("skipped  laws with more than 3 variables, too costly at carrier 65: {skipped:?}");
+        println!("skipped  laws using more than 3 variables, too costly here: {skipped:?}");
     }
     let eng = Engine::new(parsimagma::Dag::build(&sub));
     let pos = |id: u32| sub.iter().position(|l| l.id == id);
-    println!("grid     bases: linear over Z/nb, nb = 2..5, all (a,b)");
-    println!("         fibres: Z/m for m in 2,3,5,7,11,13, all (alpha,beta)");
-    println!("         cocycles: 12 sampled per solved space");
+    println!("grid     bases: linear over Z/nb for nb = 2..{NB_MAX} with every (a,b),");
+    println!("                plus every canonical 3-element magma");
+    println!("         fibres: Z/m for m in {FIBRES:?}, every (alpha,beta)");
+    println!("         carrier cap {CARRIER_MAX}, {SAMPLES} cocycles sampled per solved space");
     println!();
 
-    let mut closed: std::collections::BTreeMap<(u32, u32), String> = Default::default();
-    let t = Instant::now();
-    let mut solved = 0usize;
-    for nb in 2..=5usize {
-        for ba in 0..nb {
-            for bb in 0..nb {
-                let mut tb = vec![0u8; nb * nb];
+    // Bases, with their signatures over the laws in play.
+    let mut bases: Vec<(String, FiniteMagma)> = Vec::new();
+    for nb in 2..=NB_MAX {
+        for a in 0..nb {
+            for b in 0..nb {
+                let mut t = vec![0u8; nb * nb];
                 for x in 0..nb {
                     for y in 0..nb {
-                        tb[x * nb + y] = ((ba * x + bb * y) % nb) as u8;
+                        t[x * nb + y] = ((a * x + b * y) % nb) as u8;
                     }
                 }
-                let base = FiniteMagma::new(nb, tb).unwrap();
-                let bsig = eng.signature(&base);
-                for m in [2u32, 3, 5, 7, 11, 13] {
-                    for alpha in 0..m {
-                        for beta in 0..m {
-                            let mut ft = vec![0u8; m as usize * m as usize];
-                            for x in 0..m as usize {
-                                for y in 0..m as usize {
-                                    ft[x * m as usize + y] =
-                                        ((alpha as usize * x + beta as usize * y) % m as usize)
-                                            as u8;
-                                }
-                            }
-                            let fsig = eng.signature(&FiniteMagma::new(m as usize, ft).unwrap());
-                            for (hyp, _) in targets.iter() {
-                                let Some(hi) = pos(*hyp) else { continue };
-                                if !bsig.get(hi) || !fsig.get(hi) {
-                                    continue;
-                                }
-                                let law = sub.iter().find(|l| l.id == *hyp).unwrap();
-                                let Some(sp) = cocycle_space(&base, m, alpha, beta, law) else {
-                                    continue;
-                                };
-                                solved += 1;
-                                for k in 0..12u32 {
-                                    let coeffs: Vec<u32> = (0..sp.dimension())
-                                        .map(|i| (k * (2 * i as u32 + 1) + i as u32) % m)
-                                        .collect();
-                                    let e = Extension {
-                                        base: base.clone(),
-                                        m,
-                                        alpha,
-                                        beta,
-                                        cocycle: sp.member(&coeffs),
-                                    };
-                                    let s = eng.signature(&e.magma());
-                                    if !s.get(hi) {
-                                        continue;
-                                    }
-                                    for (h2, tgt) in targets.iter() {
-                                        if h2 != hyp {
-                                            continue;
-                                        }
-                                        let Some(ti) = pos(*tgt) else { continue };
-                                        if !s.get(ti) {
-                                            closed.entry((*hyp, *tgt)).or_insert_with(|| {
-                                                format!(
-                                                    "base Z/{nb} {ba}x+{bb}y, fibre Z/{m} a={alpha} b={beta}, carrier {}",
-                                                    nb * m as usize
-                                                )
-                                            });
-                                        }
-                                    }
-                                }
+                bases.push((
+                    format!("Z/{nb} {a}x+{b}y"),
+                    FiniteMagma::new(nb, t).unwrap(),
+                ));
+            }
+        }
+    }
+    let n_linear = bases.len();
+    for (i, m) in order3_canonical().into_iter().enumerate() {
+        bases.push((format!("order3#{i}"), m));
+    }
+    println!(
+        "{} bases ({n_linear} linear, {} non-linear of order 3)",
+        bases.len(),
+        bases.len() - n_linear
+    );
+    let bsigs: Vec<parsimagma::Signature> =
+        bases.par_iter().map(|(_, m)| eng.signature(m)).collect();
+
+    let mut fibres: Vec<(u32, u32, u32)> = Vec::new();
+    for &m in FIBRES.iter() {
+        for alpha in 0..m {
+            for beta in 0..m {
+                fibres.push((m, alpha, beta));
+            }
+        }
+    }
+    let fsigs: Vec<parsimagma::Signature> = fibres
+        .par_iter()
+        .map(|&(m, alpha, beta)| {
+            let mut t = vec![0u8; m as usize * m as usize];
+            for x in 0..m as usize {
+                for y in 0..m as usize {
+                    t[x * m as usize + y] =
+                        ((alpha as usize * x + beta as usize * y) % m as usize) as u8;
+                }
+            }
+            eng.signature(&FiniteMagma::new(m as usize, t).unwrap())
+        })
+        .collect();
+    println!("{} fibres", fibres.len());
+    println!();
+
+    let hyps: Vec<u32> = {
+        let mut v: Vec<u32> = targets.iter().map(|&(a, _)| a).collect();
+        v.sort_unstable();
+        v.dedup();
+        v
+    };
+    let t = Instant::now();
+    let mut viable: std::collections::BTreeMap<u32, usize> = Default::default();
+    let mut solved: std::collections::BTreeMap<u32, usize> = Default::default();
+    let mut dims: std::collections::BTreeMap<u32, Vec<usize>> = Default::default();
+    let mut closed: std::collections::BTreeMap<(u32, u32), String> = Default::default();
+    let mut blocked: std::collections::BTreeMap<(u32, u32), usize> = Default::default();
+
+    for &hyp in &hyps {
+        let Some(hi) = pos(hyp) else { continue };
+        let law = sub.iter().find(|l| l.id == hyp).unwrap();
+        let mine: Vec<u32> = targets
+            .iter()
+            .filter(|&&(a, _)| a == hyp)
+            .map(|&(_, b)| b)
+            .collect();
+        for (bi, (bname, base)) in bases.iter().enumerate() {
+            if !bsigs[bi].get(hi) {
+                continue;
+            }
+            for (fi, &(m, alpha, beta)) in fibres.iter().enumerate() {
+                if !fsigs[fi].get(hi) || base.n * m as usize > CARRIER_MAX {
+                    continue;
+                }
+                *viable.entry(hyp).or_default() += 1;
+                let Some(sp) = cocycle_space(base, m, alpha, beta, law) else {
+                    continue;
+                };
+                *solved.entry(hyp).or_default() += 1;
+                dims.entry(hyp).or_default().push(sp.dimension());
+                for &tgt in &mine {
+                    if closed.contains_key(&(hyp, tgt)) {
+                        continue;
+                    }
+                    let Some(law_t) = sub.iter().find(|l| l.id == tgt) else {
+                        continue;
+                    };
+                    match separates(base, m, alpha, beta, &sp, law_t) {
+                        Ok(()) => {
+                            *blocked.entry((hyp, tgt)).or_default() += 1;
+                        }
+                        Err(c) => {
+                            let e = Extension {
+                                base: base.clone(),
+                                m,
+                                alpha,
+                                beta,
+                                cocycle: c,
+                            };
+                            let s2 = eng.signature(&e.magma());
+                            if s2.get(hi) && !s2.get(pos(tgt).unwrap()) {
+                                closed.insert(
+                                    (hyp, tgt),
+                                    format!(
+                                        "base {bname}, fibre Z/{m} a={alpha} b={beta}, carrier {}",
+                                        base.n * m as usize
+                                    ),
+                                );
                             }
                         }
                     }
@@ -1982,7 +2042,25 @@ fn ext() {
             }
         }
     }
-    println!("{solved} cocycle systems solved in {:.2?}", t.elapsed());
+    println!("swept in {:.2?}", t.elapsed());
+    println!();
+    println!("per hypothesis law: viable (base,fibre) pairs / systems solved / pairs closed");
+    for &hyp in &hyps {
+        let c = targets
+            .iter()
+            .filter(|&&(a, b)| a == hyp && closed.contains_key(&(a, b)))
+            .count();
+        let n = targets.iter().filter(|&&(a, _)| a == hyp).count();
+        let d = dims.get(&hyp).cloned().unwrap_or_default();
+        let zero = d.iter().filter(|&&x| x == 0).count();
+        let dmax = d.iter().copied().max().unwrap_or(0);
+        println!(
+            "  E{hyp:<5} viable {:>7}   solved {:>6}   dim 0 in {:>6} of them, max dim {dmax}   closed {c}/{n}",
+            viable.get(&hyp).copied().unwrap_or(0),
+            solved.get(&hyp).copied().unwrap_or(0),
+            zero
+        );
+    }
     println!();
     println!("closed {} of {} pairs:", closed.len(), targets.len());
     for ((a, b), how) in &closed {
@@ -1994,5 +2072,14 @@ fn ext() {
         .filter(|p| !closed.contains_key(p))
         .collect();
     println!();
-    println!("still open ({}): {:?}", miss.len(), miss);
+    println!("still open ({}):", miss.len());
+    for p in &miss {
+        match blocked.get(p) {
+            Some(n) => println!(
+                "  E{} -> E{}   provably unreachable in {n} of the viable (base,fibre) settings",
+                p.0, p.1
+            ),
+            None => println!("  E{} -> E{}   no viable setting in this grid", p.0, p.1),
+        }
+    }
 }
