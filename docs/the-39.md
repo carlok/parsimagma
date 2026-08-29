@@ -167,8 +167,8 @@ replacing it with a decision procedure says so:
 > `particular + basis_i`. That is `dim + 1` probes, and it *decides* the
 > question, where sampling can only fail to find something.
 
-Run that way the whole sweep takes **0.95 seconds** instead of 162, and every one
-of the 30 testable remaining pairs comes back the same way:
+Run that way the whole sweep takes **2 seconds** instead of 162, and every one of
+the 33 remaining pairs comes back the same way:
 
 ```
 E476  -> E359    provably unreachable in 457 of the viable (base,fibre) settings
@@ -180,9 +180,20 @@ E2054 -> E255    provably unreachable in 309 of the viable (base,fibre) settings
 
 So for every base and fibre in this grid whose ingredients satisfy the
 hypothesis, *every* cocycle that keeps the hypothesis also keeps the target. The
-family cannot separate those pairs with `α, β` held constant. The three left over
-— `E854 -> E1067`, `E2712 -> E2285`, `E2712 -> E2488` — have no viable setting at
-all, because their laws use more than three variables and were excluded.
+family cannot separate those pairs with `α, β` held constant. **Nothing is left
+untested**: the three laws using more than three variables were excluded at first
+for a cost that turns out not to apply — a residual is `nb^arity` over base
+tuples, not `carrier^arity`, because the fibre coordinate is pinned — and once
+included they land the same way, unreachable across all 111 viable settings.
+
+Two soundness points, since the conclusion is a negative and negatives are easy
+to get wrong. The probes read the residual at fibre coordinate zero, which is
+faithful only when the target's residual is flat in that coordinate; `separates`
+checks that and returns `Undecided` rather than `Blocked` when it fails. Across
+the whole sweep it never fails, but the check is there and the count is reported.
+And where the carrier makes a full `carrier^arity` sweep affordable, every
+claimed separation is cross-checked against the engine with an assertion that
+fires on disagreement.
 
 The dimension statistics show the same thing from another angle, and rule out the
 obvious guess. The pairs that close have small cocycle spaces (max dimension 5

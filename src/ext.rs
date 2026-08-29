@@ -287,16 +287,32 @@ pub fn cocycle_space(
     })
 }
 
-/// Whether *every* cocycle satisfying `hyp` also satisfies `target`.
+/// The verdict for one (setting, target) question.
+#[derive(Debug, PartialEq, Eq)]
+pub enum Verdict {
+    /// Every cocycle satisfying the hypothesis also satisfies the target, so
+    /// this setting provably cannot separate the pair.
+    Blocked,
+    /// A cocycle satisfying the hypothesis and refuting the target.
+    Separates(Vec<u32>),
+    /// The target's residual depends on the fibre coordinate, so testing it at
+    /// coordinate zero decides nothing. Report rather than guess.
+    Undecided,
+}
+
+/// Whether *every* cocycle satisfying the hypothesis also satisfies `target`.
 ///
 /// The target's residual is affine in the cocycle and the hypothesis's solution
 /// set is an affine subspace, so the restriction is affine and vanishes
 /// identically exactly when it vanishes at the particular solution and at each
-/// `particular + basis_i`. That is `dim + 1` probes and decides the question,
-/// where sampling only ever fails to find something.
+/// `particular + basis_i`. That is `dim + 1` probes, and it decides the question
+/// where sampling can only fail to find something.
 ///
-/// Returns `Ok(())` when the family provably cannot separate the pair here, or
-/// `Err(cocycle)` with a witness that does.
+/// The probes read the residual at fibre coordinate zero, which is faithful only
+/// when the target's residual is flat in that coordinate. A nonzero residual is
+/// a genuine refutation either way, so `Separates` is always sound; `Blocked`
+/// is claimed only once flatness is checked, and `Undecided` is returned
+/// otherwise.
 pub fn separates(
     base: &FiniteMagma,
     m: u32,
@@ -304,7 +320,7 @@ pub fn separates(
     beta: u32,
     sp: &CocycleSpace,
     target: &Law,
-) -> Result<(), Vec<u32>> {
+) -> Verdict {
     let mut probes: Vec<Vec<u32>> = vec![sp.particular.clone()];
     for b in &sp.basis {
         probes.push(
@@ -315,6 +331,7 @@ pub fn separates(
                 .collect(),
         );
     }
+    let mut flat = true;
     for c in probes {
         let e = Extension {
             base: base.clone(),
@@ -324,10 +341,19 @@ pub fn separates(
             cocycle: c.clone(),
         };
         match law_residual(&e, target) {
-            None => return Err(c),
-            Some(r) if r.iter().any(|&v| v % m != 0) => return Err(c),
-            _ => {}
+            // The base itself refutes the target, so the extension does too.
+            None => return Verdict::Separates(c),
+            Some(r) if r.iter().any(|&v| v % m != 0) => return Verdict::Separates(c),
+            _ => {
+                if flat && !residual_is_flat(&e, target) {
+                    flat = false;
+                }
+            }
         }
     }
-    Ok(())
+    if flat {
+        Verdict::Blocked
+    } else {
+        Verdict::Undecided
+    }
 }

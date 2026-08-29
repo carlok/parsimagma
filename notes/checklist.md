@@ -75,9 +75,12 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 8.8e Widened to 3,533 bases and 1,556 fibres: same 6. Replaced sampling
            with a decision procedure -- 162s to 0.95s -- and the other 30 are
            now provably unreachable with alpha, beta constant, not search misses
-- [ ] 8.8f Let alpha, beta vary per base pair as the blueprint writes them. That
-           is the restriction the proof does not cover. Also the 3 laws using
-           more than 3 variables, which no setting in the grid can test
+- [x] 8.8f The 3 high-arity laws are in: the cost that excluded them was
+           carrier^arity, but a residual is nb^arity. All 33 now decided, all
+           unreachable. Soundness: Verdict::Undecided when the target residual
+           is not flat (never fired), and an engine cross-check where affordable
+- [ ] 8.8g Let alpha, beta vary per base pair as the blueprint writes them. The
+           only restriction the proof does not cover
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 

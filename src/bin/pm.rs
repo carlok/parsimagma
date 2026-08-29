@@ -1860,14 +1860,13 @@ fn order5() {
 /// that subspace is what closes pairs.
 fn ext() {
     use parsimagma::corpus::order3_canonical;
-    use parsimagma::ext::{cocycle_space, separates, Extension};
+    use parsimagma::ext::{cocycle_space, law_residual, separates, Extension, Verdict};
 
     // Grid. Carrier is the binding constraint: a three-variable law costs
     // carrier^3 per instance, so the cap is what keeps the sweep honest.
     const NB_MAX: usize = 8;
     const FIBRES: [u32; 9] = [2, 3, 5, 7, 11, 13, 17, 19, 23];
     const CARRIER_MAX: usize = 130;
-    const SAMPLES: u32 = 24;
 
     let laws = parse_laws(&data("equations.txt")).unwrap();
     let mut targets: Vec<(u32, u32)> = Vec::new();
@@ -1905,17 +1904,20 @@ fn ext() {
         .filter(|l| ids.contains(&l.id))
         .cloned()
         .collect();
-    let skipped: Vec<u32> = all.iter().filter(|l| l.arity > 3).map(|l| l.id).collect();
-    let sub: Vec<parsimagma::Law> = all.into_iter().filter(|l| l.arity <= 3).collect();
-    if !skipped.is_empty() {
-        println!("skipped  laws using more than 3 variables, too costly here: {skipped:?}");
+    // No arity filter. A residual costs nb^arity over base tuples, not
+    // carrier^arity: the fibre coordinate is pinned at zero. Only the optional
+    // confirmation sweep below is carrier-bound.
+    let hi_arity: Vec<u32> = all.iter().filter(|l| l.arity > 3).map(|l| l.id).collect();
+    let sub: Vec<parsimagma::Law> = all;
+    if !hi_arity.is_empty() {
+        println!("note     laws using more than 3 variables are included: {hi_arity:?}");
     }
     let eng = Engine::new(parsimagma::Dag::build(&sub));
     let pos = |id: u32| sub.iter().position(|l| l.id == id);
     println!("grid     bases: linear over Z/nb for nb = 2..{NB_MAX} with every (a,b),");
     println!("                plus every canonical 3-element magma");
     println!("         fibres: Z/m for m in {FIBRES:?}, every (alpha,beta)");
-    println!("         carrier cap {CARRIER_MAX}, {SAMPLES} cocycles sampled per solved space");
+    println!("         carrier cap {CARRIER_MAX}; each pair decided, not sampled");
     println!();
 
     // Bases, with their signatures over the laws in play.
@@ -1984,6 +1986,7 @@ fn ext() {
     let mut dims: std::collections::BTreeMap<u32, Vec<usize>> = Default::default();
     let mut closed: std::collections::BTreeMap<(u32, u32), String> = Default::default();
     let mut blocked: std::collections::BTreeMap<(u32, u32), usize> = Default::default();
+    let mut undecided: std::collections::BTreeMap<(u32, u32), usize> = Default::default();
 
     for &hyp in &hyps {
         let Some(hi) = pos(hyp) else { continue };
@@ -2015,10 +2018,13 @@ fn ext() {
                         continue;
                     };
                     match separates(base, m, alpha, beta, &sp, law_t) {
-                        Ok(()) => {
+                        Verdict::Blocked => {
                             *blocked.entry((hyp, tgt)).or_default() += 1;
                         }
-                        Err(c) => {
+                        Verdict::Undecided => {
+                            *undecided.entry((hyp, tgt)).or_default() += 1;
+                        }
+                        Verdict::Separates(c) => {
                             let e = Extension {
                                 base: base.clone(),
                                 m,
@@ -2026,13 +2032,34 @@ fn ext() {
                                 beta,
                                 cocycle: c,
                             };
-                            let s2 = eng.signature(&e.magma());
-                            if s2.get(hi) && !s2.get(pos(tgt).unwrap()) {
+                            // The hypothesis holds by construction: c lies in a
+                            // space built after checking its residual is flat.
+                            // The target fails because its residual is nonzero,
+                            // which is a genuine refuting assignment whether or
+                            // not that residual is flat.
+                            let hyp_ok = law_residual(&e, law)
+                                .map(|r| r.iter().all(|&v| v % m == 0))
+                                .unwrap_or(false);
+                            let tgt_bad = match law_residual(&e, law_t) {
+                                None => true,
+                                Some(r) => r.iter().any(|&v| v % m != 0),
+                            };
+                            if hyp_ok && tgt_bad {
+                                // Cross-check with the full sweep when the
+                                // carrier makes that affordable.
+                                let carrier = base.n * m as usize;
+                                let cost = (carrier as u64).pow(law_t.arity.max(law.arity) as u32);
+                                if cost <= 20_000_000 {
+                                    let s2 = eng.signature(&e.magma());
+                                    assert!(
+                                        s2.get(hi) && !s2.get(pos(tgt).unwrap()),
+                                        "residual and sweep disagree on E{hyp} -> E{tgt}"
+                                    );
+                                }
                                 closed.insert(
                                     (hyp, tgt),
                                     format!(
-                                        "base {bname}, fibre Z/{m} a={alpha} b={beta}, carrier {}",
-                                        base.n * m as usize
+                                        "base {bname}, fibre Z/{m} a={alpha} b={beta}, carrier {carrier}"
                                     ),
                                 );
                             }
@@ -2074,12 +2101,18 @@ fn ext() {
     println!();
     println!("still open ({}):", miss.len());
     for p in &miss {
-        match blocked.get(p) {
-            Some(n) => println!(
-                "  E{} -> E{}   provably unreachable in {n} of the viable (base,fibre) settings",
+        let b = blocked.get(p).copied().unwrap_or(0);
+        let u = undecided.get(p).copied().unwrap_or(0);
+        match (b, u) {
+            (0, 0) => println!("  E{} -> E{}   no viable setting in this grid", p.0, p.1),
+            (b, 0) => println!(
+                "  E{} -> E{}   provably unreachable in all {b} viable settings",
                 p.0, p.1
             ),
-            None => println!("  E{} -> E{}   no viable setting in this grid", p.0, p.1),
+            (b, u) => println!(
+                "  E{} -> E{}   unreachable in {b} settings, undecided in {u} (target residual not flat)",
+                p.0, p.1
+            ),
         }
     }
 }
