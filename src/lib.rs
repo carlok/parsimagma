@@ -10,6 +10,7 @@ pub mod corpus;
 pub mod coverage;
 pub mod dag;
 pub mod etpdata;
+pub mod ext;
 pub mod finite;
 pub mod graph;
 pub mod law;

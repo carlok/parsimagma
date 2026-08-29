@@ -120,7 +120,52 @@ of 4000 sampled from it, 3684 refute E2294 or E4435:  92%
 witness is not rare, it is generic once you are in the right family. This corpus
 missed it for one reason: §5.6 is not implemented.
 
+## Built, and it closes six of them
+
+`src/ext.rs` implements the family and `pm ext` runs it against the 39. Bases are
+linear magmas over `Z/nb` for `nb = 2..5`, fibres `Z/m` for `m` in 2, 3, 5, 7, 11,
+13 with every `(α, β)`, and for each combination where base and fibre both
+satisfy the hypothesis law the cocycle system is solved and twelve members
+sampled. 2,974 systems solved in 22 seconds.
+
+```
+closed 6 of 39 pairs:
+  E1076 -> E2294   base Z/5 4x+2y, fibre Z/13 a=5 b=9, carrier 65
+  E1076 -> E4435   base Z/5 4x+2y, fibre Z/13 a=5 b=9, carrier 65
+  E1516 -> E1489   base Z/5 3x+3y, fibre Z/7  a=4 b=1, carrier 35
+  E2091 -> E2098   base Z/5 3x+3y, fibre Z/7  a=1 b=4, carrier 35
+  E2531 -> E1313   base Z/5 2x+4y, fibre Z/13 a=7 b=7, carrier 65
+  E2531 -> E4435   base Z/5 2x+4y, fibre Z/13 a=7 b=7, carrier 65
+```
+
+The first two land on **exactly** ETP's parameters for `Refutation938` — base
+`Z/5` with `4x + 2y`, fibre `Z/13` at `α = 5, β = 9`, carrier 65 — found from the
+ingredients rather than copied from the table. `E1516 -> E1489` at carrier 35
+matches `Refutation937`'s shape. `E2091 -> E2098` and the two `E2531` pairs are
+duals of those.
+
+So the hard-core figure moves from 411 to **417 of 450**, and it moves by
+construction rather than by ingestion: nothing here reads ETP's tables.
+
+`tests/ext.rs` pins the reproduction, including the claim the family rests on —
+base and fibre each satisfy E1076, E2294 *and* E4435, so the separation cannot
+come from either.
+
+### What the remaining 33 need
+
+The grid is deliberately small: `nb <= 5`, `m <= 13`, linear bases only, twelve
+cocycles per space. Widening any axis is cheap and untried. Three laws (E1067,
+E2285, E2488) use more than three variables and are skipped, since a sweep at
+carrier 65 costs `65^4` and up.
+
+Beyond widening, the obvious gaps are non-linear bases (the base need only be a
+magma), non-constant `α, β` — the blueprint writes them as `α_{x,y}, β_{x,y}`,
+and holding them constant is this implementation's restriction, not the theory's
+— and iterated extensions.
+
 ## What to build
+
+(Written before the above. Left as the record of what the plan was.)
 
 The narrow version, which is cheap and has a known target: implement §5.6 for
 the case both ingredients are already in the corpus — base magma `B` of small

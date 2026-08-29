@@ -21,6 +21,7 @@ fn main() {
         "stats" => stats(),
         "coverage" => coverage(),
         "order5" => order5(),
+        "ext" => ext(),
         "bruteforce" => bruteforce(),
         "partition" => partition(),
         "tptp" => tptp(),
@@ -32,7 +33,7 @@ fn main() {
         "matring" => matring(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, order5, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad, matring");
+            eprintln!("unknown command {other:?}; try: stats, coverage, order5, ext, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad, matring");
             std::process::exit(2);
         }
     }
@@ -1819,4 +1820,150 @@ fn order5() {
         nlaws as u64 * (nlaws as u64 - 1),
         t.elapsed()
     );
+}
+
+/// Section 5.6 extensions against the 39 finitely-refutable hard-core pairs
+/// this corpus does not otherwise reach (`docs/the-39.md`).
+///
+/// For each base magma, fibre and coefficient pair where both ingredients
+/// satisfy the hypothesis law, the cocycles that keep the extension satisfying
+/// it form a subspace, found by elimination rather than enumeration. Sampling
+/// that subspace is what closes pairs.
+fn ext() {
+    use parsimagma::ext::{cocycle_space, Extension};
+
+    let laws = parse_laws(&data("equations.txt")).unwrap();
+    let mut targets: Vec<(u32, u32)> = Vec::new();
+    for line in data("finite_uncovered.txt").lines() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let mut it = line.split('\t');
+        if it.next() != Some("unresolved") {
+            continue;
+        }
+        let (Some(a), Some(b)) = (it.next(), it.next()) else {
+            continue;
+        };
+        if let (Ok(a), Ok(b)) = (a.parse::<u32>(), b.parse::<u32>()) {
+            targets.push((a, b));
+        }
+    }
+    println!("# Section 5.6 extensions against the 39");
+    println!();
+    println!(
+        "targets  {} pairs from data/etp/finite_uncovered.txt",
+        targets.len()
+    );
+
+    let ids: Vec<u32> = {
+        let mut v: Vec<u32> = targets.iter().flat_map(|&(a, b)| [a, b]).collect();
+        v.sort_unstable();
+        v.dedup();
+        v
+    };
+    let sub: Vec<parsimagma::Law> = laws
+        .iter()
+        .filter(|l| ids.contains(&l.id))
+        .cloned()
+        .collect();
+    let skipped: Vec<u32> = sub.iter().filter(|l| l.arity > 3).map(|l| l.id).collect();
+    let sub: Vec<parsimagma::Law> = sub.into_iter().filter(|l| l.arity <= 3).collect();
+    if !skipped.is_empty() {
+        println!("skipped  laws with more than 3 variables, too costly at carrier 65: {skipped:?}");
+    }
+    let eng = Engine::new(parsimagma::Dag::build(&sub));
+    let pos = |id: u32| sub.iter().position(|l| l.id == id);
+    println!("grid     bases: linear over Z/nb, nb = 2..5, all (a,b)");
+    println!("         fibres: Z/m for m in 2,3,5,7,11,13, all (alpha,beta)");
+    println!("         cocycles: 12 sampled per solved space");
+    println!();
+
+    let mut closed: std::collections::BTreeMap<(u32, u32), String> = Default::default();
+    let t = Instant::now();
+    let mut solved = 0usize;
+    for nb in 2..=5usize {
+        for ba in 0..nb {
+            for bb in 0..nb {
+                let mut tb = vec![0u8; nb * nb];
+                for x in 0..nb {
+                    for y in 0..nb {
+                        tb[x * nb + y] = ((ba * x + bb * y) % nb) as u8;
+                    }
+                }
+                let base = FiniteMagma::new(nb, tb).unwrap();
+                let bsig = eng.signature(&base);
+                for m in [2u32, 3, 5, 7, 11, 13] {
+                    for alpha in 0..m {
+                        for beta in 0..m {
+                            let mut ft = vec![0u8; m as usize * m as usize];
+                            for x in 0..m as usize {
+                                for y in 0..m as usize {
+                                    ft[x * m as usize + y] =
+                                        ((alpha as usize * x + beta as usize * y) % m as usize)
+                                            as u8;
+                                }
+                            }
+                            let fsig = eng.signature(&FiniteMagma::new(m as usize, ft).unwrap());
+                            for (hyp, _) in targets.iter() {
+                                let Some(hi) = pos(*hyp) else { continue };
+                                if !bsig.get(hi) || !fsig.get(hi) {
+                                    continue;
+                                }
+                                let law = sub.iter().find(|l| l.id == *hyp).unwrap();
+                                let Some(sp) = cocycle_space(&base, m, alpha, beta, law) else {
+                                    continue;
+                                };
+                                solved += 1;
+                                for k in 0..12u32 {
+                                    let coeffs: Vec<u32> = (0..sp.dimension())
+                                        .map(|i| (k * (2 * i as u32 + 1) + i as u32) % m)
+                                        .collect();
+                                    let e = Extension {
+                                        base: base.clone(),
+                                        m,
+                                        alpha,
+                                        beta,
+                                        cocycle: sp.member(&coeffs),
+                                    };
+                                    let s = eng.signature(&e.magma());
+                                    if !s.get(hi) {
+                                        continue;
+                                    }
+                                    for (h2, tgt) in targets.iter() {
+                                        if h2 != hyp {
+                                            continue;
+                                        }
+                                        let Some(ti) = pos(*tgt) else { continue };
+                                        if !s.get(ti) {
+                                            closed.entry((*hyp, *tgt)).or_insert_with(|| {
+                                                format!(
+                                                    "base Z/{nb} {ba}x+{bb}y, fibre Z/{m} a={alpha} b={beta}, carrier {}",
+                                                    nb * m as usize
+                                                )
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    println!("{solved} cocycle systems solved in {:.2?}", t.elapsed());
+    println!();
+    println!("closed {} of {} pairs:", closed.len(), targets.len());
+    for ((a, b), how) in &closed {
+        println!("  E{a} -> E{b}   {how}");
+    }
+    let miss: Vec<(u32, u32)> = targets
+        .iter()
+        .copied()
+        .filter(|p| !closed.contains_key(p))
+        .collect();
+    println!();
+    println!("still open ({}): {:?}", miss.len(), miss);
 }

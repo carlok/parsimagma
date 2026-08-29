@@ -140,7 +140,7 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/atp-control.md](docs/atp-control.md) | the domain-size cliff, four methods, and what it means for benchmark use |
 | [docs/infinite-only-exact.md](docs/infinite-only-exact.md) | the 1062 split exactly: 610 infinite-only, 450 finite, 2 open |
 | [docs/order5-first-map.md](docs/order5-first-map.md) | first coverage measurement on the 62,576 order-5 laws, and why it has no oracle |
-| [docs/the-39.md](docs/the-39.md) | what the 39 remaining finitely-refutable pairs want, and why it is not greedy |
+| [docs/the-39.md](docs/the-39.md) | what the 39 remaining pairs want, and the section 5.6 family that closes six of them |
 | [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor (superseded) |
 | [docs/phase-a-report.md](docs/phase-a-report.md) | engine, differential agreement, families implemented and not, coverage totals |
 | [docs/open-questions-scan.md](docs/open-questions-scan.md) | 143 open questions, a structured negative |

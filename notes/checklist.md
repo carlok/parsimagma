@@ -69,8 +69,12 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [x] 8.8b Rediscovery test on Refutation938: it is a section 5.6 extension, the
            law condition is linear in the cocycle, the space is 13^5 not 13^25,
            92% of it separates. Theory is blueprint/chapter/cohomology.tex, not new
-- [ ] 8.8c Implement section 5.6 in the engine; Refutation938 and 937 are the
-           reproduction tests
+- [x] 8.8c Implement section 5.6: src/ext.rs, `pm ext`, tests/ext.rs. Rediscovers
+           Refutation938's exact parameters from the ingredients
+- [x] 8.8d Closes 6 of the 39 by construction: 411 -> 417 of 450
+- [ ] 8.8e The other 33. Widen the grid (nb > 5, m > 13, non-linear bases),
+           allow alpha/beta to vary per base pair as the blueprint writes them,
+           and handle the 3 laws with more than 3 variables
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 
