@@ -84,6 +84,36 @@ the given labelling**. A congruence visible only after relabelling is invisible
 to it, so "none found" is a limit of the test, not a proof of no structure.
 Treat this table as a lead list, not a classification.
 
+## The rediscovery test passes, and the search space is tiny
+
+Before writing any Rust, the theory was checked against `Refutation938` directly.
+
+**Both ingredients satisfy all three laws.** The base `4x + 2y` on `Z/5` satisfies
+E1076, E2294 and E4435. The fibre `5x + 9y` on `Z/13` satisfies all three too.
+The extension satisfies E1076 and violates E2294 and E4435. So the separation
+lives entirely in the cocycle — which is exactly why no product, power or direct
+family in this corpus can reach it, and why widening the linear grid never would
+have.
+
+**The law condition is linear in the cocycle.** For each of the three laws the
+fibre residual turns out to be independent of the fibre coordinates `(s, t)`, so
+it is a function of the base pair alone: 25 values. And it is linear in the 25
+cocycle variables, verified by building the matrix from unit bumps and predicting
+the residual at ETP's own cocycle.
+
+That collapses the search. Over `F_13`:
+
+```
+E1076 cocycle system: rank 20  ->  solution space dimension 5
+                                   13^5 = 371,293 cocycles, all satisfying E1076
+ETP's cocycle lies in that space:  yes
+of 4000 sampled from it, 3684 refute E2294 or E4435:  92%
+```
+
+**13^25 was never the search space. It is 13^5, and 92% of it works.** The
+witness is not rare, it is generic once you are in the right family. This corpus
+missed it for one reason: §5.6 is not implemented.
+
 ## What to build
 
 The narrow version, which is cheap and has a known target: implement §5.6 for
