@@ -1785,6 +1785,35 @@ fn order5() {
         pairs += nlaws as u64 - inter as u64;
     }
     println!("hypothesis laws reached  {}", acc.len());
+
+    // Consistency check against the blueprint's order-5 classification. The
+    // 130 laws of tables 20.1-20.3 admit no nontrivial finite model, or their
+    // status is open; no instance here may satisfy one. A hit is either a
+    // resolved open question or a bug, and both want looking at.
+    let mut open_hits: Vec<(String, u32)> = Vec::new();
+    for line in data("order5_open.txt").lines() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let mut it = line.split('\t');
+        let set = it.next().unwrap_or("").to_string();
+        let Some(id) = it.next().and_then(|v| v.parse::<u32>().ok()) else {
+            continue;
+        };
+        if acc.contains_key(&((id - 1) as usize)) {
+            open_hits.push((set, id));
+        }
+    }
+    if open_hits.is_empty() {
+        println!("blueprint 20.1-20.3 control  130 laws, 0 satisfied by any instance (expected)");
+    } else {
+        println!(
+            "blueprint 20.1-20.3 control  {} HITS -- investigate: {:?}",
+            open_hits.len(),
+            open_hits
+        );
+    }
     println!(
         "distinct ordered pairs discharged  {pairs}  of {} possible, in {:.2?}",
         nlaws as u64 * (nlaws as u64 - 1),

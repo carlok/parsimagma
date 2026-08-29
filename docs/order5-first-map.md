@@ -51,11 +51,25 @@ hypothesis laws; ETP's 38,360 order-5 laws with known finite models plus the
 is the correct direction, since a linear and affine corpus will not find every
 model ETP knows about, and 0.23% under it is closer than expected.
 
-The containment itself has **not** been checked law by law — the classification
-lives in the blueprint text and a Zulip thread rather than in a machine-readable
-file on `vlad902/equational_theories@order5`, whose `data/` matches main. Doing
-that check is the obvious next step and would upgrade this from a measurement to
-a validated one.
+One direction of it **is** now checked, and `pm order5` reruns it every time.
+The 130 laws the blueprint enumerates in tables 20.1-20.3 either admit no
+nontrivial finite model or have open status, so no instance in this corpus may
+satisfy one. None does:
+
+```
+blueprint 20.1-20.3 control  130 laws, 0 satisfied by any instance (expected)
+```
+
+A hit there would be either a resolved ETP open question or a bug in this
+engine, and the run says which it got.
+
+The wider containment has **not** been checked law by law — the chapter enumerates only those
+130 equation ids. The 19,392 laws with only trivial models and the 38,360 with
+known finite models are reported as counts, not lists, and
+`vlad902/equational_theories@order5` has a `data/` matching main. So the strong
+check is not available from published data; it would need the per-law
+classification, which lives in a Zulip thread. Asking for it is cheaper than
+recomputing it.
 
 What holds it up instead is that the engine is the same one validated at order 4
 against 824 ETP tables and 790 hard-core witnesses, that `open-questions-scan.md`
