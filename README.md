@@ -12,6 +12,11 @@ a command in this repository. The derivations and the code are machine-generated
 and machine-checked, and are offered as data and reproduction steps rather than
 as a proof.
 
+**Published:** the solver built from this corpus is public on the SAIR
+Contributor Network as
+[`parsimagma-greedy-cover`](https://competition.sair.foundation/contributor-network/mathematics-distillation-challenge-equational-theories-stage2/EQT02-S00025)
+(`EQT02-S00025`). Source in [dist/](dist/).
+
 ## What it measured
 
 **The residual is not uniformly hard.** Of the 1062 implications Vampire left
