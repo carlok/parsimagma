@@ -1,44 +1,100 @@
 //! Magma extensions: paper §5.6, blueprint chapter "Magma cohomology".
 //!
-//! An extension of a base magma `B` by `Z/m` is the magma on `B × Z/m` with
+//! An extension of a base magma `B` by an abelian group `M` is the magma on
+//! `B × M` with
 //!
 //! ```text
 //!     (x, s) ◇ (y, t) = (x ◇ y, α s + β t + c(x, y))
 //! ```
 //!
-//! for fixed `α, β ∈ Z/m` and a cocycle `c: B × B → Z/m`. Elements are
-//! numbered `x * m + s`, so the base coordinate is `e / m` and the fibre
-//! coordinate is `e % m`.
+//! for endomorphisms `α, β` of `M` and a cocycle `c: B × B → M`. Here `M` is
+//! `(Z/p)^k` and the endomorphisms are `k × k` matrices over `F_p`, which is
+//! the shape the blueprint's chapter-677 lemma states; `k = 1` recovers scalar
+//! multiplication on `Z/p`. Elements are numbered `x * |M| + s` with the fibre
+//! coordinate written base `p`, least significant digit first.
 //!
 //! The point of the family is that it reaches separations no product or power
 //! can. `docs/the-39.md` records the case that motivated it: the ETP's `Fin 65`
-//! witness for `E1076 ⊭ E2294` is this shape, with base `4x + 2y` on `Z/5` and
-//! fibre `Z/13` at `α = 5, β = 9` — and *both* ingredients satisfy E1076, E2294
-//! and E4435 on their own. The separation lives entirely in the cocycle.
+//! witness for `E1076 ⊭ E2294` is this shape with `k = 1`, base `4x + 2y` on
+//! `Z/5` and fibre `Z/13` at `α = 5, β = 9` — and *both* ingredients satisfy
+//! E1076, E2294 and E4435 on their own. The separation is entirely in `c`.
 //!
-//! What makes the family searchable rather than hopeless is that for a fixed
-//! base, fibre and `(α, β)`, whether the extension satisfies a law is a *linear*
-//! condition on `c`. So the cocycles that work form a subspace of `(Z/m)^{|B|²}`
-//! and are found by elimination rather than by enumerating `m^{|B|²}`. For the
-//! E1076 case that is 13^5 = 371,293 instead of 13^25.
+//! What makes the family searchable rather than hopeless is that once the base,
+//! the fibre and `α, β` are fixed, whether the extension satisfies a law is a
+//! *linear* condition on `c`. The cocycles that work are a subspace of
+//! `(F_p)^{k|B|²}`, found by elimination rather than by enumerating `p^{k|B|²}`.
 
 use crate::finite::FiniteMagma;
 use crate::law::{Law, Term};
 
-/// An extension of `base` by `Z/m`, twisted by `cocycle`.
+/// `(Z/p)^k` with two endomorphisms, as `k × k` row-major matrices over `F_p`.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Fibre {
+    pub p: u32,
+    pub k: usize,
+    pub alpha: Vec<u32>,
+    pub beta: Vec<u32>,
+}
+
+impl Fibre {
+    /// The scalar case: `Z/p` with `α, β` acting by multiplication.
+    pub fn scalar(p: u32, alpha: u32, beta: u32) -> Self {
+        Fibre {
+            p,
+            k: 1,
+            alpha: vec![alpha % p],
+            beta: vec![beta % p],
+        }
+    }
+
+    pub fn size(&self) -> usize {
+        (self.p as usize).pow(self.k as u32)
+    }
+
+    fn decode(&self, mut e: usize, out: &mut [u32]) {
+        for cell in out.iter_mut().take(self.k) {
+            *cell = (e % self.p as usize) as u32;
+            e /= self.p as usize;
+        }
+    }
+
+    fn encode(&self, v: &[u32]) -> usize {
+        let mut e = 0usize;
+        for i in (0..self.k).rev() {
+            e = e * self.p as usize + (v[i] % self.p) as usize;
+        }
+        e
+    }
+
+    fn apply_into(&self, mat: &[u32], v: &[u32], out: &mut [u32]) {
+        for (i, cell) in out.iter_mut().enumerate().take(self.k) {
+            let mut acc = 0u32;
+            for j in 0..self.k {
+                acc = (acc + mat[i * self.k + j] * v[j]) % self.p;
+            }
+            *cell = acc;
+        }
+    }
+}
+
+/// An extension of `base` by `fibre`, twisted by `cocycle`.
+///
+/// `cocycle` is `|B|² × k` row-major: entry `(x, y)` occupies
+/// `cocycle[(x * |B| + y) * k ..][.. k]`.
 #[derive(Clone, Debug)]
 pub struct Extension {
     pub base: FiniteMagma,
-    pub m: u32,
-    pub alpha: u32,
-    pub beta: u32,
-    /// Row-major `|B| × |B|`, entries in `0..m`.
+    pub fibre: Fibre,
     pub cocycle: Vec<u32>,
 }
 
 impl Extension {
+    pub fn n_cocycle_vars(&self) -> usize {
+        self.base.n * self.base.n * self.fibre.k
+    }
+
     pub fn carrier(&self) -> usize {
-        self.base.n * self.m as usize
+        self.base.n * self.fibre.size()
     }
 
     /// The explicit multiplication table.
@@ -46,18 +102,28 @@ impl Extension {
     /// # Panics
     /// If the carrier exceeds 255, which `FiniteMagma` cannot address.
     pub fn magma(&self) -> FiniteMagma {
-        let (nb, m) = (self.base.n, self.m as usize);
-        let n = nb * m;
+        let (nb, f) = (self.base.n, &self.fibre);
+        let fs = f.size();
+        let n = nb * fs;
         assert!(n <= 255, "extension carrier {n} exceeds the table limit");
         let mut table = vec![0u8; n * n];
+        let (mut sv, mut tv) = (vec![0u32; f.k], vec![0u32; f.k]);
+        let (mut av, mut bv) = (vec![0u32; f.k], vec![0u32; f.k]);
+        let mut res = vec![0u32; f.k];
         for bx in 0..nb {
             for by in 0..nb {
                 let bz = self.base.op(bx as u8, by as u8) as usize;
-                let c = self.cocycle[bx * nb + by] as usize;
-                for s in 0..m {
-                    for t in 0..m {
-                        let f = (self.alpha as usize * s + self.beta as usize * t + c) % m;
-                        table[(bx * m + s) * n + (by * m + t)] = (bz * m + f) as u8;
+                let c = &self.cocycle[(bx * nb + by) * f.k..][..f.k];
+                for s in 0..fs {
+                    f.decode(s, &mut sv);
+                    f.apply_into(&f.alpha, &sv, &mut av);
+                    for t in 0..fs {
+                        f.decode(t, &mut tv);
+                        f.apply_into(&f.beta, &tv, &mut bv);
+                        for i in 0..f.k {
+                            res[i] = (av[i] + bv[i] + c[i]) % f.p;
+                        }
+                        table[(bx * fs + s) * n + (by * fs + t)] = (bz * fs + f.encode(&res)) as u8;
                     }
                 }
             }
@@ -77,72 +143,76 @@ fn eval(t: &Term, vals: &[u8], tbl: &[u8], n: usize) -> u8 {
     }
 }
 
-/// The fibre residual of `law`, one value per assignment of base elements.
+/// The fibre residual of `law`, one `k`-vector per assignment of base elements,
+/// flattened.
 ///
 /// Returns `None` when the base coordinates themselves disagree, i.e. the base
-/// magma does not satisfy the law — no cocycle repairs that. `fibre` fixes the
-/// fibre coordinate given to every variable; the residual is independent of it
-/// whenever the linear part is right, and `residual_is_flat` checks that rather
-/// than assuming it.
-fn residual(ext: &Extension, law: &Law, fibre: u8) -> Option<Vec<u32>> {
-    let (nb, m) = (ext.base.n, ext.m as usize);
+/// magma does not satisfy the law — no cocycle repairs that. `fibre_coord` fixes
+/// the fibre coordinate given to every variable.
+fn residual(ext: &Extension, law: &Law, fibre_coord: usize) -> Option<Vec<u32>> {
+    let (nb, f) = (ext.base.n, &ext.fibre);
+    let fs = f.size();
     let tbl = ext.magma();
     let n = tbl.n;
     let total = nb.pow(law.arity as u32);
-    let mut out = Vec::with_capacity(total);
+    let mut out = Vec::with_capacity(total * f.k);
     let mut vals = vec![0u8; law.arity as usize];
+    let (mut lv, mut rv) = (vec![0u32; f.k], vec![0u32; f.k]);
     for code in 0..total {
         let mut v = code;
         for cell in vals.iter_mut() {
-            *cell = ((v % nb) * m + fibre as usize) as u8;
+            *cell = ((v % nb) * fs + fibre_coord) as u8;
             v /= nb;
         }
         let l = eval(&law.lhs, &vals, &tbl.table, n) as usize;
         let r = eval(&law.rhs, &vals, &tbl.table, n) as usize;
-        if l / m != r / m {
+        if l / fs != r / fs {
             return None;
         }
-        out.push(((r % m + m) - l % m) as u32 % ext.m);
+        f.decode(l % fs, &mut lv);
+        f.decode(r % fs, &mut rv);
+        for i in 0..f.k {
+            out.push((rv[i] + f.p - lv[i]) % f.p);
+        }
     }
     Some(out)
 }
 
-/// The fibre residual of `law` under a given cocycle, at fibre coordinate zero.
-/// Zero everywhere exactly when the extension satisfies the law.
+/// The fibre residual under a given cocycle, at fibre coordinate zero. Zero
+/// everywhere exactly when the extension satisfies the law.
 pub fn law_residual(ext: &Extension, law: &Law) -> Option<Vec<u32>> {
     residual(ext, law, 0)
 }
 
-/// Whether the residual really is independent of the fibre coordinate, which
-/// is what makes the system linear in `c` alone.
+/// Whether the residual is independent of the fibre coordinate, which is what
+/// makes the system linear in `c` alone.
 pub fn residual_is_flat(ext: &Extension, law: &Law) -> bool {
     let base = match residual(ext, law, 0) {
         Some(r) => r,
         None => return false,
     };
-    (1..ext.m.min(4)).all(|f| residual(ext, law, f as u8).as_ref() == Some(&base))
+    (1..ext.fibre.size().min(4)).all(|f| residual(ext, law, f).as_ref() == Some(&base))
 }
 
-/// The affine space of cocycles making the extension satisfy `law`:
-/// a particular solution plus a basis of the homogeneous part, over `F_m`.
+/// The affine space of cocycles making the extension satisfy a law: a
+/// particular solution plus a basis of the homogeneous part, over `F_p`.
 #[derive(Debug)]
 pub struct CocycleSpace {
     pub particular: Vec<u32>,
     pub basis: Vec<Vec<u32>>,
-    pub m: u32,
+    pub p: u32,
 }
 
 impl CocycleSpace {
     pub fn dimension(&self) -> usize {
         self.basis.len()
     }
-    /// The `i`th member under a fixed enumeration of the space.
     pub fn member(&self, coeffs: &[u32]) -> Vec<u32> {
         let mut c = self.particular.clone();
         for (k, b) in self.basis.iter().enumerate() {
-            let a = coeffs.get(k).copied().unwrap_or(0) % self.m;
+            let a = coeffs.get(k).copied().unwrap_or(0) % self.p;
             for (ci, bi) in c.iter_mut().zip(b) {
-                *ci = (*ci + a * bi) % self.m;
+                *ci = (*ci + a * bi) % self.p;
             }
         }
         c
@@ -162,7 +232,7 @@ fn inv_mod(a: u32, p: u32) -> u32 {
     r as u32
 }
 
-fn is_prime(n: u32) -> bool {
+pub fn is_prime(n: u32) -> bool {
     n >= 2
         && (2..)
             .take_while(|d| d * d <= n)
@@ -171,23 +241,17 @@ fn is_prime(n: u32) -> bool {
 
 /// Solve for the cocycles under which the extension satisfies `law`.
 ///
-/// `m` must be prime, so that the fibre is a field and elimination applies.
-/// Returns `None` when the base magma fails the law, when the residual is not
-/// flat in the fibre coordinate, or when the system is inconsistent.
-pub fn cocycle_space(
-    base: &FiniteMagma,
-    m: u32,
-    alpha: u32,
-    beta: u32,
-    law: &Law,
-) -> Option<CocycleSpace> {
-    assert!(is_prime(m), "fibre modulus {m} is not prime");
-    let nv = base.n * base.n;
+/// `p` must be prime, so that the fibre's coefficient ring is a field and
+/// elimination applies. Returns `None` when the base magma fails the law, when
+/// the residual is not flat in the fibre coordinate, or when the system is
+/// inconsistent.
+pub fn cocycle_space(base: &FiniteMagma, fibre: &Fibre, law: &Law) -> Option<CocycleSpace> {
+    assert!(is_prime(fibre.p), "fibre modulus {} is not prime", fibre.p);
+    let p = fibre.p;
+    let nv = base.n * base.n * fibre.k;
     let zero = Extension {
         base: base.clone(),
-        m,
-        alpha,
-        beta,
+        fibre: fibre.clone(),
         cocycle: vec![0; nv],
     };
     if !residual_is_flat(&zero, law) {
@@ -195,8 +259,6 @@ pub fn cocycle_space(
     }
     let r0 = residual(&zero, law, 0)?;
 
-    // Column j is the effect of bumping cocycle entry j by one. The map is
-    // linear, so probing the unit vectors determines it.
     let mut cols: Vec<Vec<u32>> = Vec::with_capacity(nv);
     for j in 0..nv {
         let mut e = zero.clone();
@@ -205,17 +267,16 @@ pub fn cocycle_space(
         cols.push(
             rj.iter()
                 .zip(&r0)
-                .map(|(a, b)| (a + m - b % m) % m)
+                .map(|(a, b)| (a + p - b % p) % p)
                 .collect(),
         );
     }
 
-    // Augmented system: sum_j c_j * col_j = -r0.
     let neq = r0.len();
     let mut a: Vec<Vec<u32>> = (0..neq)
         .map(|i| {
             let mut row: Vec<u32> = (0..nv).map(|j| cols[j][i]).collect();
-            row.push((m - r0[i] % m) % m);
+            row.push((p - r0[i] % p) % p);
             row
         })
         .collect();
@@ -223,20 +284,20 @@ pub fn cocycle_space(
     let mut pivots: Vec<usize> = Vec::new();
     let mut r = 0usize;
     for c in 0..nv {
-        let Some(pr) = (r..neq).find(|&i| !a[i][c].is_multiple_of(m)) else {
+        let Some(pr) = (r..neq).find(|&i| !a[i][c].is_multiple_of(p)) else {
             continue;
         };
         a.swap(r, pr);
-        let inv = inv_mod(a[r][c], m);
+        let inv = inv_mod(a[r][c], p);
         for v in a[r].iter_mut() {
-            *v = *v * inv % m;
+            *v = *v * inv % p;
         }
         for i in 0..neq {
-            if i != r && !a[i][c].is_multiple_of(m) {
+            if i != r && !a[i][c].is_multiple_of(p) {
                 let f = a[i][c];
                 let pivot = a[r].clone();
                 for (aij, prj) in a[i].iter_mut().zip(&pivot) {
-                    *aij = (*aij + m - f * prj % m) % m;
+                    *aij = (*aij + p - f * prj % p) % p;
                 }
             }
         }
@@ -246,9 +307,8 @@ pub fn cocycle_space(
             break;
         }
     }
-    // Inconsistent if some row is 0 = nonzero.
     if a.iter()
-        .any(|row| row[..nv].iter().all(|v| v % m == 0) && row[nv] % m != 0)
+        .any(|row| row[..nv].iter().all(|v| v.is_multiple_of(p)) && !row[nv].is_multiple_of(p))
     {
         return None;
     }
@@ -257,14 +317,14 @@ pub fn cocycle_space(
     let solve = |freevals: &[u32]| -> Vec<u32> {
         let mut x = vec![0u32; nv];
         for (k, &c) in free.iter().enumerate() {
-            x[c] = freevals[k] % m;
+            x[c] = freevals[k] % p;
         }
         for (i, &c) in pivots.iter().enumerate() {
             let s: u32 = free
                 .iter()
-                .map(|&j| a[i][j] * x[j] % m)
-                .fold(0, |acc, v| (acc + v) % m);
-            x[c] = (a[i][nv] + m - s) % m;
+                .map(|&j| a[i][j] * x[j] % p)
+                .fold(0, |acc, v| (acc + v) % p);
+            x[c] = (a[i][nv] + p - s) % p;
         }
         x
     };
@@ -273,17 +333,17 @@ pub fn cocycle_space(
         .map(|k| {
             let mut fv = vec![0u32; free.len()];
             fv[k] = 1;
-            let s = solve(&fv);
-            s.iter()
+            solve(&fv)
+                .iter()
                 .zip(&particular)
-                .map(|(a, b)| (a + m - b) % m)
+                .map(|(a, b)| (a + p - b) % p)
                 .collect()
         })
         .collect();
     Some(CocycleSpace {
         particular,
         basis,
-        m,
+        p,
     })
 }
 
@@ -308,26 +368,19 @@ pub enum Verdict {
 /// `particular + basis_i`. That is `dim + 1` probes, and it decides the question
 /// where sampling can only fail to find something.
 ///
-/// The probes read the residual at fibre coordinate zero, which is faithful only
-/// when the target's residual is flat in that coordinate. A nonzero residual is
-/// a genuine refutation either way, so `Separates` is always sound; `Blocked`
-/// is claimed only once flatness is checked, and `Undecided` is returned
-/// otherwise.
-pub fn separates(
-    base: &FiniteMagma,
-    m: u32,
-    alpha: u32,
-    beta: u32,
-    sp: &CocycleSpace,
-    target: &Law,
-) -> Verdict {
+/// The probes read the residual at fibre coordinate zero, faithful only when the
+/// target's residual is flat there. A nonzero residual refutes the target either
+/// way, so `Separates` is always sound; `Blocked` is claimed only once flatness
+/// is checked, and `Undecided` returned otherwise.
+pub fn separates(base: &FiniteMagma, fibre: &Fibre, sp: &CocycleSpace, target: &Law) -> Verdict {
+    let p = fibre.p;
     let mut probes: Vec<Vec<u32>> = vec![sp.particular.clone()];
     for b in &sp.basis {
         probes.push(
             sp.particular
                 .iter()
                 .zip(b)
-                .map(|(p, q)| (p + q) % m)
+                .map(|(x, q)| (x + q) % p)
                 .collect(),
         );
     }
@@ -335,15 +388,12 @@ pub fn separates(
     for c in probes {
         let e = Extension {
             base: base.clone(),
-            m,
-            alpha,
-            beta,
+            fibre: fibre.clone(),
             cocycle: c.clone(),
         };
         match law_residual(&e, target) {
-            // The base itself refutes the target, so the extension does too.
             None => return Verdict::Separates(c),
-            Some(r) if r.iter().any(|&v| v % m != 0) => return Verdict::Separates(c),
+            Some(r) if r.iter().any(|&v| !v.is_multiple_of(p)) => return Verdict::Separates(c),
             _ => {
                 if flat && !residual_is_flat(&e, target) {
                     flat = false;

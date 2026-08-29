@@ -120,46 +120,70 @@ of 4000 sampled from it, 3684 refute E2294 or E4435:  92%
 witness is not rare, it is generic once you are in the right family. This corpus
 missed it for one reason: §5.6 is not implemented.
 
-## Built, and it closes six of them
+## Built, and it closes sixteen of them
 
-`src/ext.rs` implements the family and `pm ext` runs it against the 39. Bases are
-linear magmas over `Z/nb` for `nb = 2..5`, fibres `Z/m` for `m` in 2, 3, 5, 7, 11,
-13 with every `(α, β)`, and for each combination where base and fibre both
-satisfy the hypothesis law the cocycle system is solved and twelve members
-sampled. 2,974 systems solved in 22 seconds.
+`src/ext.rs` implements the family and `pm ext` runs it against the 39. The
+fibre is `(Z/p)^k` with `α, β` as `k x k` matrices over `F_p`, which is what the
+blueprint's chapter-677 lemma allows — "M is an abelian group and α, β
+endomorphisms". Scalars on `Z/p` are the `k = 1` case.
+
+Grid: 3,533 bases (linear over `Z/nb` for `nb = 2..8` with every `(a,b)`, plus
+every canonical 3-element magma) and 8,373 fibres (1,556 scalar for `p` up to 23,
+6,817 with `2 x 2` matrix endomorphisms over `F_2` and `F_3`), carrier capped at
+130. Each pair is decided rather than sampled. 25 seconds.
+
+**16 of the 39 close.**
 
 ```
-closed 6 of 39 pairs:
-  E1076 -> E2294   base Z/5 4x+2y, fibre Z/13 a=5 b=9, carrier 65
-  E1076 -> E4435   base Z/5 4x+2y, fibre Z/13 a=5 b=9, carrier 65
-  E1516 -> E1489   base Z/5 3x+3y, fibre Z/7  a=4 b=1, carrier 35
-  E2091 -> E2098   base Z/5 3x+3y, fibre Z/7  a=1 b=4, carrier 35
-  E2531 -> E1313   base Z/5 2x+4y, fibre Z/13 a=7 b=7, carrier 65
-  E2531 -> E4435   base Z/5 2x+4y, fibre Z/13 a=7 b=7, carrier 65
+E476  -> E359    base Z/5 0x+2y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45
+E476  -> E4065   base Z/5 0x+2y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45
+E503  -> E359    base Z/5 0x+2y, fibre (Z/3)^2 a=[0,2,1,0] b=[1,1,2,1], carrier 45
+E503  -> E3862   base Z/5 0x+2y, fibre (Z/3)^2 a=[0,2,1,0] b=[1,1,2,1], carrier 45
+E503  -> E4065   base Z/5 0x+2y, fibre (Z/3)^2 a=[0,2,1,0] b=[1,1,2,1], carrier 45
+E1076 -> E2294   base Z/5 4x+2y, fibre Z/13 a=5 b=9,                    carrier 65
+E1076 -> E4435   base Z/5 4x+2y, fibre Z/13 a=5 b=9,                    carrier 65
+E1516 -> E1489   base Z/5 3x+3y, fibre Z/7  a=4 b=1,                    carrier 35
+E2091 -> E2098   base Z/5 3x+3y, fibre Z/7  a=1 b=4,                    carrier 35
+E2531 -> E1313   base Z/5 2x+4y, fibre Z/13 a=7 b=7,                    carrier 65
+E2531 -> E4435   base Z/5 2x+4y, fibre Z/13 a=7 b=7,                    carrier 65
+E3069 -> E307    base Z/5 2x+0y, fibre (Z/3)^2 a=[2,1,1,0] b=[2,2,2,1], carrier 45
+E3069 -> E3253   base Z/5 2x+0y, fibre (Z/3)^2 a=[2,1,1,0] b=[2,2,2,1], carrier 45
+E3069 -> E3456   base Z/5 2x+0y, fibre (Z/3)^2 a=[2,1,1,0] b=[2,2,2,1], carrier 45
+E3076 -> E307    base Z/5 2x+0y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45
+E3076 -> E3253   base Z/5 2x+0y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45
 ```
 
-The first two land on **exactly** ETP's parameters for `Refutation938` — base
+Six of those came from scalar fibres. **The other ten needed matrix
+endomorphisms and nothing else** — every one is `(Z/3)^2` at carrier 45, and no
+scalar fibre at any modulus up to 23 reaches them. Restricting `α, β` to scalars
+was the binding constraint, not the grid width.
+
+The E1076 pair lands on **exactly** ETP's parameters for `Refutation938` — base
 `Z/5` with `4x + 2y`, fibre `Z/13` at `α = 5, β = 9`, carrier 65 — found from the
 ingredients rather than copied from the table. `E1516 -> E1489` at carrier 35
-matches `Refutation937`'s shape. `E2091 -> E2098` and the two `E2531` pairs are
-duals of those.
+matches `Refutation937`'s shape.
 
-So the hard-core figure moves from 411 to **417 of 450**, and it moves by
-construction rather than by ingestion: nothing here reads ETP's tables.
+So the hard-core figure moves from 411 to **427 of 450**, by construction:
+nothing here reads ETP's tables.
+
+Every closure is checked twice. The residual test is the decision procedure, and
+wherever `carrier^arity` is affordable — which covers all 16, at carriers 45 and
+65 — a full engine sweep is run with an assertion that fires on disagreement.
+Independently, ETP's finite implication graph records all 16 as finite-false, as
+it must.
 
 `tests/ext.rs` pins the reproduction, including the claim the family rests on —
 base and fibre each satisfy E1076, E2294 *and* E4435, so the separation cannot
 come from either.
 
-### The other 33 are a proof, not a search failure
+### The other 23 are a proof, not a search failure
 
-Widening the grid to 3,533 bases (203 linear over `Z/nb` for `nb = 2..8`, plus
-every canonical 3-element magma) and 1,556 fibres (`Z/m` for `m` up to 23, every
-`(α, β)`), with a carrier cap of 130, closed **exactly the same six**. Nothing new
-at 17x the grid.
+Widening the grid alone did nothing: at 17x the bases and the same scalar
+fibres, the count stayed at six. What moved it was changing the *kind* of fibre,
+not the size of the grid. What is left after that is a proof, not a search that
+came up short.
 
-The reason is not that the search missed them. Sampling was the wrong tool, and
-replacing it with a decision procedure says so:
+Sampling was the wrong tool, and replacing it with a decision procedure says so:
 
 > The target's residual is affine in the cocycle and the hypothesis's solution
 > set is an affine subspace, so the restriction is affine and vanishes
@@ -167,14 +191,16 @@ replacing it with a decision procedure says so:
 > `particular + basis_i`. That is `dim + 1` probes, and it *decides* the
 > question, where sampling can only fail to find something.
 
-Run that way the whole sweep takes **2 seconds** instead of 162, and every one of
-the 33 remaining pairs comes back the same way:
+Run that way the sweep decides every pair, and each of the 23 remaining comes
+back the same way:
 
 ```
-E476  -> E359    provably unreachable in 457 of the viable (base,fibre) settings
-E854  -> E413    provably unreachable in 111 of the viable (base,fibre) settings
-E1518 -> E817    provably unreachable in 309 of the viable (base,fibre) settings
-E2054 -> E255    provably unreachable in 309 of the viable (base,fibre) settings
+E854  -> E413    provably unreachable in all  137 viable settings
+E879  -> E4065   provably unreachable in all 1184 viable settings
+E1518 -> E817    provably unreachable in all  645 viable settings
+E2054 -> E255    provably unreachable in all  645 viable settings
+E2650 -> E3253   provably unreachable in all 1184 viable settings
+E2712 -> E4128   provably unreachable in all  137 viable settings
 ...
 ```
 

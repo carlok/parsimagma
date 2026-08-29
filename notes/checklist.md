@@ -71,7 +71,7 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
            92% of it separates. Theory is blueprint/chapter/cohomology.tex, not new
 - [x] 8.8c Implement section 5.6: src/ext.rs, `pm ext`, tests/ext.rs. Rediscovers
            Refutation938's exact parameters from the ingredients
-- [x] 8.8d Closes 6 of the 39 by construction: 411 -> 417 of 450
+- [x] 8.8d Closes 16 of the 39 by construction: 411 -> 427 of 450
 - [x] 8.8e Widened to 3,533 bases and 1,556 fibres: same 6. Replaced sampling
            with a decision procedure -- 162s to 0.95s -- and the other 30 are
            now provably unreachable with alpha, beta constant, not search misses
@@ -79,8 +79,12 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
            carrier^arity, but a residual is nb^arity. All 33 now decided, all
            unreachable. Soundness: Verdict::Undecided when the target residual
            is not flat (never fired), and an engine cross-check where affordable
-- [ ] 8.8g Let alpha, beta vary per base pair as the blueprint writes them. The
-           only restriction the proof does not cover
+- [x] 8.8g Generalise the fibre to (Z/p)^k with matrix endomorphisms, which is
+           what the blueprint's lemma allows. Ten more pairs close, all on
+           (Z/3)^2 at carrier 45, none reachable by any scalar fibre
+- [ ] 8.8h The last 23, on six hypothesis laws (E854, E879, E1518, E2054, E2650,
+           E2712). Untried: k >= 3, p >= 5 matrices, and alpha/beta varying per
+           base pair
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 

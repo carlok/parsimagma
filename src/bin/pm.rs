@@ -1860,7 +1860,7 @@ fn order5() {
 /// that subspace is what closes pairs.
 fn ext() {
     use parsimagma::corpus::order3_canonical;
-    use parsimagma::ext::{cocycle_space, law_residual, separates, Extension, Verdict};
+    use parsimagma::ext::{cocycle_space, law_residual, separates, Extension, Fibre, Verdict};
 
     // Grid. Carrier is the binding constraint: a three-variable law costs
     // carrier^3 per instance, so the cap is what keeps the sweep honest.
@@ -1950,28 +1950,56 @@ fn ext() {
     let bsigs: Vec<parsimagma::Signature> =
         bases.par_iter().map(|(_, m)| eng.signature(m)).collect();
 
-    let mut fibres: Vec<(u32, u32, u32)> = Vec::new();
+    let mut fibres: Vec<Fibre> = Vec::new();
     for &m in FIBRES.iter() {
         for alpha in 0..m {
             for beta in 0..m {
-                fibres.push((m, alpha, beta));
+                fibres.push(Fibre::scalar(m, alpha, beta));
+            }
+        }
+    }
+    let n_scalar = fibres.len();
+    // Matrix endomorphisms on (Z/p)^2, which is what the blueprint's lemma
+    // actually allows. Scalars are the k = 1 case; these are not.
+    for p in [2u32, 3] {
+        let mats: Vec<Vec<u32>> = (0..p.pow(4))
+            .map(|c| {
+                let mut v = vec![0u32; 4];
+                let mut r = c;
+                for cell in v.iter_mut() {
+                    *cell = r % p;
+                    r /= p;
+                }
+                v
+            })
+            .collect();
+        for a in &mats {
+            for b in &mats {
+                fibres.push(Fibre {
+                    p,
+                    k: 2,
+                    alpha: a.clone(),
+                    beta: b.clone(),
+                });
             }
         }
     }
     let fsigs: Vec<parsimagma::Signature> = fibres
         .par_iter()
-        .map(|&(m, alpha, beta)| {
-            let mut t = vec![0u8; m as usize * m as usize];
-            for x in 0..m as usize {
-                for y in 0..m as usize {
-                    t[x * m as usize + y] =
-                        ((alpha as usize * x + beta as usize * y) % m as usize) as u8;
-                }
-            }
-            eng.signature(&FiniteMagma::new(m as usize, t).unwrap())
+        .map(|f| {
+            let e = Extension {
+                base: FiniteMagma::new(1, vec![0]).unwrap(),
+                fibre: f.clone(),
+                cocycle: vec![0; f.k],
+            };
+            eng.signature(&e.magma())
         })
         .collect();
-    println!("{} fibres", fibres.len());
+    println!(
+        "{} fibres ({n_scalar} scalar over Z/p, {} with 2x2 matrix endomorphisms on (Z/p)^2)",
+        fibres.len(),
+        fibres.len() - n_scalar
+    );
     println!();
 
     let hyps: Vec<u32> = {
@@ -2000,12 +2028,12 @@ fn ext() {
             if !bsigs[bi].get(hi) {
                 continue;
             }
-            for (fi, &(m, alpha, beta)) in fibres.iter().enumerate() {
-                if !fsigs[fi].get(hi) || base.n * m as usize > CARRIER_MAX {
+            for (fi, fib) in fibres.iter().enumerate() {
+                if !fsigs[fi].get(hi) || base.n * fib.size() > CARRIER_MAX {
                     continue;
                 }
                 *viable.entry(hyp).or_default() += 1;
-                let Some(sp) = cocycle_space(base, m, alpha, beta, law) else {
+                let Some(sp) = cocycle_space(base, fib, law) else {
                     continue;
                 };
                 *solved.entry(hyp).or_default() += 1;
@@ -2017,7 +2045,7 @@ fn ext() {
                     let Some(law_t) = sub.iter().find(|l| l.id == tgt) else {
                         continue;
                     };
-                    match separates(base, m, alpha, beta, &sp, law_t) {
+                    match separates(base, fib, &sp, law_t) {
                         Verdict::Blocked => {
                             *blocked.entry((hyp, tgt)).or_default() += 1;
                         }
@@ -2027,9 +2055,7 @@ fn ext() {
                         Verdict::Separates(c) => {
                             let e = Extension {
                                 base: base.clone(),
-                                m,
-                                alpha,
-                                beta,
+                                fibre: fib.clone(),
                                 cocycle: c,
                             };
                             // The hypothesis holds by construction: c lies in a
@@ -2037,17 +2063,18 @@ fn ext() {
                             // The target fails because its residual is nonzero,
                             // which is a genuine refuting assignment whether or
                             // not that residual is flat.
+                            let pp = fib.p;
                             let hyp_ok = law_residual(&e, law)
-                                .map(|r| r.iter().all(|&v| v % m == 0))
+                                .map(|r| r.iter().all(|&v| v % pp == 0))
                                 .unwrap_or(false);
                             let tgt_bad = match law_residual(&e, law_t) {
                                 None => true,
-                                Some(r) => r.iter().any(|&v| v % m != 0),
+                                Some(r) => r.iter().any(|&v| v % pp != 0),
                             };
                             if hyp_ok && tgt_bad {
                                 // Cross-check with the full sweep when the
                                 // carrier makes that affordable.
-                                let carrier = base.n * m as usize;
+                                let carrier = base.n * fib.size();
                                 let cost = (carrier as u64).pow(law_t.arity.max(law.arity) as u32);
                                 if cost <= 20_000_000 {
                                     let s2 = eng.signature(&e.magma());
@@ -2059,7 +2086,8 @@ fn ext() {
                                 closed.insert(
                                     (hyp, tgt),
                                     format!(
-                                        "base {bname}, fibre Z/{m} a={alpha} b={beta}, carrier {carrier}"
+                                        "base {bname}, fibre {}, carrier {carrier}",
+                                        fibre_name(fib)
                                     ),
                                 );
                             }
@@ -2114,5 +2142,13 @@ fn ext() {
                 p.0, p.1
             ),
         }
+    }
+}
+
+fn fibre_name(f: &parsimagma::ext::Fibre) -> String {
+    if f.k == 1 {
+        format!("Z/{} a={} b={}", f.p, f.alpha[0], f.beta[0])
+    } else {
+        format!("(Z/{})^{} alpha={:?} beta={:?}", f.p, f.k, f.alpha, f.beta)
     }
 }

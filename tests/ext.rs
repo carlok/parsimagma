@@ -6,7 +6,7 @@
 //! is implemented correctly it rediscovers that witness from the ingredients,
 //! and the cocycle ETP published lies in the space the solver returns.
 
-use parsimagma::ext::{cocycle_space, Extension};
+use parsimagma::ext::{cocycle_space, Extension, Fibre};
 use parsimagma::{parse_laws, Engine, FiniteMagma, Law};
 
 fn laws() -> Vec<Law> {
@@ -49,7 +49,8 @@ fn sig_has(e: &Extension, ls: &[Law], id: u32) -> bool {
 fn reproduces_refutation938() {
     let ls = laws();
     let b = base();
-    let sp = cocycle_space(&b, 13, 5, 9, law(&ls, 1076)).expect("E1076 system is solvable");
+    let sp = cocycle_space(&b, &Fibre::scalar(13, 5, 9), law(&ls, 1076))
+        .expect("E1076 system is solvable");
 
     // The blueprint's cohomology chapter predicts a space, not a point.
     assert_eq!(sp.dimension(), 5, "expected 13^5 cocycles satisfying E1076");
@@ -57,9 +58,7 @@ fn reproduces_refutation938() {
     // ETP's published cocycle must satisfy E1076 through this construction.
     let etp = Extension {
         base: b.clone(),
-        m: 13,
-        alpha: 5,
-        beta: 9,
+        fibre: Fibre::scalar(13, 5, 9),
         cocycle: ETP_COCYCLE.to_vec(),
     };
     assert_eq!(etp.carrier(), 65);
@@ -81,9 +80,7 @@ fn reproduces_refutation938() {
         ];
         let e = Extension {
             base: b.clone(),
-            m: 13,
-            alpha: 5,
-            beta: 9,
+            fibre: Fibre::scalar(13, 5, 9),
             cocycle: sp.member(&coeffs),
         };
         assert!(sig_has(&e, &ls, 1076), "solved cocycle satisfies E1076");
