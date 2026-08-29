@@ -33,10 +33,29 @@ the false part of a graph nobody has mapped, and it took under a minute.
 
 ## What this does not say
 
-**There is no oracle.** Everything else in this repository is checkable against
-the ETP's Lean-verified graph — `infinite-only-exact.md` reports 790 of 790
-finite witnesses agreeing. Order 5 has no such graph, which is precisely why it
-is unmapped. Nothing here has been cross-checked against anything external.
+**No oracle for the implication graph — but order 5 is not unexplored.** The
+blueprint chapter "Order 5 Austin laws" classifies all 57,882 equations of order
+exactly 5 by *model existence*: 19,392 admit only trivial models, 38,360 have
+known satisfying finite models, 106 admit only trivial finite models (10 of them
+Austin laws, 96 with infinite models unknown), and 24 are unknown. What does not
+exist is the implication graph between those laws — the chapter notes only that
+"Vampire did not establish any implications between equations in this set" for
+the 96. So the measurement above is not duplicated work, but the framing "order 5
+is unmapped" is too broad and the chapter should be read before building on this.
+
+That classification is a **partial oracle**, in one direction: every law this
+corpus satisfies with a nontrivial finite magma must be one ETP records as having
+a nontrivial finite model. The counts line up. This run reaches 41,462
+hypothesis laws; ETP's 38,360 order-5 laws with known finite models plus the
+3,198 order-<=4 laws with nontrivial finite models give 41,558. Being under that
+is the correct direction, since a linear and affine corpus will not find every
+model ETP knows about, and 0.23% under it is closer than expected.
+
+The containment itself has **not** been checked law by law — the classification
+lives in the blueprint text and a Zulip thread rather than in a machine-readable
+file on `vlad902/equational_theories@order5`, whose `data/` matches main. Doing
+that check is the obvious next step and would upgrade this from a measurement to
+a validated one.
 
 What holds it up instead is that the engine is the same one validated at order 4
 against 824 ETP tables and 790 hard-core witnesses, that `open-questions-scan.md`
