@@ -110,6 +110,24 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
            satisfies must be one ETP records as having a nontrivial finite model.
            Counts already agree at 41,462 against 41,558
 
+## S10 — the SAIR Stage 2 solver
+
+- [x] 10.1 Standalone `dist/refute.py`: law-text driven, stdlib only, no data ships
+- [x] 10.2 Greedy cover over the false-implication graph gives the search order;
+           four instances of Z/2 carry 85.7%, twenty-five carry 97.2%
+- [x] 10.3 `dist/solo/solver.py` on the Solo stdin/stdout protocol; tier 2 is the
+           section 5.6 extension family, recovering 8 of 15 tier-1 misses
+- [x] 10.4 Verified against the official judge, not a replica. Two bugs it caught:
+           budget exhaustion on families that provably cannot separate, and
+           `magmaFin` being outside the declaration allowlist (use `finOpTable`,
+           carrier <= 10, since it parses single digits)
+- [x] 10.5 55/200 on the stress set mirroring the graded distribution
+- [x] 10.6 Submitted, and published as `parsimagma-greedy-cover` (EQT02-S00025)
+- [ ] 10.7 Read the published solvers that handle the true half -- `claudev5`,
+           `Ultra_solver`, `claudeopus` name reflexive and singleton/collapse
+           handling and sixteen deterministic strategies. That is the half this
+           corpus structurally cannot touch
+
 ## Blocked / not started
 
 - [x] S2   296-pair cluster is four dual pairs; one ad hoc infinite model on N (docs/cluster-296.md)

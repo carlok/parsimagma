@@ -25,7 +25,8 @@ On 400 uniformly sampled false implications from the ETP order-≤4 graph:
 
 | | |
 |---|---|
-| refuted | **385 / 400 = 96.2%** |
+| refuted, linear sweep alone | 385 / 400 = 96.2% |
+| refuted, with magma extensions | **393 / 400 = 98.2%** |
 | mean time at a 0.25s/problem budget | **11 ms** |
 | carrier of the witness | 2 in 342 cases, 3 in 21, 4 in 8, 5 in 7, 7 in 5, 11 in 1, 13 in 1 |
 
@@ -75,6 +76,24 @@ Verified against a local replica of `JudgeProblem`: the certificates compile,
 and `#print axioms submission` reports `[propext]` alone — inside the allowed
 set of `propext`, `Quot.sound`, `Classical.choice`, and with no
 `Lean.ofReduceBool`, which is what makes `native_decide` inadmissible.
+
+## The competition solver
+
+`dist/solo/solver.py` is the same corpus wired to the SAIR Stage 2 Solo
+protocol, published as
+[`parsimagma-greedy-cover`](https://competition.sair.foundation/contributor-network/mathematics-distillation-challenge-equational-theories-stage2/EQT02-S00025).
+It adds a second tier — the §5.6 magma extensions of the ETP blueprint's
+"Magma cohomology" chapter — for the problems the linear sweep cannot reach
+structurally, where thousands of linear magmas satisfy the hypothesis and every
+one satisfies the goal as well. Tier 2 recovers 8 of 15 tier-1 misses in about
+a second.
+
+Measured against the 200-problem stress set that mirrors the graded
+distribution: **55/200** — 23/25 `order4_normal`, 17/25 `order4_hard`, 15/25
+`order5_normal`, 0/25 `order4_extra_hard`, and 0/100 on true implications by
+design. The `extra_hard` category is selected against exactly this method, and
+the 98.2% above is over *uniformly sampled* false implications, which does not
+transfer to a curated set.
 
 ## Order 5
 
