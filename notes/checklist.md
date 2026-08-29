@@ -64,8 +64,31 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
            the 814) finitely-refutable pairs the corpus does not reach
 - [x] 8.7  Write `docs/infinite-only-exact.md`; correct the denominator in
            `phase-a-report.md` and the superseded claims in `hard-core-anatomy.md`
-- [ ] 8.8  Close the 39. Fourteen hypothesis laws; E854 and E1516 have their own
-           blueprint chapters, so the method is recorded rather than guessed
+- [x] 8.8a Locate ETP's own witnesses for the 39: 30 of them, all in
+           All4x4Tables/Refutation930-939, carriers 12 to 65 (docs/the-39.md)
+- [x] 8.8b Rediscovery test on Refutation938: it is a section 5.6 extension, the
+           law condition is linear in the cocycle, the space is 13^5 not 13^25,
+           92% of it separates. Theory is blueprint/chapter/cohomology.tex, not new
+- [ ] 8.8c Implement section 5.6 in the engine; Refutation938 and 937 are the
+           reproduction tests
+- [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
+           rather than a third thread. Two threads open: #1473, #1474
+
+## S9 — order 5
+
+- [x] 9.1  `pm order5`: 66,151 linear and affine instances against the 62,576 laws
+           of eq_size5, 52s, 2,299,094,885 distinct ordered pairs discharged
+- [x] 9.2  Blueprint 20.1-20.3 control wired into every run: 130 laws, 0 satisfied
+- [x] 9.3  Correct the framing — order 5 is not unexplored. The blueprint chapter
+           'Order 5 Austin laws' classifies all 57,882 by model existence; what is
+           missing is the implication graph (docs/order5-first-map.md)
+- [ ] 9.4  Ask on Zulip for the per-law order-5 classification as data. The chapter
+           enumerates only 130 ids; the 19,392 and 38,360 are counts, and the
+           order5 branch data/ matches main. Thread:
+           https://leanprover.zulipchat.com/#narrow/channel/458659-Equational/topic/Some.20results.20from.20order.205/near/482118667
+- [ ] 9.5  With that data, check the containment law by law: every law this corpus
+           satisfies must be one ETP records as having a nontrivial finite model.
+           Counts already agree at 41,462 against 41,558
 
 ## Blocked / not started
 
