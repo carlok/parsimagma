@@ -20,6 +20,7 @@ fn main() {
     match cmd.as_str() {
         "stats" => stats(),
         "coverage" => coverage(),
+        "order5" => order5(),
         "bruteforce" => bruteforce(),
         "partition" => partition(),
         "tptp" => tptp(),
@@ -31,7 +32,7 @@ fn main() {
         "matring" => matring(),
         "openq" => openq(),
         other => {
-            eprintln!("unknown command {other:?}; try: stats, coverage, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad, matring");
+            eprintln!("unknown command {other:?}; try: stats, coverage, order5, bruteforce, partition, tptp, ladr, smt2, openq, mincover, transinv, quad, matring");
             std::process::exit(2);
         }
     }
@@ -1708,5 +1709,85 @@ fn matring() {
         all_reached.len(),
         hard.len(),
         new.len()
+    );
+}
+
+/// First coverage measurement against the order-5 law set.
+///
+/// The ETP mapped the 4694 laws of order at most 4. `eq_size5.txt` carries
+/// 62,576 laws of order at most 5, and no implication graph for them exists,
+/// so unlike `coverage` there is nothing here to cross-check against. This
+/// reports what the corpus discharges and nothing about what it should.
+fn order5() {
+    let laws = parse_laws(&data("eq_size5.txt")).unwrap();
+    let nlaws = laws.len();
+    println!("# Order-5 coverage measurement");
+    println!();
+    println!("law set                {nlaws} laws of order <= 5 (eq_size5.txt)");
+    println!("oracle                 none -- the ETP maps order <= 4 only");
+    println!();
+
+    let t = Instant::now();
+    let ll: &'static LinearLaws = Box::leak(Box::new(LinearLaws::build(&laws)));
+    let build_ll = t.elapsed();
+
+    let t = Instant::now();
+    let corpus = linear_corpus(ll);
+    let sweep = t.elapsed();
+
+    let mut enumerated = 0usize;
+    for g in &corpus.grid {
+        println!(
+            "{:<18} {:>9} enumerated  {:>6} distinct signatures",
+            g.family, g.enumerated, g.distinct
+        );
+        enumerated += g.enumerated;
+    }
+    println!();
+    println!("law dag built in {build_ll:.2?}, {enumerated} instances swept in {sweep:.2?}");
+
+    let sigs: Vec<&parsimagma::Signature> = corpus.instances.iter().map(|i| &i.sig).collect();
+    let nw = nlaws.div_ceil(64);
+    let sat_counts: Vec<u32> = sigs.iter().map(|s| s.count()).collect();
+    let nonempty = sat_counts.iter().filter(|&&c| c > 0).count();
+    let maxsat = sat_counts.iter().copied().max().unwrap_or(0);
+    let meansat = if sigs.is_empty() {
+        0.0
+    } else {
+        sat_counts.iter().map(|&c| c as f64).sum::<f64>() / sigs.len() as f64
+    };
+    println!("{} distinct rows, {nonempty} satisfying at least one law, mean {meansat:.1} satisfied, max {maxsat}",
+             sigs.len());
+
+    // Distinct ordered pairs discharged. A pair (i, j) is covered iff some row
+    // satisfies i and refutes j, so the uncoverable targets for i are exactly
+    // the laws in the intersection of every row satisfying i.
+    let t = Instant::now();
+    let mut acc: std::collections::HashMap<usize, Vec<u64>> = std::collections::HashMap::new();
+    for s in &sigs {
+        let w = s.words();
+        for i in s.iter_set() {
+            match acc.get_mut(&i) {
+                Some(a) => {
+                    for k in 0..nw {
+                        a[k] &= w[k];
+                    }
+                }
+                None => {
+                    acc.insert(i, w[..nw].to_vec());
+                }
+            }
+        }
+    }
+    let mut pairs: u64 = 0;
+    for a in acc.values() {
+        let inter: u32 = a.iter().map(|x| x.count_ones()).sum();
+        pairs += nlaws as u64 - inter as u64;
+    }
+    println!("hypothesis laws reached  {}", acc.len());
+    println!(
+        "distinct ordered pairs discharged  {pairs}  of {} possible, in {:.2?}",
+        nlaws as u64 * (nlaws as u64 - 1),
+        t.elapsed()
     );
 }
