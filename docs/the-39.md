@@ -61,10 +61,16 @@ is missing is not either ingredient. It is the extension itself.
 fibres affine. Both are quasigroups, rows and columns permutations.
 
 This is the family listed as §5.6 "submagma / projection / magma cohomology
-extensions" in the Phase 0 construction table and never implemented. The ETP's
-own `blueprint/src/chapter/677.tex` uses the identical shape in its Lemma "No
-counterexamples via linear extension", written as
-`(x,s) ◇ (y,t) = (x ◇ y, α_{x,y} s + β_{x,y} t + c_{x,y})`.
+extensions" in the Phase 0 construction table and never implemented here.
+
+**None of the theory below is new.** `blueprint/src/chapter/cohomology.tex` is a
+whole chapter on it: extensions with carrier `G x M`, the observation that an
+extension satisfies a law exactly when a condition on the cocycle holds, and the
+conjugation `(x,s) ↦ (x, s + g(x))` that quotients the search by coboundaries.
+`blueprint/src/chapter/677.tex` uses the same shape in its Lemma "No
+counterexamples via linear extension". What follows is a re-derivation of
+documented theory, done to check the family is worth building here. It is new to
+this corpus and to nothing else.
 
 ## The other eight are not transparent, and the test is weak
 
