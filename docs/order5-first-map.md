@@ -33,50 +33,39 @@ the false part of a graph nobody has mapped, and it took under a minute.
 
 ## What this does not say
 
-**No oracle for the implication graph — but order 5 is not unexplored.** The
-blueprint chapter "Order 5 Austin laws" classifies all 57,882 equations of order
-exactly 5 by *model existence*: 19,392 admit only trivial models, 38,360 have
-known satisfying finite models, 106 admit only trivial finite models (10 of them
-Austin laws, 96 with infinite models unknown), and 24 are unknown. What does not
-exist is the implication graph between those laws — the chapter notes only that
-"Vampire did not establish any implications between equations in this set" for
-the 96. So the measurement above is not duplicated work, but the framing "order 5
-is unmapped" is too broad and the chapter should be read before building on this.
+**No oracle for the implication graph — but a strong one for model existence.**
+The blueprint chapter "Order 5 Austin laws" classifies all 57,882 equations of
+order exactly 5: 19,392 admit only trivial models, 38,360 have known satisfying
+finite models, 106 admit only trivial finite models (10 of them Austin laws), and
+24 are unknown. What does not exist is the implication graph between those laws,
+so the pair count above is not cross-checked against anything.
 
-That classification is a **partial oracle**, in one direction: every law this
-corpus satisfies with a nontrivial finite magma must be one ETP records as having
-a nontrivial finite model. The counts line up. This run reaches 41,462
-hypothesis laws; ETP's 38,360 order-5 laws with known finite models plus the
-3,198 order-<=4 laws with nontrivial finite models give 41,558. Being under that
-is the correct direction, since a linear and affine corpus will not find every
-model ETP knows about, and 0.23% under it is closer than expected.
-
-One direction of it **is** now checked, and `pm order5` reruns it every time.
-The 130 laws the blueprint enumerates in tables 20.1-20.3 either admit no
-nontrivial finite model or have open status, so no instance in this corpus may
-satisfy one. None does:
+The classification is checkable, and better than the chapter text suggests. The
+branch the chapter cites, `vlad902/equational_theories@order5`, carries
+`equational_theories/Generated/Order5/Eq2Proof{1..20}.lean`: **19,392** distinct
+`EquationN_implies_Equation2` theorems, matching the chapter's count exactly.
+A law implying Equation 2 admits only trivial models, and every instance in this
+corpus has carrier at least 2, so satisfying one would contradict a Lean proof.
+Extracted to `data/etp/order5_trivial_only.txt` and checked on every run:
 
 ```
-blueprint 20.1-20.3 control  130 laws, 0 satisfied by any instance (expected)
+blueprint 20.1-20.3 control   130 laws, 0 satisfied by any instance (expected)
+trivial-models-only control 19392 laws, 0 satisfied by any instance (expected)
 ```
 
-A hit there would be either a resolved ETP open question or a bug in this
-engine, and the run says which it got.
+That is 19,522 laws of hard agreement, not the 130 an earlier draft of this
+document claimed was all that was available.
 
-The wider containment has **not** been checked law by law — the chapter enumerates only those
-130 equation ids. The 19,392 laws with only trivial models and the 38,360 with
-known finite models are reported as counts, not lists, and
-`vlad902/equational_theories@order5` has a `data/` matching main. So the strong
-check is not available from published data; it would need the per-law
-classification, which lives in a Zulip thread. Asking for it is cheaper than
-recomputing it.
+The counts line up on the other side too. This run reaches 41,462 hypothesis
+laws; the laws that can have a nontrivial finite model are 38,360 plus the 3,198
+order-≤4 ones, so 41,558. Being 96 under is the right direction, since a linear
+and affine corpus will not find every model the ETP knows about.
 
-What holds it up instead is that the engine is the same one validated at order 4
-against 824 ETP tables and 790 hard-core witnesses, that `open-questions-scan.md`
-records positive and negative controls on order-5 laws specifically, and that
-each discharged pair is witnessed by a concrete magma and so is checkable
-one at a time by anyone who doubts it. That is weaker than an oracle. It should
-be read as weaker.
+What is still missing is the list behind that 38,360. The chapter reports it as a
+count, and the branch's `Generated/Order5/` holds `Eq2Proof`, `FiniteImplications`
+(105 `Finite.EquationN_implies_Equation2` theorems), `MiscImplications` and
+`Conjectures` — the negative side, not the models. With the positive list the
+containment closes in both directions.
 
 **58.7% of all ordered pairs is not a coverage rate.** Most pairs in any such
 graph are true implications and cannot be discharged at all. At order 4, 62.9% of

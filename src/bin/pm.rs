@@ -1815,6 +1815,35 @@ fn order5() {
             open_hits
         );
     }
+    // The stronger control: 19,392 order-5 laws the ETP proves imply Equation 2,
+    // so they admit only trivial models. Every instance here has carrier at
+    // least 2, so satisfying one would contradict a Lean proof.
+    let mut triv = 0usize;
+    let mut triv_hits: Vec<u32> = Vec::new();
+    for line in data("order5_trivial_only.txt").lines() {
+        let line = line.trim();
+        if line.is_empty() || line.starts_with('#') {
+            continue;
+        }
+        let Ok(id) = line.parse::<u32>() else {
+            continue;
+        };
+        triv += 1;
+        if acc.contains_key(&((id - 1) as usize)) {
+            triv_hits.push(id);
+        }
+    }
+    if triv_hits.is_empty() {
+        println!(
+            "trivial-models-only control  {triv} laws, 0 satisfied by any instance (expected)"
+        );
+    } else {
+        println!(
+            "trivial-models-only control  {} HITS of {triv} -- contradicts a Lean proof: {:?}",
+            triv_hits.len(),
+            &triv_hits[..triv_hits.len().min(10)]
+        );
+    }
     println!(
         "distinct ordered pairs discharged  {pairs}  of {} possible, in {:.2?}",
         nlaws as u64 * (nlaws as u64 - 1),
