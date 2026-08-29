@@ -122,9 +122,10 @@ missed it for one reason: §5.6 is not implemented.
 
 ## Built, and it closes sixteen of them
 
-`src/ext.rs` implements the family and `pm ext` runs it against the 39. The
-fibre is `(Z/p)^k` with `α, β` as `k x k` matrices over `F_p`, which is what the
-blueprint's chapter-677 lemma allows — "M is an abelian group and α, β
+`src/ext.rs` implements the family — the blueprint's, from
+`chapter/cohomology.tex`, not one invented here — and `pm ext` runs it against
+the 39. The fibre is `(Z/p)^k` with `α, β` as `k x k` matrices over `F_p`, which
+is what the chapter-677 lemma allows — "M is an abelian group and α, β
 endomorphisms". Scalars on `Z/p` are the `k = 1` case.
 
 Grid: 3,533 bases (linear over `Z/nb` for `nb = 2..8` with every `(a,b)`, plus
@@ -200,6 +201,27 @@ Sampling was the wrong tool, and replacing it with a decision procedure says so:
 > identically exactly when it vanishes at the particular solution and at each
 > `particular + basis_i`. That is `dim + 1` probes, and it *decides* the
 > question, where sampling can only fail to find something.
+
+**None of that is a finding here.** `blueprint/src/chapter/cohomology.tex` states
+it as the method: the `E`-cocycles form a group `Z²_E(G,M)`, coboundaries
+`B²(G,M)` sit inside it, and
+
+> "to refute an implication `E ⟹ E'`, it suffices to locate a magma `G` and a
+> linear magma `M` satisfying both `E` and `E'` such that
+> `H²_E(G,M) ⊄ H²_{E'}(G,M)`. This leads to a computational approach to
+> refutations, as these groups can be computed by linear algebra."
+
+with a worked example — E1110 against E1629 on `F_5` with `x ◇ y = 3x - y`,
+coboundaries four-dimensional, cocycles six, giving a 25-element counterexample.
+What is here is an implementation of that method and a systematic run of it, not
+the method.
+
+One thing the chapter does that this implementation does **not**: quotient by
+coboundaries. Working in `Z²` rather than `H² = Z²/B²` leaves
+coboundary-equivalent cocycles in the search, which is redundancy, though it does
+not affect the containment test — `B²` sits inside both spaces, so
+`Z²_E ⊆ Z²_{E'}` and `H²_E ⊆ H²_{E'}` say the same thing. Quotienting would make
+the sweep smaller, not the conclusions different.
 
 Run that way the sweep decides every pair, and each of the 23 remaining comes
 back the same way:

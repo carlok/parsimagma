@@ -88,6 +88,9 @@ Sorted. `[x]` done, `[>]` in progress, `[ ]` queued. Sprint definitions in
 - [ ] 8.8i The last 23 on six hypothesis laws. Only untried direction is alpha
            and beta varying per base pair, which breaks the single linear solve.
            No evidence it works either -- treat as a spike with a kill criterion
+- [ ] 8.8j Quotient by coboundaries. The blueprint works in H^2 = Z^2/B^2 and
+           this works in Z^2, so the search carries coboundary-equivalent
+           duplicates. Same conclusions, smaller sweep
 - [x] 8.9  Report the stale data/full_entries.json as a second comment on #1474
            rather than a third thread. Two threads open: #1473, #1474
 
