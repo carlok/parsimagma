@@ -25,3 +25,8 @@
 # Python bytecode
 __pycache__/
 *.pyc
+
+# Draft paper. Goes public via Zenodo when submitted, not before.
+/paper/
+
+.DS_Store

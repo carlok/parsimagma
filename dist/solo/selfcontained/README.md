@@ -1,21 +1,25 @@
 # A solver with nothing borrowed and nothing looked up
 
-`solver.py`, 1,343 lines, 49 KB. **198/200** on a local 200-problem sample set.
-Three of the four categories are perfect and order-5 is 48/50. The build it
-replaced — 4,323 lines carrying the competition's reference solver and two
-embedded lookup tables — scored 190.
+`solver.py`, 2,841 lines, 106 KB. **200/200** on a local 200-problem sample
+set, all four categories complete, confirmed by two independent runs that agree
+problem for problem. The build it replaced — 4,323 lines carrying the
+competition's reference solver and two embedded lookup tables — scored 190.
+
+The same file serves both Stage 2 tracks, dispatching on
+`JUDGE_MARATHON_MANIFEST`; the marathon path was checked against the
+organizer's own scorer.
 
 |  | self-contained | the build it matches |
 |---|---|---|
-| lines | 1,343 | 4,323 |
-| bytes | 49,978 | 213,536 |
+| lines | 2,841 | 4,323 |
+| bytes | 108,748 | 213,536 |
 | reference-solver code | none | 2,268 lines |
 | embedded tables | none | 80,746 chars base64 |
 | LLM calls over 200 problems | 0 | 0 |
-| order4_normal / hard / extra_hard / order5 | **50 / 50 / 50 / 48** | 48 / 47 / 50 / 45 |
-| wall clock, 200 problems | 32.3 min | — |
+| order4_normal / hard / extra_hard / order5 | **50 / 50 / 50 / 50** | 48 / 47 / 50 / 45 |
+| wall clock, 200 problems | 26.2 min | — |
 
-## Two mechanisms, both search
+## Three mechanisms, all search
 
 **Finite model search** settles every `verdict: false` problem in the set. Fill
 the Cayley table cell by cell; after each assignment, check the instances of the
@@ -62,11 +66,22 @@ derivation, never an assumption. Paths are replayed internally before any Lean
 is written, and one that does not replay is discarded rather than emitted, so a
 bug in the search surfaces as a missing proof and never as a wrong one.
 
+## The third mechanism
+
+Ordered superposition: a given-clause loop with a Knuth-Bendix ordering,
+forward and backward demodulation inside the loop, and subsumption. The
+ordering is the whole difference. Completion above uses term size as a stand-in
+for a reduction order, which admits only rewrites that shrink the term, and the
+last two proofs in this set need rewrites that do not.
+
+Its certificates come from the inference DAG rather than a flattened path —
+each derived lemma stated once as a `have` and cited. On the hardest problem
+here that is 13,728 bytes against 3,634,949 for the same proof written out
+flat, under a 100,000-byte cap. The compression is what makes it submittable.
+
 ## What it does not settle
 
-Two of the 200, both order-5 laws outside the ETP's resolved graph:
-`E19040 -> E12906` and `E6543 -> E29450`. Vampire proves both, in 24 ms and
-2 ms, so they are theorems and there is nothing to refute. Measured, the best derived equation structurally matches 7 to 9 of a goal's 11
+Nothing, on this set. Measured, the best derived equation structurally matches 7 to 9 of a goal's 11
 nodes and stalls there. Six thousand derived equations, term-size ceilings from
 13 to 21, goal-biased selection, five-step goal rewriting and singleton
 detection all return nothing on them.

@@ -12,10 +12,16 @@ a command in this repository. The derivations and the code are machine-generated
 and machine-checked, and are offered as data and reproduction steps rather than
 as a proof.
 
-**Published:** the solver built from this corpus is public on the SAIR
-Contributor Network as
+**The solver.** [dist/solo/selfcontained/](dist/solo/selfcontained/) settles
+**200/200** on the Stage 2 sample set. One Python file, 108,748 bytes, standard
+library only: no database, no embedded lookup table, no problem-specific case,
+no LLM call. Its proofs of implications close over **no Lean axioms at all**.
+Two independent full runs, identical problem for problem. That set is a local
+sample, not the graded one.
+
+An earlier solver from this corpus is public on the SAIR Contributor Network as
 [`parsimagma-greedy-cover`](https://competition.sair.foundation/contributor-network/mathematics-distillation-challenge-equational-theories-stage2/EQT02-S00025)
-(`EQT02-S00025`). Source in [dist/](dist/).
+(`EQT02-S00025`); it settled 55/200 and is superseded by the above.
 
 ## What it measured
 
@@ -163,8 +169,9 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/order5-first-map.md](docs/order5-first-map.md) | first coverage measurement on the 62,576 order-5 laws, and why it has no oracle |
 | [docs/merge-experiment.md](docs/merge-experiment.md) | merging the solver with the competition's reference: 55/200 to 172/200, none of it the corpus |
 | [docs/equational-prover.md](docs/equational-prover.md) | the laws no model search settles, and the completion prover that proves them: 172/200 to 187/200 |
-| [dist/solo/selfcontained/](dist/solo/selfcontained/) | 1,343 lines, nothing borrowed, no lookup tables: 198/200 |
+| [dist/solo/selfcontained/](dist/solo/selfcontained/) | nothing borrowed, no lookup tables, no LLM: 200/200, serves both tracks |
 | [docs/atp-calibration-stage2.md](docs/atp-calibration-stage2.md) | what the self-contained solver gives up to Vampire, and the one inference rule that explains it |
+| [docs/marathon-mode.md](docs/marathon-mode.md) | the marathon design, and the three decisions a review of the harness source overturned |
 | [docs/the-39.md](docs/the-39.md) | what the 39 remaining pairs want, and the section 5.6 family that closes sixteen of them |
 | [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor (superseded) |
 | [docs/phase-a-report.md](docs/phase-a-report.md) | engine, differential agreement, families implemented and not, coverage totals |

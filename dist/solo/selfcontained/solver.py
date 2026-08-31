@@ -1275,6 +1275,10 @@ def main_body(problem):
         if body and submit("true", true_code(body)):
             return
 
+    body = attempt(prove_superposition, problem, eq1, eq2, 30.0)
+    if body and submit("true", true_code_op(body)):
+        return
+
     code = attempt(find_model, eq1, eq2, (4, 5, 6, 7), 240.0)
     if code:
         submit("false", code)
@@ -1368,6 +1372,1403 @@ def _arg(t):
     if t is None:
         return "x"
     return pv_show(t) if t[0] != "o" else "(%s)" % pv_show(t)
+
+
+from collections import Counter as _Counter, deque as _deque
+import heapq as _heapq
+import itertools as _itertools
+
+def sb_parse(text, varnames):
+    """Parse a parenthesised magma term.
+
+    Names in ``varnames`` are sb_variables; every other name is a rigid constant.
+    ``*`` and ``◇`` are accepted as the binary operation.
+    """
+
+    toks = re.findall(r"[A-Za-z_][A-Za-z_0-9#@]*|[()*◇]", text)
+    pos = 0
+
+    def atom():
+        nonlocal pos
+        if pos >= len(toks):
+            raise ValueError("unexpected end of term: %r" % text)
+        if toks[pos] == "(":
+            pos += 1
+            term = expr()
+            if pos >= len(toks) or toks[pos] != ")":
+                raise ValueError("unbalanced term: %r" % text)
+            pos += 1
+            return term
+        name = toks[pos]
+        pos += 1
+        return ("v", name) if name in varnames else ("c", name)
+
+    def expr():
+        nonlocal pos
+        term = atom()
+        while pos < len(toks) and toks[pos] in ("*", "◇"):
+            pos += 1
+            term = ("o", term, atom())
+        return term
+
+    result = expr()
+    if pos != len(toks):
+        raise ValueError("trailing input in term: %r" % text)
+    return result
+
+def sb_show(term):
+    if term[0] in ("v", "c"):
+        return term[1]
+    left = sb_show(term[1])
+    right = sb_show(term[2])
+    if term[1][0] == "o":
+        left = "(" + left + ")"
+    if term[2][0] == "o":
+        right = "(" + right + ")"
+    return left + " ◇ " + right
+
+def sb_size(term):
+    """Reference-compatible sb_size: number of leaves, not AST nodes."""
+
+    if term[0] in ("v", "c"):
+        return 1
+    return sb_size(term[1]) + sb_size(term[2])
+
+def sb_term_weight(term):
+    """KBO weight.  Every variable, constant, and operation has weight one."""
+
+    if term[0] in ("v", "c"):
+        return 1
+    return 1 + sb_term_weight(term[1]) + sb_term_weight(term[2])
+
+def sb_variables(term, acc=None):
+    acc = set() if acc is None else acc
+    if term[0] == "v":
+        acc.add(term[1])
+    elif term[0] == "o":
+        sb_variables(term[1], acc)
+        sb_variables(term[2], acc)
+    return acc
+
+def sb_variable_counts(term, out=None):
+    out = _Counter() if out is None else out
+    if term[0] == "v":
+        out[term[1]] += 1
+    elif term[0] == "o":
+        sb_variable_counts(term[1], out)
+        sb_variable_counts(term[2], out)
+    return out
+
+def sb_subst(term, sigma):
+    """Simultaneous, one-level substitution.
+
+    A replacement is returned as supplied rather than substituted again.  This
+    is important for matching: a pattern variable named ``x`` may legitimately
+    sb_match a target term containing a target variable also named ``x``.
+    """
+
+    if term[0] == "v":
+        return sigma.get(term[1], term)
+    if term[0] == "c":
+        return term
+    return ("o", sb_subst(term[1], sigma), sb_subst(term[2], sigma))
+
+def sb_match(pattern, term, sigma=None):
+    """One-way matching: return sigma with ``pattern sigma == term``."""
+
+    sigma = {} if sigma is None else sigma
+    if pattern[0] == "v":
+        old = sigma.get(pattern[1])
+        if old is None:
+            result = dict(sigma)
+            result[pattern[1]] = term
+            return result
+        return sigma if old == term else None
+    if pattern[0] == "c":
+        return sigma if pattern == term else None
+    if term[0] != "o":
+        return None
+    sigma = sb_match(pattern[1], term[1], sigma)
+    return sb_match(pattern[2], term[2], sigma) if sigma is not None else None
+
+def sb_positions(term, position=()):
+    yield position, term
+    if term[0] == "o":
+        yield from sb_positions(term[1], position + (0,))
+        yield from sb_positions(term[2], position + (1,))
+
+def sb_subterm(term, position):
+    for direction in position:
+        if term[0] != "o":
+            raise IndexError("position %r does not exist" % (position,))
+        term = term[direction + 1]
+    return term
+
+def sb_replace(term, position, new):
+    if not position:
+        return new
+    if term[0] != "o":
+        raise IndexError("position %r does not exist" % (position,))
+    if position[0] == 0:
+        return ("o", sb_replace(term[1], position[1:], new), term[2])
+    return ("o", term[1], sb_replace(term[2], position[1:], new))
+
+def sb_rename(term, suffix):
+    if term[0] == "v":
+        return ("v", term[1] + suffix)
+    if term[0] == "c":
+        return term
+    return ("o", sb_rename(term[1], suffix), sb_rename(term[2], suffix))
+
+def sb_walk(term, sigma):
+    seen = set()
+    while term[0] == "v" and term[1] in sigma:
+        if term[1] in seen:
+            raise ValueError("cyclic substitution")
+        seen.add(term[1])
+        term = sigma[term[1]]
+    return term
+
+def sb_occurs(name, term, sigma):
+    term = sb_walk(term, sigma)
+    if term[0] == "v":
+        return term[1] == name
+    if term[0] == "c":
+        return False
+    return sb_occurs(name, term[1], sigma) or sb_occurs(name, term[2], sigma)
+
+def sb_unify(left, right, sigma=None):
+    sigma = {} if sigma is None else sigma
+    left, right = sb_walk(left, sigma), sb_walk(right, sigma)
+    if left == right:
+        return sigma
+    if left[0] == "v":
+        if sb_occurs(left[1], right, sigma):
+            return None
+        result = dict(sigma)
+        result[left[1]] = right
+        return result
+    if right[0] == "v":
+        if sb_occurs(right[1], left, sigma):
+            return None
+        result = dict(sigma)
+        result[right[1]] = left
+        return result
+    if left[0] == "c" or right[0] == "c":
+        return None
+    sigma = sb_unify(left[1], right[1], sigma)
+    return sb_unify(left[2], right[2], sigma) if sigma is not None else None
+
+def sb_resolve(term, sigma):
+    term = sb_walk(term, sigma)
+    if term[0] == "o":
+        return ("o", sb_resolve(term[1], sigma), sb_resolve(term[2], sigma))
+    return term
+
+def sb__root_precedence(term):
+    # Variables have no precedence.  The operation is above constants; names
+    # give a deterministic total precedence between rigid constants.
+    if term[0] == "c":
+        return (0, term[1])
+    if term[0] == "o":
+        return (1, "o")
+    return (-1, term[1])
+
+def sb_kbo_gt(left, right):
+    """Strict KBO with unit weights and lexicographic status for ``◇``.
+
+    The variable condition is checked before weights.  The result is a partial
+    order on nonground terms: for example ``x ◇ y`` and ``y ◇ x`` are
+    incomparable.  That is deliberate; both sides remain eligible in ordered
+    superposition when neither is smaller.
+    """
+
+    if left == right:
+        return False
+    lc = sb_variable_counts(left)
+    rc = sb_variable_counts(right)
+    if any(lc[name] < count for name, count in rc.items()):
+        return False
+    lw, rw = sb_term_weight(left), sb_term_weight(right)
+    if lw != rw:
+        return lw > rw
+    if left[0] == "v":
+        return False
+    if right[0] == "v":
+        # With positive unit weights this is normally excluded by weight or
+        # the variable condition, but retaining the standard case is harmless.
+        return True
+    lp, rp = sb__root_precedence(left), sb__root_precedence(right)
+    if lp != rp:
+        return lp > rp
+    if left[0] == "c":
+        return left[1] > right[1]
+    if left[1] != right[1]:
+        return sb_kbo_gt(left[1], right[1])
+    return sb_kbo_gt(left[2], right[2])
+
+def sb_kbo_cmp(left, right):
+    if left == right:
+        return 0
+    if sb_kbo_gt(left, right):
+        return 1
+    if sb_kbo_gt(right, left):
+        return -1
+    return None
+
+class sb_ProofError(ValueError):
+    pass
+
+def sb_replay(term, steps, hypothesis_left, hypothesis_right):
+    """Strictly sb_replay primitive hypothesis steps.
+
+    Unlike a blind replacement routine, this checks that the instantiated
+    source is exactly the sb_subterm at the recorded position.  Search bugs are
+    therefore rejected at admission instead of becoming false certificates.
+    """
+
+    for index, (position, direction, sigma) in enumerate(steps):
+        source, target = ((hypothesis_left, hypothesis_right)
+                          if direction == "fwd"
+                          else (hypothesis_right, hypothesis_left))
+        if direction not in ("fwd", "bwd"):
+            raise sb_ProofError("step %d has invalid direction %r" %
+                             (index, direction))
+        try:
+            actual = sb_subterm(term, position)
+        except IndexError as exc:
+            raise sb_ProofError("step %d: %s" % (index, exc)) from exc
+        expected = sb_subst(source, sigma)
+        if actual != expected:
+            raise sb_ProofError(
+                "step %d at %r: expected %s, found %s" %
+                (index, position, sb_show(expected), sb_show(actual)))
+        term = sb_replace(term, position, sb_subst(target, sigma))
+    return term
+
+def sb_proof_replays(equation, hypothesis_left, hypothesis_right):
+    left, right, steps = equation
+    try:
+        return sb_replay(left, steps, hypothesis_left, hypothesis_right) == right
+    except (sb_ProofError, IndexError, RecursionError, ValueError):
+        return False
+
+def sb_invert(steps):
+    return [(position, "bwd" if direction == "fwd" else "fwd", sigma)
+            for position, direction, sigma in reversed(steps)]
+
+def sb_under(steps, at):
+    return [(tuple(at) + position, direction, sigma)
+            for position, direction, sigma in steps]
+
+def sb_apply_match(steps, sigma):
+    return [(position, direction,
+             {name: sb_subst(value, sigma) for name, value in step_sigma.items()})
+            for position, direction, step_sigma in steps]
+
+def sb_apply_subst(steps, sigma):
+    return [(position, direction,
+             {name: sb_resolve(value, sigma)
+              for name, value in step_sigma.items()})
+            for position, direction, step_sigma in steps]
+
+def sb_orientations(equation):
+    left, right, steps = equation
+    yield left, right, steps
+    yield right, left, sb_invert(steps)
+
+def sb_base_equation(left, right):
+    names = sb_variables(left) | sb_variables(right)
+    identity = {name: ("v", name) for name in names}
+    return left, right, [((), "fwd", identity)]
+
+def sb_oriented_rule_info(equation):
+    left, right, steps = equation
+    if sb_kbo_gt(left, right):
+        return left, right, steps, False
+    if sb_kbo_gt(right, left):
+        return right, left, sb_invert(steps), True
+    return None
+
+def sb_oriented_rule(equation):
+    result = sb_oriented_rule_info(equation)
+    return result[:3] if result is not None else None
+
+def sb_ordered_superpositions(target_equation, source_equation, max_size,
+                           fresh_suffix="#", target_id=None, source_id=None):
+    """Generate ordered superpositions of ``source`` into ``target``.
+
+    Both equation sides are considered.  After applying the MGU, the chosen
+    source and target sides must not be smaller than their opposite sides.
+    Overlaps at sb_variables are excluded.  Every result is a primitive proof
+    from the target branch back through the overlap and down the source branch.
+    """
+
+    for target_reversed, (target_left, target_right, target_path) in enumerate(
+            sb_orientations(target_equation)):
+        for source_reversed, (source_left_raw, source_right_raw, source_path_raw) in enumerate(
+                sb_orientations(source_equation)):
+            source_left = sb_rename(source_left_raw, fresh_suffix)
+            source_right = sb_rename(source_right_raw, fresh_suffix)
+            source_path = [
+                (position, direction,
+                 {name: sb_rename(value, fresh_suffix)
+                  for name, value in sigma.items()})
+                for position, direction, sigma in source_path_raw
+            ]
+            for position, overlap in sb_positions(target_left):
+                if overlap[0] != "o":
+                    continue
+                sigma = sb_unify(overlap, source_left)
+                if sigma is None:
+                    continue
+                tl = sb_resolve(target_left, sigma)
+                tr = sb_resolve(target_right, sigma)
+                sl = sb_resolve(source_left, sigma)
+                sr = sb_resolve(source_right, sigma)
+                # Ordered-superposition maximality restrictions.
+                if sb_kbo_gt(tr, tl) or sb_kbo_gt(sr, sl):
+                    continue
+                left = tr
+                right = sb_replace(tl, position, sr)
+                if left == right:
+                    continue
+                if sb_size(left) > max_size or sb_size(right) > max_size:
+                    continue
+                path = (sb_invert(sb_apply_subst(target_path, sigma)) +
+                        sb_under(sb_apply_subst(source_path, sigma), position))
+                equation = (left, right, path)
+                if target_id is None or source_id is None:
+                    yield equation
+                    continue
+                target_sigma = {
+                    name: sb_resolve(("v", name), sigma)
+                    for name in sb_variables(target_equation[0]) |
+                    sb_variables(target_equation[1])
+                }
+                source_sigma = {
+                    name: sb_resolve(sb_rename(("v", name), fresh_suffix), sigma)
+                    for name in sb_variables(source_equation[0]) |
+                    sb_variables(source_equation[1])
+                }
+                route = [
+                    (target_id, (), not bool(target_reversed), target_sigma),
+                    (source_id, position, bool(source_reversed), source_sigma),
+                ]
+                yield sb__Candidate(equation, route)
+
+def sb__rewrite_candidates(term, rules, max_size):
+    for rule_index, equation in enumerate(rules):
+        oriented = sb_oriented_rule(equation)
+        if oriented is None:
+            continue
+        source, target, path = oriented
+        for position, actual in sb_positions(term):
+            sigma = sb_match(source, actual, None)
+            if sigma is None:
+                continue
+            if sb_variables(target) - set(sigma):
+                continue
+            result = sb_replace(term, position, sb_subst(target, sigma))
+            if result == term or sb_size(result) > max_size:
+                continue
+            # This assertion also catches implementation errors in KBO.
+            if not sb_kbo_gt(term, result):
+                continue
+            concrete = sb_under(sb_apply_match(path, sigma), position)
+            priority = (sb_size(result), sb_term_weight(result), sb_show(result),
+                        rule_index, len(position), position)
+            yield priority, result, concrete
+
+def sb_normalise(term, rules, hypothesis_left, hypothesis_right, max_size,
+              rounds=256):
+    """KBO-sb_normalise ``term`` and return its primitive proof path."""
+
+    path = []
+    for _ in range(rounds):
+        best = None
+        for candidate in sb__rewrite_candidates(term, rules, max_size):
+            if best is None or candidate[0] < best[0]:
+                best = candidate
+        if best is None:
+            break
+        _, result, extra = best
+        # Validate each demodulation while its context is still small and local.
+        try:
+            if sb_replay(term, extra, hypothesis_left, hypothesis_right) != result:
+                raise sb_ProofError("demodulation path ends at the wrong term")
+        except sb_ProofError:
+            break
+        term = result
+        path.extend(extra)
+    return term, path
+
+def sb_simplify_equation(equation, rules, hypothesis_left, hypothesis_right,
+                      max_size):
+    left, right, path = equation
+    new_left, left_path = sb_normalise(
+        left, rules, hypothesis_left, hypothesis_right, max_size)
+    new_right, right_path = sb_normalise(
+        right, rules, hypothesis_left, hypothesis_right, max_size)
+    new_path = sb_invert(left_path) + path + right_path
+    return new_left, new_right, new_path
+
+def sb_equation_subsumes(general, specific):
+    """Whether ``specific`` is an instance/variant of ``general``."""
+
+    gl, gr, _ = general
+    sl, sr, _ = specific
+    for left, right in ((sl, sr), (sr, sl)):
+        sigma = sb_match(gl, left, None)
+        if sigma is not None and sb_match(gr, right, sigma) is not None:
+            return True
+    return False
+
+def sb_canonical(left, right):
+    """Equation key modulo side exchange and a consistent variable renaming."""
+
+    def one(a, b):
+        names = {}
+
+        def visit(term):
+            if term[0] == "v":
+                if term[1] not in names:
+                    names[term[1]] = "v%d" % len(names)
+                return ("v", names[term[1]])
+            if term[0] == "c":
+                return term
+            return ("o", visit(term[1]), visit(term[2]))
+
+        return sb_show(visit(a)), sb_show(visit(b))
+
+    direct = one(left, right)
+    reverse = one(right, left)
+    return min(direct, reverse)
+
+class sb__Candidate:
+    __slots__ = ("equation", "route")
+
+    def __init__(self, equation, route):
+        self.equation = equation
+        self.route = route
+
+def sb_invert_route(route):
+    return [(record_id, position, not flipped, sigma)
+            for record_id, position, flipped, sigma in reversed(route)]
+
+def sb_replay_route(term, route, records):
+    """Replay a compressed path whose steps apply previously proved lemmas."""
+
+    for index, (record_id, position, flipped, sigma) in enumerate(route):
+        if record_id < 0 or record_id >= len(records):
+            raise sb_ProofError("route step %d refers to missing lemma %d" %
+                             (index, record_id))
+        left, right, _ = records[record_id].equation
+        source, target = (right, left) if flipped else (left, right)
+        actual = sb_subterm(term, position)
+        expected = sb_subst(source, sigma)
+        if actual != expected:
+            raise sb_ProofError(
+                "route step %d at %r: expected %s, found %s" %
+                (index, position, sb_show(expected), sb_show(actual)))
+        term = sb_replace(term, position, sb_subst(target, sigma))
+    return term
+
+def sb_unfold_route(route, records):
+    """Expand a compressed lemma route to primitive hypothesis steps."""
+
+    output = []
+    for record_id, position, flipped, sigma in route:
+        equation = records[record_id].equation
+        path = sb_invert(equation[2]) if flipped else equation[2]
+        output.extend(sb_under(sb_apply_match(path, sigma), position))
+    return output
+
+def sb__rewrite_candidates_records(term, records, max_size):
+    """Demodulation candidates carrying both flat and compressed proofs."""
+
+    for record in records:
+        info = sb_oriented_rule_info(record.equation)
+        if info is None:
+            continue
+        source, target, path, flipped = info
+        for position, actual in sb_positions(term):
+            sigma = sb_match(source, actual, None)
+            if sigma is None or sb_variables(target) - set(sigma):
+                continue
+            result = sb_replace(term, position, sb_subst(target, sigma))
+            if result == term or sb_size(result) > max_size:
+                continue
+            if not sb_kbo_gt(term, result):
+                continue
+            concrete = sb_under(sb_apply_match(path, sigma), position)
+            use_sigma = {
+                name: sigma.get(name, ("v", name))
+                for name in sb_variables(record.equation[0]) |
+                sb_variables(record.equation[1])
+            }
+            use = (record.identifier, position, flipped, use_sigma)
+            priority = (sb_size(result), sb_term_weight(result), sb_show(result),
+                        record.age, len(position), position)
+            yield priority, result, concrete, use
+
+def sb_normalise_records(term, records, hypothesis_left, hypothesis_right,
+                      max_size, rounds=256):
+    path, route = [], []
+    records = list(records)
+    for _ in range(rounds):
+        best = None
+        for candidate in sb__rewrite_candidates_records(term, records, max_size):
+            if best is None or candidate[0] < best[0]:
+                best = candidate
+        if best is None:
+            break
+        _, result, extra, use = best
+        if sb_replay(term, extra, hypothesis_left, hypothesis_right) != result:
+            raise sb_ProofError("compressed demodulation has an invalid flat path")
+        if sb_replay_route(term, [use], sb_records_by_id(records)) != result:
+            raise sb_ProofError("compressed demodulation has an invalid lemma use")
+        term = result
+        path.extend(extra)
+        route.append(use)
+    return term, path, route
+
+def sb_records_by_id(records):
+    """Return an id-indexed record list, preserving holes when passed a subset."""
+
+    records = list(records)
+    if not records:
+        return []
+    highest = max(record.identifier for record in records)
+    indexed = [None] * (highest + 1)
+    for record in records:
+        indexed[record.identifier] = record
+    return indexed
+
+class sb__Record:
+    __slots__ = ("identifier", "equation", "route", "age", "live",
+                 "active", "selected")
+
+    def __init__(self, identifier, equation, route, age):
+        self.identifier = identifier
+        self.equation = equation
+        self.route = route
+        self.age = age
+        self.live = True
+        self.active = False
+        self.selected = False
+
+LAST_STATS = {}
+
+LAST_SATURATION = None
+
+class sb_Saturation:
+    """A proof-checking given-clause loop with forward/backward simplification."""
+
+    def __init__(self, hypothesis_left, hypothesis_right, max_size=15,
+                 max_rules=1200, deadline=None, order="weight", dedup=None,
+                 age_ratio=6):
+        self.left = hypothesis_left
+        self.right = hypothesis_right
+        self.max_size = max_size
+        self.max_rules = max_rules
+        self.deadline = deadline
+        self.order = order
+        self.dedup = dedup or sb_canonical
+        self.age_ratio = max(2, age_ratio)
+        self.records = []
+        self.admitted = 0
+        self.selections = 0
+        self.fresh = 0
+        self.stats = {
+            "paths_produced": 0,
+            "paths_replayed": 0,
+            "path_failures": 0,
+            "dag_paths_replayed": 0,
+            "dag_path_failures": 0,
+            "raw_superpositions": 0,
+            "forward_simplifications": 0,
+            "backward_simplifications": 0,
+            "forward_subsumed": 0,
+            "backward_subsumed": 0,
+            "tautologies": 0,
+            "admitted": 0,
+            "selected": 0,
+            "live": 0,
+        }
+
+    def expired(self):
+        return self.deadline is not None and time.monotonic() > self.deadline
+
+    def live_records(self, exclude=None):
+        for record in self.records:
+            if record.live and record is not exclude:
+                yield record
+
+    def live_equations(self, exclude=None):
+        return [record.equation for record in self.live_records(exclude)]
+
+    def _track_path(self, equation):
+        self.stats["paths_produced"] += 1
+        if sb_proof_replays(equation, self.left, self.right):
+            self.stats["paths_replayed"] += 1
+            return True
+        self.stats["path_failures"] += 1
+        return False
+
+    def _track_candidate(self, candidate):
+        if not self._track_path(candidate.equation):
+            return False
+        if candidate.route is None:
+            return True
+        try:
+            if sb_replay_route(candidate.equation[0], candidate.route,
+                            self.records) != candidate.equation[1]:
+                raise sb_ProofError("compressed path ends at the wrong term")
+        except (sb_ProofError, IndexError, AttributeError):
+            self.stats["dag_path_failures"] += 1
+            return False
+        self.stats["dag_paths_replayed"] += 1
+        return True
+
+    def _simplify_candidate(self, candidate, records):
+        records = list(records)
+        left, right, path = candidate.equation
+        new_left, left_path, left_route = sb_normalise_records(
+            left, records, self.left, self.right, self.max_size)
+        new_right, right_path, right_route = sb_normalise_records(
+            right, records, self.left, self.right, self.max_size)
+        new_path = sb_invert(left_path) + path + right_path
+        if candidate.route is None:
+            new_route = None
+        else:
+            new_route = (sb_invert_route(left_route) + candidate.route +
+                         right_route)
+        return sb__Candidate((new_left, new_right, new_path), new_route)
+
+    def deactivate(self, record):
+        record.live = False
+        record.active = False
+
+    def admit(self, equation, origin="inference", route=None):
+        """Simplify, proof-check, subsume, then enqueue an equation.
+
+        Backward demodulation can create more equations, so admission drains a
+        local work queue.  The return value is the first retained record, if
+        any; callers do not rely on it for correctness.
+        """
+
+        initial = equation if isinstance(equation, sb__Candidate) else sb__Candidate(
+            equation, route)
+        work = _deque([(initial, origin)])
+        first = None
+        while work and self.admitted < self.max_rules and not self.expired():
+            candidate, why = work.popleft()
+            before = candidate.equation[:2]
+            candidate = self._simplify_candidate(
+                candidate, self.live_records())
+            equation = candidate.equation
+            if equation[:2] != before:
+                self.stats["forward_simplifications"] += 1
+            if not self._track_candidate(candidate):
+                continue
+            if equation[0] == equation[1]:
+                self.stats["tautologies"] += 1
+                continue
+            if sb_size(equation[0]) > self.max_size or sb_size(equation[1]) > self.max_size:
+                continue
+
+            known = list(self.live_records())
+            if any(sb_equation_subsumes(record.equation, equation)
+                   for record in known):
+                self.stats["forward_subsumed"] += 1
+                continue
+
+            # A newly found general equation makes its live instances redundant.
+            for record in known:
+                if record.live and sb_equation_subsumes(equation, record.equation):
+                    self.deactivate(record)
+                    self.stats["backward_subsumed"] += 1
+
+            identifier = len(self.records)
+            record = sb__Record(identifier, equation, candidate.route, identifier)
+            self.records.append(record)
+            self.admitted += 1
+            self.stats["admitted"] = self.admitted
+            if first is None:
+                first = record
+
+            # Backward demodulation uses only the genuinely new rule.  Any
+            # simplified descendant is sent through full forward simplification
+            # when its turn in this local queue arrives.
+            if sb_oriented_rule(equation) is not None:
+                for old in list(self.live_records(exclude=record)):
+                    identity = {
+                        name: ("v", name)
+                        for name in sb_variables(old.equation[0]) |
+                        sb_variables(old.equation[1])
+                    }
+                    seed = sb__Candidate(
+                        old.equation,
+                        [(old.identifier, (), False, identity)])
+                    simplified = self._simplify_candidate(seed, [record])
+                    if simplified.equation[:2] == old.equation[:2]:
+                        continue
+                    self.deactivate(old)
+                    self.stats["backward_simplifications"] += 1
+                    work.append((simplified, "backward"))
+        return first
+
+    def select(self):
+        passive = [record for record in self.live_records()
+                   if not record.selected]
+        if not passive:
+            return None
+        choose_age = (self.order in ("fifo", "age") or
+                      (self.order not in ("fifo", "age") and
+                       self.selections % self.age_ratio == self.age_ratio - 1))
+        if choose_age:
+            chosen = min(passive, key=lambda record: record.age)
+        else:
+            chosen = min(
+                passive,
+                key=lambda record: (
+                    sb_size(record.equation[0]) + sb_size(record.equation[1]),
+                    sb_term_weight(record.equation[0]) + sb_term_weight(record.equation[1]),
+                    len(record.equation[2]),
+                    record.age,
+                ),
+            )
+        chosen.selected = True
+        chosen.active = True
+        self.selections += 1
+        self.stats["selected"] = self.selections
+        return chosen
+
+    def run(self):
+        self.admit(sb_base_equation(self.left, self.right), origin="axiom",
+                   route=None)
+        while self.admitted < self.max_rules and not self.expired():
+            given = self.select()
+            if given is None:
+                break
+            active = [record for record in self.live_records()
+                      if record.active]
+            raw = []
+            for other in active:
+                if self.expired():
+                    break
+                self.fresh += 1
+                suffix = "#%d" % self.fresh
+                raw.extend(sb_ordered_superpositions(
+                    given.equation, other.equation, self.max_size, suffix,
+                    given.identifier, other.identifier))
+                if other is not given:
+                    self.fresh += 1
+                    suffix = "#%d" % self.fresh
+                    raw.extend(sb_ordered_superpositions(
+                        other.equation, given.equation, self.max_size, suffix,
+                        other.identifier, given.identifier))
+            for candidate in raw:
+                if self.admitted >= self.max_rules or self.expired():
+                    break
+                self.stats["raw_superpositions"] += 1
+                # Raw paths are checked separately from their simplified form.
+                if not self._track_candidate(candidate):
+                    continue
+                self.admit(candidate)
+        result = [record.equation for record in self.live_records()]
+        self.stats["live"] = len(result)
+        return result
+
+def sb_complete(left, right, max_size=15, max_rules=1200, deadline=None,
+             order="weight", dedup=None):
+    """Return proof-carrying consequences of ``left = right``.
+
+    The signature intentionally follows the reference ``sb_complete.complete``.
+    ``order='weight'`` uses a fair 5:1 weight/age ratio; ``fifo`` and ``age``
+    select strictly by age.
+    """
+
+    global LAST_STATS, LAST_SATURATION
+    saturation = sb_Saturation(left, right, max_size, max_rules, deadline,
+                            order, dedup)
+    result = saturation.run()
+    LAST_STATS = dict(saturation.stats)
+    LAST_SATURATION = saturation
+    return result
+
+def sb__path_variables(path):
+    result = set()
+    for _, _, sigma in path:
+        for value in sigma.values():
+            result |= sb_variables(value)
+    return result
+
+def sb_join_by_instance(rules, goal_left, goal_right, hypothesis_left,
+                     hypothesis_right, default=None):
+    if default is None:
+        default = goal_left if goal_left[0] == "c" else ("c", "x")
+    for equation in rules:
+        for left, right, path in sb_orientations(equation):
+            sigma = sb_match(left, goal_left, None)
+            if sigma is None:
+                continue
+            sigma = sb_match(right, goal_right, sigma)
+            if sigma is None:
+                continue
+            sigma = dict(sigma)
+            free = (sb__path_variables(path) | sb_variables(left) | sb_variables(right))
+            for name in free - set(sigma):
+                sigma[name] = default
+            concrete = [
+                (position, direction,
+                 {name: sb_subst(value, sigma) for name, value in step_sigma.items()})
+                for position, direction, step_sigma in path
+            ]
+            if sb__path_variables(concrete):
+                continue
+            try:
+                if sb_replay(goal_left, concrete, hypothesis_left,
+                          hypothesis_right) == goal_right:
+                    return concrete
+            except sb_ProofError:
+                continue
+    return None
+
+def sb_join_by_instance_records(saturation, goal_left, goal_right):
+    for record in saturation.live_records():
+        for reversed_side, (left, right, _) in enumerate(
+                sb_orientations(record.equation)):
+            sigma = sb_match(left, goal_left, None)
+            if sigma is None:
+                continue
+            sigma = sb_match(right, goal_right, sigma)
+            if sigma is None:
+                continue
+            use_sigma = {
+                name: sigma.get(name, ("v", name))
+                for name in sb_variables(record.equation[0]) |
+                sb_variables(record.equation[1])
+            }
+            route = [(record.identifier, (), bool(reversed_side), use_sigma)]
+            try:
+                if sb_replay_route(goal_left, route, saturation.records) == goal_right:
+                    return route
+            except sb_ProofError:
+                continue
+    return None
+
+def sb_join_by_normalising(rules, goal_left, goal_right, hypothesis_left,
+                        hypothesis_right, max_size=25, rounds=64):
+    left_nf, left_path = sb_normalise(
+        goal_left, rules, hypothesis_left, hypothesis_right, max_size, rounds)
+    right_nf, right_path = sb_normalise(
+        goal_right, rules, hypothesis_left, hypothesis_right, max_size, rounds)
+    if left_nf != right_nf:
+        return None
+    result = left_path + sb_invert(right_path)
+    try:
+        return result if sb_replay(goal_left, result, hypothesis_left,
+                                hypothesis_right) == goal_right else None
+    except sb_ProofError:
+        return None
+
+def sb_join_by_normalising_records(saturation, goal_left, goal_right,
+                                max_size=25, rounds=64):
+    records = list(saturation.live_records())
+    left_nf, _, left_route = sb_normalise_records(
+        goal_left, records, saturation.left, saturation.right,
+        max_size, rounds)
+    right_nf, _, right_route = sb_normalise_records(
+        goal_right, records, saturation.left, saturation.right,
+        max_size, rounds)
+    if left_nf != right_nf:
+        return None
+    route = left_route + sb_invert_route(right_route)
+    try:
+        return route if sb_replay_route(goal_left, route,
+                                     saturation.records) == goal_right else None
+    except sb_ProofError:
+        return None
+
+def sb_rule_steps(term, rules, max_size, cap, default=None):
+    count = 0
+    for equation in rules:
+        for left, right, path in sb_orientations(equation):
+            for position, actual in sb_positions(term):
+                sigma = sb_match(left, actual, None)
+                if sigma is None or sb_variables(right) - set(sigma):
+                    continue
+                result = sb_replace(term, position, sb_subst(right, sigma))
+                if sb_size(result) > max_size:
+                    continue
+                sigma = dict(sigma)
+                for name in sb__path_variables(path) - set(sigma):
+                    sigma[name] = default if default is not None else ("c", "x")
+                concrete = [
+                    (p, direction,
+                     {name: sb_subst(value, sigma)
+                      for name, value in step_sigma.items()})
+                    for p, direction, step_sigma in path
+                ]
+                if sb__path_variables(concrete):
+                    continue
+                yield result, sb_under(concrete, position)
+                count += 1
+                if count >= cap:
+                    return
+
+def sb__splice(forward, backward, meeting):
+    def chain(table, term):
+        segments = []
+        while table[term][0] is not None:
+            parent, path = table[term]
+            segments.append(path)
+            term = parent
+        segments.reverse()
+        return [step for segment in segments for step in segment]
+
+    head = chain(forward, meeting)
+    tail = []
+    term = meeting
+    while backward[term][0] is not None:
+        parent, path = backward[term]
+        tail.extend(sb_invert(path))
+        term = parent
+    return head + tail
+
+def sb_join_by_rewriting(rules, goal_left, goal_right, hypothesis_left,
+                      hypothesis_right, max_size=17, cap=400, max_steps=4,
+                      deadline=None):
+    if goal_left == goal_right:
+        return []
+    forward = {goal_left: (None, None)}
+    backward = {goal_right: (None, None)}
+    front, back = [goal_left], [goal_right]
+    for _ in range(max_steps):
+        for table, other, frontier, is_forward in (
+                (forward, backward, front, True),
+                (backward, forward, back, False)):
+            following = []
+            for term in frontier:
+                if deadline is not None and time.monotonic() > deadline:
+                    return None
+                for result, path in sb_rule_steps(
+                        term, rules, max_size, cap,
+                        default=goal_left if goal_left[0] == "c" else None):
+                    if result in table:
+                        continue
+                    table[result] = (term, path)
+                    if result in other:
+                        candidate = sb__splice(forward, backward, result)
+                        try:
+                            if sb_replay(goal_left, candidate, hypothesis_left,
+                                      hypothesis_right) == goal_right:
+                                return candidate
+                        except sb_ProofError:
+                            pass
+                    following.append(result)
+            if is_forward:
+                front = following
+            else:
+                back = following
+        if not front and not back:
+            break
+    return None
+
+def sb_join_by_pair(rules, goal_left, goal_right, hypothesis_left,
+                 hypothesis_right, deadline=None):
+    halves = []
+    for equation in rules:
+        for left, right, path in sb_orientations(equation):
+            if left[0] == "v":
+                halves.append((left[1], right, path))
+    left_matches = [(name, term, path, sigma)
+                    for name, term, path in halves
+                    for sigma in [sb_match(term, goal_left, None)]
+                    if sigma is not None]
+    for name1, term1, path1, sigma1 in left_matches:
+        if deadline is not None and time.monotonic() > deadline:
+            return None
+        for name2, term2, path2 in halves:
+            suffix = "@pair"
+            bridge = {name2 + suffix: ("v", name1)}
+            term2 = sb_subst(sb_rename(term2, suffix), bridge)
+            sigma = sb_match(term2, goal_right, dict(sigma1))
+            if sigma is None:
+                continue
+            path2 = [
+                (position, direction,
+                 {name: sb_subst(sb_rename(value, suffix), bridge)
+                  for name, value in step_sigma.items()})
+                for position, direction, step_sigma in path2
+            ]
+            path = sb_invert(path1) + path2
+            sigma = dict(sigma)
+            for name in sb__path_variables(path) - set(sigma):
+                sigma[name] = goal_left if goal_left[0] == "c" else ("c", "x")
+            concrete = [
+                (position, direction,
+                 {name: sb_subst(value, sigma) for name, value in step_sigma.items()})
+                for position, direction, step_sigma in path
+            ]
+            if sb__path_variables(concrete):
+                continue
+            try:
+                if sb_replay(goal_left, concrete, hypothesis_left,
+                          hypothesis_right) == goal_right:
+                    return concrete
+            except sb_ProofError:
+                continue
+    return None
+
+def sb_shorten(path, start, hypothesis_left, hypothesis_right):
+    steps = list(path)
+    terms = [start]
+    for step in steps:
+        terms.append(sb_replay(terms[-1], [step], hypothesis_left,
+                            hypothesis_right))
+    index = 0
+    while index < len(terms):
+        last = index
+        for other in range(len(terms) - 1, index, -1):
+            if terms[other] == terms[index]:
+                last = other
+                break
+        if last > index:
+            del terms[index + 1:last + 1]
+            del steps[index:last]
+        index += 1
+    return steps
+
+def sb_interreduce(rules, hypothesis_left, hypothesis_right, max_size,
+                window=None):
+    """Compatibility helper; the main loop already interreduces eagerly."""
+
+    selected = list(rules)
+    if window is not None:
+        selected = sorted(
+            selected, key=lambda eq: sb_size(eq[0]) + sb_size(eq[1]))[:window]
+    output = []
+    for index, equation in enumerate(selected):
+        others = selected[:index] + selected[index + 1:]
+        simplified = sb_simplify_equation(
+            equation, others, hypothesis_left, hypothesis_right, max_size)
+        if simplified[0] != simplified[1] and sb_proof_replays(
+                simplified, hypothesis_left, hypothesis_right):
+            output.append(simplified)
+    return output
+
+def sb_lean_term(term):
+    """Render without declaring notation or any parser/elaborator extension."""
+
+    if term[0] in ("v", "c"):
+        return term[1]
+    return "op (%s) (%s)" % (sb_lean_term(term[1]), sb_lean_term(term[2]))
+
+def sb__lean_arg(term):
+    rendered = sb_lean_term(term)
+    return rendered if term[0] != "o" else "(" + rendered + ")"
+
+def sb__context_lambda(term, position):
+    if not position:
+        return None
+    hole = ("c", "__hole")
+    body = sb_lean_term(sb_replace(term, position, hole)).replace("__hole", "t")
+    return "fun t => " + body
+
+def sb_route_closure(route, records):
+    needed = set()
+    stack = [record_id for record_id, _, _, _ in route]
+    while stack:
+        record_id = stack.pop()
+        if record_id in needed:
+            continue
+        needed.add(record_id)
+        parent_route = records[record_id].route
+        if parent_route is not None:
+            stack.extend(parent for parent, _, _, _ in parent_route)
+    return sorted(needed)
+
+def sb__instantiate_route(route, own_variables, names):
+    """Rename a lemma's sb_variables and pin proof-only sb_variables consistently."""
+
+    mapping = {old: ("c", new) for old, new in zip(own_variables, names)}
+    used = set()
+    for _, _, _, sigma in route:
+        for value in sigma.values():
+            used |= sb_variables(value)
+    pin = ("c", names[0])
+    for loose in used - set(own_variables):
+        mapping[loose] = pin
+    return [
+        (record_id, position, flipped,
+         {name: sb_subst(value, mapping) for name, value in sigma.items()})
+        for record_id, position, flipped, sigma in route
+    ], mapping
+
+def sb__lemma_proof(record_id, flipped, sigma, records, lemma_variables,
+                 hypothesis_variables):
+    if record_id == 0:
+        name = "h"
+        variables_order = hypothesis_variables
+    else:
+        name = "lem%d" % record_id
+        variables_order = lemma_variables[record_id]
+    args = []
+    for variable in variables_order:
+        value = sigma.get(variable)
+        if value is None:
+            raise sb_ProofError("lemma %d has unbound variable %s" %
+                             (record_id, variable))
+        args.append(sb__lean_arg(value))
+    proof = name + ((" " + " ".join(args)) if args else "")
+    if flipped:
+        proof = "(" + proof + ").symm"
+    return proof
+
+def sb__calc_lines(start, route, records, lemma_variables,
+                hypothesis_variables, indent=""):
+    if not route:
+        return [indent + "rfl"]
+    lines = [indent + "calc"]
+    current = start
+    first = True
+    for record_id, position, flipped, sigma in route:
+        left, right, _ = records[record_id].equation
+        source, target = (right, left) if flipped else (left, right)
+        actual = sb_subterm(current, position)
+        if actual != sb_subst(source, sigma):
+            raise sb_ProofError("compressed Lean route does not sb_match its redex")
+        following = sb_replace(current, position, sb_subst(target, sigma))
+        proof = sb__lemma_proof(record_id, flipped, sigma, records,
+                             lemma_variables, hypothesis_variables)
+        context = sb__context_lambda(current, position)
+        if context is not None:
+            proof = "congrArg (%s) (%s)" % (context, proof)
+        lhs = sb_lean_term(current) if first else "_"
+        lines.append(indent + "  %s = %s := %s" %
+                     (lhs, sb_lean_term(following), proof))
+        current = following
+        first = False
+    return lines
+
+def sb_emit_lean_dag(saturation, goal_route, goal_left, goal_right,
+                  hypothesis_variables, goal_variables):
+    """Emit a lemma-sharing proof body and validate every compressed route.
+
+    Record zero is the original hypothesis and is emitted as applications of
+    ``h``.  Every other record in the transitive dependency closure becomes one
+    ``have``.  No macros, notation, tactics, or elaborator extensions are used.
+    """
+
+    records = saturation.records
+    closure = sb_route_closure(goal_route, records)
+    lemma_variables = {
+        record_id: sorted(sb_variables(records[record_id].equation[0]) |
+                          sb_variables(records[record_id].equation[1]))
+        for record_id in closure
+    }
+    lines = []
+    for record_id in closure:
+        if record_id == 0:
+            continue
+        record = records[record_id]
+        if record.route is None:
+            raise sb_ProofError("derived lemma %d has no compressed proof" % record_id)
+        own = lemma_variables[record_id]
+        binder_names = ["a%d" % index for index in range(len(own))]
+        if not binder_names:
+            binder_names = ["_a"]
+        route, mapping = sb__instantiate_route(record.route, own, binder_names)
+        left = sb_subst(record.equation[0], mapping)
+        right = sb_subst(record.equation[1], mapping)
+        if sb_replay_route(left, route, records) != right:
+            raise sb_ProofError("renamed compressed lemma %d does not sb_replay" %
+                             record_id)
+        binders = " ".join(binder_names)
+        lines.append("have lem%d : ∀ %s : G, %s = %s := by" %
+                     (record_id, binders, sb_lean_term(left), sb_lean_term(right)))
+        lines.append("  intro " + binders)
+        lines.extend(sb__calc_lines(left, route, records, lemma_variables,
+                                 hypothesis_variables, indent="  "))
+
+    if sb_replay_route(goal_left, goal_route, records) != goal_right:
+        raise sb_ProofError("goal's compressed route does not sb_replay")
+    if goal_variables:
+        lines.append("intro " + " ".join(goal_variables))
+    lines.extend(sb__calc_lines(goal_left, goal_route, records, lemma_variables,
+                             hypothesis_variables))
+    return "\n".join(lines), len(closure)
+
+def sb_emit_lean_theorem(problem, proof_body, theorem_name="generated_proof"):
+    """Wrap a compressed body in a standalone theorem for local checking."""
+
+    left, right, goal_left, goal_right, hypothesis_variables, goal_variables = (
+        sb_prepare(problem))
+    hbinders = " ".join(hypothesis_variables)
+    gbinders = " ".join(goal_variables)
+    hypothesis = "∀ %s : G, %s = %s" % (
+        hbinders, sb_lean_term(left), sb_lean_term(right))
+    goal = "∀ %s : G, %s = %s" % (
+        gbinders, sb_lean_term(goal_left), sb_lean_term(goal_right))
+    indented = "\n".join("  " + line for line in proof_body.splitlines())
+    return ("theorem %s {G : Type} (op : G → G → G) "
+            "(h : %s) : %s := by\n%s\n" %
+            (theorem_name, hypothesis, goal, indented))
+
+def sb_parse_variables(text):
+    seen, result = set(), []
+    for name in re.findall(r"\b([a-z])\b", text):
+        if name not in seen:
+            seen.add(name)
+            result.append(name)
+    return result
+
+def sb_prepare(problem):
+    equation1 = problem["equation1"]
+    equation2 = problem["equation2"]
+    hypothesis_variables = sb_parse_variables(equation1)
+    goal_variables = sb_parse_variables(equation2)
+    left, right = [sb_parse(side.strip(), set(hypothesis_variables))
+                   for side in equation1.split("=")]
+    goal_left, goal_right = [sb_parse(side.strip(), set())
+                             for side in equation2.split("=")]
+    return (left, right, goal_left, goal_right,
+            hypothesis_variables, goal_variables)
+
+def sb_prove(problem, budget=12.0, max_size=17, max_rules=2000,
+          order="weight"):
+    """Attempt a proof and return a result dictionary.
+
+    ``status`` is ``proved`` or ``unknown``.  No negative semantic claim is
+    made: finite model search is deliberately outside this prover's scope.
+    """
+
+    (left, right, goal_left, goal_right,
+     hypothesis_variables, goal_variables) = sb_prepare(problem)
+    started = time.monotonic()
+    deadline = started + budget if budget is not None else None
+    # Preserve time for the goal phase.  sb_Saturation commonly has a nonempty
+    # passive set even after it has already derived the one small lemma needed
+    # by the goal; spending the entire clock there would hide that success.
+    saturation_deadline = (started + budget * 0.8
+                           if budget is not None else None)
+    rules = sb_complete(left, right, max_size, max_rules,
+                     saturation_deadline, order)
+    saturation = LAST_SATURATION
+    route_methods = (
+        ("instance", lambda: sb_join_by_instance_records(
+            saturation, goal_left, goal_right)),
+        ("sb_normalise", lambda: sb_join_by_normalising_records(
+            saturation, goal_left, goal_right,
+            max_size=max(max_size, sb_size(goal_left), sb_size(goal_right)))),
+    )
+    flat_methods = (
+        ("pair", lambda: sb_join_by_pair(
+            rules, goal_left, goal_right, left, right, deadline)),
+        ("rewrite", lambda: sb_join_by_rewriting(
+            rules, goal_left, goal_right, left, right,
+            max_size=max(max_size, sb_size(goal_left), sb_size(goal_right)),
+            deadline=deadline)),
+    )
+    path = None
+    route = None
+    method = None
+    for name, join in route_methods:
+        route = join()
+        if route is not None:
+            method = name
+            path = sb_unfold_route(route, saturation.records)
+            break
+    if path is None:
+        for name, join in flat_methods:
+            if deadline is not None and time.monotonic() > deadline:
+                break
+            path = join()
+            if path is not None:
+                method = name
+                break
+    elapsed = time.monotonic() - started
+    stats = dict(LAST_STATS)
+    stats["rules_returned"] = len(rules)
+    if path is None:
+        return {"status": "unknown", "seconds": elapsed,
+                "method": None, "path": None, "route": None, "lean": None,
+                "stats": stats}
+    stats["paths_produced"] = stats.get("paths_produced", 0) + 1
+    try:
+        replayed = sb_replay(goal_left, path, left, right) == goal_right
+    except sb_ProofError:
+        replayed = False
+    if replayed:
+        stats["paths_replayed"] = stats.get("paths_replayed", 0) + 1
+        path = sb_shorten(path, goal_left, left, right)
+        lean = None
+        if route is not None:
+            try:
+                lean, lemma_count = sb_emit_lean_dag(
+                    saturation, route, goal_left, goal_right,
+                    hypothesis_variables, goal_variables)
+                stats["dag_lemmas"] = lemma_count
+                stats["certificate_bytes"] = len(lean.encode("utf-8"))
+            except sb_ProofError:
+                stats["dag_path_failures"] = (
+                    stats.get("dag_path_failures", 0) + 1)
+        return {"status": "proved", "seconds": elapsed,
+                "method": method, "path": path, "route": route,
+                "lean": lean, "stats": stats}
+    stats["path_failures"] = stats.get("path_failures", 0) + 1
+    return {"status": "unknown", "seconds": elapsed,
+            "method": None, "path": None, "route": None, "lean": None,
+            "stats": stats}
+
+def sb__jsonable_term(term):
+    return [sb__jsonable_term(item) if isinstance(item, tuple) else item
+            for item in term]
+
+def sb__jsonable_path(path):
+    if path is None:
+        return None
+    return [[list(position), direction,
+             {name: sb__jsonable_term(value) for name, value in sigma.items()}]
+            for position, direction, sigma in path]
+
+# ── ordered superposition ────────────────────────────────────────────
+#
+# A given-clause loop with a Knuth-Bendix ordering, forward and backward
+# demodulation inside the loop, and subsumption. It reaches lemmas the
+# critical-pair search above cannot: the size test used there forbids rewrites
+# that do not shrink the term, and some proofs live exactly there.
+#
+# Its certificates are emitted from the inference DAG rather than flattened --
+# each derived lemma stated once as a `have` and cited. On the hardest problem
+# in this set that is 13,728 bytes against 3,634,949 for the same proof written
+# out flat, so the compression is what makes it submittable at all.
+
+
+def prove_superposition(problem, eq1_text, eq2_text, budget):
+    """A Lean proof body, or None. Body references `op`, so the wrapper binds it."""
+    prob = {"id": problem.get("id", "p"),
+            "eq1_id": problem.get("eq1_id"), "eq2_id": problem.get("eq2_id"),
+            "equation1": eq1_text, "equation2": eq2_text}
+    result = sb_prove(prob, budget, 20, 4000, "weight")
+    if result.get("status") != "proved":
+        return None
+    body = result.get("lean")
+    if not body or len(body.encode()) > MAX_CERT_BYTES:
+        return None
+    return body
+
+
+def true_code_op(body):
+    """`true_code`, plus the `op` binding the DAG emitter's bodies refer to."""
+    return ("import JudgeProblem\n\n"
+            "def submission : Goal := by\n"
+            "  intro G _ h\n"
+            "  let op : G \u2192 G \u2192 G := fun a b => a \u25c7 b\n"
+            + "\n".join("  " + l for l in body.split("\n")) + "\n")
 
 
 def solve_one(problem):
