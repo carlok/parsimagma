@@ -69,11 +69,17 @@ nodes and stalls there. Six thousand derived equations, term-size ceilings from
 13 to 21, goal-biased selection, five-step goal rewriting and singleton
 detection all return nothing on them.
 
-The honest gap is that this is completion without simplification: derived
-equations are never normalised against one another, so the set fills with
-reducible consequences. A proper unfailing-completion loop with a Knuth-Bendix
-ordering and forward and backward simplification is the standard answer and is
-not implemented here. And the search is not saturating, so a negative means
-"not found within the budget", never "no proof exists".
+Simplification was the obvious missing piece and it turned out not to be the
+answer. Normalising each critical pair against what is already derived, and
+dropping it when both sides meet, is implemented and sound — every stored path
+still replays. On these four it drops 26 to 1,115 pairs as redundant and keeps
+2 to 35. That is the interesting part: **at term size 15 the theory is very
+nearly confluent, and its whole non-redundant content is a few dozen
+equations.** The goal is not among them, and raising the ceiling to 23 or 31
+does not change that. So the proof, if it exists, needs either much larger
+terms or a route that is not size-reducing.
+
+The search is not saturating in any case, so a negative here means "not found
+within the budget", never "no proof exists".
 
 Readable, unprefixed sources are in [../prover](../prover).
