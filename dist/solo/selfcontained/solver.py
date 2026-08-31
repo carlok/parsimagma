@@ -324,8 +324,20 @@ def pv_invert(pv_steps):
             for (p, tag, s) in reversed(pv_steps)]
 
 
-def pv_under(pv_steps, prefix):
-    return [(tuple(prefix) + p, tag, s) for (p, tag, s) in pv_steps]
+def pv_under(pv_steps, at):
+    return [(tuple(at) + p, tag, s) for (p, tag, s) in pv_steps]
+
+
+def pv_apply_match(pv_steps, s):
+    """Instantiate a path by a *matching* substitution.
+
+    `pv_apply_subst` resolves through a triangular unifier, which is right for a
+    critical pair but wrong here: a pv_match binds `x` to a term that may itself
+    contain `x`, and resolving that walks forever. A pv_match is already flat, so
+    substitute once.
+    """
+    return [(p, tag, {k: pv_subst(v, s) for k, v in sub.items()})
+            for (p, tag, sub) in pv_steps]
 
 
 def pv_apply_subst(pv_steps, sigma):
@@ -391,7 +403,7 @@ def pv_normalise(t, rules, L, R, max_size, rounds=60):
                         continue          # would need to invent a term
                     new = pv_replace(t, p, pv_subst(dst, s))
                     if pv_size(new) < pv_size(t) and (best is None or pv_size(new) < pv_size(best[0])):
-                        best = (new, pv_under(pv_apply_subst(path, s), p))
+                        best = (new, pv_under(pv_apply_match(path, s), p))
         if best is None:
             break
         t, extra = best
@@ -516,7 +528,7 @@ def pv_join_by_instance(rules, GL, GR, L, R, default=None):
     per derived equation.
 
     Variables the pv_match leaves free are pinned to `default`. They are genuinely
-    arbitrary (the law pv_holds for every value), but they must become concrete:
+    arbitrary (the law holds for every value), but they must become concrete:
     an unpinned variable would reach the emitter as a name Lean has never
     heard of.
     """
@@ -548,13 +560,16 @@ def pv_join_by_instance(rules, GL, GR, L, R, default=None):
     return None
 
 
-def pv_rule_steps(t, rules, max_size, cap):
+def pv_rule_steps(t, rules, max_size, cap, default=None):
     """One-step rewrites of t by any derived equation, with the proof spliced in.
 
-    A derived equation may only be used where the pv_match binds every variable of
-    the side being introduced. Inventing a term for an unbound variable is what
-    made the naive goal pv_search explode, and the derived set is large enough that
-    it is not needed.
+    The side being introduced must be fully bound by the pv_match — inventing a
+    term for an unbound variable is what made the naive goal pv_search explode.
+    But a *path* may mention pv_variables the pv_match never sees, and those are
+    genuinely arbitrary: the law holds for every value. Refusing them, as an
+    earlier version did, threw away usable lemmas — including `x ◇ y = x`,
+    which is the whole proof for one of these problems. Pin them instead, the
+    way `pv_join_by_instance` already does.
     """
     n = 0
     for (a, b, pv_steps) in rules:
@@ -563,18 +578,22 @@ def pv_rule_steps(t, rules, max_size, cap):
                 s = pv_match(lhs, sub, None)
                 if s is None:
                     continue
-                free = set(pv_variables(rhs)) - set(s)
-                for (_, _, ss) in path:
-                    for v in ss.values():
-                        free |= pv_variables(v)
-                free -= set(s)
-                if free:
-                    continue
+                if set(pv_variables(rhs)) - set(s):
+                    continue                    # would have to invent the result
                 new = pv_replace(t, p, pv_subst(rhs, s))
                 if pv_size(new) > max_size:
                     continue
-                concrete = [(pp, tag, {k: pv_subst(v, s) for k, v in ss.items()})
+                free = set()
+                for (_, _, ss) in path:
+                    for v in ss.values():
+                        free |= pv_variables(v)
+                s2 = dict(s)
+                for v in free - set(s2):
+                    s2[v] = default if default is not None else ("c", "x")
+                concrete = [(pp, tag, {k: pv_subst(v, s2) for k, v in ss.items()})
                             for (pp, tag, ss) in path]
+                if any(pv_variables(v) for (_, _, ss) in concrete for v in ss.values()):
+                    continue
                 yield new, pv_under(concrete, p)
                 n += 1
                 if n >= cap:
@@ -596,7 +615,8 @@ def pv_join_by_rewriting(rules, GL, GR, L, R, max_size=17, cap=400,
             for t in frontier:
                 if deadline is not None and time.monotonic() > deadline:
                     return None
-                for new, sub_path in pv_rule_steps(t, rules, max_size, cap):
+                for new, sub_path in pv_rule_steps(t, rules, max_size, cap,
+                                                default=GL if GL[0] == 'c' else None):
                     if new in side:
                         continue
                     side[new] = (t, sub_path)
@@ -710,97 +730,311 @@ def pv_shorten(path, start, L, R):
         i += 1
     return pv_steps
 
+
+def pv_interreduce(rules, L, R, max_size, window=120):
+    """Normalise every derived equation against the smallest of the set.
+
+    This is where a lemma like `x ◇ y = x` actually appears: not as a critical
+    pair, but as what a critical pair becomes once its sides are reduced. The
+    normalisation pv_steps are spliced into the stored path, so the result is
+    still proof-carrying.
+    """
+    small = sorted(rules, key=lambda e: pv_size(e[0]) + pv_size(e[1]))[:window]
+    out = []
+    for (a, b, pv_steps) in rules:
+        try:
+            a2, sa = pv_normalise(a, small, L, R, max_size)
+            b2, sb = pv_normalise(b, small, L, R, max_size)
+        except Exception:
+            continue
+        if a2 == b2:
+            continue
+        path = pv_invert(sa) + pv_steps + sb
+        if pv_replay(a2, path, L, R) == b2:
+            out.append((a2, b2, path))
+    return out
+
+
+def pv_join_by_normalising(rules, GL, GR, L, R, max_size=25, rounds=8):
+    """Reduce both sides of the goal with the derived equations and see if they
+    meet.
+
+    Cheaper and stronger than searching over the goal: when the theory collapses
+    to something like left projection, the goal's big side simply reduces to its
+    small one, and breadth-first rewriting never gets there because each rule
+    application drags a long proof behind it.
+    """
+    a, sa = pv_normalise(GL, rules, L, R, max_size, rounds=rounds)
+    b, sb = pv_normalise(GR, rules, L, R, max_size, rounds=rounds)
+    if a != b:
+        return None
+    path = sa + pv_invert(sb)
+    return path if pv_replay(GL, path, L, R) == GR else None
+
+
+def pv_normalising_route(rules, GL, GR, L, R, max_size=25, rounds=8):
+    """Same as `pv_join_by_normalising`, but keep the rule applications intact.
+
+    Returning the flattened h-pv_steps loses the fact that a goal is often one
+    derived lemma applied three times. Inlined, that is hundreds of pv_steps over
+    huge terms — 108 KB against a 100 KB cap on one problem here. Kept as
+    (equation, position, direction, substitution) the same proof states the
+    lemma once and applies it, which is both smaller and what a person would
+    write.
+
+    Returns (uses, lemmas) or None, where each use names the lemma it applies.
+    """
+    def reduce_side(t):
+        uses = []
+        for _ in range(rounds):
+            best = None
+            for i, (el, er, es) in enumerate(rules):
+                for src, dst, flip in ((el, er, False), (er, el, True)):
+                    for p, sub in pv_positions(t):
+                        s = pv_match(src, sub, None)
+                        if s is None or set(pv_variables(dst)) - set(s):
+                            continue
+                        new = pv_replace(t, p, pv_subst(dst, s))
+                        if pv_size(new) < pv_size(t) and (best is None or pv_size(new) < pv_size(best[0])):
+                            best = (new, i, p, flip, s)
+            if best is None:
+                break
+            t, i, p, flip, s = best
+            uses.append((i, p, flip, s))
+        return t, uses
+
+    a, ua = reduce_side(GL)
+    b, ub = reduce_side(GR)
+    if a != b:
+        return None
+    return ua, ub
+
 PV_UNKNOWN = -1
 
-
-def pv_compile_term(term, varnames):
-    """Term -> a closure over (table, n, assignment) returning an element or PV_UNKNOWN."""
-    if term[0] in ("v", "c"):
-        i = varnames.index(term[1])
-        return lambda tbl, n, a, i=i: a[i]
-    left = pv_compile_term(term[1], varnames)
-    right = pv_compile_term(term[2], varnames)
-
-    def ev(tbl, n, a):
-        x = left(tbl, n, a)
-        if x is PV_UNKNOWN or x < 0:
-            return PV_UNKNOWN
-        y = right(tbl, n, a)
-        if y is PV_UNKNOWN or y < 0:
-            return PV_UNKNOWN
-        return tbl[x * n + y]
-    return ev
+PV_STATS = {"instances_woken": 0, "node_evals": 0, "cell_trials": 0,
+         "nodes": 0, "propagations": 0, "conflicts": 0}
 
 
-def pv_holds(lhs, rhs, tbl, n, nvars):
-    """True when every assignment satisfies lhs = rhs. Undetermined cells fail
-    closed: a law is only reported as holding on a pv_complete table."""
-    for a in product(range(n), repeat=nvars):
-        u, v = lhs(tbl, n, a), rhs(tbl, n, a)
-        if u < 0 or v < 0 or u != v:
-            return False
-    return True
+def pv_flatten(lhs, rhs, varnames):
+    """Both sides into one straight-line program, lhs nodes first.
+
+    prog[i] = (0, varindex, 0) | (1, childA, childB), topologically ordered.
+    """
+    prog, memo = [], {}
+
+    def go(t):
+        key = t
+        if key in memo:
+            return memo[key]
+        if t[0] in ("v", "c"):
+            idx = len(prog)
+            prog.append((0, varnames.index(t[1]), 0))
+        else:
+            a = go(t[1])
+            b = go(t[2])
+            idx = len(prog)
+            prog.append((1, a, b))
+        memo[key] = idx
+        return idx
+
+    lroot = go(lhs)
+    rroot = go(rhs)
+    return prog, lroot, rroot
 
 
-def pv_fails(lhs, rhs, tbl, n, nvars):
-    for a in product(range(n), repeat=nvars):
-        u, v = lhs(tbl, n, a), rhs(tbl, n, a)
-        if u >= 0 and v >= 0 and u != v:
-            return True
-    return False
+def pv_square_order(n):
+    """Cells grouped by max(i, j): keeps the set of elements mentioned by the
+    partial table a short prefix for as long as possible, which is what makes
+    the isomorphism cut bite."""
+    out = []
+    for d in range(n):
+        out.append(d * n + d)
+        for j in range(d):
+            out.append(d * n + j)
+        for i in range(d):
+            out.append(i * n + d)
+    return out
 
 
-def pv_violated(lhs, rhs, tbl, n, nvars):
-    """Some fully determined instance of the law is already false."""
-    for a in product(range(n), repeat=nvars):
-        u, v = lhs(tbl, n, a), rhs(tbl, n, a)
-        if u >= 0 and v >= 0 and u != v:
-            return True
-    return False
+def pv_search_size(n, prog, lroot, rroot, nvars, gprog, glroot, grroot, gnvars,
+                deadline, stats=False, iso=True):
+    ncells = n * n
+    order = pv_square_order(n) if iso else list(range(ncells))
+    nprog = len(prog)
+    tbl = [PV_UNKNOWN] * ncells
+    insts = list(product(range(n), repeat=nvars))
+    ninst = len(insts)
+    val = [0] * nprog
+    wcell = [-1] * ninst
+    state = [0] * ninst          # 0 = still undetermined, 1 = retired
+    watch = [[] for _ in range(ncells)]
+    trail = []
+    pending = [ninst]
+    mx = [-1]              # largest element occurring anywhere in the partial table
 
+    def setcell(c, v):
+        tbl[c] = v
+        trail.append((2, c, mx[0]))
+        i, j = divmod(c, n)
+        m = mx[0]
+        if i > m: m = i
+        if j > m: m = j
+        if v > m: m = v
+        mx[0] = m
 
-def pv_search_size(n, h, g, deadline):
-    """Fill the n x n table cell by cell, pruning on any pv_violated instance of h."""
-    hl, hr, hn = h
-    gl, gr, gn = g
-    tbl = [PV_UNKNOWN] * (n * n)
-    cells = n * n
+    def evaluate(i):
+        """(-1, 0) when fully determined, else (node index, cell) it blocks on."""
+        base = insts[i]
+        for idx in range(nprog):
+            k, a, b = prog[idx]
+            if k == 0:
+                val[idx] = base[a]
+            else:
+                c = val[a] * n + val[b]
+                t = tbl[c]
+                if t < 0:
+                    return idx, c
+                val[idx] = t
+        return -1, 0
 
-    def rec(k):
+    if stats:
+        _ev = evaluate
+        def evaluate(i, _ev=_ev):
+            PV_STATS["node_evals"] += nprog
+            return _ev(i)
+
+    def process(c, queue):
+        lst = watch[c]
+        j = 0
+        while j < len(lst):
+            i = lst[j]; j += 1
+            if state[i] or wcell[i] != c:
+                continue
+            if stats: PV_STATS["instances_woken"] += 1
+            blk, cc = evaluate(i)
+            if blk < 0:
+                if val[lroot] != val[rroot]:
+                    if stats: PV_STATS["conflicts"] += 1
+                    return False
+                state[i] = 1; wcell[i] = -1
+                trail.append((1, i, c)); pending[0] -= 1
+            elif blk == rroot and lroot < rroot:
+                # evaluation reached the last node, so every earlier node -- the
+                # other side's root included -- already has a value: this cell
+                # has exactly one admissible value rather than n.
+                setcell(cc, val[lroot]); queue.append(cc)
+                if stats: PV_STATS["propagations"] += 1
+                state[i] = 1; wcell[i] = -1
+                trail.append((1, i, c)); pending[0] -= 1
+            elif blk == lroot and rroot < lroot:
+                setcell(cc, val[rroot]); queue.append(cc)
+                if stats: PV_STATS["propagations"] += 1
+                state[i] = 1; wcell[i] = -1
+                trail.append((1, i, c)); pending[0] -= 1
+            else:
+                wcell[i] = cc; watch[cc].append(i)
+                trail.append((0, i, c, cc))
+        return True
+
+    def propagate(queue):
+        while queue:
+            c = queue.pop()
+            if not process(c, queue):
+                return False
+        return True
+
+    def undo(mark):
+        while len(trail) > mark:
+            e = trail.pop()
+            if e[0] == 0:
+                _, i, old, new = e
+                watch[new].pop(); wcell[i] = old
+            elif e[0] == 1:
+                _, i, c = e
+                state[i] = 0; wcell[i] = c; pending[0] += 1
+            else:
+                tbl[e[1]] = PV_UNKNOWN; mx[0] = e[2]
+
+    # park every instance on the cell it first blocks on
+    for i in range(ninst):
+        blk, cc = evaluate(i)
+        if blk < 0:
+            if val[lroot] != val[rroot]:
+                return None
+            state[i] = 1; pending[0] -= 1
+        else:
+            wcell[i] = cc; watch[cc].append(i)
+
+    gn = len(gprog)
+    gval = [0] * gn
+    ginsts = list(product(range(n), repeat=gnvars))
+
+    def goal_fails():
+        for base in ginsts:
+            for idx in range(gn):
+                k, a, b = gprog[idx]
+                gval[idx] = base[a] if k == 0 else tbl[gval[a] * n + gval[b]]
+            if gval[glroot] != gval[grroot]:
+                return True
+        return False
+
+    def rec(start):
+        if stats: PV_STATS["nodes"] += 1
         if deadline is not None and time.monotonic() > deadline:
             raise TimeoutError
-        if k == cells:
-            return pv_holds(hl, hr, tbl, n, hn) and pv_fails(gl, gr, tbl, n, gn)
-        for v in range(n):
-            tbl[k] = v
-            if not pv_violated(hl, hr, tbl, n, hn) and rec(k + 1):
+        p = start
+        while p < ncells and tbl[order[p]] != PV_UNKNOWN:
+            p += 1
+        if p == ncells:
+            return pending[0] == 0 and goal_fails()
+        k = order[p]
+        i, j = divmod(k, n)
+        # mx[0] tracks every element the partial table mentions, including cells
+        # written by propagation ahead of the cursor.  Elements above me+1 occur
+        # nowhere, so they are interchangeable and one representative suffices.
+        me = mx[0]
+        if i > me: me = i
+        if j > me: me = j
+        top = min(n - 1, me + 1) if iso else n - 1
+        for v in range(top + 1):
+            if stats: PV_STATS["cell_trials"] += 1
+            mark = len(trail)
+            setcell(k, v)
+            if propagate([k]) and rec(p + 1):
                 return True
-            tbl[k] = PV_UNKNOWN
+            undo(mark)
         return False
 
     try:
-        return tbl if rec(0) else None
+        return tbl[:] if rec(0) else None
     except TimeoutError:
         return None
 
 
 def pv_find_counterexample(eq1_text, eq2_text, parse_vars, parse_term,
-                        sizes=(2, 3, 4, 5, 6, 7), budget=45.0):
-    """Smallest n in `sizes` carrying a model of eq1 that breaks eq2."""
+                        sizes=(2, 3, 4, 5, 6, 7), budget=45.0, stats=False,
+                        per_size=None, iso=True):
+    """Smallest n in `sizes` carrying a model of eq1 that breaks eq2.
+
+    `per_size` gives each carrier its own budget instead of sharing one pool,
+    so a hard small carrier cannot starve the larger ones.
+    """
     t0 = time.monotonic()
     v1, v2 = parse_vars(eq1_text), parse_vars(eq2_text)
     allv = v1 + [v for v in v2 if v not in v1]
     l1, r1 = [parse_term(s.strip(), set(allv)) for s in eq1_text.split("=")]
     l2, r2 = [parse_term(s.strip(), set(allv)) for s in eq2_text.split("=")]
-    h = (pv_compile_term(l1, allv), pv_compile_term(r1, allv), len(allv))
-    g = (pv_compile_term(l2, allv), pv_compile_term(r2, allv), len(allv))
+    prog, lroot, rroot = pv_flatten(l1, r1, allv)
+    gprog, glroot, grroot = pv_flatten(l2, r2, allv)
     for n in sizes:
-        # a bigger carrier costs n^(n*n) in the worst case; give the tail of the
-        # budget to the sizes that can still finish
         left = budget - (time.monotonic() - t0)
         if left <= 0.5:
             break
-        tbl = pv_search_size(n, h, g, time.monotonic() + left)
+        # per_size caps what one carrier may spend; the total budget still
+        # binds, otherwise a long `sizes` list overruns the caller's deadline.
+        dl = time.monotonic() + (min(left, per_size) if per_size is not None else left)
+        tbl = pv_search_size(n, prog, lroot, rroot, len(allv),
+                          gprog, glroot, grroot, len(allv), dl, stats, iso)
         if tbl is not None:
             return n, [tbl[i * n:(i + 1) * n] for i in range(n)]
     return None, None
@@ -811,12 +1045,23 @@ TABLE_MAX_CARRIER = 10          # finOpTable reads one character per entry
 
 
 def false_code(n, table):
+    """A counterexample certificate.
+
+    `decideFin!` evaluates the law at every point of the carrier, and past
+    carrier 5 that overruns Lean's default recursion limit: the judge answers
+    "maximum recursion depth has been reached" rather than rejecting the model,
+    so a perfectly good counterexample is thrown away. Raising the limit is a
+    `set_option` -- not banned, not an axiom, and the kernel still checks the
+    same term.
+    """
     rows = "[" + ", ".join("[" + ", ".join(str(v) for v in r) + "]" for r in table) + "]"
+    opt = "set_option maxRecDepth 8000 in\n" if n >= 6 else ""
     return (
         "import JudgeProblem\n"
         "import JudgeDecide.DecideBang\n"
         "import JudgeFinOp.MemoFinOp\n"
         "open MemoFinOp\n\n"
+        + opt +
         "def submission : Goal := by\n"
         "  let m : Magma (Fin %d) := {\n"
         "    op := finOpTable \"%s\"\n"
@@ -890,7 +1135,8 @@ def prep(eq1_text, eq2_text):
 
 def find_model(eq1_text, eq2_text, sizes, budget):
     n, table = pv_find_counterexample(eq1_text, eq2_text, parse_variables, pv_parse,
-                                      sizes=sizes, budget=budget)
+                                      sizes=sizes, budget=budget,
+                                      per_size=max(3.0, budget / max(2, len(sizes))))
     if n is None or n > TABLE_MAX_CARRIER:
         return None
     return false_code(n, table)
@@ -938,6 +1184,33 @@ def prove(eq1_text, eq2_text, budget, rewriting=False):
     return None
 
 
+def prove_by_normalising(eq1_text, eq2_text, budget):
+    """Interreduce the derived set, then reduce both goal sides to a common form.
+
+    Kept as its own stage rather than folded into `prove`: interreducing a
+    1,500-equation set is seconds of work on its own, and sharing `prove`'s
+    slice starved it of the time it needs.
+
+    This is where a lemma like `x ◇ y = x` shows up — not as a critical pair,
+    but as what one becomes once its sides are reduced. The proof is then that
+    lemma applied a few times, so it is emitted as a `have` and applied rather
+    than inlined: on one problem here that is the difference between 108,238
+    bytes and 4,567, against a 100,000-byte cap.
+    """
+    L, R, GL, GR, hv, gv = prep(eq1_text, eq2_text)
+    t0 = time.monotonic()
+    rules = pv_complete(L, R, max_size=15, max_rules=1500,
+                        deadline=t0 + budget * 0.35)
+    rules = rules + pv_interreduce(rules, L, R, 15)
+    route = pv_normalising_route(rules, GL, GR, L, R)
+    if route is None:
+        return None
+    body = emit_with_lemmas(route[0], route[1], rules, GL, GR, L, R, hv, gv)
+    if body is None or len(body.encode()) > MAX_CERT_BYTES:
+        return None
+    return body
+
+
 def prove_collapse(eq1_text, eq2_text, budget):
     """Prove the law forces a singleton, then read the goal off that."""
     L, R, GL, GR, hv, gv = prep(eq1_text, eq2_text)
@@ -972,15 +1245,99 @@ def main():
     # before paying for a table search that a true implication can never end.
     for args in ((prove, eq1, eq2, 14.0),
                  (prove_collapse, eq1, eq2, 10.0),
+                 (prove_by_normalising, eq1, eq2, 60.0),
                  (prove, eq1, eq2, 22.0, True)):
         body = attempt(*args)
         if body and call_judge("true", true_code(body)).get("status") == "accepted":
             return
 
-    code = attempt(find_model, eq1, eq2, (4, 5, 6, 7), 45.0)
+    code = attempt(find_model, eq1, eq2, (4, 5, 6, 7), 240.0)
     if code:
         call_judge("false", code)
 
+
+
+def emit_with_lemmas(uses_l, uses_r, rules, GL, GR, L, R, hv, gv):
+    """A proof that states each derived lemma once and then applies it.
+
+    `emit` inlines every hypothesis application, which is right for a short
+    chain and ruinous when the same lemma is used three times over large terms.
+    Here each lemma becomes a `have` proved by its own calc chain, and the goal
+    is a calc chain over lemma applications.
+    """
+    used = sorted({i for (i, _, _, _) in uses_l + uses_r})
+    lines, names = [], {}
+    for k, i in enumerate(used):
+        a, b, path = rules[i]
+        lv = sorted(pv_variables(a) | pv_variables(b))
+        sub = {v: ("c", "a%d" % j) for j, v in enumerate(lv)}
+        # The path may mention variables neither side of the lemma binds. They
+        # are arbitrary — the law holds for every value — but they must become
+        # something Lean has heard of, so pin them to the lemma's first binder.
+        loose = set()
+        for (_, _, ss) in path:
+            for v in ss.values():
+                loose |= pv_variables(v)
+        pin = ("c", "a0") if lv else ("c", "_a")
+        for v in loose - set(sub):
+            sub[v] = pin
+        aa, bb = pv_subst(a, sub), pv_subst(b, sub)
+        cpath = [(p, tag, {kk: pv_subst(v, sub) for kk, v in ss.items()}) for (p, tag, ss) in path]
+        if any(pv_variables(v) for (_, _, ss) in cpath for v in ss.values()):
+            return None
+        cpath = pv_shorten(cpath, aa, L, R)
+        if pv_replay(aa, cpath, L, R) != bb:
+            return None
+        inner = emit(cpath, aa, L, R, hv, [])
+        if inner is None:
+            return None
+        inner = inner.split("\n", 1)[1] if inner.startswith("intro") else inner
+        nm = "lem%d" % k
+        names[i] = (nm, lv)
+        args = " ".join("a%d" % j for j in range(len(lv)))
+        head = "have %s : ∀ %s : G, %s = %s := by" % (
+            nm, " ".join("a%d" % j for j in range(len(lv))) or "_a", pv_show(aa), pv_show(bb))
+        lines.append(head)
+        lines.append("  intro %s" % (args or "_a"))
+        lines += ["  " + l for l in inner.split("\n")]
+
+    body = ["intro %s" % " ".join(gv), "calc"]
+    cur, first = GL, True
+    for (i, p, flip, s) in uses_l:
+        a, b, _ = rules[i]
+        src, dst = (b, a) if flip else (a, b)
+        nm, lv = names[i]
+        nxt = pv_replace(cur, p, pv_subst(dst, s))
+        app = "%s %s" % (nm, " ".join(_arg(s.get(v)) for v in lv))
+        if flip:
+            app = "(%s).symm" % app
+        lam = context_lambda(cur, p)
+        proof = app if lam is None else "congrArg (%s) (%s)" % (lam, app)
+        body.append("  %s = %s := %s" % (pv_show(cur) if first else "_", pv_show(nxt), proof))
+        cur, first = nxt, False
+    tail = []
+    for (i, p, flip, s) in reversed(uses_r):
+        a, b, _ = rules[i]
+        src, dst = (b, a) if flip else (a, b)
+        nm, lv = names[i]
+        prev = pv_replace(cur, p, pv_subst(src, s))
+        app = "%s %s" % (nm, " ".join(_arg(s.get(v)) for v in lv))
+        if not flip:
+            app = "(%s).symm" % app
+        lam = context_lambda(cur, p)
+        proof = app if lam is None else "congrArg (%s) (%s)" % (lam, app)
+        tail.append("  %s = %s := %s" % (pv_show(cur) if first else "_", pv_show(prev), proof))
+        cur, first = prev, False
+    body += tail
+    if cur != GR:
+        return None
+    return "\n".join(lines + body)
+
+
+def _arg(t):
+    if t is None:
+        return "x"
+    return pv_show(t) if t[0] != "o" else "(%s)" % pv_show(t)
 
 if __name__ == "__main__":
     main()

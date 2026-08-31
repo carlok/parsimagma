@@ -88,8 +88,20 @@ def invert(steps):
             for (p, tag, s) in reversed(steps)]
 
 
-def under(steps, prefix):
-    return [(tuple(prefix) + p, tag, s) for (p, tag, s) in steps]
+def under(steps, at):
+    return [(tuple(at) + p, tag, s) for (p, tag, s) in steps]
+
+
+def apply_match(steps, s):
+    """Instantiate a path by a *matching* substitution.
+
+    `apply_subst` resolves through a triangular unifier, which is right for a
+    critical pair but wrong here: a match binds `x` to a term that may itself
+    contain `x`, and resolving that walks forever. A match is already flat, so
+    substitute once.
+    """
+    return [(p, tag, {k: subst(v, s) for k, v in sub.items()})
+            for (p, tag, sub) in steps]
 
 
 def apply_subst(steps, sigma):
@@ -155,7 +167,7 @@ def normalise(t, rules, L, R, max_size, rounds=60):
                         continue          # would need to invent a term
                     new = replace(t, p, subst(dst, s))
                     if size(new) < size(t) and (best is None or size(new) < size(best[0])):
-                        best = (new, under(apply_subst(path, s), p))
+                        best = (new, under(apply_match(path, s), p))
         if best is None:
             break
         t, extra = best
@@ -312,13 +324,16 @@ def join_by_instance(rules, GL, GR, L, R, default=None):
     return None
 
 
-def rule_steps(t, rules, max_size, cap):
+def rule_steps(t, rules, max_size, cap, default=None):
     """One-step rewrites of t by any derived equation, with the proof spliced in.
 
-    A derived equation may only be used where the match binds every variable of
-    the side being introduced. Inventing a term for an unbound variable is what
-    made the naive goal search explode, and the derived set is large enough that
-    it is not needed.
+    The side being introduced must be fully bound by the match — inventing a
+    term for an unbound variable is what made the naive goal search explode.
+    But a *path* may mention variables the match never sees, and those are
+    genuinely arbitrary: the law holds for every value. Refusing them, as an
+    earlier version did, threw away usable lemmas — including `x ◇ y = x`,
+    which is the whole proof for one of these problems. Pin them instead, the
+    way `join_by_instance` already does.
     """
     n = 0
     for (a, b, steps) in rules:
@@ -327,18 +342,22 @@ def rule_steps(t, rules, max_size, cap):
                 s = match(lhs, sub, None)
                 if s is None:
                     continue
-                free = set(variables(rhs)) - set(s)
-                for (_, _, ss) in path:
-                    for v in ss.values():
-                        free |= variables(v)
-                free -= set(s)
-                if free:
-                    continue
+                if set(variables(rhs)) - set(s):
+                    continue                    # would have to invent the result
                 new = replace(t, p, subst(rhs, s))
                 if size(new) > max_size:
                     continue
-                concrete = [(pp, tag, {k: subst(v, s) for k, v in ss.items()})
+                free = set()
+                for (_, _, ss) in path:
+                    for v in ss.values():
+                        free |= variables(v)
+                s2 = dict(s)
+                for v in free - set(s2):
+                    s2[v] = default if default is not None else ("c", "x")
+                concrete = [(pp, tag, {k: subst(v, s2) for k, v in ss.items()})
                             for (pp, tag, ss) in path]
+                if any(variables(v) for (_, _, ss) in concrete for v in ss.values()):
+                    continue
                 yield new, under(concrete, p)
                 n += 1
                 if n >= cap:
@@ -360,7 +379,8 @@ def join_by_rewriting(rules, GL, GR, L, R, max_size=17, cap=400,
             for t in frontier:
                 if deadline is not None and time.monotonic() > deadline:
                     return None
-                for new, sub_path in rule_steps(t, rules, max_size, cap):
+                for new, sub_path in rule_steps(t, rules, max_size, cap,
+                                                default=GL if GL[0] == 'c' else None):
                     if new in side:
                         continue
                     side[new] = (t, sub_path)
@@ -473,3 +493,82 @@ def shorten(path, start, L, R):
             del steps[i:last]
         i += 1
     return steps
+
+
+def interreduce(rules, L, R, max_size, window=120):
+    """Normalise every derived equation against the smallest of the set.
+
+    This is where a lemma like `x ◇ y = x` actually appears: not as a critical
+    pair, but as what a critical pair becomes once its sides are reduced. The
+    normalisation steps are spliced into the stored path, so the result is
+    still proof-carrying.
+    """
+    small = sorted(rules, key=lambda e: size(e[0]) + size(e[1]))[:window]
+    out = []
+    for (a, b, steps) in rules:
+        try:
+            a2, sa = normalise(a, small, L, R, max_size)
+            b2, sb = normalise(b, small, L, R, max_size)
+        except Exception:
+            continue
+        if a2 == b2:
+            continue
+        path = invert(sa) + steps + sb
+        if replay(a2, path, L, R) == b2:
+            out.append((a2, b2, path))
+    return out
+
+
+def join_by_normalising(rules, GL, GR, L, R, max_size=25, rounds=8):
+    """Reduce both sides of the goal with the derived equations and see if they
+    meet.
+
+    Cheaper and stronger than searching over the goal: when the theory collapses
+    to something like left projection, the goal's big side simply reduces to its
+    small one, and breadth-first rewriting never gets there because each rule
+    application drags a long proof behind it.
+    """
+    a, sa = normalise(GL, rules, L, R, max_size, rounds=rounds)
+    b, sb = normalise(GR, rules, L, R, max_size, rounds=rounds)
+    if a != b:
+        return None
+    path = sa + invert(sb)
+    return path if replay(GL, path, L, R) == GR else None
+
+
+def normalising_route(rules, GL, GR, L, R, max_size=25, rounds=8):
+    """Same as `join_by_normalising`, but keep the rule applications intact.
+
+    Returning the flattened h-steps loses the fact that a goal is often one
+    derived lemma applied three times. Inlined, that is hundreds of steps over
+    huge terms — 108 KB against a 100 KB cap on one problem here. Kept as
+    (equation, position, direction, substitution) the same proof states the
+    lemma once and applies it, which is both smaller and what a person would
+    write.
+
+    Returns (uses, lemmas) or None, where each use names the lemma it applies.
+    """
+    def reduce_side(t):
+        uses = []
+        for _ in range(rounds):
+            best = None
+            for i, (el, er, es) in enumerate(rules):
+                for src, dst, flip in ((el, er, False), (er, el, True)):
+                    for p, sub in positions(t):
+                        s = match(src, sub, None)
+                        if s is None or set(variables(dst)) - set(s):
+                            continue
+                        new = replace(t, p, subst(dst, s))
+                        if size(new) < size(t) and (best is None or size(new) < size(best[0])):
+                            best = (new, i, p, flip, s)
+            if best is None:
+                break
+            t, i, p, flip, s = best
+            uses.append((i, p, flip, s))
+        return t, uses
+
+    a, ua = reduce_side(GL)
+    b, ub = reduce_side(GR)
+    if a != b:
+        return None
+    return ua, ub

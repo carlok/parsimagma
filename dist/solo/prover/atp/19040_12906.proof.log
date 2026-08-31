@@ -1,0 +1,151 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for 19040_12906
+% SZS output start Proof for 19040_12906
+fof(f1,axiom,(
+  ! [X0,X1,X2] : X0 = f(f(X1,X0),f(f(X2,X2),f(X0,X2)))),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/19040_12906.p','hypothesis')).
+fof(f2,conjecture,(
+  ! [X0,X1,X2,X3] : X1 = f(X2,f(f(X1,f(X3,f(X3,X2))),X0))),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/19040_12906.p','goal')).
+fof(f3,negated_conjecture,(
+  ~ ! [X0,X1,X2,X3] : X1 = f(X2,f(f(X1,f(X3,f(X3,X2))),X0))),
+  inference(negated_conjecture,[status(cth)],[f2])).
+fof(f4,plain,(
+  ? [X0,X1,X2,X3] : f(X2,f(f(X1,f(X3,f(X3,X2))),X0)) != X1),
+  inference(ennf_transformation,[],[f3])).
+fof(f5,plain,(
+  sK1 != f(sK2,f(f(sK1,f(sK3,f(sK3,sK2))),sK0))),
+  inference(skolemize,[status(esa),new_symbols(skolem,[sK0,sK1,sK2,sK3]),skolemize(X0,sK0),skolemize(X1,sK1),skolemize(X2,sK2),skolemize(X3,sK3)],[f4])).
+fof(f6,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,X0),f(f(X2,X2),f(X0,X2))) = X0) )),
+  inference(cnf_transformation,[],[f1])).
+fof(f7,plain,(
+  sK1 != f(sK2,f(f(sK1,f(sK3,f(sK3,sK2))),sK0))),
+  inference(cnf_transformation,[],[f5])).
+fof(f8,plain,(
+  ( ! [X2,X3,X0] : (f(f(X2,X2),f(X0,X2)) = f(X0,f(f(X3,X3),f(f(f(X2,X2),f(X0,X2)),X3)))) )),
+  inference(superposition,[],[f6,f6])).
+fof(f9,plain,(
+  ( ! [X2,X3,X0,X1] : (f(X2,X0) = f(f(X1,f(X2,X0)),f(f(f(f(X3,X3),f(X0,X3)),f(f(X3,X3),f(X0,X3))),X0))) )),
+  inference(superposition,[],[f6,f6])).
+fof(f10,plain,(
+  ( ! [X2,X3,X0,X1] : (f(f(f(f(X1,X1),f(X0,X1)),f(f(X1,X1),f(X0,X1))),X0) = f(f(X2,X0),f(f(X3,X3),f(f(f(f(f(X1,X1),f(X0,X1)),f(f(X1,X1),f(X0,X1))),X0),X3)))) )),
+  inference(superposition,[],[f8,f6])).
+fof(f12,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,X1),f(X0,X1)) = f(X0,f(f(f(f(X2,X2),f(f(X0,X1),X2)),f(f(X2,X2),f(f(X0,X1),X2))),f(X0,X1)))) )),
+  inference(superposition,[],[f8,f6])).
+fof(f14,plain,(
+  ( ! [X2,X3,X0,X1] : (f(f(X2,X1),f(f(f(f(X3,X3),f(f(f(X0,X0),f(X1,X0)),X3)),f(f(X3,X3),f(f(f(X0,X0),f(X1,X0)),X3))),f(f(X0,X0),f(X1,X0)))) = X1) )),
+  inference(superposition,[],[f6,f8])).
+fof(f21,plain,(
+  ( ! [X2,X0,X1,X4] : (f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1) = f(f(X0,X1),f(f(f(f(X4,X4),f(X1,X4)),f(f(X4,X4),f(X1,X4))),X1))) )),
+  inference(superposition,[],[f9,f9])).
+fof(f25,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,X1),f(X0,X1)) = f(X0,f(f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)),f(X0,X1)))) )),
+  inference(superposition,[],[f8,f9])).
+fof(f69,plain,(
+  ( ! [X2,X3,X0,X1,X4] : (f(X3,X1) = f(f(X4,f(X3,X1)),f(f(X0,X1),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)))) )),
+  inference(superposition,[],[f9,f21])).
+fof(f208,plain,(
+  ( ! [X0,X1] : (f(X0,X0) = f(f(X1,f(X0,X0)),f(f(f(f(f(X0,X0),f(X0,X0)),f(f(X0,X0),f(X0,X0))),X0),f(f(f(X0,X0),f(X0,X0)),f(f(X0,X0),f(X0,X0)))))) )),
+  inference(superposition,[],[f14,f69])).
+fof(f225,plain,(
+  ( ! [X0] : (f(f(f(X0,X0),f(X0,X0)),f(f(X0,X0),f(X0,X0))) = X0) )),
+  inference(superposition,[],[f12,f14])).
+fof(f243,plain,(
+  ( ! [X0,X1] : (f(X0,X0) = f(f(X1,f(X0,X0)),f(f(X0,X0),X0))) )),
+  inference(forward_demodulation,[],[f208,f225])).
+fof(f355,plain,(
+  ( ! [X2,X0,X1] : (f(X0,X0) = f(f(X1,X0),f(f(f(f(X2,X2),f(X0,X2)),f(f(X2,X2),f(X0,X2))),X0))) )),
+  inference(superposition,[],[f21,f225])).
+fof(f356,plain,(
+  ( ! [X2,X0,X1] : (f(X1,X0) = f(f(X2,f(X1,X0)),f(X0,X0))) )),
+  inference(superposition,[],[f9,f225])).
+fof(f370,plain,(
+  ( ! [X0,X1] : (f(f(X1,X0),f(f(f(X0,X0),f(X0,X0)),f(f(X0,X0),f(X0,X0)))) = X0) )),
+  inference(superposition,[],[f14,f225])).
+fof(f371,plain,(
+  ( ! [X0] : (f(f(X0,X0),f(X0,X0)) = f(X0,f(X0,X0))) )),
+  inference(superposition,[],[f8,f225])).
+fof(f411,plain,(
+  ( ! [X0,X1] : (f(f(X1,X0),f(f(X0,X0),f(f(X0,X0),f(X0,X0)))) = X0) )),
+  inference(forward_demodulation,[],[f370,f371])).
+fof(f426,plain,(
+  ( ! [X0,X1] : (f(f(X1,X0),X0) = X0) )),
+  inference(forward_demodulation,[],[f411,f6])).
+fof(f460,plain,(
+  ( ! [X2,X3,X0,X1,X4] : (f(f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)),f(X0,X1)) = f(f(X3,f(X0,X1)),f(f(f(f(f(f(X4,X4),f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),X4)),f(f(X4,X4),f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),X4))),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)),f(f(f(f(X4,X4),f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),X4)),f(f(X4,X4),f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),X4))),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1))),f(X0,X1)))) )),
+  inference(superposition,[],[f25,f9])).
+fof(f462,plain,(
+  ( ! [X2,X0,X1] : (f(f(f(f(X0,X0),X0),f(f(X0,X0),X0)),f(X0,X0)) = f(f(X1,f(X0,X0)),f(f(f(f(f(f(X2,X2),f(f(f(X0,X0),X0),X2)),f(f(X2,X2),f(f(f(X0,X0),X0),X2))),f(f(X0,X0),X0)),f(f(f(f(X2,X2),f(f(f(X0,X0),X0),X2)),f(f(X2,X2),f(f(f(X0,X0),X0),X2))),f(f(X0,X0),X0))),f(X0,X0)))) )),
+  inference(superposition,[],[f25,f243])).
+fof(f507,plain,(
+  ( ! [X0,X1] : (f(f(f(f(X0,X0),X0),f(f(X0,X0),X0)),f(X0,X0)) = f(f(X1,f(X0,X0)),f(f(f(f(X0,X0),X0),f(f(X0,X0),X0)),f(X0,X0)))) )),
+  inference(forward_demodulation,[],[f462,f355])).
+fof(f509,plain,(
+  ( ! [X2,X3,X0,X1] : (f(f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)),f(X0,X1)) = f(f(X3,f(X0,X1)),f(f(f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1),f(f(f(f(X2,X2),f(X1,X2)),f(f(X2,X2),f(X1,X2))),X1)),f(X0,X1)))) )),
+  inference(forward_demodulation,[],[f460,f355])).
+fof(f547,plain,(
+  ( ! [X0,X1] : (f(f(X0,X0),X0) = f(f(X1,f(X0,X0)),f(f(X0,X0),X0))) )),
+  inference(forward_demodulation,[],[f507,f356])).
+fof(f549,plain,(
+  ( ! [X3,X0,X1] : (f(f(X1,X1),f(X0,X1)) = f(f(X3,f(X0,X1)),f(f(X1,X1),f(X0,X1)))) )),
+  inference(forward_demodulation,[],[f509,f355])).
+fof(f563,plain,(
+  ( ! [X0] : (f(X0,X0) = f(f(X0,X0),X0)) )),
+  inference(forward_demodulation,[],[f547,f243])).
+fof(f571,plain,(
+  ( ! [X0] : (f(X0,X0) = X0) )),
+  inference(forward_demodulation,[],[f563,f426])).
+fof(f591,plain,(
+  ( ! [X2,X0,X1] : (f(f(f(f(X1,X1),f(X0,X1)),f(f(X1,X1),f(X0,X1))),X0) = f(X0,f(f(X2,X2),f(f(f(f(f(X1,X1),f(X0,X1)),f(f(X1,X1),f(X0,X1))),X0),X2)))) )),
+  inference(superposition,[],[f10,f571])).
+fof(f618,plain,(
+  ( ! [X2,X3,X0,X1] : (f(X0,X1) = f(f(X0,X1),f(f(X2,X1),f(f(f(f(X3,X3),f(X1,X3)),f(f(X3,X3),f(X1,X3))),X1)))) )),
+  inference(superposition,[],[f69,f571])).
+fof(f679,plain,(
+  ( ! [X0,X1] : (f(X0,X1) = f(f(X0,X1),f(X1,X1))) )),
+  inference(forward_demodulation,[],[f618,f355])).
+fof(f705,plain,(
+  ( ! [X2,X0,X1] : (f(f(f(X1,X1),f(X0,X1)),X0) = f(X0,f(f(X2,X2),f(f(f(f(X1,X1),f(X0,X1)),X0),X2)))) )),
+  inference(forward_demodulation,[],[f591,f549])).
+fof(f724,plain,(
+  ( ! [X0,X1] : (f(X0,X1) = f(f(X0,X1),X1)) )),
+  inference(forward_demodulation,[],[f679,f571])).
+fof(f740,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,f(X0,X1)),X0) = f(X0,f(f(X2,X2),f(f(f(X1,f(X0,X1)),X0),X2)))) )),
+  inference(forward_demodulation,[],[f705,f571])).
+fof(f747,plain,(
+  ( ! [X0,X1] : (f(X0,X1) = X1) )),
+  inference(forward_demodulation,[],[f724,f426])).
+fof(f756,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,f(X0,X1)),X0) = f(X0,f(X2,f(f(f(X1,f(X0,X1)),X0),X2)))) )),
+  inference(forward_demodulation,[],[f740,f571])).
+fof(f764,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,f(X0,X1)),X0) = f(X2,f(f(f(X1,f(X0,X1)),X0),X2))) )),
+  inference(forward_demodulation,[],[f756,f747])).
+fof(f768,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,f(X0,X1)),X0) = f(f(f(X1,f(X0,X1)),X0),X2)) )),
+  inference(forward_demodulation,[],[f764,f747])).
+fof(f770,plain,(
+  ( ! [X2,X0,X1] : (f(f(X1,f(X0,X1)),X0) = X2) )),
+  inference(forward_demodulation,[],[f768,f747])).
+fof(f771,plain,(
+  ( ! [X2,X0] : (X0 = X2) )),
+  inference(forward_demodulation,[],[f770,f747])).
+fof(f1081,plain,(
+  ( ! [X0] : (sK1 != f(sK2,f(f(sK1,f(X0,f(X0,sK2))),sK0))) )),
+  inference(superposition,[],[f7,f771])).
+fof(f1082,plain,(
+  $false),
+  inference(forward_subsumption_resolution,[],[f1081,f771])).
+% SZS output end Proof for 19040_12906
+% ------------------------------
+% Version: Vampire 5.1.0 (Release build, commit )
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.024 s
+% Peak memory usage: 8 MB
+% ------------------------------
+% ------------------------------

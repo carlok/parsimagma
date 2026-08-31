@@ -144,3 +144,92 @@ def run_complete(problem, budget=12.0, max_size=15, max_rules=1200):
         cur = E.replace(cur, pos, E.subst(dst, sub))
         path.append((cur, pos, tag, sub))
     return path, time.monotonic() - t0, verify(path, L, R, GL, GR)
+
+
+def emit_with_lemmas(uses_l, uses_r, rules, GL, GR, L, R, hv, gv):
+    """A proof that states each derived lemma once and then applies it.
+
+    `emit` inlines every hypothesis application, which is right for a short
+    chain and ruinous when the same lemma is used three times over large terms.
+    Here each lemma becomes a `have` proved by its own calc chain, and the goal
+    is a calc chain over lemma applications.
+    """
+    import complete as C
+    used = sorted({i for (i, _, _, _) in uses_l + uses_r})
+    lines, names = [], {}
+    for k, i in enumerate(used):
+        a, b, path = rules[i]
+        lv = sorted(C.variables(a) | C.variables(b))
+        sub = {v: ("c", "a%d" % j) for j, v in enumerate(lv)}
+        # The path may mention variables neither side of the lemma binds. They
+        # are arbitrary — the law holds for every value — but they must become
+        # something Lean has heard of, so pin them to the lemma's first binder.
+        loose = set()
+        for (_, _, ss) in path:
+            for v in ss.values():
+                loose |= C.variables(v)
+        pin = ("c", "a0") if lv else ("c", "_a")
+        for v in loose - set(sub):
+            sub[v] = pin
+        aa, bb = C.subst(a, sub), C.subst(b, sub)
+        cpath = [(p, tag, {kk: C.subst(v, sub) for kk, v in ss.items()}) for (p, tag, ss) in path]
+        if any(C.variables(v) for (_, _, ss) in cpath for v in ss.values()):
+            return None
+        cpath = C.shorten(cpath, aa, L, R)
+        if C.replay(aa, cpath, L, R) != bb:
+            return None
+        steps = []
+        cur = aa
+        for st in cpath:
+            cur = C.replay(cur, [st], L, R)
+            steps.append((cur,) + st)
+        inner = emit(steps, aa, bb, hv, [])
+        if inner is None:
+            return None
+        inner = inner.split("\n", 1)[1] if inner.startswith("intro") else inner
+        nm = "lem%d" % k
+        names[i] = (nm, lv)
+        args = " ".join("a%d" % j for j in range(len(lv)))
+        head = "have %s : ∀ %s : G, %s = %s := by" % (
+            nm, " ".join("a%d" % j for j in range(len(lv))) or "_a", E.show(aa), E.show(bb))
+        lines.append(head)
+        lines.append("  intro %s" % (args or "_a"))
+        lines += ["  " + l for l in inner.split("\n")]
+
+    body = ["intro %s" % " ".join(gv), "calc"]
+    cur, first = GL, True
+    for (i, p, flip, s) in uses_l:
+        a, b, _ = rules[i]
+        src, dst = (b, a) if flip else (a, b)
+        nm, lv = names[i]
+        nxt = E.replace(cur, p, E.subst(dst, s))
+        app = "%s %s" % (nm, " ".join(_arg(s.get(v)) for v in lv))
+        if flip:
+            app = "(%s).symm" % app
+        lam = context_lambda(cur, p)
+        proof = app if lam is None else "congrArg (%s) (%s)" % (lam, app)
+        body.append("  %s = %s := %s" % (E.show(cur) if first else "_", E.show(nxt), proof))
+        cur, first = nxt, False
+    tail = []
+    for (i, p, flip, s) in reversed(uses_r):
+        a, b, _ = rules[i]
+        src, dst = (b, a) if flip else (a, b)
+        nm, lv = names[i]
+        prev = E.replace(cur, p, E.subst(src, s))
+        app = "%s %s" % (nm, " ".join(_arg(s.get(v)) for v in lv))
+        if not flip:
+            app = "(%s).symm" % app
+        lam = context_lambda(cur, p)
+        proof = app if lam is None else "congrArg (%s) (%s)" % (lam, app)
+        tail.append("  %s = %s := %s" % (E.show(cur) if first else "_", E.show(prev), proof))
+        cur, first = prev, False
+    body += tail
+    if cur != GR:
+        return None
+    return "\n".join(lines + body)
+
+
+def _arg(t):
+    if t is None:
+        return "x"
+    return E.show(t) if t[0] != "o" else "(%s)" % E.show(t)

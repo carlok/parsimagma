@@ -1,19 +1,19 @@
 # A solver with nothing borrowed and nothing looked up
 
-`solver.py`, 986 lines, 35 KB. **196/200** on a local 200-problem sample set.
-Three of the four categories are perfect; only order-5 is short, at 46/50. The
-build it replaced — 4,323 lines carrying the competition's reference solver and
-two embedded lookup tables — scored 190.
+`solver.py`, 1,343 lines, 49 KB. **198/200** on a local 200-problem sample set.
+Three of the four categories are perfect and order-5 is 48/50. The build it
+replaced — 4,323 lines carrying the competition's reference solver and two
+embedded lookup tables — scored 190.
 
 |  | self-contained | the build it matches |
 |---|---|---|
-| lines | 986 | 4,323 |
-| bytes | 35,736 | 213,536 |
+| lines | 1,343 | 4,323 |
+| bytes | 49,978 | 213,536 |
 | reference-solver code | none | 2,268 lines |
 | embedded tables | none | 80,746 chars base64 |
 | LLM calls over 200 problems | 0 | 0 |
-| order4_normal / hard / extra_hard / order5 | **50 / 50 / 50 / 46** | 48 / 47 / 50 / 45 |
-| wall clock, 200 problems | 16.5 min | — |
+| order4_normal / hard / extra_hard / order5 | **50 / 50 / 50 / 48** | 48 / 47 / 50 / 45 |
+| wall clock, 200 problems | 32.3 min | — |
 
 ## Two mechanisms, both search
 
@@ -64,7 +64,9 @@ bug in the search surfaces as a missing proof and never as a wrong one.
 
 ## What it does not settle
 
-Four of the 200, all order-5 laws outside the ETP's resolved graph. Measured, the best derived equation structurally matches 7 to 9 of a goal's 11
+Two of the 200, both order-5 laws outside the ETP's resolved graph:
+`E19040 -> E12906` and `E6543 -> E29450`. Vampire proves both, in 24 ms and
+2 ms, so they are theorems and there is nothing to refute. Measured, the best derived equation structurally matches 7 to 9 of a goal's 11
 nodes and stalls there. Six thousand derived equations, term-size ceilings from
 13 to 21, goal-biased selection, five-step goal rewriting and singleton
 detection all return nothing on them.

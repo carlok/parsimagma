@@ -67,10 +67,28 @@ heuristic removes them: filling cells in order, a cell may introduce element
 `k+1` only once `k` has appeared. Every isomorphism class keeps a
 representative, so no model is lost.
 
-Carrier 6 went from **not found in 280 seconds** to **found in 91**, and the
-model the local search returns is not Mace4's — a different six-element magma,
-verified the same way. The solver now settles this problem on its own, in 95
-seconds, with no external tool.
+The first version of that cut was **unsound**. It bounded a cell's value by
+the largest value already *assigned*, ignoring the cell's own row and column —
+which are elements the cell itself mentions. The correct bound is
+`max(max_used, i, j) + 1`. Audited against an exhaustive no-symmetry oracle
+over 595 problem/size pairs, the wrong one silently loses three real
+counterexamples at carriers 3 and 4, on `E12079 -> E37631`, `E20750 -> E28971`
+and `E11965 -> E4781`. All three were re-verified here by hand. One of them,
+`order5_normal_0037`, went from solved to unsolvable.
+
+Two lessons, both cheap to state and expensive to learn. A search optimisation
+that prunes is a correctness change, and "every isomorphism class keeps a
+representative" is a claim that needs an oracle, not an argument. And the fix
+made the search slower, which exposed a second bug behind it: the carriers
+shared one budget in order, so carrier 5 — hard *and* empty on these laws, ~50
+seconds to exhaust — swallowed the pool and carrier 6 never ran at all.
+
+With both fixed, and with each undetermined law instance parked on the single
+cell its evaluation blocks on rather than every instance being rechecked after
+every assignment, the full pipeline returns a verified six-element model in
+**22.8 seconds**. Three distinct such magmas are now known for this problem —
+Mace4's, and two found locally — each checked to satisfy E7422 on all 216
+assignments and to break E18784.
 
 ## Honest summary
 

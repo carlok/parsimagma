@@ -1,0 +1,58 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for 4777_33810
+% SZS output start Proof for 4777_33810
+fof(f1,axiom,(
+  ! [X0,X1,X2] : X0 = f(X0,f(X1,f(X0,f(X2,f(X2,X2)))))),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/4777_33810.p','hypothesis')).
+fof(f2,conjecture,(
+  ! [X0,X1,X2,X3] : X1 = f(f(f(X1,X2),f(X3,f(X3,X0))),X3)),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/4777_33810.p','goal')).
+fof(f3,negated_conjecture,(
+  ~ ! [X0,X1,X2,X3] : X1 = f(f(f(X1,X2),f(X3,f(X3,X0))),X3)),
+  inference(negated_conjecture,[status(cth)],[f2])).
+fof(f4,plain,(
+  ? [X0,X1,X2,X3] : f(f(f(X1,X2),f(X3,f(X3,X0))),X3) != X1),
+  inference(ennf_transformation,[],[f3])).
+fof(f5,plain,(
+  sK1 != f(f(f(sK1,sK2),f(sK3,f(sK3,sK0))),sK3)),
+  inference(skolemize,[status(esa),new_symbols(skolem,[sK0,sK1,sK2,sK3]),skolemize(X0,sK0),skolemize(X1,sK1),skolemize(X2,sK2),skolemize(X3,sK3)],[f4])).
+fof(f6,plain,(
+  ( ! [X2,X0,X1] : (f(X0,f(X1,f(X0,f(X2,f(X2,X2))))) = X0) )),
+  inference(cnf_transformation,[],[f1])).
+fof(f7,plain,(
+  sK1 != f(f(f(sK1,sK2),f(sK3,f(sK3,sK0))),sK3)),
+  inference(cnf_transformation,[],[f5])).
+fof(f8,plain,(
+  ( ! [X0,X1] : (f(X0,f(X0,X0)) = f(f(X0,f(X0,X0)),f(X1,f(X0,f(X0,X0))))) )),
+  inference(superposition,[],[f6,f6])).
+fof(f12,plain,(
+  ( ! [X0,X1] : (f(X1,f(X0,f(X0,X0))) = X1) )),
+  inference(superposition,[],[f6,f8])).
+fof(f15,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X1)) = f(f(X1,f(X1,X1)),X0)) )),
+  inference(superposition,[],[f8,f12])).
+fof(f16,plain,(
+  ( ! [X0,X1] : (f(X0,f(X1,X0)) = X0) )),
+  inference(superposition,[],[f6,f12])).
+fof(f21,plain,(
+  ( ! [X0,X1] : (f(X1,X0) = X1) )),
+  inference(forward_demodulation,[],[f15,f16])).
+fof(f34,plain,(
+  sK1 != f(f(sK1,f(sK3,f(sK3,sK0))),sK3)),
+  inference(superposition,[],[f7,f21])).
+fof(f39,plain,(
+  sK1 != f(sK1,f(sK3,f(sK3,sK0)))),
+  inference(forward_demodulation,[],[f34,f21])).
+fof(f44,plain,(
+  $false),
+  inference(forward_subsumption_resolution,[],[f39,f21])).
+% SZS output end Proof for 4777_33810
+% ------------------------------
+% Version: Vampire 5.1.0 (Release build, commit )
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.001 s
+% Peak memory usage: 6 MB
+% ------------------------------
+% ------------------------------

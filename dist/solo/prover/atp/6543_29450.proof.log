@@ -1,0 +1,88 @@
+% Running in auto input_syntax mode. Trying TPTP
+% Refutation found. Thanks to Tanya!
+% SZS status Theorem for 6543_29450
+% SZS output start Proof for 6543_29450
+fof(f1,axiom,(
+  ! [X0,X1,X2] : X0 = f(X0,f(X1,f(f(X1,X0),f(X1,X2))))),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/6543_29450.p','hypothesis')).
+fof(f2,conjecture,(
+  ! [X0,X1,X2,X3,X4] : X2 = f(f(X2,f(X3,f(X4,f(X1,X0)))),X4)),
+  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/6543_29450.p','goal')).
+fof(f3,negated_conjecture,(
+  ~ ! [X0,X1,X2,X3,X4] : X2 = f(f(X2,f(X3,f(X4,f(X1,X0)))),X4)),
+  inference(negated_conjecture,[status(cth)],[f2])).
+fof(f4,plain,(
+  ? [X0,X1,X2,X3,X4] : f(f(X2,f(X3,f(X4,f(X1,X0)))),X4) != X2),
+  inference(ennf_transformation,[],[f3])).
+fof(f5,plain,(
+  sK2 != f(f(sK2,f(sK3,f(sK4,f(sK1,sK0)))),sK4)),
+  inference(skolemize,[status(esa),new_symbols(skolem,[sK0,sK1,sK2,sK3,sK4]),skolemize(X0,sK0),skolemize(X1,sK1),skolemize(X2,sK2),skolemize(X3,sK3),skolemize(X4,sK4)],[f4])).
+fof(f6,plain,(
+  ( ! [X2,X0,X1] : (f(X0,f(X1,f(f(X1,X0),f(X1,X2)))) = X0) )),
+  inference(cnf_transformation,[],[f1])).
+fof(f7,plain,(
+  sK2 != f(f(sK2,f(sK3,f(sK4,f(sK1,sK0)))),sK4)),
+  inference(cnf_transformation,[],[f5])).
+fof(f9,plain,(
+  ( ! [X0,X1] : (f(X1,f(X0,f(f(X0,X1),X0))) = X1) )),
+  inference(superposition,[],[f6,f6])).
+fof(f10,plain,(
+  ( ! [X0,X1] : (f(X1,f(X0,f(X0,X1))) = X1) )),
+  inference(superposition,[],[f6,f6])).
+fof(f12,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X0)) = f(f(X1,f(X1,X0)),f(X0,X0))) )),
+  inference(superposition,[],[f10,f10])).
+fof(f14,plain,(
+  ( ! [X0] : (f(X0,X0) = f(f(X0,X0),X0)) )),
+  inference(superposition,[],[f10,f10])).
+fof(f20,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X0)) = f(f(X1,f(X1,X0)),f(X0,f(X0,X0)))) )),
+  inference(superposition,[],[f9,f10])).
+fof(f29,plain,(
+  ( ! [X0] : (f(X0,f(f(X0,X0),f(X0,X0))) = X0) )),
+  inference(superposition,[],[f10,f14])).
+fof(f62,plain,(
+  ( ! [X0] : (f(X0,X0) = X0) )),
+  inference(superposition,[],[f6,f29])).
+fof(f77,plain,(
+  ( ! [X0,X1] : (f(X0,f(f(f(X0,X0),f(X0,X1)),f(f(X0,X0),f(X0,X1)))) = X0) )),
+  inference(superposition,[],[f12,f6])).
+fof(f95,plain,(
+  ( ! [X0,X1] : (f(X0,f(f(X0,X0),f(X0,X1))) = X0) )),
+  inference(forward_demodulation,[],[f77,f62])).
+fof(f104,plain,(
+  ( ! [X0,X1] : (f(X0,f(X0,f(X0,X1))) = X0) )),
+  inference(forward_demodulation,[],[f95,f62])).
+fof(f190,plain,(
+  ( ! [X0,X1] : (f(X0,f(f(X0,X1),f(X0,X1))) = X0) )),
+  inference(superposition,[],[f12,f104])).
+fof(f208,plain,(
+  ( ! [X0,X1] : (f(X0,f(X0,X1)) = X0) )),
+  inference(forward_demodulation,[],[f190,f62])).
+fof(f248,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X1)) = f(f(X1,f(X1,X1)),f(f(X0,f(X0,X1)),f(X0,f(X0,X1))))) )),
+  inference(superposition,[],[f10,f20])).
+fof(f258,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X1)) = f(f(X1,f(X1,X1)),f(X0,f(X0,X1)))) )),
+  inference(forward_demodulation,[],[f248,f62])).
+fof(f275,plain,(
+  ( ! [X0,X1] : (f(X1,f(X1,X1)) = f(f(X1,f(X1,X1)),X0)) )),
+  inference(forward_demodulation,[],[f258,f208])).
+fof(f290,plain,(
+  ( ! [X0,X1] : (f(X1,X0) = X1) )),
+  inference(forward_demodulation,[],[f275,f208])).
+fof(f332,plain,(
+  sK2 != f(sK2,sK4)),
+  inference(superposition,[],[f7,f290])).
+fof(f337,plain,(
+  $false),
+  inference(forward_subsumption_resolution,[],[f332,f290])).
+% SZS output end Proof for 6543_29450
+% ------------------------------
+% Version: Vampire 5.1.0 (Release build, commit )
+% CaDiCaL version: 2.1.3
+% Termination reason: Refutation
+% Time elapsed: 0.002 s
+% Peak memory usage: 6 MB
+% ------------------------------
+% ------------------------------
