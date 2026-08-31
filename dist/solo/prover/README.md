@@ -7,6 +7,7 @@ for what it is for and what it measures.
 
     eqprove.py    terms, matching, positions, one-step rewriting
     complete.py   unification, critical pairs, completion, the two joins
+    models.py     finite counterexample search, backtracking with propagation
     drive.py      problem parsing, replay verification, Lean `calc` emission
 
 ## Use
