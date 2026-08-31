@@ -163,21 +163,23 @@ def normalise(t, rules, L, R, max_size, rounds=60):
     return t, steps
 
 
-def complete(L, R, max_size=13, max_rules=140, deadline=None):
-    """Grow a set of proof-carrying consequences of L = R."""
+def _complete_fifo(L, R, max_size, max_rules, deadline, dedup=None):
+    """The discovery-order search. Kept because it is not dominated."""
     import time
     base = (L, R, [((), "fwd", {v: ("v", v) for v in variables(L) | variables(R)})])
     rules = [base]
-    seen = {(show(L), show(R)), (show(R), show(L))}
+    dedup = dedup or canonical
+    seen = {dedup(L, R)}
     queue = [(base, base)]
     i = 0
     while i < len(queue) and len(rules) < max_rules:
         if deadline is not None and time.monotonic() > deadline:
             break
-        e1, e2 = queue[i]; i += 1
+        e1, e2 = queue[i]
+        i += 1
         for a, b, steps in critical_pairs(e1, e2, max_size):
-            key = (show(a), show(b))
-            if key in seen or (key[1], key[0]) in seen:
+            key = dedup(a, b)
+            if key in seen:
                 continue
             seen.add(key)
             eq = (a, b, steps)
@@ -186,6 +188,83 @@ def complete(L, R, max_size=13, max_rules=140, deadline=None):
                 queue.append((eq, other))
             if len(rules) >= max_rules:
                 break
+    return rules
+
+
+def literal(a, b):
+    """Dedup on the printed form only, keeping alpha-variants apart.
+
+    Logically redundant, but not operationally: two variants carry different
+    proof paths, and a path's unbound variables get pinned to a default before
+    emission, so one variant can reach the goal where the other cannot. At
+    least one problem in the set is solved only under this key.
+    """
+    ka, kb = show(a), show(b)
+    return (ka, kb) if ka <= kb else (kb, ka)
+
+
+def canonical(a, b):
+    """A key that collapses equations identical up to variable renaming, and up
+    to which side is written first. Without it a tenth to a fifth of every
+    budget goes on storing variants of what is already there."""
+    m, ctr = {}, [0]
+
+    def go(t):
+        if t[0] == "v":
+            if t[1] not in m:
+                m[t[1]] = "v%d" % ctr[0]
+                ctr[0] += 1
+            return ("v", m[t[1]])
+        if t[0] == "c":
+            return t
+        return ("o", go(t[1]), go(t[2]))
+
+    ka, kb = show(go(a)), show(go(b))
+    return (ka, kb) if ka <= kb else (kb, ka)
+
+
+def complete(L, R, max_size=15, max_rules=1200, deadline=None, order="weight", dedup=None):
+    """Grow a set of proof-carrying consequences of L = R.
+
+    `order="weight"` selects the smallest equation next. That is the whole
+    difference from a plain queue: overlapping in discovery order spends the
+    budget deepening one branch, and what the goal usually needs is the compact
+    consequences. Measured on the problems that defeated the queue, the size-15
+    ceiling held 168 equations against 6 at size 2.
+
+    `order="fifo"` keeps the discovery order. It is not strictly worse — it
+    reaches derivations the weighted search never gets to, and at least one
+    problem in the set is solved only by it. Try weight first and fall back.
+    """
+    import heapq, time
+    dedup = dedup or canonical
+    if order == "fifo":
+        return _complete_fifo(L, R, max_size, max_rules, deadline, dedup)
+    base = (L, R, [((), "fwd", {v: ("v", v) for v in variables(L) | variables(R)})])
+    rules = [base]
+    seen = {dedup(L, R)}
+    queue = [(size(L) + size(R), 0, 0)]
+    serial = 0
+    processed = []
+    while queue and len(rules) < max_rules:
+        if deadline is not None and time.monotonic() > deadline:
+            break
+        _, _, i = heapq.heappop(queue)
+        e1 = rules[i]
+        for e2 in processed + [e1]:
+            for a, b, steps in critical_pairs(e1, e2, max_size):
+                key = dedup(a, b)
+                if key in seen:
+                    continue
+                seen.add(key)
+                rules.append((a, b, steps))
+                serial += 1
+                heapq.heappush(queue, (size(a) + size(b), serial, len(rules) - 1))
+                if len(rules) >= max_rules:
+                    break
+            if len(rules) >= max_rules:
+                break
+        processed.append(e1)
     return rules
 
 
@@ -317,3 +396,80 @@ def _splice(fwd, bwd, meet):
     for seg in segs:
         tail += invert(seg)
     return head + tail
+
+
+def join_by_pair(rules, GL, GR, L, R, deadline=None):
+    """Combine two derived equations into one the goal can match.
+
+    Almost every consequence of `x = C[x,..]` keeps a bare variable on one side,
+    so `join_by_instance` — which matches a single equation against the goal —
+    cannot see a goal whose two sides are both compound. But `v = T1` and
+    `v = T2` together give `T1 = T2`, and that family can. The proof is the
+    first path run backwards followed by the second.
+    """
+    import time
+    halves = []
+    for (a, b, steps) in rules:
+        for lhs, rhs, path in ((a, b, steps), (b, a, invert(steps))):
+            if lhs[0] == "v":
+                halves.append((lhs[1], rhs, path))
+    # only the halves that can supply the goal's left side are worth pairing
+    left = [(v, T, p, s) for (v, T, p) in halves
+            for s in [match(T, GL, None)] if s is not None]
+    if not left:
+        return None
+    for (v1, T1, p1, s1) in left:
+        if deadline is not None and time.monotonic() > deadline:
+            return None
+        for (v2, T2, p2) in halves:
+            ren = {k: rename(x, "@") for k, x in [("_", ("v", v2))]}
+            sub = {v2 + "@": ("v", v1)}
+            T2r = subst(rename(T2, "@"), sub)
+            s = match(T2r, GR, dict(s1))
+            if s is None:
+                continue
+            p2r = [(p, tag, {k: subst(rename(x, "@"), sub) for k, x in ss.items()})
+                   for (p, tag, ss) in p2]
+            path = invert(p1) + p2r
+            free = set()
+            for (_, _, ss) in path:
+                for x in ss.values():
+                    free |= variables(x)
+            s = dict(s)
+            for x in free - set(s):
+                s[x] = GL if GL[0] == "c" else ("c", "x")
+            concrete = [(p, tag, {k: subst(x, s) for k, x in ss.items()})
+                        for (p, tag, ss) in path]
+            if any(variables(x) for (_, _, ss) in concrete for x in ss.values()):
+                continue
+            if replay(GL, concrete, L, R) == GR:
+                return concrete
+    return None
+
+
+def shorten(path, start, L, R):
+    """Cut loops out of a derivation.
+
+    Splicing two paths together routinely produces a chain that visits the same
+    term twice; everything between is a detour. If terms[i] == terms[j] for
+    j > i, the steps i..j-1 can go: whatever follows applies to the same term
+    either way. It matters because the judge caps a certificate at 100,000
+    bytes, and a spliced proof can run to 170 steps.
+    """
+    steps = list(path)
+    terms = [start]
+    for st in steps:
+        terms.append(replay(terms[-1], [st], L, R))
+    i = 0
+    while i < len(terms):
+        key = show(terms[i])
+        last = i
+        for j in range(len(terms) - 1, i, -1):
+            if show(terms[j]) == key:
+                last = j
+                break
+        if last > i:
+            del terms[i + 1:last + 1]
+            del steps[i:last]
+        i += 1
+    return steps

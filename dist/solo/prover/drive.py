@@ -133,6 +133,8 @@ def run_complete(problem, budget=12.0, max_size=15, max_rules=1200):
                        deadline=t0 + budget * 0.7)
     raw = C.join_by_instance(rules, GL, GR, L, R)
     if raw is None:
+        raw = C.join_by_pair(rules, GL, GR, L, R, deadline=t0 + budget)
+    if raw is None:
         return None, time.monotonic() - t0, None
     # completion emits (pos, tag, subst); the emitter wants each step's
     # resulting term too, so replay once and carry it.
