@@ -52,7 +52,6 @@ def parse_variables(text):
     return out
 
 
-
 # ── terms ────────────────────────────────────────────────────────────
 # ('v', name)  variable (of the hypothesis; instantiable)
 # ('c', name)  constant (a Skolemised goal variable; rigid)
@@ -400,21 +399,23 @@ def pv_normalise(t, rules, L, R, max_size, rounds=60):
     return t, pv_steps
 
 
-def pv_complete(L, R, max_size=13, max_rules=140, deadline=None):
-    """Grow a set of proof-carrying consequences of L = R."""
+def pv__complete_fifo(L, R, max_size, max_rules, deadline, dedup=None):
+    """The discovery-order pv_search. Kept because it is not dominated."""
     import time
     base = (L, R, [((), "fwd", {v: ("v", v) for v in pv_variables(L) | pv_variables(R)})])
     rules = [base]
-    seen = {(pv_show(L), pv_show(R)), (pv_show(R), pv_show(L))}
+    dedup = dedup or pv_canonical
+    seen = {dedup(L, R)}
     queue = [(base, base)]
     i = 0
     while i < len(queue) and len(rules) < max_rules:
         if deadline is not None and time.monotonic() > deadline:
             break
-        e1, e2 = queue[i]; i += 1
+        e1, e2 = queue[i]
+        i += 1
         for a, b, pv_steps in pv_critical_pairs(e1, e2, max_size):
-            key = (pv_show(a), pv_show(b))
-            if key in seen or (key[1], key[0]) in seen:
+            key = dedup(a, b)
+            if key in seen:
                 continue
             seen.add(key)
             eq = (a, b, pv_steps)
@@ -423,6 +424,83 @@ def pv_complete(L, R, max_size=13, max_rules=140, deadline=None):
                 queue.append((eq, other))
             if len(rules) >= max_rules:
                 break
+    return rules
+
+
+def pv_literal(a, b):
+    """Dedup on the printed form only, keeping alpha-variants apart.
+
+    Logically redundant, but not operationally: two variants carry different
+    proof paths, and a path's unbound pv_variables get pinned to a default before
+    emission, so one variant can reach the goal where the other cannot. At
+    least one problem in the set is solved only pv_under this key.
+    """
+    ka, kb = pv_show(a), pv_show(b)
+    return (ka, kb) if ka <= kb else (kb, ka)
+
+
+def pv_canonical(a, b):
+    """A key that collapses equations identical up to variable renaming, and up
+    to which side is written first. Without it a tenth to a fifth of every
+    budget goes on storing variants of what is already there."""
+    m, ctr = {}, [0]
+
+    def go(t):
+        if t[0] == "v":
+            if t[1] not in m:
+                m[t[1]] = "v%d" % ctr[0]
+                ctr[0] += 1
+            return ("v", m[t[1]])
+        if t[0] == "c":
+            return t
+        return ("o", go(t[1]), go(t[2]))
+
+    ka, kb = pv_show(go(a)), pv_show(go(b))
+    return (ka, kb) if ka <= kb else (kb, ka)
+
+
+def pv_complete(L, R, max_size=15, max_rules=1200, deadline=None, order="weight", dedup=None):
+    """Grow a set of proof-carrying consequences of L = R.
+
+    `order="weight"` selects the smallest equation next. That is the whole
+    difference from a plain queue: overlapping in discovery order spends the
+    budget deepening one branch, and what the goal usually needs is the compact
+    consequences. Measured on the problems that defeated the queue, the pv_size-15
+    ceiling held 168 equations against 6 at pv_size 2.
+
+    `order="fifo"` keeps the discovery order. It is not strictly worse — it
+    reaches derivations the weighted pv_search never gets to, and at least one
+    problem in the set is solved only by it. Try weight first and fall back.
+    """
+    import heapq, time
+    dedup = dedup or pv_canonical
+    if order == "fifo":
+        return pv__complete_fifo(L, R, max_size, max_rules, deadline, dedup)
+    base = (L, R, [((), "fwd", {v: ("v", v) for v in pv_variables(L) | pv_variables(R)})])
+    rules = [base]
+    seen = {dedup(L, R)}
+    queue = [(pv_size(L) + pv_size(R), 0, 0)]
+    serial = 0
+    processed = []
+    while queue and len(rules) < max_rules:
+        if deadline is not None and time.monotonic() > deadline:
+            break
+        _, _, i = heapq.heappop(queue)
+        e1 = rules[i]
+        for e2 in processed + [e1]:
+            for a, b, pv_steps in pv_critical_pairs(e1, e2, max_size):
+                key = dedup(a, b)
+                if key in seen:
+                    continue
+                seen.add(key)
+                rules.append((a, b, pv_steps))
+                serial += 1
+                heapq.heappush(queue, (pv_size(a) + pv_size(b), serial, len(rules) - 1))
+                if len(rules) >= max_rules:
+                    break
+            if len(rules) >= max_rules:
+                break
+        processed.append(e1)
     return rules
 
 
@@ -554,6 +632,83 @@ def pv__splice(fwd, bwd, meet):
     for seg in segs:
         tail += pv_invert(seg)
     return head + tail
+
+
+def pv_join_by_pair(rules, GL, GR, L, R, deadline=None):
+    """Combine two derived equations into one the goal can pv_match.
+
+    Almost every consequence of `x = C[x,..]` keeps a bare variable on one side,
+    so `pv_join_by_instance` — which matches a single equation against the goal —
+    cannot see a goal whose two sides are both compound. But `v = T1` and
+    `v = T2` together give `T1 = T2`, and that family can. The proof is the
+    first path run backwards followed by the second.
+    """
+    import time
+    halves = []
+    for (a, b, pv_steps) in rules:
+        for lhs, rhs, path in ((a, b, pv_steps), (b, a, pv_invert(pv_steps))):
+            if lhs[0] == "v":
+                halves.append((lhs[1], rhs, path))
+    # only the halves that can supply the goal's left side are worth pairing
+    left = [(v, T, p, s) for (v, T, p) in halves
+            for s in [pv_match(T, GL, None)] if s is not None]
+    if not left:
+        return None
+    for (v1, T1, p1, s1) in left:
+        if deadline is not None and time.monotonic() > deadline:
+            return None
+        for (v2, T2, p2) in halves:
+            ren = {k: pv_rename(x, "@") for k, x in [("_", ("v", v2))]}
+            sub = {v2 + "@": ("v", v1)}
+            T2r = pv_subst(pv_rename(T2, "@"), sub)
+            s = pv_match(T2r, GR, dict(s1))
+            if s is None:
+                continue
+            p2r = [(p, tag, {k: pv_subst(pv_rename(x, "@"), sub) for k, x in ss.items()})
+                   for (p, tag, ss) in p2]
+            path = pv_invert(p1) + p2r
+            free = set()
+            for (_, _, ss) in path:
+                for x in ss.values():
+                    free |= pv_variables(x)
+            s = dict(s)
+            for x in free - set(s):
+                s[x] = GL if GL[0] == "c" else ("c", "x")
+            concrete = [(p, tag, {k: pv_subst(x, s) for k, x in ss.items()})
+                        for (p, tag, ss) in path]
+            if any(pv_variables(x) for (_, _, ss) in concrete for x in ss.values()):
+                continue
+            if pv_replay(GL, concrete, L, R) == GR:
+                return concrete
+    return None
+
+
+def pv_shorten(path, start, L, R):
+    """Cut loops out of a derivation.
+
+    Splicing two paths together routinely produces a chain that visits the same
+    term twice; everything between is a detour. If terms[i] == terms[j] for
+    j > i, the pv_steps i..j-1 can go: whatever follows applies to the same term
+    either way. It matters because the judge caps a certificate at 100,000
+    bytes, and a spliced proof can run to 170 pv_steps.
+    """
+    pv_steps = list(path)
+    terms = [start]
+    for st in pv_steps:
+        terms.append(pv_replay(terms[-1], [st], L, R))
+    i = 0
+    while i < len(terms):
+        key = pv_show(terms[i])
+        last = i
+        for j in range(len(terms) - 1, i, -1):
+            if pv_show(terms[j]) == key:
+                last = j
+                break
+        if last > i:
+            del terms[i + 1:last + 1]
+            del pv_steps[i:last]
+        i += 1
+    return pv_steps
 
 PV_UNKNOWN = -1
 
@@ -741,21 +896,46 @@ def find_model(eq1_text, eq2_text, sizes, budget):
     return false_code(n, table)
 
 
+MAX_CERT_BYTES = 96_000        # the judge caps a certificate at 100,000
+
+
+MAX_CERT_BYTES = 96_000        # the judge caps a certificate at 100,000
+
+# Two completion settings, tried in order. Smallest-first with variants folded
+# together is much the stronger of the two, but it is not dominant: discovery
+# order with variants kept apart reaches derivations it never gets to, and one
+# problem in the set is solved only that way. Both are cheap, so try both.
+SEARCH_ORDERS = (("weight", "canonical"), ("fifo", "literal"))
+
+
 def prove(eq1_text, eq2_text, budget, rewriting=False):
     """A Lean proof body, or None."""
     L, R, GL, GR, hv, gv = prep(eq1_text, eq2_text)
-    t0 = time.monotonic()
-    rules = pv_complete(L, R, max_size=15 if not rewriting else 13,
-                        max_rules=1200 if not rewriting else 700,
-                        deadline=t0 + budget * (0.7 if not rewriting else 0.3))
-    if rewriting:
-        path = pv_join_by_rewriting(rules, GL, GR, L, R, max_size=17, cap=300,
-                                    max_steps=3, deadline=t0 + budget)
-    else:
-        path = pv_join_by_instance(rules, GL, GR, L, R)
-    if path is None or pv_replay(GL, path, L, R) != GR:
-        return None
-    return emit(path, GL, L, R, hv, gv)
+    slice_ = budget / len(SEARCH_ORDERS)
+    for order, dedup in SEARCH_ORDERS:
+        t0 = time.monotonic()
+        dd = pv_canonical if dedup == "canonical" else pv_literal
+        rules = pv_complete(L, R, max_size=15 if not rewriting else 13,
+                            max_rules=2000 if not rewriting else 700,
+                            deadline=t0 + slice_ * (0.6 if not rewriting else 0.3),
+                            order=order, dedup=dd)
+        if rewriting:
+            path = pv_join_by_rewriting(rules, GL, GR, L, R, max_size=17, cap=300,
+                                        max_steps=3, deadline=t0 + slice_)
+        else:
+            path = (pv_join_by_instance(rules, GL, GR, L, R)
+                    or pv_join_by_pair(rules, GL, GR, L, R, deadline=t0 + slice_))
+        if path is None:
+            continue
+        # Splicing two derivations tends to revisit terms; drop the detours
+        # before they cost bytes the certificate does not have.
+        path = pv_shorten(path, GL, L, R)
+        if pv_replay(GL, path, L, R) != GR:
+            continue
+        body = emit(path, GL, L, R, hv, gv)
+        if body is not None and len(body.encode()) <= MAX_CERT_BYTES:
+            return body
+    return None
 
 
 def prove_collapse(eq1_text, eq2_text, budget):

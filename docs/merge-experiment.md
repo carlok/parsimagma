@@ -33,7 +33,8 @@ set, it was wrong by a factor of two.
 | a further build, per-problem tactics | 40/50 | 50/50 | 50/50 | 39/50 | 179/200 |
 | `sprint3` = 172 build + completion prover | 47/50 | 45/50 | 50/50 | 45/50 | 187/200 |
 | `sprint4` = + goal rewriting | 48/50 | 47/50 | 50/50 | 45/50 | 190/200 |
-| `sprint5` = nothing borrowed, no tables | 48/50 | 47/50 | 50/50 | 45/50 | **190/200** |
+| `sprint5` = nothing borrowed, no tables | 48/50 | 47/50 | 50/50 | 45/50 | 190/200 |
+| `sprint7` = + smallest-first, pair join | 50/50 | 50/50 | 50/50 | 46/50 | **196/200** |
 
 Solvers and per-problem results are under `dist/solo/experiments/`.
 
@@ -127,6 +128,12 @@ not be rebuilt.**
 `sprint5` carries no reference-solver code, no embedded tables, and no LLM path.
 806 lines against 4,323. It scores **190/200, identical to the borrowed build in
 every one of the four categories, and misses exactly the same ten problems.**
+
+`sprint7` then goes past it. Two standard changes to the completion prover —
+selecting the smallest equation next instead of the oldest, and combining two
+derived equations into one the goal can match — take it to **196/200**, with
+three of the four categories perfect. 986 lines, still nothing borrowed and
+nothing looked up.
 
 Each piece was checked against what it replaced before the solver was assembled:
 the model finder reproduces all 99 of the reference's false certificates in one

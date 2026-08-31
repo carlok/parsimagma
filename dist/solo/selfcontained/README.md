@@ -1,18 +1,19 @@
 # A solver with nothing borrowed and nothing looked up
 
-`solver.py`, 806 lines, 28 KB. **190/200** on a local 200-problem sample set —
-the same score, category for category, as a 4,323-line build that carries the
-competition's reference solver and two embedded lookup tables.
+`solver.py`, 986 lines, 35 KB. **196/200** on a local 200-problem sample set.
+Three of the four categories are perfect; only order-5 is short, at 46/50. The
+build it replaced — 4,323 lines carrying the competition's reference solver and
+two embedded lookup tables — scored 190.
 
 |  | self-contained | the build it matches |
 |---|---|---|
-| lines | 806 | 4,323 |
-| bytes | 28,505 | 213,536 |
+| lines | 986 | 4,323 |
+| bytes | 35,736 | 213,536 |
 | reference-solver code | none | 2,268 lines |
 | embedded tables | none | 80,746 chars base64 |
 | LLM calls over 200 problems | 0 | 0 |
-| order4_normal / hard / extra_hard / order5 | 48 / 47 / 50 / 45 | 48 / 47 / 50 / 45 |
-| wall clock, 200 problems | 17.8 min | — |
+| order4_normal / hard / extra_hard / order5 | **50 / 50 / 50 / 46** | 48 / 47 / 50 / 45 |
+| wall clock, 200 problems | 16.5 min | — |
 
 ## Two mechanisms, both search
 
@@ -23,8 +24,11 @@ fails. That is the whole trick — the 4^16 tables on `Fin 4` are never
 enumerated. Carriers used: 43 at `Fin 2`, 28 at 3, 27 at 4, 1 at 5.
 
 **Completion** settles the true ones. Overlap the hypothesis with itself,
-collect critical pairs, and look for a derived equation that *is* the goal
-under a substitution. There is no search over the goal at all: these laws read
+collect critical pairs — **smallest equation first**, which is the single
+biggest lever here — and look for a derived equation that *is* the goal
+under a substitution. Where the goal has compound terms on both sides, combine
+two derived equations `v = T1` and `v = T2` into `T1 = T2`, a family a single
+equation cannot express. There is no search over the goal at all: these laws read
 `x = C[x,..]`, so every consequence keeps a variable on one side, and a goal
 `x = <compound>` is discharged the moment some derived side matches the
 compound. When that fails, a bounded meet-in-the-middle rewrites the goal with
@@ -60,9 +64,16 @@ bug in the search surfaces as a missing proof and never as a wrong one.
 
 ## What it does not settle
 
-Ten of the 200. Eight need a deeper join between derived equations than the
-bounded search reaches; the completion runs to a fixed budget and is not
-saturating, so a negative answer means "not found within the budget" and never
-"no proof exists".
+Four of the 200, all order-5 laws outside the ETP's resolved graph. Measured, the best derived equation structurally matches 7 to 9 of a goal's 11
+nodes and stalls there. Six thousand derived equations, term-size ceilings from
+13 to 21, goal-biased selection, five-step goal rewriting and singleton
+detection all return nothing on them.
+
+The honest gap is that this is completion without simplification: derived
+equations are never normalised against one another, so the set fills with
+reducible consequences. A proper unfailing-completion loop with a Knuth-Bendix
+ordering and forward and backward simplification is the standard answer and is
+not implemented here. And the search is not saturating, so a negative means
+"not found within the budget", never "no proof exists".
 
 Readable, unprefixed sources are in [../prover](../prover).
