@@ -31,7 +31,9 @@ set, it was wrong by a factor of two.
 | `merged` = opnorm + parsimagma | 36/50 | 25/50 | 37/50 | 39/50 | **137/200** |
 | `finaltuned` = merged + oracle + singleton | 40/50 | 43/50 | 50/50 | 39/50 | **172/200** |
 | a further build, per-problem tactics | 40/50 | 50/50 | 50/50 | 39/50 | 179/200 |
-| `sprint3` = 172 build + completion prover | 47/50 | 45/50 | 50/50 | 45/50 | **187/200** |
+| `sprint3` = 172 build + completion prover | 47/50 | 45/50 | 50/50 | 45/50 | 187/200 |
+| `sprint4` = + goal rewriting | 48/50 | 47/50 | 50/50 | 45/50 | 190/200 |
+| `sprint5` = nothing borrowed, no tables | 48/50 | 47/50 | 50/50 | 45/50 | **190/200** |
 
 Solvers and per-problem results are under `dist/solo/experiments/`.
 
@@ -115,3 +117,26 @@ That also changed the borrowing. The 179 build was 6,165 lines; the 187 build
 is 4,209, of which 2,268 are still opnorm's, 804 are the embedded ETP results,
 and 741 are local. Deleting the dead LLM path — zero calls across 200 problems —
 and the per-problem tactics did most of it.
+
+## The end of the borrowing
+
+The question this file opened with — what does merging with a stronger solver
+buy — has an answer that took three more builds to reach: **nothing that could
+not be rebuilt.**
+
+`sprint5` carries no reference-solver code, no embedded tables, and no LLM path.
+806 lines against 4,323. It scores **190/200, identical to the borrowed build in
+every one of the four categories, and misses exactly the same ten problems.**
+
+Each piece was checked against what it replaced before the solver was assembled:
+the model finder reproduces all 99 of the reference's false certificates in one
+second and finds a smaller carrier on one of them; the prover reaches all 29 of
+its singleton collapses and all 16 of its calc chains. Nothing was lost, so
+nothing had to be traded.
+
+The lookup table went too. It was routing — over 30 known-true implications the
+model finder never once wrongly claimed a counterexample, it simply spends its
+budget and gives up. Dropping it costs wall clock, not score, and removes the
+rule obligation to disclose an embedded payload.
+
+See [../dist/solo/selfcontained/README.md](../dist/solo/selfcontained/README.md).
