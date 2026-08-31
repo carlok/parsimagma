@@ -164,6 +164,7 @@ test: Vampire 5.1.0 and Prover9/Mace4, both in Homebrew.
 | [docs/merge-experiment.md](docs/merge-experiment.md) | merging the solver with the competition's reference: 55/200 to 172/200, none of it the corpus |
 | [docs/equational-prover.md](docs/equational-prover.md) | the laws no model search settles, and the completion prover that proves them: 172/200 to 187/200 |
 | [dist/solo/selfcontained/](dist/solo/selfcontained/) | 986 lines, nothing borrowed, no lookup tables: 196/200, three of four categories perfect |
+| [docs/atp-calibration-stage2.md](docs/atp-calibration-stage2.md) | what the self-contained solver gives up to Vampire, and the one inference rule that explains it |
 | [docs/the-39.md](docs/the-39.md) | what the 39 remaining pairs want, and the section 5.6 family that closes sixteen of them |
 | [docs/hard-core-anatomy.md](docs/hard-core-anatomy.md) | what the 1062 actually contains, and the 385 floor (superseded) |
 | [docs/phase-a-report.md](docs/phase-a-report.md) | engine, differential agreement, families implemented and not, coverage totals |
