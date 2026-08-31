@@ -1,0 +1,1602 @@
+[
+ {
+  "id": "order4_normal_0001",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 8.92
+ },
+ {
+  "id": "order4_normal_0002",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.58
+ },
+ {
+  "id": "order4_normal_0003",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.21
+ },
+ {
+  "id": "order4_normal_0004",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.82
+ },
+ {
+  "id": "order4_normal_0005",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.61
+ },
+ {
+  "id": "order4_normal_0006",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.58
+ },
+ {
+  "id": "order4_normal_0007",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.02
+ },
+ {
+  "id": "order4_normal_0008",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.5
+ },
+ {
+  "id": "order4_normal_0009",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.38
+ },
+ {
+  "id": "order4_normal_0010",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.23
+ },
+ {
+  "id": "order4_normal_0011",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.06
+ },
+ {
+  "id": "order4_normal_0012",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.07
+ },
+ {
+  "id": "order4_normal_0013",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.1
+ },
+ {
+  "id": "order4_normal_0014",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.45
+ },
+ {
+  "id": "order4_normal_0015",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.99
+ },
+ {
+  "id": "order4_normal_0016",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.33
+ },
+ {
+  "id": "order4_normal_0017",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.94
+ },
+ {
+  "id": "order4_normal_0018",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 3.41
+ },
+ {
+  "id": "order4_normal_0019",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.23
+ },
+ {
+  "id": "order4_normal_0020",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.82
+ },
+ {
+  "id": "order4_normal_0021",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.27
+ },
+ {
+  "id": "order4_normal_0022",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.73
+ },
+ {
+  "id": "order4_normal_0023",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.07
+ },
+ {
+  "id": "order4_normal_0024",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.72
+ },
+ {
+  "id": "order4_normal_0025",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.07
+ },
+ {
+  "id": "order4_normal_0026",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.92
+ },
+ {
+  "id": "order4_normal_0027",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.91
+ },
+ {
+  "id": "order4_normal_0028",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.6
+ },
+ {
+  "id": "order4_normal_0029",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.99
+ },
+ {
+  "id": "order4_normal_0030",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 33.61
+ },
+ {
+  "id": "order4_normal_0031",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.72
+ },
+ {
+  "id": "order4_normal_0032",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.45
+ },
+ {
+  "id": "order4_normal_0033",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.68
+ },
+ {
+  "id": "order4_normal_0034",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.28
+ },
+ {
+  "id": "order4_normal_0035",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.67
+ },
+ {
+  "id": "order4_normal_0036",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 6.1
+ },
+ {
+  "id": "order4_normal_0037",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.79
+ },
+ {
+  "id": "order4_normal_0038",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.29
+ },
+ {
+  "id": "order4_normal_0039",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.74
+ },
+ {
+  "id": "order4_normal_0040",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.23
+ },
+ {
+  "id": "order4_normal_0041",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.96
+ },
+ {
+  "id": "order4_normal_0042",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 3.48
+ },
+ {
+  "id": "order4_normal_0043",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.89
+ },
+ {
+  "id": "order4_normal_0044",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 3.5
+ },
+ {
+  "id": "order4_normal_0045",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.79
+ },
+ {
+  "id": "order4_normal_0046",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 3.08
+ },
+ {
+  "id": "order4_normal_0047",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order4_normal_0048",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.62
+ },
+ {
+  "id": "order4_normal_0049",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.78
+ },
+ {
+  "id": "order4_normal_0050",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.73
+ },
+ {
+  "id": "order4_hard_0001",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.87
+ },
+ {
+  "id": "order4_hard_0002",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.94
+ },
+ {
+  "id": "order4_hard_0003",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.8
+ },
+ {
+  "id": "order4_hard_0004",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order4_hard_0005",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.87
+ },
+ {
+  "id": "order4_hard_0006",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.96
+ },
+ {
+  "id": "order4_hard_0007",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.83
+ },
+ {
+  "id": "order4_hard_0008",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.88
+ },
+ {
+  "id": "order4_hard_0009",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.83
+ },
+ {
+  "id": "order4_hard_0010",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.92
+ },
+ {
+  "id": "order4_hard_0011",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.78
+ },
+ {
+  "id": "order4_hard_0012",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order4_hard_0013",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.81
+ },
+ {
+  "id": "order4_hard_0014",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order4_hard_0015",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.86
+ },
+ {
+  "id": "order4_hard_0016",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.96
+ },
+ {
+  "id": "order4_hard_0017",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.78
+ },
+ {
+  "id": "order4_hard_0018",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order4_hard_0019",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order4_hard_0020",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order4_hard_0021",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order4_hard_0022",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.86
+ },
+ {
+  "id": "order4_hard_0023",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.8
+ },
+ {
+  "id": "order4_hard_0024",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.72
+ },
+ {
+  "id": "order4_hard_0025",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order4_hard_0026",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.91
+ },
+ {
+  "id": "order4_hard_0027",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.89
+ },
+ {
+  "id": "order4_hard_0028",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.84
+ },
+ {
+  "id": "order4_hard_0029",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.95
+ },
+ {
+  "id": "order4_hard_0030",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.83
+ },
+ {
+  "id": "order4_hard_0031",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.02
+ },
+ {
+  "id": "order4_hard_0032",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.95
+ },
+ {
+  "id": "order4_hard_0033",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.95
+ },
+ {
+  "id": "order4_hard_0034",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.96
+ },
+ {
+  "id": "order4_hard_0035",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.82
+ },
+ {
+  "id": "order4_hard_0036",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.87
+ },
+ {
+  "id": "order4_hard_0037",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.87
+ },
+ {
+  "id": "order4_hard_0038",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.29
+ },
+ {
+  "id": "order4_hard_0039",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 35.94
+ },
+ {
+  "id": "order4_hard_0040",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.31
+ },
+ {
+  "id": "order4_hard_0041",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order4_hard_0042",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.72
+ },
+ {
+  "id": "order4_hard_0043",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.8
+ },
+ {
+  "id": "order4_hard_0044",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.43
+ },
+ {
+  "id": "order4_hard_0045",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.78
+ },
+ {
+  "id": "order4_hard_0046",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.82
+ },
+ {
+  "id": "order4_hard_0047",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order4_hard_0048",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.73
+ },
+ {
+  "id": "order4_hard_0049",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order4_hard_0050",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.76
+ },
+ {
+  "id": "order4_extra_hard_0001",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.43
+ },
+ {
+  "id": "order4_extra_hard_0002",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.49
+ },
+ {
+  "id": "order4_extra_hard_0003",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.52
+ },
+ {
+  "id": "order4_extra_hard_0004",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.46
+ },
+ {
+  "id": "order4_extra_hard_0005",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 36.84
+ },
+ {
+  "id": "order4_extra_hard_0006",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.63
+ },
+ {
+  "id": "order4_extra_hard_0007",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 36.65
+ },
+ {
+  "id": "order4_extra_hard_0008",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.61
+ },
+ {
+  "id": "order4_extra_hard_0009",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 36.15
+ },
+ {
+  "id": "order4_extra_hard_0010",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.67
+ },
+ {
+  "id": "order4_extra_hard_0011",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 31.92
+ },
+ {
+  "id": "order4_extra_hard_0012",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.95
+ },
+ {
+  "id": "order4_extra_hard_0013",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 36.34
+ },
+ {
+  "id": "order4_extra_hard_0014",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.48
+ },
+ {
+  "id": "order4_extra_hard_0015",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 34.6
+ },
+ {
+  "id": "order4_extra_hard_0016",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.32
+ },
+ {
+  "id": "order4_extra_hard_0017",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 29.9
+ },
+ {
+  "id": "order4_extra_hard_0018",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.31
+ },
+ {
+  "id": "order4_extra_hard_0019",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.12
+ },
+ {
+  "id": "order4_extra_hard_0020",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.33
+ },
+ {
+  "id": "order4_extra_hard_0021",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.08
+ },
+ {
+  "id": "order4_extra_hard_0022",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.32
+ },
+ {
+  "id": "order4_extra_hard_0023",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.03
+ },
+ {
+  "id": "order4_extra_hard_0024",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.34
+ },
+ {
+  "id": "order4_extra_hard_0025",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.34
+ },
+ {
+  "id": "order4_extra_hard_0026",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.47
+ },
+ {
+  "id": "order4_extra_hard_0027",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.59
+ },
+ {
+  "id": "order4_extra_hard_0028",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.51
+ },
+ {
+  "id": "order4_extra_hard_0029",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.76
+ },
+ {
+  "id": "order4_extra_hard_0030",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.48
+ },
+ {
+  "id": "order4_extra_hard_0031",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.9
+ },
+ {
+  "id": "order4_extra_hard_0032",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.51
+ },
+ {
+  "id": "order4_extra_hard_0033",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.74
+ },
+ {
+  "id": "order4_extra_hard_0034",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.52
+ },
+ {
+  "id": "order4_extra_hard_0035",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.54
+ },
+ {
+  "id": "order4_extra_hard_0036",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.38
+ },
+ {
+  "id": "order4_extra_hard_0037",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.24
+ },
+ {
+  "id": "order4_extra_hard_0038",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.37
+ },
+ {
+  "id": "order4_extra_hard_0039",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.34
+ },
+ {
+  "id": "order4_extra_hard_0040",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.42
+ },
+ {
+  "id": "order4_extra_hard_0041",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 30.44
+ },
+ {
+  "id": "order4_extra_hard_0042",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.68
+ },
+ {
+  "id": "order4_extra_hard_0043",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 32.18
+ },
+ {
+  "id": "order4_extra_hard_0044",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.38
+ },
+ {
+  "id": "order4_extra_hard_0045",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 32.05
+ },
+ {
+  "id": "order4_extra_hard_0046",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.52
+ },
+ {
+  "id": "order4_extra_hard_0047",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 31.86
+ },
+ {
+  "id": "order4_extra_hard_0048",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.42
+ },
+ {
+  "id": "order4_extra_hard_0049",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 32.08
+ },
+ {
+  "id": "order4_extra_hard_0050",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.41
+ },
+ {
+  "id": "order5_normal_0001",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.73
+ },
+ {
+  "id": "order5_normal_0002",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.65
+ },
+ {
+  "id": "order5_normal_0003",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 102.43
+ },
+ {
+  "id": "order5_normal_0004",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.49
+ },
+ {
+  "id": "order5_normal_0005",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order5_normal_0006",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.08
+ },
+ {
+  "id": "order5_normal_0007",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.73
+ },
+ {
+  "id": "order5_normal_0008",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.59
+ },
+ {
+  "id": "order5_normal_0009",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 25.05
+ },
+ {
+  "id": "order5_normal_0010",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.82
+ },
+ {
+  "id": "order5_normal_0011",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.91
+ },
+ {
+  "id": "order5_normal_0012",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 3.62
+ },
+ {
+  "id": "order5_normal_0013",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order5_normal_0014",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.27
+ },
+ {
+  "id": "order5_normal_0015",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.93
+ },
+ {
+  "id": "order5_normal_0016",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.64
+ },
+ {
+  "id": "order5_normal_0017",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.86
+ },
+ {
+  "id": "order5_normal_0018",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.97
+ },
+ {
+  "id": "order5_normal_0019",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.81
+ },
+ {
+  "id": "order5_normal_0020",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.79
+ },
+ {
+  "id": "order5_normal_0021",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.79
+ },
+ {
+  "id": "order5_normal_0022",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.48
+ },
+ {
+  "id": "order5_normal_0023",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.77
+ },
+ {
+  "id": "order5_normal_0024",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.23
+ },
+ {
+  "id": "order5_normal_0025",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.32
+ },
+ {
+  "id": "order5_normal_0026",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 6.0
+ },
+ {
+  "id": "order5_normal_0027",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.85
+ },
+ {
+  "id": "order5_normal_0028",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.87
+ },
+ {
+  "id": "order5_normal_0029",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 86.29
+ },
+ {
+  "id": "order5_normal_0030",
+  "solved": false,
+  "verdict": null,
+  "judge_calls": 0,
+  "llm_calls": 0,
+  "elapsed_seconds": 108.51
+ },
+ {
+  "id": "order5_normal_0031",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.11
+ },
+ {
+  "id": "order5_normal_0032",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 18.12
+ },
+ {
+  "id": "order5_normal_0033",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.68
+ },
+ {
+  "id": "order5_normal_0034",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.58
+ },
+ {
+  "id": "order5_normal_0035",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.64
+ },
+ {
+  "id": "order5_normal_0036",
+  "solved": false,
+  "verdict": null,
+  "judge_calls": 0,
+  "llm_calls": 0,
+  "elapsed_seconds": 198.4
+ },
+ {
+  "id": "order5_normal_0037",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.86
+ },
+ {
+  "id": "order5_normal_0038",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.04
+ },
+ {
+  "id": "order5_normal_0039",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.8
+ },
+ {
+  "id": "order5_normal_0040",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.48
+ },
+ {
+  "id": "order5_normal_0041",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.8
+ },
+ {
+  "id": "order5_normal_0042",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 14.3
+ },
+ {
+  "id": "order5_normal_0043",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.63
+ },
+ {
+  "id": "order5_normal_0044",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 5.44
+ },
+ {
+  "id": "order5_normal_0045",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order5_normal_0046",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.27
+ },
+ {
+  "id": "order5_normal_0047",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 1.9
+ },
+ {
+  "id": "order5_normal_0048",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 4.57
+ },
+ {
+  "id": "order5_normal_0049",
+  "solved": true,
+  "verdict": "false",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.21
+ },
+ {
+  "id": "order5_normal_0050",
+  "solved": true,
+  "verdict": "true",
+  "judge_calls": 1,
+  "llm_calls": 0,
+  "elapsed_seconds": 2.75
+ }
+]

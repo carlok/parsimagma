@@ -82,6 +82,30 @@ def replay(t, steps, L, R):
     return t
 
 
+def checked_replay(t, steps, L, R):
+    """Replay, and verify each step was actually applicable.
+
+    `replay` only performs the replacement: it never checks that the rule's
+    source side matches the subterm it is replacing. A path can therefore
+    arrive at the right endpoint while containing a step that means nothing,
+    and the Lean built from it will not typecheck. In Solo the judge caught
+    that; in marathon there is no judge, so the check has to be here.
+
+    Returns the endpoint, or None if any step does not apply.
+    """
+    for (p, tag, s) in steps:
+        src, dst = (L, R) if tag == "fwd" else (R, L)
+        sub = t
+        for d in p:
+            if sub[0] != "o":
+                return None
+            sub = sub[d + 1]
+        if subst(src, s) != sub:
+            return None
+        t = replace(t, p, subst(dst, s))
+    return t
+
+
 def invert(steps):
     """The inverse path: same positions, opposite directions, reversed order."""
     return [(p, "bwd" if tag == "fwd" else "fwd", s)

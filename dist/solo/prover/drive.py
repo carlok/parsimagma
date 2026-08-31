@@ -155,6 +155,12 @@ def emit_with_lemmas(uses_l, uses_r, rules, GL, GR, L, R, hv, gv):
     is a calc chain over lemma applications.
     """
     import complete as C
+    if not uses_l and not uses_r:
+        # Both goal sides already coincide. Emitting a `calc` with no lines is
+        # not Lean; it only ever got past here because the Solo judge rejected
+        # it and the ladder moved on. With no judge — marathon — it would be
+        # the final answer for that problem.
+        return "intro %s\nrfl" % " ".join(gv) if gv else "rfl"
     used = sorted({i for (i, _, _, _) in uses_l + uses_r})
     lines, names = [], {}
     for k, i in enumerate(used):

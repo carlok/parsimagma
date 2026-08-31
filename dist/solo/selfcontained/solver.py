@@ -19,6 +19,7 @@ The proofs that come out depend on no axioms at all.
 """
 
 import json
+import os
 import re
 import sys
 import time
@@ -1231,14 +1232,37 @@ def attempt(fn, *a):
         return None
 
 
+# Marathon has no judge in the loop: answers are appended to a file and scored
+# after the process exits. `submit` is the single place that knows which track
+# is running, so the ladder below is written once.
+#
+# This matters more than it looks. `read_message` raises SystemExit on EOF, and
+# marathon launches the solver with stdin on /dev/null — so one stray
+# `call_judge` would raise SystemExit(0), sail through every `except Exception`
+# in the file, exit the process with status 0, and turn every remaining problem
+# into `not_attempted` with nothing in any log to say why.
+MARATHON = {"on": False, "answer": None}
+
+
+def submit(verdict, code):
+    """True if the answer is (or is assumed) accepted."""
+    if MARATHON["on"]:
+        MARATHON["answer"] = (verdict, code)
+        return True
+    return call_judge(verdict, code).get("status") == "accepted"
+
+
 def main():
-    problem = read_message()["problem"]
+    main_body(read_message()["problem"])
+
+
+def main_body(problem):
     eq1 = problem["equation1"].replace("*", "◇")
     eq2 = problem["equation2"].replace("*", "◇")
 
     # A counterexample at carrier 2 or 3 is nearly free, so look before proving.
     code = attempt(find_model, eq1, eq2, (2, 3), 5.0)
-    if code and call_judge("false", code).get("status") == "accepted":
+    if code and submit("false", code):
         return
 
     # Proving is cheap; the wider carriers are not. Exhaust every proof route
@@ -1248,12 +1272,12 @@ def main():
                  (prove_by_normalising, eq1, eq2, 60.0),
                  (prove, eq1, eq2, 22.0, True)):
         body = attempt(*args)
-        if body and call_judge("true", true_code(body)).get("status") == "accepted":
+        if body and submit("true", true_code(body)):
             return
 
     code = attempt(find_model, eq1, eq2, (4, 5, 6, 7), 240.0)
     if code:
-        call_judge("false", code)
+        submit("false", code)
 
 
 
@@ -1265,6 +1289,12 @@ def emit_with_lemmas(uses_l, uses_r, rules, GL, GR, L, R, hv, gv):
     Here each lemma becomes a `have` proved by its own calc chain, and the goal
     is a calc chain over lemma applications.
     """
+    if not uses_l and not uses_r:
+        # Both goal sides already coincide. Emitting a `calc` with no lines is
+        # not Lean; it only ever got past here because the Solo judge rejected
+        # it and the ladder moved on. With no judge — marathon — it would be
+        # the final answer for that problem.
+        return "intro %s\nrfl" % " ".join(gv) if gv else "rfl"
     used = sorted({i for (i, _, _, _) in uses_l + uses_r})
     lines, names = [], {}
     for k, i in enumerate(used):
@@ -1339,5 +1369,72 @@ def _arg(t):
         return "x"
     return pv_show(t) if t[0] != "o" else "(%s)" % pv_show(t)
 
+
+def solve_one(problem):
+    """Run the ladder for one problem and return (verdict, code), or None."""
+    MARATHON["answer"] = None
+    main_body(problem)
+    return MARATHON["answer"]
+
+
+def run_marathon():
+    """N problems, one shared wall-clock budget, answers appended as found.
+
+    Scoring reads the answer file after the process is dead, last write wins
+    per id, and a wrong answer scores the same as no answer. So the only thing
+    that costs points is stopping early — never withholding a certificate we
+    already have.
+    """
+    manifest_path = os.environ["JUDGE_MARATHON_MANIFEST"]
+    output_path = os.environ["JUDGE_MARATHON_OUTPUT"]
+    budget = float(os.environ.get("JUDGE_MARATHON_BUDGET_SECONDS", "3600"))
+    deadline = time.monotonic() + budget
+
+    problems = []
+    with open(manifest_path, encoding="utf-8") as fh:
+        for raw in fh:
+            raw = raw.strip()
+            if not raw:
+                continue
+            try:
+                obj = json.loads(raw)
+            except ValueError:
+                continue
+            if isinstance(obj, dict) and "id" in obj:
+                problems.append(obj)
+    if not problems:
+        return
+
+    # One pass. Measured on the reference 100-problem manifest, the ladder
+    # needs 34.6 s at worst and 152 s in total, so a per-problem ceiling of
+    # budget/N never binds and a second pass would re-run a deterministic
+    # search for the same nothing. The floor is what the first stage of the
+    # model search costs; without it a small smoke budget starves it.
+    cap = max(6.0, budget / len(problems))
+    # Leave room for the last write to land: the runner freezes the file at
+    # SIGTERM, so a write that starts after the deadline may not count.
+    margin = 30.0
+
+    MARATHON["on"] = True
+    for prob in problems:
+        if time.monotonic() + margin >= deadline:
+            break
+        MARATHON["deadline"] = min(time.monotonic() + cap, deadline - margin)
+        try:
+            answer = solve_one(prob)
+        except BaseException:      # SystemExit included, deliberately
+            answer = None
+        if answer is None:
+            continue
+        verdict, code = answer
+        line = json.dumps({"id": prob["id"], "verdict": verdict, "code": code},
+                          ensure_ascii=False) + "\n"
+        with open(output_path, "a", encoding="utf-8") as fh:
+            fh.write(line)
+            fh.flush()
+
 if __name__ == "__main__":
-    main()
+    if "JUDGE_MARATHON_MANIFEST" in os.environ:
+        run_marathon()
+    else:
+        main()
