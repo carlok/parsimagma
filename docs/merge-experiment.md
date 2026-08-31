@@ -30,6 +30,8 @@ set, it was wrong by a factor of two.
 | `opnorm` (reference, partial run) | 36/50 | 22/43 | — | — | 58/93 |
 | `merged` = opnorm + parsimagma | 36/50 | 25/50 | 37/50 | 39/50 | **137/200** |
 | `finaltuned` = merged + oracle + singleton | 40/50 | 43/50 | 50/50 | 39/50 | **172/200** |
+| a further build, per-problem tactics | 40/50 | 50/50 | 50/50 | 39/50 | 179/200 |
+| `sprint3` = 172 build + completion prover | 47/50 | 45/50 | 50/50 | 45/50 | **187/200** |
 
 Solvers and per-problem results are under `dist/solo/experiments/`.
 
@@ -93,3 +95,23 @@ happen first, and the second is a judgement call rather than a task:
   reference solver with roughly 12 KB of additions. Whether that is a
   submission or a fork of the baseline is a question about what the entry is
   for, and the entry was never for placement.
+
+## Afterwards
+
+A later build reached 179/200, but seven of those came from six strategies
+hardcoded to individual problem pairs — `try_eq719_normalization` returns
+`False` unless `eq1_id == 719 and eq2_id == 4138`, and five more like it. The
+rules state the graded set reuses no publicly available problem, so none of
+them could ever fire there. They were removed, which is what puts the
+`finaltuned` row at 172 rather than 179.
+
+What replaced them is one general method rather than six special cases: a
+proof-carrying completion prover for the true direction, which reaches
+**187/200** with no per-problem knowledge and no LLM call on any of the 200.
+See [equational-prover.md](equational-prover.md). Its certificates depend on no
+axioms at all.
+
+That also changed the borrowing. The 179 build was 6,165 lines; the 187 build
+is 4,209, of which 2,268 are still opnorm's, 804 are the embedded ETP results,
+and 741 are local. Deleting the dead LLM path — zero calls across 200 problems —
+and the per-problem tactics did most of it.
