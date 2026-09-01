@@ -4,10 +4,10 @@
 % SZS output start Proof for 6543_29450
 fof(f1,axiom,(
   ! [X0,X1,X2] : X0 = f(X0,f(X1,f(f(X1,X0),f(X1,X2))))),
-  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/6543_29450.p','hypothesis')).
+  file('atp/6543_29450.p','hypothesis')).
 fof(f2,conjecture,(
   ! [X0,X1,X2,X3,X4] : X2 = f(f(X2,f(X3,f(X4,f(X1,X0)))),X4)),
-  file('/private/tmp/claude-501/-Users-carlo-Documents-varie-hacks-lean4/3b96bf1a-7762-4782-afe4-ad50e3ea1bea/scratchpad/atp/6543_29450.p','goal')).
+  file('atp/6543_29450.p','goal')).
 fof(f3,negated_conjecture,(
   ~ ! [X0,X1,X2,X3,X4] : X2 = f(f(X2,f(X3,f(X4,f(X1,X0)))),X4)),
   inference(negated_conjecture,[status(cth)],[f2])).
