@@ -15,7 +15,7 @@ as a proof.
 
 **The solver.** [dist/solo/selfcontained/solver.py](dist/solo/selfcontained/solver.py)
 settles **200/200** on the Stage 2 sample set. Write-up:
-[doi:10.5281/zenodo.22214744](https://doi.org/10.5281/zenodo.22214744). One Python file, 108,748 bytes, standard
+[doi:10.5281/zenodo.22237246](https://doi.org/10.5281/zenodo.22237246). One Python file, 108,748 bytes, standard
 library only: no database, no embedded lookup table, no problem-specific case,
 no LLM call. Its proofs of implications close over **no Lean axioms at all**.
 Two independent full runs, identical problem for problem. That set is a local
