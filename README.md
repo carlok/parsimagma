@@ -1,6 +1,7 @@
 # parsimagma
 
 ![ci](https://github.com/carlok/parsimagma/actions/workflows/ci.yml/badge.svg)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.22237101.svg)](https://doi.org/10.5281/zenodo.22237101)
 
 A signature and coverage engine over the 4694 equational laws of the
 [Equational Theories Project](https://teorth.github.io/equational_theories/),
@@ -12,8 +13,9 @@ a command in this repository. The derivations and the code are machine-generated
 and machine-checked, and are offered as data and reproduction steps rather than
 as a proof.
 
-**The solver.** [dist/solo/selfcontained/](dist/solo/selfcontained/) settles
-**200/200** on the Stage 2 sample set. One Python file, 108,748 bytes, standard
+**The solver.** [dist/solo/selfcontained/solver.py](dist/solo/selfcontained/solver.py)
+settles **200/200** on the Stage 2 sample set. Write-up:
+[doi:10.5281/zenodo.22214744](https://doi.org/10.5281/zenodo.22214744). One Python file, 108,748 bytes, standard
 library only: no database, no embedded lookup table, no problem-specific case,
 no LLM call. Its proofs of implications close over **no Lean axioms at all**.
 Two independent full runs, identical problem for problem. That set is a local
