@@ -1,0 +1,752 @@
+[
+ {
+  "id": "order5_normal_0001",
+  "eq1_id": 20708,
+  "eq2_id": 34528,
+  "equation1": "x = (y * x) * (((x * z) * y) * x)",
+  "equation2": "x = ((x * x) * ((y * x) * x)) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 0], [0, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.76,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0002",
+  "eq1_id": 9058,
+  "eq2_id": 14712,
+  "equation1": "x = y * (z * (((w * u) * z) * w))",
+  "equation2": "x = y * (((y * x) * (y * z)) * x)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ (((x ◇ x) ◇ x) ◇ x)) := h x x x x x\n    _ = y ◇ (((y ◇ x) ◇ (y ◇ z)) ◇ x) := (h (y ◇ (((y ◇ x) ◇ (y ◇ z)) ◇ x)) x x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.81,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0003",
+  "eq1_id": 7040,
+  "eq2_id": 8333,
+  "equation1": "x = y * (z * ((y * x) * (z * y)))",
+  "equation2": "x = x * (y * (((z * x) * y) * x))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 5) := {\n    op := finOpTable \"[[0, 2, 3, 4, 1], [2, 1, 4, 0, 3], [3, 4, 2, 1, 0], [4, 0, 1, 3, 2], [1, 3, 0, 2, 4]]\"\n  }\n  refine ⟨Fin 5, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 128.38,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0004",
+  "eq1_id": 15824,
+  "eq2_id": 20351,
+  "equation1": "x = y * (((z * (y * y)) * y) * z)",
+  "equation2": "x = (y * z) * ((w * (x * z)) * y)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = x ◇ (((x ◇ (x ◇ x)) ◇ x) ◇ x) := h x x x\n    _ = (y ◇ z) ◇ ((w ◇ (x ◇ z)) ◇ y) := (h ((y ◇ z) ◇ ((w ◇ (x ◇ z)) ◇ y)) x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.46,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0005",
+  "eq1_id": 8871,
+  "eq2_id": 33513,
+  "equation1": "x = y * (z * (((z * x) * z) * y))",
+  "equation2": "x = (y * (((z * w) * x) * w)) * w",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[0, 1, 2], [2, 0, 1], [1, 2, 0]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.79,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0006",
+  "eq1_id": 8012,
+  "eq2_id": 37322,
+  "equation1": "x = y * (z * ((z * (y * z)) * z))",
+  "equation2": "x = ((x * (y * (z * w))) * x) * y",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x)) := h x x x\n    _ = ((x ◇ (y ◇ (z ◇ w))) ◇ x) ◇ y := (h (((x ◇ (y ◇ (z ◇ w))) ◇ x) ◇ y) x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 3.98,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0007",
+  "eq1_id": 10259,
+  "eq2_id": 32311,
+  "equation1": "x = y * ((x * z) * ((y * z) * x))",
+  "equation2": "x = (y * ((y * (z * x)) * x)) * y",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.69,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0008",
+  "eq1_id": 7633,
+  "eq2_id": 8651,
+  "equation1": "x = y * (x * ((z * (y * w)) * y))",
+  "equation2": "x = y * (y * (((z * y) * x) * w))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ (((y ◇ y) ◇ x) ◇ (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((x ◇ (((y ◇ y) ◇ x) ◇ x)) ◇ ((y ◇ y) ◇ x))))) ◇ ((y ◇ y) ◇ x))) := h x ((y ◇ y) ◇ x) ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((x ◇ (((y ◇ y) ◇ x) ◇ x)) ◇ ((y ◇ y) ◇ x)))\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))) ◇ ((y ◇ y) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ t) ◇ ((y ◇ y) ◇ x)))) ((h ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ((y ◇ y) ◇ x) x x).symm)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))))) ◇ ((y ◇ y) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ t) ◇ ((y ◇ y) ◇ x)))) (h ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (y ◇ (((z ◇ y) ◇ x) ◇ w)) x ((x ◇ (x ◇ x)) ◇ x))\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))))) ◇ ((y ◇ y) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ (t ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))))) ◇ ((y ◇ y) ◇ x)))) ((h (y ◇ (((z ◇ y) ◇ x) ◇ w)) x x x).symm)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((x ◇ (((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))))) ◇ ((y ◇ y) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (t ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)))))) ◇ ((y ◇ y) ◇ x)))) (h ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) x x x)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((y ◇ y) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ (t ◇ ((y ◇ y) ◇ x)))) ((h (y ◇ (((z ◇ y) ◇ x) ◇ w)) ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) x ((x ◇ (x ◇ x)) ◇ x)).symm)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ ((x ◇ (((y ◇ y) ◇ (y ◇ y)) ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ ((y ◇ y) ◇ (y ◇ y))))) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ (t ◇ x)))) (h (y ◇ y) ((y ◇ y) ◇ (y ◇ y)) x ((x ◇ (x ◇ x)) ◇ x))\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (y ◇ y))))) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (t ◇ ((y ◇ y) ◇ (y ◇ y))))) ◇ x)))) ((h ((y ◇ y) ◇ (y ◇ y)) x x x).symm)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (((y ◇ y) ◇ (y ◇ y)) ◇ ((x ◇ ((y ◇ y) ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ (y ◇ y))))) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (((y ◇ y) ◇ (y ◇ y)) ◇ (t ◇ (y ◇ y))))) ◇ x)))) (h (y ◇ y) x x x)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ ((y ◇ y) ◇ (y ◇ y))) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ t) ◇ x)))) ((h ((y ◇ y) ◇ (y ◇ y)) (y ◇ y) x ((x ◇ (x ◇ x)) ◇ x)).symm)\n    _ = ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ (x ◇ (((y ◇ y) ◇ (y ◇ y)) ◇ ((x ◇ (x ◇ x)) ◇ x)))) ◇ x))) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ (x ◇ ((y ◇ (((z ◇ y) ◇ x) ◇ w)) ◇ ((((y ◇ y) ◇ (y ◇ y)) ◇ t) ◇ x)))) (h ((y ◇ y) ◇ (y ◇ y)) x x x)\n    _ = ((y ◇ y) ◇ x) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ x) ◇ t) ((h (y ◇ (((z ◇ y) ◇ x) ◇ w)) x ((y ◇ y) ◇ (y ◇ y)) (((y ◇ y) ◇ (y ◇ y)) ◇ ((x ◇ (x ◇ x)) ◇ x))).symm)\n    _ = ((y ◇ y) ◇ (y ◇ (x ◇ ((x ◇ (y ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ t) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (h x y x ((x ◇ (x ◇ x)) ◇ x))\n    _ = ((y ◇ y) ◇ (y ◇ (x ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (x ◇ (t ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ((h y x x x).symm)\n    _ = ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ ((x ◇ ((x ◇ x) ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ (x ◇ x)))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (t ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (h x (x ◇ x) x ((x ◇ (x ◇ x)) ◇ x))\n    _ = ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ ((x ◇ x) ◇ (x ◇ x)))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ (t ◇ (x ◇ x)))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ((h (x ◇ x) x x x).symm)\n    _ = ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ ((x ◇ x) ◇ ((x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x))) ◇ x)))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ ((x ◇ x) ◇ (t ◇ x)))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (h x x x x)\n    _ = ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ (x ◇ x)) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ t) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ((h (x ◇ x) x x ((x ◇ (x ◇ x)) ◇ x)).symm)\n    _ = ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ ((y ◇ y) ◇ ((x ◇ x) ◇ ((x ◇ ((y ◇ y) ◇ x)) ◇ (y ◇ y))))) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => ((y ◇ y) ◇ (y ◇ (((x ◇ x) ◇ t) ◇ (y ◇ y)))) ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) (h (x ◇ x) (y ◇ y) x x)\n    _ = y ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w)) := congrArg (fun t => t ◇ (y ◇ (((z ◇ y) ◇ x) ◇ w))) ((h y (y ◇ y) (x ◇ x) ((x ◇ x) ◇ ((x ◇ ((y ◇ y) ◇ x)) ◇ (y ◇ y)))).symm)\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.78,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0009",
+  "eq1_id": 16379,
+  "eq2_id": 40021,
+  "equation1": "x = y * ((((x * z) * x) * y) * z)",
+  "equation2": "x = (((y * (x * y)) * x) * z) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 4) := {\n    op := finOpTable \"[[0, 1, 2, 3], [3, 2, 1, 0], [1, 0, 3, 2], [2, 3, 0, 1]]\"\n  }\n  refine ⟨Fin 4, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 54.07,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0010",
+  "eq1_id": 7782,
+  "eq2_id": 31479,
+  "equation1": "x = y * (y * ((z * (y * z)) * w))",
+  "equation2": "x = (y * ((y * z) * (z * w))) * x",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x)) := h x x x x\n    _ = (y ◇ ((y ◇ z) ◇ (z ◇ w))) ◇ x := (h ((y ◇ ((y ◇ z) ◇ (z ◇ w))) ◇ x) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.68,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0011",
+  "eq1_id": 20814,
+  "eq2_id": 38176,
+  "equation1": "x = (y * x) * (((z * w) * y) * x)",
+  "equation2": "x = ((x * ((y * z) * y)) * w) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 0], [0, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.7,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0012",
+  "eq1_id": 7034,
+  "eq2_id": 24504,
+  "equation1": "x = y * (z * ((y * x) * (x * w)))",
+  "equation2": "x = ((y * z) * x) * ((x * z) * z)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = ((y ◇ z) ◇ x) ◇ ((x ◇ z) ◇ ((((y ◇ z) ◇ x) ◇ x) ◇ (x ◇ (((((y ◇ z) ◇ x) ◇ x) ◇ z) ◇ (z ◇ x))))) := h x ((y ◇ z) ◇ x) (x ◇ z) (((((y ◇ z) ◇ x) ◇ x) ◇ z) ◇ (z ◇ x))\n    _ = ((y ◇ z) ◇ x) ◇ ((x ◇ z) ◇ z) := congrArg (fun t => ((y ◇ z) ◇ x) ◇ ((x ◇ z) ◇ t)) ((h z (((y ◇ z) ◇ x) ◇ x) x x).symm)\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 3.19,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0013",
+  "eq1_id": 19375,
+  "eq2_id": 39786,
+  "equation1": "x = (y * z) * ((y * w) * (w * x))",
+  "equation2": "x = (((x * (x * x)) * y) * z) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[1, 2, 0], [1, 2, 0], [1, 2, 0]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.79,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0014",
+  "eq1_id": 8699,
+  "eq2_id": 34903,
+  "equation1": "x = y * (y * (((z * w) * w) * z))",
+  "equation2": "x = ((y * y) * ((x * z) * w)) * u",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w u\n  calc\n    x = x ◇ (x ◇ (((x ◇ x) ◇ x) ◇ x)) := h x x x x\n    _ = ((y ◇ y) ◇ ((x ◇ z) ◇ w)) ◇ u := (h (((y ◇ y) ◇ ((x ◇ z) ◇ w)) ◇ u) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.13,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0015",
+  "eq1_id": 19442,
+  "eq2_id": 27648,
+  "equation1": "x = (y * z) * ((z * w) * (y * x))",
+  "equation2": "x = ((x * (y * z)) * y) * (z * x)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[1, 2, 0], [1, 2, 0], [1, 2, 0]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.78,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0016",
+  "eq1_id": 10386,
+  "eq2_id": 15921,
+  "equation1": "x = y * ((y * z) * ((x * x) * y))",
+  "equation2": "x = y * (((z * (z * z)) * z) * y)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = ((x ◇ x) ◇ x) ◇ ((((x ◇ x) ◇ x) ◇ ((((x ◇ x) ◇ x) ◇ x) ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x)))) ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x))) := h x ((x ◇ x) ◇ x) ((((x ◇ x) ◇ x) ◇ x) ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x)))\n    _ = ((x ◇ x) ◇ x) ◇ (x ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x))) := congrArg (fun t => ((x ◇ x) ◇ x) ◇ (t ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x)))) ((h x ((x ◇ x) ◇ x) x).symm)\n    _ = ((x ◇ x) ◇ x) ◇ (x ◇ ((x ◇ ((x ◇ x) ◇ (((x ◇ x) ◇ (x ◇ x)) ◇ x))) ◇ ((x ◇ x) ◇ x))) := congrArg (fun t => ((x ◇ x) ◇ x) ◇ (x ◇ (t ◇ ((x ◇ x) ◇ x)))) (h (x ◇ x) x x)\n    _ = ((x ◇ x) ◇ x) ◇ x := congrArg (fun t => ((x ◇ x) ◇ x) ◇ t) ((h x x ((x ◇ x) ◇ (((x ◇ x) ◇ (x ◇ x)) ◇ x))).symm)\n    _ = ((x ◇ x) ◇ x) ◇ (x ◇ ((x ◇ ((x ◇ x) ◇ ((((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) ◇ ((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)))) ◇ x))) ◇ ((x ◇ x) ◇ x))) := congrArg (fun t => ((x ◇ x) ◇ x) ◇ t) (h x x ((x ◇ x) ◇ ((((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) ◇ ((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)))) ◇ x)))\n    _ = ((x ◇ x) ◇ x) ◇ (x ◇ (((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) ◇ ((x ◇ x) ◇ x))) := congrArg (fun t => ((x ◇ x) ◇ x) ◇ (x ◇ (t ◇ ((x ◇ x) ◇ x)))) ((h ((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) x x).symm)\n    _ = ((x ◇ x) ◇ x) ◇ ((((x ◇ x) ◇ x) ◇ ((((x ◇ x) ◇ x) ◇ x) ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x)))) ◇ (((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) ◇ ((x ◇ x) ◇ x))) := congrArg (fun t => ((x ◇ x) ◇ x) ◇ (t ◇ (((y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ◇ (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y))) ◇ ((x ◇ x) ◇ x)))) (h x ((x ◇ x) ◇ x) x)\n    _ = y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y) := (h (y ◇ (((z ◇ (z ◇ z)) ◇ z) ◇ y)) ((x ◇ x) ◇ x) ((((x ◇ x) ◇ x) ◇ x) ◇ ((x ◇ x) ◇ ((x ◇ x) ◇ x)))).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.6,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0017",
+  "eq1_id": 20381,
+  "eq2_id": 31748,
+  "equation1": "x = (y * z) * ((w * (y * w)) * x)",
+  "equation2": "x = (y * ((z * w) * (x * y))) * z",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.7,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0018",
+  "eq1_id": 17587,
+  "eq2_id": 33517,
+  "equation1": "x = (y * z) * (y * (y * (w * w)))",
+  "equation2": "x = (y * (((z * w) * x) * u)) * z",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w u\n  calc\n    x = (x ◇ x) ◇ (x ◇ (x ◇ (x ◇ x))) := h x x x x\n    _ = (y ◇ (((z ◇ w) ◇ x) ◇ u)) ◇ z := (h ((y ◇ (((z ◇ w) ◇ x) ◇ u)) ◇ z) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.88,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0019",
+  "eq1_id": 20450,
+  "eq2_id": 10923,
+  "equation1": "x = (y * z) * ((w * (u * y)) * x)",
+  "equation2": "x = x * ((y * (y * x)) * (x * x))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 0], [1, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.7,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0020",
+  "eq1_id": 20446,
+  "eq2_id": 17646,
+  "equation1": "x = (y * z) * ((w * (u * x)) * z)",
+  "equation2": "x = (y * z) * (z * (x * (w * z)))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = (x ◇ x) ◇ (((x ◇ x) ◇ ((x ◇ (x ◇ x)) ◇ x)) ◇ x) := h x x x (x ◇ x) (x ◇ (x ◇ x))\n    _ = (x ◇ x) ◇ (x ◇ x) := congrArg (fun t => (x ◇ x) ◇ (t ◇ x)) ((h x x x x x).symm)\n    _ = (x ◇ x) ◇ (((x ◇ ((y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z))))) ◇ ((x ◇ (x ◇ x)) ◇ ((y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z)))))) ◇ x) := congrArg (fun t => (x ◇ x) ◇ (t ◇ x)) (h x x ((y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z)))) x x)\n    _ = (y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z))) := (h ((y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z)))) x x (x ◇ ((y ◇ z) ◇ (z ◇ (x ◇ (w ◇ z))))) (x ◇ (x ◇ x))).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.49,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0021",
+  "eq1_id": 10414,
+  "eq2_id": 31385,
+  "equation1": "x = y * ((y * z) * ((y * w) * x))",
+  "equation2": "x = (y * ((y * x) * (z * y))) * z",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.8,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0022",
+  "eq1_id": 6293,
+  "eq2_id": 6361,
+  "equation1": "x = y * (z * (z * ((w * z) * y)))",
+  "equation2": "x = y * (z * (w * ((z * x) * y)))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = x ◇ (x ◇ (x ◇ ((x ◇ x) ◇ x))) := h x x x x\n    _ = y ◇ (z ◇ (w ◇ ((z ◇ x) ◇ y))) := (h (y ◇ (z ◇ (w ◇ ((z ◇ x) ◇ y)))) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.03,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0023",
+  "eq1_id": 20113,
+  "eq2_id": 12724,
+  "equation1": "x = (y * z) * ((x * (x * y)) * x)",
+  "equation2": "x = x * ((y * (z * (x * z))) * z)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.77,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0024",
+  "eq1_id": 6916,
+  "eq2_id": 12259,
+  "equation1": "x = y * (y * ((z * z) * (y * y)))",
+  "equation2": "x = y * (((z * x) * z) * (z * y))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ ((x ◇ x) ◇ (x ◇ x))) := h x x x\n    _ = y ◇ (((z ◇ x) ◇ z) ◇ (z ◇ y)) := (h (y ◇ (((z ◇ x) ◇ z) ◇ (z ◇ y))) x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.93,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0025",
+  "eq1_id": 15030,
+  "eq2_id": 12607,
+  "equation1": "x = y * (((z * z) * (y * w)) * x)",
+  "equation2": "x = x * ((x * (y * (x * y))) * y)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.71,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0026",
+  "eq1_id": 8049,
+  "eq2_id": 32591,
+  "equation1": "x = y * (z * ((z * (w * z)) * w))",
+  "equation2": "x = (y * ((z * (z * z)) * w)) * u",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w u\n  calc\n    x = x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x)) := h x x x x\n    _ = (y ◇ ((z ◇ (z ◇ z)) ◇ w)) ◇ u := (h ((y ◇ ((z ◇ (z ◇ z)) ◇ w)) ◇ u) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.58,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0027",
+  "eq1_id": 20639,
+  "eq2_id": 33808,
+  "equation1": "x = (x * y) * (((z * y) * w) * w)",
+  "equation2": "x = ((x * y) * (z * (z * w))) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 1], [0, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.83,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0028",
+  "eq1_id": 13932,
+  "eq2_id": 10857,
+  "equation1": "x = y * ((y * ((z * z) * y)) * y)",
+  "equation2": "x = x * ((x * (y * x)) * (z * z))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ ((x ◇ ((x ◇ x) ◇ x)) ◇ x) := h x x x\n    _ = x ◇ ((x ◇ (y ◇ x)) ◇ (z ◇ z)) := (h (x ◇ ((x ◇ (y ◇ x)) ◇ (z ◇ z))) x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.87,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0029",
+  "eq1_id": 7422,
+  "eq2_id": 18784,
+  "equation1": "x = x * (y * ((y * (x * z)) * y))",
+  "equation2": "x = (x * y) * ((x * x) * (y * z))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\nset_option maxRecDepth 8000 in\ndef submission : Goal := by\n  let m : Magma (Fin 6) := {\n    op := finOpTable \"[[0, 0, 0, 0, 0, 3], [1, 1, 1, 0, 5, 0], [2, 2, 2, 4, 0, 0], [3, 3, 3, 4, 2, 3], [4, 4, 4, 4, 5, 1], [5, 5, 5, 0, 5, 3]]\"\n  }\n  refine ⟨Fin 6, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 85.98,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0030",
+  "eq1_id": 19040,
+  "eq2_id": 12906,
+  "equation1": "x = (y * x) * ((z * z) * (x * z))",
+  "equation2": "x = y * ((x * (z * (z * y))) * w)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  let op : G → G → G := fun a b => a ◇ b\n  have lem1 : ∀ a0 a1 a2 : G, op (op (a2) (a2)) (op (a0) (a2)) = op (a0) (op (op (a1) (a1)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a1))) := by\n    intro a0 a1 a2\n    calc\n      op (op (a2) (a2)) (op (a0) (a2)) = op (op (op (a0) (a0)) (op (op (a2) (a2)) (op (a0) (a2)))) (op (op (a1) (a1)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a1))) := h (op (op (a2) (a2)) (op (a0) (a2))) (op (a0) (a0)) a1\n      _ = op (a0) (op (op (a1) (a1)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a1))) := congrArg (fun t => op (t) (op (op (a1) (a1)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a1)))) ((h a0 a0 a2).symm)\n  have lem2 : ∀ a0 a1 a2 a3 : G, op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (a0)) := by\n    intro a0 a1 a2 a3\n    calc\n      op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (op (op (a2) (a0)) (op (op (a3) (a3)) (op (a0) (a3))))) := h (op (a2) (a0)) a1 (op (op (a3) (a3)) (op (a0) (a3)))\n      _ = op (op (a1) (op (a2) (a0))) (op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (a0)) := congrArg (fun t => op (op (a1) (op (a2) (a0))) (op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (t))) ((h a0 a2 a3).symm)\n  have lem3 : ∀ a0 a1 a2 : G, op (op (a1) (a1)) (op (a0) (a1)) = op (a0) (op (op (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))) (op (op (a2) (a2)) (op (op (a0) (a1)) (a2)))) (op (a0) (a1))) := by\n    intro a0 a1 a2\n    calc\n      op (op (a1) (a1)) (op (a0) (a1)) = op (a0) (op (op (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))) (op (op (a2) (a2)) (op (op (a0) (a1)) (a2)))) (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))))) := lem1 a0 (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))) a1\n      _ = op (a0) (op (op (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))) (op (op (a2) (a2)) (op (op (a0) (a1)) (a2)))) (op (a0) (a1))) := congrArg (fun t => op (a0) (op (op (op (op (a2) (a2)) (op (op (a0) (a1)) (a2))) (op (op (a2) (a2)) (op (op (a0) (a1)) (a2)))) (t))) ((h (op (a0) (a1)) (op (a1) (a1)) a2).symm)\n  have lem5 : ∀ a0 a1 a2 a3 : G, a0 = op (op (a1) (a0)) (op (op (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))) (op (op (a2) (a2)) (op (a0) (a2)))) := by\n    intro a0 a1 a2 a3\n    calc\n      a0 = op (op (a1) (a0)) (op (op (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))) (op (a0) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))))) := h a0 a1 (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))\n      _ = op (op (a1) (a0)) (op (op (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))) (op (op (a2) (a2)) (op (a0) (a2)))) := congrArg (fun t => op (op (a1) (a0)) (op (op (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))) (t))) ((lem1 a0 a3 a2).symm)\n  have lem6 : ∀ a0 a1 a2 a3 : G, op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (a0) = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := by\n    intro a0 a1 a2 a3\n    calc\n      op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (a0) = op (op (op (a0) (op (a1) (a0))) (op (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) (a0))) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := lem2 a0 (op (a0) (op (a1) (a0))) (op (op (op (a3) (a3)) (op (a0) (a3))) (op (op (a3) (a3)) (op (a0) (a3)))) a2\n      _ = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := congrArg (fun t => op (t) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0))) ((lem2 a0 a0 a1 a3).symm)\n  have lem11 : ∀ a0 a1 : G, op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) = op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0)) := by\n    intro a0 a1\n    calc\n      op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) = op (op (a0) (a0)) (op (op (a0) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) := lem1 (op (a0) (a0)) a0 (op (a0) (a0))\n      _ = op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0)) := congrArg (fun t => op (op (a0) (a0)) (t)) ((lem6 a0 a0 a0 a1).symm)\n  have lem13 : ∀ a0 a1 a2 a3 a4 : G, op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (op (op (a4) (a4)) (op (a0) (a4))) (op (op (a4) (a4)) (op (a0) (a4)))) (a0))) := by\n    intro a0 a1 a2 a3 a4\n    calc\n      op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := lem2 a0 a1 a2 a0\n      _ = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (op (op (a4) (a4)) (op (a0) (a4))) (op (op (a4) (a4)) (op (a0) (a4)))) (a0))) := congrArg (fun t => op (op (a1) (op (a2) (a0))) (t)) (lem6 a0 a3 a4 a0)\n  have lem16 : ∀ a0 a1 a2 : G, op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0) = op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0) := by\n    intro a0 a1 a2\n    calc\n      op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0) = op (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := lem6 a0 (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) a0 a2\n      _ = op (op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0))) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := congrArg (fun t => op (t) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) (lem6 a0 a0 a1 a0)\n      _ = op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0) := (lem2 a0 (op (a0) (a0)) (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) a0).symm\n  have lem22 : ∀ a0 a1 a2 a3 a4 a5 : G, op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (a4) (a0)) (op (op (op (op (a5) (a5)) (op (a0) (a5))) (op (op (a5) (a5)) (op (a0) (a5)))) (a0)))) := by\n    intro a0 a1 a2 a3 a4 a5\n    calc\n      op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) := lem13 a0 a1 a2 a3 a0\n      _ = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (a4) (a0)) (op (op (op (op (a5) (a5)) (op (a0) (a5))) (op (op (a5) (a5)) (op (a0) (a5)))) (a0)))) := congrArg (fun t => op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (t))) (lem6 a0 a4 a5 a0)\n  have lem26 : ∀ a0 a1 : G, op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) = op (op (a0) (a0)) (op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0))) := by\n    intro a0 a1\n    calc\n      op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) = op (op (a0) (a0)) (op (op (a0) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) := lem1 (op (a0) (a0)) a0 (op (a0) (a0))\n      _ = op (op (a0) (a0)) (op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0))) := congrArg (fun t => op (op (a0) (a0)) (op (op (a0) (a0)) (t))) (lem16 a0 a1 a0)\n  have lem27 : ∀ a0 : G, a0 = op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) := by\n    intro a0\n    calc\n      a0 = op (op (a0) (a0)) (op (op (op (op (a0) (a0)) (op (op (op (a0) (a0)) (op (a0) (a0))) (a0))) (op (op (a0) (a0)) (op (op (op (a0) (a0)) (op (a0) (a0))) (a0)))) (op (op (a0) (a0)) (op (a0) (a0)))) := lem5 a0 a0 a0 a0\n      _ = op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) := (lem3 (op (a0) (a0)) (op (a0) (a0)) a0).symm\n  have lem29 : ∀ a0 a1 : G, a0 = op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0)) := by\n    intro a0 a1\n    calc\n      a0 = op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) := lem27 a0\n      _ = op (op (a0) (a0)) (op (op (op (op (a1) (a1)) (op (a0) (a1))) (op (op (a1) (a1)) (op (a0) (a1)))) (a0)) := lem11 a0 a1\n  have lem31 : ∀ a0 : G, a0 = op (op (a0) (a0)) (a0) := by\n    intro a0\n    calc\n      a0 = op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0))) := lem27 a0\n      _ = op (op (a0) (a0)) (op (op (a0) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) := lem26 a0 a0\n      _ = op (op (a0) (a0)) (a0) := congrArg (fun t => op (op (a0) (a0)) (t)) ((lem29 a0 a0).symm)\n  have lem38 : ∀ a0 a1 a2 : G, op (a1) (a0) = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := by\n    intro a0 a1 a2\n    calc\n      op (a1) (a0) = op (op (op (op (a1) (a0)) (op (a1) (a0))) (op (a1) (a0))) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := lem2 a0 (op (op (a1) (a0)) (op (a1) (a0))) a1 a2\n      _ = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := congrArg (fun t => op (t) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0))) ((lem31 (op (a1) (a0))).symm)\n  have lem46 : ∀ a0 a1 a2 a3 a4 : G, op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (a4) (a0))) := by\n    intro a0 a1 a2 a3 a4\n    calc\n      op (a2) (a0) = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (op (a4) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)))) := lem22 a0 a1 a2 a3 a4 a0\n      _ = op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (op (a4) (a0))) := congrArg (fun t => op (op (a1) (op (a2) (a0))) (op (op (a3) (a0)) (t))) ((lem38 a0 a4 a0).symm)\n  have lem49 : ∀ a0 : G, a0 = op (a0) (a0) := by\n    intro a0\n    calc\n      a0 = op (op (a0) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := lem29 a0 a0\n      _ = op (a0) (a0) := (lem38 a0 a0 a0).symm\n  have lem50 : ∀ a0 a1 a2 a3 : G, a0 = op (op (a1) (a0)) (op (op (op (a2) (op (a0) (a2))) (a3)) (op (a2) (op (a0) (a2)))) := by\n    intro a0 a1 a2 a3\n    calc\n      a0 = op (op (a1) (a0)) (op (op (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3))) (op (op (a3) (a3)) (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)))) (op (op (a2) (a2)) (op (a0) (a2)))) := lem5 a0 a1 a2 a3\n      _ = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)) (op (op (a2) (a2)) (op (a0) (a2)))) := congrArg (fun t => op (op (a1) (a0)) (op (t) (op (op (a2) (a2)) (op (a0) (a2))))) ((lem46 a3 (op (a3) (a3)) (op (op (a2) (a2)) (op (a0) (a2))) a3 (op (op (a2) (a2)) (op (a0) (a2)))).symm)\n      _ = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)) (op (a2) (op (a0) (a2)))) := congrArg (fun t => op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (a3)) (op (t) (op (a0) (a2))))) ((lem49 a2).symm)\n      _ = op (op (a1) (a0)) (op (op (op (a2) (op (a0) (a2))) (a3)) (op (a2) (op (a0) (a2)))) := congrArg (fun t => op (op (a1) (a0)) (op (op (op (t) (op (a0) (a2))) (a3)) (op (a2) (op (a0) (a2))))) ((lem49 a2).symm)\n  have lem56 : ∀ a0 a1 a2 : G, op (a1) (a0) = op (op (a1) (a0)) (op (op (a0) (a2)) (a0)) := by\n    intro a0 a1 a2\n    calc\n      op (a1) (a0) = op (op (a1) (a0)) (op (op (op (op (a2) (a2)) (op (a0) (a2))) (op (op (a2) (a2)) (op (a0) (a2)))) (a0)) := lem38 a0 a1 a2\n      _ = op (op (a1) (a0)) (op (op (a0) (a2)) (a0)) := congrArg (fun t => op (op (a1) (a0)) (op (t) (a0))) ((lem46 a2 (op (a2) (a2)) a0 a2 a0).symm)\n  have lem66 : ∀ a0 a1 : G, a0 = op (a1) (a0) := by\n    intro a0 a1\n    calc\n      a0 = op (a0) (a0) := lem49 a0\n      _ = op (op (a0) (a0)) (a0) := congrArg (fun t => op (t) (a0)) (lem49 a0)\n      _ = op (op (a1) (op (op (a0) (a0)) (a0))) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := lem2 a0 a1 (op (a0) (a0)) a0\n      _ = op (op (a1) (a0)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0)) := congrArg (fun t => op (op (a1) (t)) (op (op (op (op (a0) (a0)) (op (a0) (a0))) (op (op (a0) (a0)) (op (a0) (a0)))) (a0))) ((lem31 a0).symm)\n      _ = op (op (a1) (a0)) (op (op (a0) (a0)) (a0)) := congrArg (fun t => op (op (a1) (a0)) (op (t) (a0))) ((lem46 a0 (op (a0) (a0)) a0 a0 a0).symm)\n      _ = op (a1) (a0) := (lem56 a0 a1 a0).symm\n  have lem67 : ∀ a0 a1 : G, a0 = a1 := by\n    intro a0 a1\n    calc\n      a0 = op (op (a0) (a0)) (op (op (op (a1) (op (a0) (a1))) (a0)) (op (a1) (op (a0) (a1)))) := lem50 a0 a0 a1 a0\n      _ = op (op (a0) (a0)) (op (a1) (op (a0) (a1))) := congrArg (fun t => op (op (a0) (a0)) (t)) ((lem66 (op (a1) (op (a0) (a1))) (op (op (a1) (op (a0) (a1))) (a0))).symm)\n      _ = op (a1) (op (a0) (a1)) := (lem66 (op (a1) (op (a0) (a1))) (op (a0) (a0))).symm\n      _ = op (a0) (a1) := (lem66 (op (a0) (a1)) a1).symm\n      _ = a1 := (lem66 a1 a0).symm\n  intro x y z w\n  calc\n    x = op (y) (op (op (x) (op (z) (op (z) (y)))) (w)) := lem67 x (op (y) (op (op (x) (op (z) (op (z) (y)))) (w)))\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 18.94,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0031",
+  "eq1_id": 10358,
+  "eq2_id": 36091,
+  "equation1": "x = y * ((y * y) * ((y * x) * x))",
+  "equation2": "x = ((y * (z * z)) * (z * z)) * x",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[0, 1, 2], [0, 1, 2], [1, 0, 2]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.9,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0032",
+  "eq1_id": 4777,
+  "eq2_id": 33810,
+  "equation1": "x = x * (y * (x * (z * (z * z))))",
+  "equation2": "x = ((x * y) * (z * (z * w))) * z",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  have lem0 : ∀ a0 a1 : G, a1 = a1 ◇ a0 := by\n    intro a0 a1\n    calc\n      a1 = a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ (a0 ◇ (a0 ◇ a0)))) := h a1 (a0 ◇ (a0 ◇ a0)) a0\n      _ = a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))))) := congrArg (fun t => a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ t))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0)\n      _ = a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0)))))))))) := congrArg (fun t => a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0)\n      _ = a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))) := congrArg (fun t => a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a1 ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))) ((h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0))).symm)\n      _ = a1 ◇ (a0 ◇ (a0 ◇ a0)) := congrArg (fun t => a1 ◇ t) ((h (a0 ◇ (a0 ◇ a0)) a1 a0).symm)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ (a0 ◇ (a0 ◇ a0)))))) := congrArg (fun t => a1 ◇ (a0 ◇ t)) (h (a0 ◇ a0) (a0 ◇ (a0 ◇ a0)) a0)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ t))))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0)))))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))))))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))))) ((h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0))).symm)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ (a0 ◇ a0)))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ t))) ((h (a0 ◇ (a0 ◇ a0)) (a0 ◇ a0) a0).symm)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ (a0 ◇ (a0 ◇ a0)))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ t)))) (h (a0 ◇ a0) (a0 ◇ a0) a0)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ t))))))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ a0) a0)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0)))))))))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))))))))) (h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)))\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ (a0 ◇ (a0 ◇ a0))))))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ t)))))))))))) ((h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0).symm)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ (a0 ◇ (a0 ◇ a0)))))))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ ((a0 ◇ (a0 ◇ a0)) ◇ ((a0 ◇ a0) ◇ t))))))))) ((h (a0 ◇ (a0 ◇ a0)) (a0 ◇ (a0 ◇ a0)) a0).symm)\n      _ = a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ (a0 ◇ a0)))))) := congrArg (fun t => a1 ◇ (a0 ◇ ((a0 ◇ a0) ◇ (a0 ◇ ((a0 ◇ a0) ◇ ((a0 ◇ a0) ◇ t)))))) ((h (a0 ◇ a0) (a0 ◇ (a0 ◇ a0)) a0).symm)\n      _ = a1 ◇ a0 := congrArg (fun t => a1 ◇ t) ((h a0 (a0 ◇ a0) (a0 ◇ a0)).symm)\n  intro x y z w\n  calc\n    x = x ◇ y := lem0 y x\n    _ = (x ◇ y) ◇ z := lem0 z (x ◇ y)\n    _ = ((x ◇ y) ◇ (z ◇ (z ◇ w))) ◇ z := congrArg (fun t => t ◇ z) (lem0 (z ◇ (z ◇ w)) (x ◇ y))\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 18.91,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0033",
+  "eq1_id": 12079,
+  "eq2_id": 37631,
+  "equation1": "x = y * (((y * x) * y) * (y * y))",
+  "equation2": "x = ((y * (y * (z * w))) * y) * w",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[0, 1, 2], [2, 0, 1], [1, 2, 0]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.87,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0034",
+  "eq1_id": 5481,
+  "eq2_id": 19849,
+  "equation1": "x = y * (z * (w * (y * (u * u))))",
+  "equation2": "x = (y * x) * ((y * (x * y)) * z)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ (x ◇ (x ◇ (x ◇ x)))) := h x x x x x\n    _ = (y ◇ x) ◇ ((y ◇ (x ◇ y)) ◇ z) := (h ((y ◇ x) ◇ ((y ◇ (x ◇ y)) ◇ z)) x x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.73,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0035",
+  "eq1_id": 10173,
+  "eq2_id": 26747,
+  "equation1": "x = y * ((x * x) * ((y * y) * x))",
+  "equation2": "x = ((x * y) * (z * x)) * (x * y)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.75,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0036",
+  "eq1_id": 6543,
+  "eq2_id": 29450,
+  "equation1": "x = x * (y * ((y * x) * (y * z)))",
+  "equation2": "x = (x * (y * (z * (w * u)))) * z",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  let op : G → G → G := fun a b => a ◇ b\n  have lem1 : ∀ a0 a1 : G, a0 = op (a0) (op (a1) (op (a1) (a0))) := by\n    intro a0 a1\n    calc\n      a0 = op (a0) (op (a1) (op (op (a1) (a0)) (op (a1) (op (op (a1) (op (a1) (a0))) (op (a1) (a0)))))) := h a0 a1 (op (op (a1) (op (a1) (a0))) (op (a1) (a0)))\n      _ = op (a0) (op (a1) (op (a1) (a0))) := congrArg (fun t => op (a0) (op (a1) (t))) ((h (op (a1) (a0)) a1 a0).symm)\n  have lem7 : ∀ a0 : G, op (a0) (a0) = op (op (a0) (a0)) (a0) := by\n    intro a0\n    calc\n      op (a0) (a0) = op (op (a0) (a0)) (op (a0) (op (a0) (op (a0) (a0)))) := lem1 (op (a0) (a0)) a0\n      _ = op (op (a0) (a0)) (a0) := congrArg (fun t => op (op (a0) (a0)) (t)) ((lem1 a0 a0).symm)\n  have lem8 : ∀ a0 a1 : G, op (a1) (op (a1) (a0)) = op (op (a1) (op (a1) (a0))) (op (a0) (a0)) := by\n    intro a0 a1\n    calc\n      op (a1) (op (a1) (a0)) = op (op (a1) (op (a1) (a0))) (op (a0) (op (a0) (op (a1) (op (a1) (a0))))) := lem1 (op (a1) (op (a1) (a0))) a0\n      _ = op (op (a1) (op (a1) (a0))) (op (a0) (a0)) := congrArg (fun t => op (op (a1) (op (a1) (a0))) (op (a0) (t))) ((lem1 a0 a1).symm)\n  have lem10 : ∀ a0 : G, a0 = op (a0) (op (op (a0) (a0)) (op (a0) (a0))) := by\n    intro a0\n    calc\n      a0 = op (a0) (op (op (a0) (a0)) (op (op (a0) (a0)) (a0))) := lem1 a0 (op (a0) (a0))\n      _ = op (a0) (op (op (a0) (a0)) (op (a0) (a0))) := congrArg (fun t => op (a0) (op (op (a0) (a0)) (t))) ((lem7 a0).symm)\n  have lem17 : ∀ a0 : G, a0 = op (a0) (a0) := by\n    intro a0\n    calc\n      a0 = op (a0) (op (a0) (op (op (a0) (a0)) (op (a0) (a0)))) := h a0 a0 a0\n      _ = op (a0) (a0) := congrArg (fun t => op (a0) (t)) ((lem10 a0).symm)\n  have lem20 : ∀ a0 a1 : G, op (a1) (op (a1) (a0)) = op (op (a1) (op (a1) (a0))) (a0) := by\n    intro a0 a1\n    calc\n      op (a1) (op (a1) (a0)) = op (op (a1) (op (a1) (a0))) (op (a0) (a0)) := lem8 a0 a1\n      _ = op (op (a1) (op (a1) (a0))) (a0) := congrArg (fun t => op (op (a1) (op (a1) (a0))) (t)) ((lem17 a0).symm)\n  have lem29 : ∀ a0 a1 : G, a0 = op (a0) (op (a0) (op (a0) (a1))) := by\n    intro a0 a1\n    calc\n      a0 = op (a0) (op (a0) (op (op (a0) (a0)) (op (a0) (a1)))) := h a0 a0 a1\n      _ = op (op (a0) (op (a0) (op (op (a0) (a0)) (op (a0) (a1))))) (op (op (a0) (a0)) (op (a0) (a1))) := lem20 (op (op (a0) (a0)) (op (a0) (a1))) a0\n      _ = op (a0) (op (op (a0) (a0)) (op (a0) (a1))) := congrArg (fun t => op (t) (op (op (a0) (a0)) (op (a0) (a1)))) ((h a0 a0 a1).symm)\n      _ = op (a0) (op (a0) (op (a0) (a1))) := congrArg (fun t => op (a0) (op (t) (op (a0) (a1)))) ((lem17 a0).symm)\n  have lem31 : ∀ a0 a1 : G, a0 = op (a0) (op (a0) (a1)) := by\n    intro a0 a1\n    calc\n      a0 = op (a0) (op (a0) (op (a0) (a1))) := lem29 a0 a1\n      _ = op (op (a0) (op (a0) (op (a0) (a1)))) (op (a0) (a1)) := lem20 (op (a0) (a1)) a0\n      _ = op (a0) (op (a0) (a1)) := congrArg (fun t => op (t) (op (a0) (a1))) ((lem29 a0 a1).symm)\n  have lem32 : ∀ a0 a1 : G, a0 = op (a0) (a1) := by\n    intro a0 a1\n    calc\n      a0 = op (a0) (op (a1) (op (a1) (a0))) := lem1 a0 a1\n      _ = op (a0) (a1) := congrArg (fun t => op (a0) (t)) ((lem31 a1 a0).symm)\n  intro x y z w u\n  calc\n    x = op (x) (z) := lem32 x z\n    _ = op (op (x) (op (y) (op (z) (op (w) (u))))) (z) := congrArg (fun t => op (t) (z)) (lem32 x (op (y) (op (z) (op (w) (u)))))\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 45.35,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0037",
+  "eq1_id": 20750,
+  "eq2_id": 28971,
+  "equation1": "x = (y * x) * (((y * z) * z) * y)",
+  "equation2": "x = (((y * z) * y) * x) * (w * w)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[0, 2, 1], [2, 1, 0], [1, 0, 2]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.88,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0038",
+  "eq1_id": 7173,
+  "eq2_id": 12002,
+  "equation1": "x = y * (z * ((z * w) * (z * u)))",
+  "equation2": "x = y * (((x * z) * x) * (w * z))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w\n  calc\n    x = x ◇ (x ◇ ((x ◇ x) ◇ (x ◇ x))) := h x x x x x\n    _ = y ◇ (((x ◇ z) ◇ x) ◇ (w ◇ z)) := (h (y ◇ (((x ◇ z) ◇ x) ◇ (w ◇ z))) x x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.06,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0039",
+  "eq1_id": 9434,
+  "eq2_id": 23418,
+  "equation1": "x = y * ((y * x) * (x * (x * x)))",
+  "equation2": "x = ((y * x) * z) * (y * (w * x))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 0], [1, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.74,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0040",
+  "eq1_id": 7975,
+  "eq2_id": 26062,
+  "equation1": "x = y * (z * ((y * (w * w)) * y))",
+  "equation2": "x = (y * ((x * z) * z)) * (z * x)",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x)) := h x x x x\n    _ = (y ◇ ((x ◇ z) ◇ z)) ◇ (z ◇ x) := (h ((y ◇ ((x ◇ z) ◇ z)) ◇ (z ◇ x)) x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.44,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0041",
+  "eq1_id": 19617,
+  "eq2_id": 9149,
+  "equation1": "x = (x * x) * ((x * (y * z)) * z)",
+  "equation2": "x = x * ((y * x) * (y * (z * y)))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[1, 1], [0, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.79,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0042",
+  "eq1_id": 17348,
+  "eq2_id": 7093,
+  "equation1": "x = (y * y) * (x * (z * (x * y)))",
+  "equation2": "x = y * (z * ((y * w) * (z * y)))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  have collapse : ∀ a b : G, a = b := by\n    intro a b\n    calc\n      a = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) := h a (a ◇ (b ◇ a)) a\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) := h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ t)) ((h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))) ◇ t) (h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))))\n      _ = ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := (h (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))).symm\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := congrArg (fun t => t ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) (h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))))\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ t) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ((h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (((a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t)) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) (h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) := congrArg (fun t => t ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ((h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ((a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))).symm)\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t) (h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ t)) ((h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))).symm)\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (((a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a)))))))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t))) (h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t) ((h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))) ((a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))) ◇ (a ◇ (a ◇ (a ◇ (a ◇ (b ◇ a))))))).symm)\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (((b ◇ b) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t) (h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ((b ◇ b) ◇ (b ◇ b)))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t))) ((h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) (b ◇ b) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))).symm)\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ t)) (h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t) ((h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (((b ◇ b) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => t ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) (h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ((b ◇ b) ◇ (b ◇ b)))\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ t)) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ((h ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) (b ◇ b) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ t) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) (h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))\n      _ = ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => t ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ((h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a)))) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) := h (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))) ◇ t) ((h ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))).symm)\n      _ = ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))))) := congrArg (fun t => ((((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ◇ (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ t)) (h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))))\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b) := (h (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) (((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b))) ◇ ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))) ((((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)) ◇ (((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ b)))).symm\n      _ = ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ ((a ◇ a) ◇ (b ◇ (a ◇ (b ◇ a))))) := congrArg (fun t => ((a ◇ (b ◇ a)) ◇ (a ◇ (b ◇ a))) ◇ (b ◇ t)) (h b a a)\n      _ = b := (h b (a ◇ (b ◇ a)) (a ◇ a)).symm\n  intro x y z w\n  exact collapse (x) (y ◇ (z ◇ ((y ◇ w) ◇ (z ◇ y))))\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 14.77,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0043",
+  "eq1_id": 5929,
+  "eq2_id": 23015,
+  "equation1": "x = y * (y * (x * ((x * y) * x)))",
+  "equation2": "x = (y * (z * w)) * ((y * w) * w)",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.73,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0044",
+  "eq1_id": 7987,
+  "eq2_id": 7858,
+  "equation1": "x = y * (z * ((z * (x * x)) * z))",
+  "equation2": "x = y * (z * ((x * (y * z)) * z))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ (((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ (x ◇ x)) ◇ (x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)))) := h x x (x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x))\n    _ = x ◇ ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z)))) := congrArg (fun t => x ◇ ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ t)) ((h (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ (x ◇ x)) x).symm)\n    _ = x ◇ ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ (((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ (x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)))) := congrArg (fun t => x ◇ ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ t)) (h (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ((x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x)) ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) x)\n    _ = y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z)) := (h (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) x (x ◇ ((x ◇ ((y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))) ◇ (y ◇ (z ◇ ((x ◇ (y ◇ z)) ◇ z))))) ◇ x))).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 5.46,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0045",
+  "eq1_id": 11965,
+  "eq2_id": 4781,
+  "equation1": "x = y * (((x * y) * y) * (y * y))",
+  "equation2": "x = x * (y * (x * (z * (w * z))))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 3) := {\n    op := finOpTable \"[[0, 2, 1], [2, 1, 0], [1, 0, 2]]\"\n  }\n  refine ⟨Fin 3, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.81,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0046",
+  "eq1_id": 8128,
+  "eq2_id": 31305,
+  "equation1": "x = y * (z * ((w * (z * z)) * u))",
+  "equation2": "x = (y * ((x * z) * (y * y))) * z",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ ((x ◇ (x ◇ x)) ◇ x)) := h x x x x x\n    _ = (y ◇ ((x ◇ z) ◇ (y ◇ y))) ◇ z := (h ((y ◇ ((x ◇ z) ◇ (y ◇ y))) ◇ z) x x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 4.11,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0047",
+  "eq1_id": 5686,
+  "eq2_id": 18728,
+  "equation1": "x = x * (y * (y * ((z * y) * y)))",
+  "equation2": "x = (x * x) * ((x * x) * (x * y))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 0], [1, 0]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.78,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0048",
+  "eq1_id": 9020,
+  "eq2_id": 11698,
+  "equation1": "x = y * (z * (((w * w) * x) * w))",
+  "equation2": "x = y * ((z * (w * u)) * (u * x))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z w u\n  calc\n    x = y ◇ (x ◇ ((((((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x) ◇ (((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x)) ◇ x) ◇ (((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x))) := h x y x (((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x)\n    _ = y ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x)) := congrArg (fun t => y ◇ t) ((h ((z ◇ (w ◇ u)) ◇ (u ◇ x)) x (((((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x) ◇ (((x ◇ x) ◇ ((z ◇ (w ◇ u)) ◇ (u ◇ x))) ◇ x)) ◇ x) x).symm)\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 4.28,
+  "judge_status": "accepted",
+  "axioms": []
+ },
+ {
+  "id": "order5_normal_0049",
+  "eq1_id": 8669,
+  "eq2_id": 5342,
+  "equation1": "x = y * (y * (((z * z) * y) * x))",
+  "equation2": "x = y * (z * (y * (w * (z * u))))",
+  "verdict": "false",
+  "code": "import JudgeProblem\nimport JudgeDecide.DecideBang\nimport JudgeFinOp.MemoFinOp\nopen MemoFinOp\n\ndef submission : Goal := by\n  let m : Magma (Fin 2) := {\n    op := finOpTable \"[[0, 1], [0, 1]]\"\n  }\n  refine ⟨Fin 2, m, ?_⟩\n  decideFin!\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 1.74,
+  "judge_status": "accepted",
+  "axioms": [
+   "Classical.choice",
+   "Quot.sound",
+   "propext"
+  ]
+ },
+ {
+  "id": "order5_normal_0050",
+  "eq1_id": 9074,
+  "eq2_id": 11250,
+  "equation1": "x = y * (z * (((w * u) * v) * y))",
+  "equation2": "x = y * ((y * (y * z)) * (y * y))",
+  "verdict": "true",
+  "code": "import JudgeProblem\n\ndef submission : Goal := by\n  intro G _ h\n  intro x y z\n  calc\n    x = x ◇ (x ◇ (((x ◇ x) ◇ x) ◇ x)) := h x x x x x x\n    _ = y ◇ ((y ◇ (y ◇ z)) ◇ (y ◇ y)) := (h (y ◇ ((y ◇ (y ◇ z)) ◇ (y ◇ y))) x x x x x).symm\n",
+  "judge_calls": 1,
+  "elapsed_seconds": 2.58,
+  "judge_status": "accepted",
+  "axioms": []
+ }
+]
