@@ -138,6 +138,11 @@ surviving pair is decided rather than sampled. 8.5 minutes.
 
 **16 of the 39 close.**
 
+A note on how to quote the negative: 661,142 is the grid *before* filtering, and
+2,147 fibres survive it. The 23 that stay open are blocked across the settings
+actually decided — 55,516 of them — not across 661,142. The larger number sizes
+the search; the smaller one is what the negative rests on.
+
 ```
 E476  -> E359    base Z/5 0x+2y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45
 E476  -> E4065   base Z/5 0x+2y, fibre (Z/3)^2 a=[1,1,1,0] b=[0,2,2,1], carrier 45

@@ -146,12 +146,22 @@ The ETP paper (§8) puts the number of pairs with `E ⊭ E'` but `E ⊧_fin E'` 
     |infinite-only ∩ 1062|  ≥  820 − 435  =  385
 ```
 
-**At least 385 of the 1062 require an infinite model.** Janota reports 310,
-which is below that floor. The likeliest reading is that 310 counts pairs
-*tagged* in the ETP data as having an infinite-model proof — a property of the
-formalized generating set, not of its closure under transitivity and duality.
-The same generating-versus-closure gap makes 10,657 formalized positive
-implications stand for 8,173,585 real ones.
+**At least 385 of the 1062 require an infinite model.**
+
+> **Superseded.** This bound, and the reading of 310 that follows it, are both
+> obsolete. The ETP's own finite implication graph is fetchable, and decoding it
+> gives the split exactly: **610 infinite-only, 450 finite, 2 open** — see
+> [infinite-only-exact.md](infinite-only-exact.md). The floor argument is kept
+> here because it was how the question was approached before the graph was
+> available, not because 385 is the answer.
+>
+> The 310 comparison was also unsound as stated, and the denominators are the
+> reason. The 820 counts ordered pairs across the whole 4694² closed graph;
+> 310 is quoted against the 1062 residue and appears to count dual classes.
+> Recomputing dual orbits over the residue gives 316, or 294 if both members of
+> a pair must lie inside it. So 310 is a dual-class count against an earlier
+> snapshot rather than an error, and the claim that it sits below a provable
+> floor is withdrawn. Pointed out by Wenlin Zhang.
 
 ## 4. Consequences for benchmark use
 
